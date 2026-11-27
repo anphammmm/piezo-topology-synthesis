@@ -141,7 +141,8 @@ def iteration_prompt(iteration: int, max_proposals: int, top: List[dict], last: 
     elif last.get("error"):
         parts.append(f"Your previous request failed: {last['error']}")
     else:
-        parts.append("Result of your previous proposal (after value tuning):\n" + _design_block(last))
+        parts.append("Result of your previous proposal, with the values you proposed (it is tuned automatically "
+                     "while you think; tuned versions appear under BEST DESIGNS):\n" + _design_block(last))
     if top:
         parts.append("BEST DESIGNS SO FAR (values already tuned):\n\n" + "\n\n".join(_design_block(d) for d in top))
     if explored:
