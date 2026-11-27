@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FBR_Zener",
+ "rationale": "The reference FBR failed due to diode voltage drops (S2, S4) and overvoltage under strong excitation (S3). I am adding a Synchronized Switch Harvesting on Inductor (SSHI) inverter (L1, S1, G1) in parallel with the piezo to flip its voltage at peaks, which increases the energy transferred to the storage capacitor and helps meet the 1.8V minimum. A Zener clamp (D5) is added to ensure vout never exceeds 3.6V, and a larger storage capacitor C1 is used to reduce ripple.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 6.345757411010115e-06
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.009517973982560494
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5.686963163316649e-05,
+   "phase": -0.018992153257731893,
+   "edges": "both"
+  }
+ ]
+}

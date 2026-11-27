@@ -1,0 +1,6 @@
+round,k,name,move,topo_hash,status,candidate,of,worst_ratio,ratio_S2,ratio_S4,ratio_S6,gain_S2,gain_S4,gain_S6,n_presets,hints,problems
+1,1,fbr_zener,new_topology,ba973e766678,evaluated,c0001,,,,,,,,,,underpower | not_settled,
+1,2,sshi_fbr_zener,new_topology,c364d0f2b6ab,evaluated,c0002,,,,,,,,,,not_settled | ripple,
+1,3,sshi_half_zener,new_topology,a7a5e311d360,evaluated,c0003,,,,,,,,,,pinned,
+2,1,sshi_fbr_res,modify_topology,50082e7d29c6,evaluated,c0044,,,,,,,,,,not_settled | ripple,
+2,2,sshi_half_gnd,new_topology,3be50bad8e3c,evaluated,c0045,,,,,,,,,,ripple,

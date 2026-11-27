@@ -1,0 +1,39 @@
+[00:00:00] [setup  ] output in runs/bench/P1/no_diag/seed1; mode search; spec P1 (Sensor supply 1.8-3.6 V); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:07] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (7.9 s)
+[00:00:11] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 3.2 s)
+[00:00:11] [model  ] round 1: asking the model (thinking on)
+[00:00:26] [model  ] waiting 15 s (round 1)
+[00:00:41] [model  ] waiting 30 s (round 1)
+[00:00:56] [model  ] waiting 45 s (round 1)
+[00:01:11] [model  ] waiting 60 s (round 1)
+[00:01:26] [model  ] waiting 75 s (round 1)
+[00:01:41] [model  ] waiting 90 s (round 1)
+[00:01:56] [model  ] waiting 105 s (round 1)
+[00:02:11] [model  ] waiting 120 s (round 1)
+[00:02:26] [model  ] waiting 135 s (round 1)
+[00:02:41] [model  ] waiting 150 s (round 1)
+[00:02:56] [model  ] waiting 165 s (round 1)
+[00:03:11] [model  ] waiting 180 s (round 1)
+[00:03:26] [model  ] waiting 195 s (round 1)
+[00:03:40] [model  ] reply after 210 s (2316 in / 7747 out)
+[00:03:40] [eval   ] round 1 design 1: new_topology 'SECE' (8 parts)
+[00:03:45] [screen ] r01d1: fail, worst -56 % of the power needed (4 presets, 4.7 s)
+[00:03:45] [eval   ] round 1 design 2: new_topology 'SSHI_FullBridge' (9 parts)
+[00:03:55] [screen ] r01d2: PASS, worst 253 % of the power needed (4 presets, 9.9 s)
+[00:03:55] [sim    ] r01d2: simulating 6 conditions
+[00:04:02] [eval   ] r01d2: score 23.01, 1/6 conditions, 21/30 checks pass (7.1 s)
+[00:04:02] [eval   ] round 1 design 3: new_topology 'SECE_DualL' (10 parts)
+[00:04:07] [screen ] r01d3: fail, worst -56 % of the power needed (4 presets, 5.1 s)
+[00:04:07] [model  ] round 2: asking the model (thinking on)
+[00:04:53] [size   ] c0001 (SSHI_FullBridge) generation 1: best score 23.01 -> 23.01, 8/48 evaluations (46 s)
+[00:05:52] [size   ] c0001 (SSHI_FullBridge) generation 2: best score 23.01 -> 23.01, 16/48 evaluations (59 s)
+[00:06:43] [eval   ] new best c0023 (SSHI_FullBridge): score 62.47, 4/6 conditions pass
+[00:06:43] [size   ] c0001 (SSHI_FullBridge) generation 3: best score 23.01 -> 62.47, 24/48 evaluations (51 s)
+[00:07:33] [eval   ] new best c0030 (SSHI_FullBridge): score 77.06, 5/6 conditions pass
+[00:07:33] [size   ] c0001 (SSHI_FullBridge) generation 4: best score 62.47 -> 77.06, 32/48 evaluations (51 s)
+[00:07:33] [model  ] reply after 198 s (4456 in / 7350 out)
+[00:07:33] [eval   ] round 2 design 1 'SSHI_LowRipple' repeats structure c0001; not simulated
+[00:07:33] [model  ] round 3: asking the model (thinking on)

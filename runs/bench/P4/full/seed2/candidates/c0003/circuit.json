@@ -1,0 +1,78 @@
+{
+ "move": "new_topology",
+ "name": "sshi_fbr_no_zener",
+ "rationale": "Identical to the sshi_fbr_zener but without the Zener clamp. This is to evaluate if the optimized SSHI parameters (L, ton) and a larger storage capacitor can naturally keep vout below 3.6V on light loads (S3) while maximizing efficiency, avoiding any potential Zener leakage or clamping losses.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.9672941328980504e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.7e-06
+  }
+ ]
+}

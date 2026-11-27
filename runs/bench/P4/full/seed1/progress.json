@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 701.7,
+  "iteration": 2,
+  "max_rounds": 12,
+  "best_id": "c0026",
+  "best_name": "parallel_sshi_fbr_zener",
+  "best_scalar": 90.607,
+  "best_cond_pass": 6,
+  "n_candidates": 34,
+  "n_sims": 243,
+  "model_wait_s": 0
+}

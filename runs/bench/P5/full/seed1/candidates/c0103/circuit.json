@@ -1,0 +1,78 @@
+{
+ "move": "new_topology",
+ "name": "LC_Filtered_HalfBridge_SSHI",
+ "rationale": "The SSHI_HalfBridge_Zener (c0022) provided excellent voltage levels (passing vout_min and vout_max) but failed on ripple and settling. Increasing Cout to solve ripple increases the time constant (tau = RL*Cout), causing the output to drift and slow down startup. By replacing the simple capacitive buffer with an LC filter (L_filt and Cout), we can significantly reduce the peak-to-peak ripple without needing an excessively large Cout. This allows us to keep Cout small enough to meet the startup (tup) and settling (dv) requirements. The half-bridge configuration is chosen over the full-bridge to minimize diode drops, as previous results showed the full-bridge (c0061) suffered severe underpowering on weak excitation (S4).",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.5707963267948967e-05,
+   "phase": 0.1,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_filt"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L_filt",
+   "type": "L",
+   "nodes": [
+    "n_filt",
+    "out"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-05
+  },
+  {
+   "id": "Csplit",
+   "type": "C",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 4.7e-06
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

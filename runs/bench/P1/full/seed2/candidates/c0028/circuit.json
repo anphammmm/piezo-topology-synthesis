@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FBR_Zener",
+ "rationale": "Parallel-SSHI (Synchronized Switch Harvesting on Inductor) is used to flip the piezoelectric capacitance voltage at each peak, significantly increasing the extracted energy and the voltage available to the rectifier. This should solve the under-voltage issues in S2 and S4. A full-bridge rectifier (FBR) maximizes energy capture, and a Zener diode clamp (DZ33) prevents the output from exceeding 3.6V in S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.002914299866505368
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5.63275566159699e-05,
+   "phase": -0.14352160794186075,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.6388647619357216e-07
+  }
+ ]
+}

@@ -1,0 +1,78 @@
+{
+ "move": "new_topology",
+ "name": "p_sshi_full_bridge_silicon",
+ "rationale": "Replacing the low-drop DSCH Schottky diodes with higher-drop DSI silicon diodes in the rectifier bridge. This increases the series voltage drop by 0.5 V, which may help in reducing vout_max on nominally strong conditions without needing a shunt clamp, while still utilizing the SSHI boost to reach 4.5 V.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.00656889001245137
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.9704869506529067e-05,
+   "phase": 0.044403085235484974,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 6.335077656843735e-06
+  }
+ ]
+}

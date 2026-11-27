@@ -1,0 +1,60 @@
+{
+ "move": "new_topology",
+ "name": "sshi_half_zener",
+ "rationale": "A half-wave rectifier version of the SSHI circuit. Reducing the number of diodes in the path can lower the forward voltage drop, potentially improving startup (tup) and vavg in weak excitation cases (S4) compared to a full bridge, while still utilizing the inductive flip for boost.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "value": 0.002
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.7e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

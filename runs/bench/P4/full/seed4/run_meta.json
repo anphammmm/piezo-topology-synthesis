@@ -1,0 +1,9 @@
+{
+  "label": "full",
+  "baseline": null,
+  "fake": false,
+  "smoke": false,
+  "seed": 4,
+  "spec": "P4",
+  "argv": null
+}

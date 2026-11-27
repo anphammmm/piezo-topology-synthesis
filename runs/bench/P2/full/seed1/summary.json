@@ -1,0 +1,127 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0112",
+  "selected_topology": {
+    "name": "P-SSHI-Shunt",
+    "topo_hash": "4294db5e5d10"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [
+    {
+      "condition": "S3",
+      "criterion": "vout_max",
+      "measured": "6.90995550156",
+      "op": "<=",
+      "limit": 5.5,
+      "margin": -0.2563555457381818,
+      "split": "search"
+    },
+    {
+      "condition": "S3",
+      "criterion": "ripple",
+      "measured": "0.0506629943848",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -0.01325988769599995,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "vout_min",
+      "measured": "4.39354716425",
+      "op": ">=",
+      "limit": 4.5,
+      "margin": -0.02365618572222219,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "settled",
+      "measured": "0.021486576230000054",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -0.07432881150000267,
+      "split": "search"
+    },
+    {
+      "condition": "S5",
+      "criterion": "startup",
+      "measured": "0.415994618849",
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -0.039986547122499994,
+      "split": "search"
+    },
+    {
+      "condition": "H1",
+      "criterion": "startup",
+      "measured": "0.583935802003",
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -0.4598395050074999,
+      "split": "heldout"
+    },
+    {
+      "condition": "H3",
+      "criterion": "vout_max",
+      "measured": "7.52649402618",
+      "op": "<=",
+      "limit": 5.5,
+      "margin": -0.36845345930545453,
+      "split": "heldout"
+    },
+    {
+      "condition": "H3",
+      "criterion": "ripple",
+      "measured": "0.0582976341248",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -0.1659526824959999,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "startup",
+      "measured": "0.573804612137",
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -0.43451153034249984,
+      "split": "heldout"
+    }
+  ],
+  "timing": {
+    "wall_s": 2364.1,
+    "model_s": 1682.7,
+    "model_calls": 7,
+    "model_errors": 0,
+    "prompt_tokens": 30294,
+    "completion_tokens": 60955,
+    "reasoning_tokens": 0,
+    "sim_seconds": 9526.6,
+    "sim_wall_s": 1283.4,
+    "n_sims": 1143,
+    "cache_hits": 0,
+    "sim_failures": 0,
+    "size_s": 1013.3,
+    "screen_s": 59.0,
+    "n_screen_sims": 87,
+    "n_proposals": 8,
+    "n_invalid": 0,
+    "n_duplicate": 1,
+    "n_topologies": 7,
+    "n_screen_pass": 3,
+    "rounds": 7,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

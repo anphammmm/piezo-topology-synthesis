@@ -1,0 +1,37 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,4.2625,0,14,False
+c0001,1,llm,,new_topology,parallel_sshi_fbr_zener,40eae91a637a,ffd4330d3d63,9,search,31.8311,2,20,False
+c0002,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,b50c20f2aac0,9,search,-6.5347,0,10,False
+c0003,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,8e46e4a4b8d5,9,search,29.7877,2,19,False
+c0004,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,d3ea1dcb5fc0,9,search,46.1145,3,22,False
+c0005,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,0f727a7fed65,9,search,8.5575,1,12,False
+c0006,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,113693fe4618,9,search,-11.0124,0,7,False
+c0007,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,72917fe14237,9,search,12.5471,1,14,False
+c0008,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,df420b9f4e0b,9,search,78.9195,5,29,False
+c0009,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,63874e0ee56b,9,search,25.1743,2,16,False
+c0010,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,498103469d35,9,search,11.7819,1,14,False
+c0011,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,e6b5d0233a8f,9,search,31.9961,2,20,False
+c0012,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,1e18fba60fac,9,search,50.6564,3,25,False
+c0013,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,efc6552cd389,9,search,50.8881,3,24,False
+c0014,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,7d862b20fb2f,9,search,44.4799,3,21,False
+c0015,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,38a2ad481a5f,9,search,37.7465,2,23,False
+c0016,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,480d5d66db2f,9,search,46.3563,3,22,False
+c0017,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,23b23e18251b,9,search,21.1371,0,24,False
+c0018,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,64f3600a4150,9,search,48.1195,3,23,False
+c0019,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,faca11e925a4,9,search,16.0571,1,17,False
+c0020,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,545901256d60,9,search,65.4623,4,27,False
+c0021,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,f84b639d54bd,9,search,39.081,2,24,False
+c0022,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,0a22f99c7254,9,search,19.0579,1,18,False
+c0023,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,21c1ea401a0a,9,search,28.1248,2,18,False
+c0024,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,cab9c31e848e,9,search,48.4172,3,24,False
+c0025,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,ff90e562a1c1,9,search,43.8434,2,25,False
+c0026,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,3e5cea9ae404,9,search,90.6072,6,30,True
+c0027,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,5d68689d8efc,9,search,51.0196,3,25,False
+c0028,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,0f4aa111ce23,9,search,77.8231,5,28,False
+c0029,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,bceac3093c33,9,search,46.0346,3,22,False
+c0030,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,149693c3920b,9,search,44.664,3,21,False
+c0031,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,c7efaaf49d2f,9,search,35.2892,2,21,False
+c0032,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,63a0a9f74a65,9,search,35.635,2,21,False
+c0033,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,6d79cae256a4,9,search,9.4953,1,13,False
+c0026,2,size,c0001,size,parallel_sshi_fbr_zener,40eae91a637a,3e5cea9ae404,9,heldout,60.4056,4,20,True
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,heldout,19.1564,1,13,False

@@ -1,0 +1,62 @@
+{
+ "move": "new_topology",
+ "name": "FBR_Zener_LargeCap",
+ "rationale": "A baseline modification of the reference. I add the Zener clamp to fix the vmax failure in S3 and increase the storage capacitor significantly to address the ripple and startup time issues seen in S2 and S4, although it may not fully solve the low vavg in S5/S6.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.094429853565848e-05
+  }
+ ]
+}

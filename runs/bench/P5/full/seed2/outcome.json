@@ -1,0 +1,172 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0027",
+  "selected_name": "SSHI_FBR_Zener",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": null,
+  "failed_checks": [
+    {
+      "split": "search",
+      "condition": "S1",
+      "criterion": "vout_min",
+      "measured": 1.17665704343,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.34630164253888884,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S1",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S2",
+      "criterion": "vout_min",
+      "measured": 1.00121139206,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.44377144885555553,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S2",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S4",
+      "criterion": "vout_min",
+      "measured": 0.690196483425,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.6165575092083333,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S4",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S5",
+      "criterion": "vout_min",
+      "measured": 1.21476093877,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.3251328117944445,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S5",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S6",
+      "criterion": "vout_min",
+      "measured": 1.00771769717,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.4401568349055556,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S6",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H1",
+      "criterion": "vout_min",
+      "measured": 0.790564062884,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.5607977428422222,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H1",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H2",
+      "criterion": "vout_min",
+      "measured": 1.49790463581,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.1678307578833333,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H2",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "vout_min",
+      "measured": 0.883518879377,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.5091561781238889,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    }
+  ]
+}

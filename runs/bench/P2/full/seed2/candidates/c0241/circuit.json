@@ -1,0 +1,141 @@
+{
+ "move": "new_topology",
+ "name": "p_sshi_lcl_filter_clamp",
+ "rationale": "The previous best designs failed due to ripple on S3 (strong excitation) or slow startup on S4 (weak excitation). A Pi filter (C-L-C) reduced ripple but slowed startup. I am proposing an L-C-L filter (two inductors and two capacitors) which typically provides superior ripple attenuation for the same total capacitance, potentially satisfying both the ripple and startup constraints. Additionally, I have replaced the ineffective clamp from previous iterations with a genuine Zener-diode chain (3 x DSI + 1 x DZ33) connected from ground to 'out' to strictly limit vmax to ~5.1V.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n_inv"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n_inv",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.9672941328980504e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "n_mid"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "C_mid",
+   "type": "C",
+   "nodes": [
+    "n_mid",
+    "0"
+   ],
+   "value": 1e-06
+  },
+  {
+   "id": "L3",
+   "type": "L",
+   "nodes": [
+    "n_mid",
+    "out"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.5e-06
+  },
+  {
+   "id": "DC1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "n_c1"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC2",
+   "type": "D",
+   "nodes": [
+    "n_c1",
+    "n_c2"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC3",
+   "type": "D",
+   "nodes": [
+    "n_c2",
+    "n_c3"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "n_c3",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

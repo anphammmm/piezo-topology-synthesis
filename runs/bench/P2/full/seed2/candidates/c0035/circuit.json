@@ -1,0 +1,78 @@
+{
+ "move": "new_topology",
+ "name": "p_sshi_full_bridge_pos",
+ "rationale": "Similar to the half-bridge pos, this uses a full-bridge rectifier but limits the flipping to one peak per cycle (edges=pos). This combines the efficiency of the full-bridge for low-excitation cases (S4) with a power reduction mechanism to prevent overvoltage on S1-S3. A larger C1 is used to stabilize the output and meet ripple requirements.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.9672941328980504e-05,
+   "phase": 0.0,
+   "edges": "pos"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-05
+  }
+ ]
+}

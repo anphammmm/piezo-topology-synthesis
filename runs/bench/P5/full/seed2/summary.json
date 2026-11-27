@@ -1,0 +1,181 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0027",
+  "selected_topology": {
+    "name": "SSHI_FBR_Zener",
+    "topo_hash": "40eae91a637a"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [
+    {
+      "condition": "S1",
+      "criterion": "vout_min",
+      "measured": "1.17665704343",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.34630164253888884,
+      "split": "search"
+    },
+    {
+      "condition": "S1",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.15,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S2",
+      "criterion": "vout_min",
+      "measured": "1.00121139206",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.44377144885555553,
+      "split": "search"
+    },
+    {
+      "condition": "S2",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.15,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "vout_min",
+      "measured": "0.690196483425",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.6165575092083333,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.15,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S5",
+      "criterion": "vout_min",
+      "measured": "1.21476093877",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.3251328117944445,
+      "split": "search"
+    },
+    {
+      "condition": "S5",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.15,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S6",
+      "criterion": "vout_min",
+      "measured": "1.00771769717",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.4401568349055556,
+      "split": "search"
+    },
+    {
+      "condition": "S6",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.15,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "H1",
+      "criterion": "vout_min",
+      "measured": "0.790564062884",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.5607977428422222,
+      "split": "heldout"
+    },
+    {
+      "condition": "H1",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.15,
+      "margin": -1.0,
+      "split": "heldout"
+    },
+    {
+      "condition": "H2",
+      "criterion": "vout_min",
+      "measured": "1.49790463581",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.1678307578833333,
+      "split": "heldout"
+    },
+    {
+      "condition": "H2",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.15,
+      "margin": -1.0,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "vout_min",
+      "measured": "0.883518879377",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.5091561781238889,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.15,
+      "margin": -1.0,
+      "split": "heldout"
+    }
+  ],
+  "timing": {
+    "wall_s": 2321.8,
+    "model_s": 2043.3,
+    "model_calls": 7,
+    "model_errors": 0,
+    "prompt_tokens": 24258,
+    "completion_tokens": 56000,
+    "reasoning_tokens": 0,
+    "sim_seconds": 3942.2,
+    "sim_wall_s": 539.7,
+    "n_sims": 543,
+    "cache_hits": 0,
+    "sim_failures": 0,
+    "size_s": 299.6,
+    "screen_s": 38.4,
+    "n_screen_sims": 75,
+    "n_proposals": 8,
+    "n_invalid": 0,
+    "n_duplicate": 2,
+    "n_topologies": 6,
+    "n_screen_pass": 1,
+    "rounds": 7,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

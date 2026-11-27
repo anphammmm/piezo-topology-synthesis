@@ -1,0 +1,14 @@
+{
+  "phase": "size",
+  "stop_reason": null,
+  "elapsed_s": 294.9,
+  "iteration": 2,
+  "max_rounds": 12,
+  "best_id": "c0003",
+  "best_name": "SSHI_FullBridge",
+  "best_scalar": 12.929,
+  "best_cond_pass": 0,
+  "n_candidates": 10,
+  "n_sims": 87,
+  "model_wait_s": 0
+}

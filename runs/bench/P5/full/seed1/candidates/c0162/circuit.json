@@ -1,0 +1,105 @@
+{
+ "move": "new_topology",
+ "name": "Pi_Filtered_Clamped_SSHI",
+ "rationale": "The previous best design ('Clamped_LC_Filtered_SSHI') passed all constraints except for the ripple (Vpp <= 0.02 V), which was slightly too high (22-41 mV). To solve this, I am adding a capacitor 'C_rect' at the rectifier output node 'n_rect', converting the existing LC filter into a pi-filter (C-L-C). This will significantly reduce the voltage ripple by providing a local reservoir to buffer the sharp charging current pulses before they reach the inductor L_filt, while the zener clamp 'Dz' ensures the output remains below the absolute maximum of 3.6 V.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0015186800626161134
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.941366660549468e-05,
+   "phase": 0.0016852976499963646,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "n_rect"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C_rect",
+   "type": "C",
+   "nodes": [
+    "n_rect",
+    "0"
+   ],
+   "value": 1.8437489231583002e-06
+  },
+  {
+   "id": "L_filt",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 0.0010470811183173495
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 7.909325957223451e-07
+  }
+ ]
+}

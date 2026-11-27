@@ -1,0 +1,105 @@
+{
+ "move": "new_topology",
+ "name": "LC_Filtered_SSHI_FBR",
+ "rationale": "The SSHI_FBR_Zener design was very close to meeting all goals, failing only on ripple (33-70 mV vs 20 mV). To eliminate this ripple without significantly increasing Cout (which would hurt startup time tup), I am introducing a second-stage LC filter between the bridge rectifier output and the storage capacitor. This topology maintains the high power delivery of the Full Bridge Rectifier (FBR) and SSHI inversion while providing high-frequency attenuation for the charge pulses.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.002
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 2.2214414690791832e-05,
+   "phase": 0.01,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L_filt",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-06
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "Csplit",
+   "type": "C",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 1e-06
+  }
+ ]
+}

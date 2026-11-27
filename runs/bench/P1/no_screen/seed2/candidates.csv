@@ -1,0 +1,14 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,24.608,1,20,False
+c0001,1,llm,,new_topology,SSHI_FBR,40eae91a637a,90711c1cd83d,9,search,-10.1533,0,8,False
+c0002,1,llm,,new_topology,SR_FBR,b8c15461bdb9,17682043a5d1,8,search,-11.9241,0,7,False
+c0003,2,size,c0001,size,SSHI_FBR,40eae91a637a,352089c64a48,9,search,7.2236,1,11,False
+c0004,2,size,c0001,size,SSHI_FBR,40eae91a637a,f23cad497b91,9,search,-8.4378,0,8,False
+c0005,2,size,c0001,size,SSHI_FBR,40eae91a637a,fe979ef6da3d,9,search,13.8382,1,15,False
+c0006,2,size,c0001,size,SSHI_FBR,40eae91a637a,e41abb7bbed9,9,search,11.3565,1,14,False
+c0007,2,size,c0001,size,SSHI_FBR,40eae91a637a,474088139ae4,9,search,5.6732,1,10,False
+c0008,2,size,c0001,size,SSHI_FBR,40eae91a637a,34146fa588a1,9,search,90.5998,6,30,True
+c0009,2,size,c0001,size,SSHI_FBR,40eae91a637a,d35d008935a6,9,search,10.6976,1,13,False
+c0010,2,size,c0001,size,SSHI_FBR,40eae91a637a,b07a3c181661,9,search,5.8859,1,11,False
+c0008,2,size,c0001,size,SSHI_FBR,40eae91a637a,34146fa588a1,9,heldout,46.3447,3,18,False
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,heldout,18.1045,1,13,False

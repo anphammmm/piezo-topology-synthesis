@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FBR",
+ "rationale": "Implementing a Synchronized Switch Harvesting on Inductor (SSHI) circuit. It uses a full-bridge rectifier (FBR) to charge the storage capacitor and an L-S inversion loop in parallel with the piezo to flip the voltage at the peaks, significantly increasing energy extraction. A Zener diode is added to clamp vout at 3.3V to meet the vmax <= 3.6V requirement (fixing S3).",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.003086514783792165
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.2318373030492425e-05,
+   "phase": 0.05506462279458513,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.1195506765500736e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

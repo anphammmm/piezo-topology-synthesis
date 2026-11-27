@@ -1,0 +1,78 @@
+{
+ "move": "new_topology",
+ "name": "Resistor_Filtered_SSHI",
+ "rationale": "To combat the ripple and settling issues in the SSHI_HalfBridge_Zener, I'm introducing a series resistance between the rectifier and the storage capacitor. This dampens the current spikes from the inductor pulses, spreading the charge delivery over time and reducing the peak-to-peak voltage ripple on the output capacitor.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.002491420834720984
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5.599299790749989e-05,
+   "phase": 0.0063355799592767215,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n2"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "R1",
+   "type": "R",
+   "nodes": [
+    "n2",
+    "out"
+   ],
+   "value": 478.24389375633103
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.449884650952532e-07
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "Csplit",
+   "type": "C",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 9.783474508366514e-06
+  }
+ ]
+}

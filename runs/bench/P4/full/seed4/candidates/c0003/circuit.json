@@ -1,0 +1,62 @@
+{
+ "move": "new_topology",
+ "name": "FBR_ZENER",
+ "rationale": "A baseline design: FBR with a Zener clamp. The reference design failed primarily because of the absence of a voltage clamp (vmax on S3) and potentially suboptimal C1. Adding DZ33 and allowing the optimizer to tune C1 and the diode model might solve the basic issues, though it is less efficient than SSHI.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

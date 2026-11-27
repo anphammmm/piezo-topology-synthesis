@@ -1,0 +1,15 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": true,
+  "selected_id": "c0034",
+  "selected_name": "SSHI_Bridge_Zener",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 421.08,
+    "n_sims": 249,
+    "id": "c0034"
+  },
+  "failed_checks": []
+}

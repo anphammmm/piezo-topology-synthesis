@@ -1,0 +1,26 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0054",
+  "selected_name": "sshi_fbr_res",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 614.98,
+    "n_sims": 372,
+    "id": "c0054"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.07474379506000028,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -2.7371897530000138,
+      "passed": false
+    }
+  ]
+}

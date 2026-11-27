@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FBR",
+ "rationale": "The reference FBR fails on S2 and S4 due to diode voltage drops and low open-circuit voltage (Voc). A Parallel Synchronized Switch Harvesting on Inductor (SSHI) circuit is added to flip the voltage across the piezo capacitance Cp at the peaks. This effectively increases the voltage seen by the rectifier, boosting the average output voltage (vavg) and improving the startup time (tup) for weak excitation (S4) and heavy loads (S2). A Zener diode (DZ33) is included to clamp the output voltage and prevent overvoltage in S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 8.37193583104541e-06
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.006005600077855842
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 6.075159042912882e-06,
+   "phase": -0.026465558129120565,
+   "edges": "both"
+  }
+ ]
+}

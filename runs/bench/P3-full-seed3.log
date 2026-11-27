@@ -1,0 +1,86 @@
+[00:00:00] [setup  ] output in runs/bench/P3/full/seed3; mode search; spec P3 (Very weak excitation, 1.8-3.6 V); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:06] [eval   ] reference: score 9.77, 0/6 conditions, 19/30 checks pass (6.7 s)
+[00:00:10] [screen ] reference: fail, worst -839 % of the power needed (1 presets, 4.1 s)
+[00:00:10] [model  ] round 1: asking the model (thinking on)
+[00:00:25] [model  ] waiting 15 s (round 1)
+[00:00:40] [model  ] waiting 30 s (round 1)
+[00:00:55] [model  ] waiting 45 s (round 1)
+[00:01:10] [model  ] waiting 60 s (round 1)
+[00:01:25] [model  ] waiting 75 s (round 1)
+[00:01:40] [model  ] waiting 90 s (round 1)
+[00:01:55] [model  ] waiting 105 s (round 1)
+[00:02:10] [model  ] waiting 120 s (round 1)
+[00:02:25] [model  ] waiting 135 s (round 1)
+[00:02:40] [model  ] waiting 150 s (round 1)
+[00:02:55] [model  ] waiting 165 s (round 1)
+[00:03:07] [model  ] reply after 177 s (2333 in / 5692 out)
+[00:03:07] [eval   ] round 1 design 1: new_topology 'sshi_fbr' (9 parts)
+[00:03:12] [screen ] r01d1: PASS, worst 2216 % of the power needed (4 presets, 5.1 s)
+[00:03:12] [sim    ] r01d1: simulating 6 conditions
+[00:03:19] [eval   ] r01d1: score 46.12, 3/6 conditions, 22/30 checks pass (7.1 s)
+[00:03:19] [eval   ] new best c0001 (sshi_fbr): score 46.12, 3/6 conditions pass
+[00:03:19] [model  ] round 2: asking the model (thinking on)
+[00:04:05] [eval   ] new best c0003 (sshi_fbr): score 63.42, 4/6 conditions pass
+[00:04:05] [size   ] c0001 (sshi_fbr) generation 1: best score 46.12 -> 63.42, 8/48 evaluations (45 s)
+[00:04:56] [eval   ] new best c0014 (sshi_fbr): score 78.82, 5/6 conditions pass
+[00:04:56] [size   ] c0001 (sshi_fbr) generation 2: best score 63.42 -> 78.82, 16/48 evaluations (52 s)
+[00:05:50] [size   ] c0001 (sshi_fbr) generation 3: best score 78.82 -> 78.82, 24/48 evaluations (53 s)
+[00:06:39] [size   ] c0001 (sshi_fbr) generation 4: best score 78.82 -> 78.82, 32/48 evaluations (49 s)
+[00:07:31] [size   ] c0001 (sshi_fbr) generation 5: best score 78.82 -> 78.82, 40/48 evaluations (52 s)
+[00:08:16] [eval   ] new best c0042 (sshi_fbr): score 79.31, 5/6 conditions pass
+[00:08:16] [size   ] c0001 (sshi_fbr) generation 6: best score 78.82 -> 79.31, 48/48 evaluations (45 s); budget
+[00:08:16] [model  ] reply after 261 s (4236 in / 9354 out)
+[00:08:16] [eval   ] round 2 design 1: new_topology 'sshi_doubler' (11 parts)
+[00:08:22] [screen ] r02d1: fail, worst -614 % of the power needed (4 presets, 5.7 s)
+[00:08:22] [model  ] round 3: asking the model (thinking on)
+[00:08:37] [model  ] waiting 15 s (round 3)
+[00:08:52] [model  ] waiting 30 s (round 3)
+[00:09:07] [model  ] waiting 45 s (round 3)
+[00:09:22] [model  ] waiting 60 s (round 3)
+[00:09:37] [model  ] waiting 75 s (round 3)
+[00:09:52] [model  ] waiting 90 s (round 3)
+[00:10:07] [model  ] waiting 105 s (round 3)
+[00:10:22] [model  ] waiting 120 s (round 3)
+[00:10:37] [model  ] waiting 135 s (round 3)
+[00:10:52] [model  ] waiting 150 s (round 3)
+[00:11:07] [model  ] waiting 165 s (round 3)
+[00:11:22] [model  ] waiting 180 s (round 3)
+[00:11:37] [model  ] waiting 195 s (round 3)
+[00:11:52] [model  ] waiting 210 s (round 3)
+[00:12:07] [model  ] waiting 225 s (round 3)
+[00:12:22] [model  ] waiting 240 s (round 3)
+[00:12:37] [model  ] waiting 255 s (round 3)
+[00:12:52] [model  ] waiting 270 s (round 3)
+[00:12:56] [model  ] reply after 274 s (3356 in / 9740 out)
+[00:12:56] [eval   ] round 3 design 1: new_topology 'sshi_fbr_filter' (11 parts)
+[00:13:01] [screen ] r03d1: PASS, worst 2143 % of the power needed (4 presets, 5.7 s)
+[00:13:01] [sim    ] r03d1: simulating 6 conditions
+[00:13:10] [eval   ] r03d1: score 9.02, 1/6 conditions, 13/30 checks pass (8.2 s)
+[00:13:10] [model  ] round 4: asking the model (thinking on)
+[00:14:02] [size   ] c0050 (sshi_fbr_filter) generation 1: best score 9.02 -> 11.92, 8/48 evaluations (53 s)
+[00:15:02] [size   ] c0050 (sshi_fbr_filter) generation 2: best score 11.92 -> 22.52, 16/48 evaluations (60 s)
+[00:15:51] [size   ] c0050 (sshi_fbr_filter) generation 3: best score 22.52 -> 22.89, 24/48 evaluations (49 s)
+[00:16:51] [size   ] c0050 (sshi_fbr_filter) generation 4: best score 22.89 -> 23.44, 32/48 evaluations (60 s)
+[00:16:51] [model  ] reply after 182 s (5094 in / 6456 out)
+[00:16:51] [eval   ] round 4 design 1: new_topology 'sshi_fbr_L_filter' (10 parts)
+[00:16:57] [screen ] r04d1: PASS, worst 2143 % of the power needed (4 presets, 6.4 s)
+[00:16:57] [sim    ] r04d1: simulating 6 conditions
+[00:17:06] [eval   ] r04d1: score 46.07, 3/6 conditions, 22/30 checks pass (9.2 s)
+[00:17:06] [model  ] round 5: asking the model (thinking on)
+[00:19:28] [size   ] c0083 (sshi_fbr_L_filter) generation 1: best score 46.07 -> 46.07, 8/48 evaluations (142 s)
+[00:21:35] [size   ] c0083 (sshi_fbr_L_filter) generation 2: best score 46.07 -> 46.07, 16/48 evaluations (127 s)
+[00:21:35] [model  ] reply after 219 s (5842 in / 7953 out)
+[00:21:35] [eval   ] round 5 design 1: new_topology 'sshi_dual_doubler' (11 parts)
+[00:21:41] [screen ] r05d1: fail, worst -614 % of the power needed (4 presets, 5.8 s)
+[00:21:41] [model  ] round 6: asking the model (thinking on)
+[00:23:49] [size   ] c0083 (sshi_fbr_L_filter) generation 3: best score 46.07 -> 63.53, 24/48 evaluations (129 s)
+[00:25:56] [eval   ] new best c0110 (sshi_fbr_L_filter): score 90.60, 6/6 conditions pass
+[00:25:56] [size   ] c0083 (sshi_fbr_L_filter) generation 4: best score 63.53 -> 90.60, 32/48 evaluations (127 s); spec_met
+[00:25:56] [model  ] reply after 249 s (5256 in / 9192 out)
+[00:25:56] [done   ] search stopped: search_spec_met; selected c0110 (sshi_fbr_L_filter)
+[00:25:56] [heldout] checking c0110 and the reference on 4 held-out conditions
+[00:26:14] [heldout] c0110: 4/4 held-out conditions pass; reference: 0/4
+[00:26:14] [robust ] Monte Carlo: 16 samples of c0110 on all 10 conditions

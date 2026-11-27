@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 2057.3,
+  "iteration": 4,
+  "max_rounds": 12,
+  "best_id": "c0099",
+  "best_name": "p_sshi_lc_filter",
+  "best_scalar": 90.598,
+  "best_cond_pass": 6,
+  "n_candidates": 100,
+  "n_sims": 651,
+  "model_wait_s": 719
+}

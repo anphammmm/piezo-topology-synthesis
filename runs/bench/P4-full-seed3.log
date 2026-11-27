@@ -1,0 +1,47 @@
+[00:00:00] [setup  ] output in runs/bench/P4/full/seed3; mode search; spec P4 (Wide band 50-200 Hz, Cp +/-30 %); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:07] [eval   ] reference: score 9.33, 0/6 conditions, 16/30 checks pass (7.5 s)
+[00:00:10] [screen ] reference: PASS, worst 61 % of the power needed (1 presets, 2.6 s)
+[00:00:10] [model  ] round 1: asking the model (thinking on)
+[00:00:25] [model  ] waiting 15 s (round 1)
+[00:00:40] [model  ] waiting 30 s (round 1)
+[00:00:55] [model  ] waiting 45 s (round 1)
+[00:01:10] [model  ] waiting 60 s (round 1)
+[00:01:25] [model  ] waiting 75 s (round 1)
+[00:01:40] [model  ] waiting 90 s (round 1)
+[00:01:55] [model  ] waiting 105 s (round 1)
+[00:02:10] [model  ] waiting 120 s (round 1)
+[00:02:25] [model  ] waiting 135 s (round 1)
+[00:02:40] [model  ] waiting 150 s (round 1)
+[00:02:55] [model  ] waiting 165 s (round 1)
+[00:02:58] [model  ] reply after 168 s (2332 in / 6068 out)
+[00:02:58] [eval   ] round 1 design 1: new_topology 'SSHI_Bridge_Zener' (9 parts)
+[00:03:04] [screen ] r01d1: PASS, worst 239 % of the power needed (4 presets, 6.1 s)
+[00:03:04] [sim    ] r01d1: simulating 6 conditions
+[00:03:12] [eval   ] r01d1: score 55.15, 3/6 conditions, 27/30 checks pass (7.8 s)
+[00:03:12] [eval   ] new best c0001 (SSHI_Bridge_Zener): score 55.15, 3/6 conditions pass
+[00:03:12] [eval   ] round 1 design 2: new_topology 'SECE_Zener' (10 parts)
+[00:03:17] [screen ] r01d2: fail, worst -56 % of the power needed (4 presets, 5.3 s)
+[00:03:17] [eval   ] round 1 design 3: new_topology 'FBR_Zener_LargeCap' (6 parts)
+[00:03:24] [screen ] r01d3: PASS, worst 61 % of the power needed (4 presets, 6.6 s)
+[00:03:24] [sim    ] r01d3: simulating 6 conditions
+[00:03:32] [eval   ] r01d3: score -11.89, 0/6 conditions, 6/30 checks pass (8.0 s)
+[00:03:32] [model  ] round 2: asking the model (thinking on)
+[00:04:31] [eval   ] new best c0004 (SSHI_Bridge_Zener): score 77.48, 5/6 conditions pass
+[00:04:31] [size   ] c0001 (SSHI_Bridge_Zener) generation 1: best score 55.15 -> 77.48, 8/48 evaluations (59 s)
+[00:05:24] [eval   ] new best c0016 (SSHI_Bridge_Zener): score 78.28, 5/6 conditions pass
+[00:05:24] [size   ] c0001 (SSHI_Bridge_Zener) generation 2: best score 77.48 -> 78.28, 16/48 evaluations (54 s)
+[00:06:14] [size   ] c0001 (SSHI_Bridge_Zener) generation 3: best score 78.28 -> 78.28, 24/48 evaluations (49 s)
+[00:07:01] [eval   ] new best c0034 (SSHI_Bridge_Zener): score 90.56, 6/6 conditions pass
+[00:07:01] [size   ] c0001 (SSHI_Bridge_Zener) generation 4: best score 78.28 -> 90.56, 32/48 evaluations (47 s); spec_met
+[00:07:01] [model  ] spec met while waiting; not waiting for the model's answer
+[00:07:01] [model  ] reply after 209 s (no token counts); ERROR spec_met_during_wait
+[00:07:01] [done   ] search stopped: search_spec_met; selected c0034 (SSHI_Bridge_Zener)
+[00:07:01] [heldout] checking c0034 and the reference on 4 held-out conditions
+[00:07:15] [heldout] c0034: 4/4 held-out conditions pass; reference: 1/4
+[00:07:15] [robust ] Monte Carlo: 16 samples of c0034 on all 10 conditions
+[00:10:47] [robust ] 75 % of samples meet the spec on every condition; weakest: S6
+[00:10:47] [done   ] spec met on search conditions: True; on all conditions: True
+[00:10:47] [done   ] report: runs/bench/P4/full/seed3/report.md

@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "sshi_fbr",
+ "rationale": "The reference FBR failed because the piezo's open-circuit voltage (approx 0.76 V) is below the required 1.8 V output. I am implementing a Synchronized Switch Harvesting on Inductor (SSHI) circuit. This uses an inductor and a switch to flip the voltage across the piezo capacitance at every peak, effectively 'pumping' the voltage to a higher level that can then be rectified and stored. A full-bridge rectifier (FBR) is used for efficient energy extraction from both halves of the cycle, and a Zener diode clamps the output to 3.3 V to satisfy the vmax limit.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00021678250854035574,
+   "phase": 0.13399304750910349,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 5.045083125338917e-08
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

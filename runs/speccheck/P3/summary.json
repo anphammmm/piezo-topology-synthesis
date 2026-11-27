@@ -1,0 +1,322 @@
+{
+ "spec": "P3",
+ "title": "Very weak excitation, 1.8-3.6 V",
+ "hardness": "open-circuit voltage below half the minimum output; a synchronous controller costs more than the load",
+ "reference": {
+  "name": "FBR reference (4x Schottky, 2.2 uF)",
+  "search_pass": 0,
+  "search_met": false,
+  "failed": [
+   "S1:startup",
+   "S1:vout_min",
+   "S2:startup",
+   "S2:vout_min",
+   "S3:settled",
+   "S4:startup",
+   "S4:vout_min",
+   "S5:startup",
+   "S5:vout_min",
+   "S6:startup",
+   "S6:vout_min"
+  ],
+  "screen_ratio": {
+   "S2": -0.37581751081813336,
+   "S4": -1.2177975972531112,
+   "S6": -8.392245239722222
+  },
+  "heldout_pass": 0,
+  "heldout_n": 4
+ },
+ "textbook": {
+  "name": "witness: p-SSHI + bridge + zener clamp",
+  "search_pass": 1,
+  "search_met": false,
+  "failed": [
+   "S1:ripple",
+   "S1:settled",
+   "S1:startup",
+   "S2:ripple",
+   "S2:settled",
+   "S2:startup",
+   "S4:ripple",
+   "S4:settled",
+   "S4:startup",
+   "S4:vout_min",
+   "S5:ripple",
+   "S5:settled",
+   "S5:startup",
+   "S5:vout_min",
+   "S6:ripple",
+   "S6:settled",
+   "S6:startup",
+   "S6:vout_min"
+  ],
+  "screen_ratio": {
+   "S2": 22.602844283160003,
+   "S4": 42.09141458377778,
+   "S6": 22.093026843666664
+  },
+  "sized_search_pass": 4,
+  "sized_search_met": false,
+  "sized_evals": 96,
+  "sizer_stop": "budget",
+  "sized_circuit": {
+   "move": "new_topology",
+   "name": "witness: p-SSHI + bridge + zener clamp",
+   "rationale": "",
+   "done": false,
+   "components": [
+    {
+     "id": "D1",
+     "type": "D",
+     "nodes": [
+      "pzp",
+      "out"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "D2",
+     "type": "D",
+     "nodes": [
+      "pzn",
+      "out"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "D3",
+     "type": "D",
+     "nodes": [
+      "0",
+      "pzp"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "D4",
+     "type": "D",
+     "nodes": [
+      "0",
+      "pzn"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "C1",
+     "type": "C",
+     "nodes": [
+      "out",
+      "0"
+     ],
+     "value": 3.524204392550142e-07
+    },
+    {
+     "id": "L1",
+     "type": "L",
+     "nodes": [
+      "pzp",
+      "n1"
+     ],
+     "value": 0.01
+    },
+    {
+     "id": "S1",
+     "type": "S",
+     "nodes": [
+      "n1",
+      "pzn"
+     ],
+     "ctrl": "G1"
+    },
+    {
+     "id": "G1",
+     "type": "SYNC",
+     "ton": 5.591024231102328e-05,
+     "phase": -0.06044378105558154,
+     "edges": "both"
+    },
+    {
+     "id": "D5",
+     "type": "D",
+     "nodes": [
+      "0",
+      "out"
+     ],
+     "model": "DZ33"
+    }
+   ]
+  },
+  "sized_failed": [
+   "S3:ripple",
+   "S4:ripple",
+   "S4:settled"
+  ],
+  "heldout_pass": 2,
+  "heldout_n": 4
+ },
+ "witness": {
+  "name": "witness: 2-stage Cockcroft-Walton multiplier + zener clamp",
+  "search_pass": 0,
+  "search_met": false,
+  "failed": [
+   "S1:ripple",
+   "S1:settled",
+   "S1:startup",
+   "S1:vout_min",
+   "S2:ripple",
+   "S2:settled",
+   "S2:startup",
+   "S2:vout_min",
+   "S3:ripple",
+   "S3:settled",
+   "S3:startup",
+   "S4:ripple",
+   "S4:settled",
+   "S4:startup",
+   "S4:vout_min",
+   "S5:ripple",
+   "S5:settled",
+   "S5:startup",
+   "S5:vout_min",
+   "S6:ripple",
+   "S6:settled",
+   "S6:startup",
+   "S6:vout_min"
+  ],
+  "screen_ratio": {
+   "S2": 3.0569851783991107,
+   "S4": 5.2660904248455545,
+   "S6": 0.06389830909388888
+  },
+  "sized_search_pass": 1,
+  "sized_search_met": false,
+  "sized_evals": 96,
+  "sizer_stop": "budget",
+  "sized_circuit": {
+   "move": "new_topology",
+   "name": "witness: 2-stage Cockcroft-Walton multiplier + zener clamp",
+   "rationale": "",
+   "done": false,
+   "components": [
+    {
+     "id": "R1",
+     "type": "R",
+     "nodes": [
+      "pzn",
+      "0"
+     ],
+     "value": 19.789161343140243
+    },
+    {
+     "id": "C1",
+     "type": "C",
+     "nodes": [
+      "pzp",
+      "n1"
+     ],
+     "value": 6.489836017041009e-06
+    },
+    {
+     "id": "D1",
+     "type": "D",
+     "nodes": [
+      "0",
+      "n1"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "D2",
+     "type": "D",
+     "nodes": [
+      "n1",
+      "n2"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "C2",
+     "type": "C",
+     "nodes": [
+      "n2",
+      "0"
+     ],
+     "value": 2.1098808870162152e-10
+    },
+    {
+     "id": "C3",
+     "type": "C",
+     "nodes": [
+      "n1",
+      "n3"
+     ],
+     "value": 9.456451029335253e-10
+    },
+    {
+     "id": "D3",
+     "type": "D",
+     "nodes": [
+      "n2",
+      "n3"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "D4",
+     "type": "D",
+     "nodes": [
+      "n3",
+      "out"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "C4",
+     "type": "C",
+     "nodes": [
+      "out",
+      "n2"
+     ],
+     "value": 4.1140702567961344e-05
+    },
+    {
+     "id": "C5",
+     "type": "C",
+     "nodes": [
+      "out",
+      "0"
+     ],
+     "value": 5.083878893376633e-07
+    },
+    {
+     "id": "D5",
+     "type": "D",
+     "nodes": [
+      "0",
+      "out"
+     ],
+     "model": "DZ33"
+    }
+   ]
+  },
+  "sized_failed": [
+   "S1:startup",
+   "S1:vout_min",
+   "S2:startup",
+   "S2:vout_min",
+   "S4:startup",
+   "S4:vout_min",
+   "S5:settled",
+   "S5:startup",
+   "S5:vout_min",
+   "S6:startup",
+   "S6:vout_min"
+  ],
+  "heldout_pass": 0,
+  "heldout_n": 4
+ },
+ "verdict": "unproven",
+ "n_sims": 1203,
+ "wall_s": 1388.5
+}

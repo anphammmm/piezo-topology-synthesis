@@ -1,0 +1,90 @@
+[00:00:00] [setup  ] output in runs/bench/P4/no_screen/seed1; mode search; spec P4 (Wide band 50-200 Hz, Cp +/-30 %); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:07] [eval   ] reference: score 9.33, 0/6 conditions, 16/30 checks pass (7.2 s)
+[00:00:07] [model  ] round 1: asking the model (thinking on)
+[00:00:22] [model  ] waiting 15 s (round 1)
+[00:00:37] [model  ] waiting 30 s (round 1)
+[00:00:52] [model  ] waiting 45 s (round 1)
+[00:01:07] [model  ] waiting 60 s (round 1)
+[00:01:22] [model  ] waiting 75 s (round 1)
+[00:01:37] [model  ] waiting 90 s (round 1)
+[00:01:52] [model  ] waiting 105 s (round 1)
+[00:02:07] [model  ] waiting 120 s (round 1)
+[00:02:22] [model  ] waiting 135 s (round 1)
+[00:02:37] [model  ] waiting 150 s (round 1)
+[00:02:52] [model  ] waiting 165 s (round 1)
+[00:03:07] [model  ] waiting 180 s (round 1)
+[00:03:16] [model  ] reply after 190 s (2235 in / 6721 out)
+[00:03:16] [eval   ] round 1 design 1: new_topology 'FBR_Zener' (6 parts)
+[00:03:16] [sim    ] r01d1: simulating 6 conditions
+[00:03:24] [eval   ] r01d1: score 22.10, 1/6 conditions, 18/30 checks pass (7.4 s)
+[00:03:24] [eval   ] new best c0001 (FBR_Zener): score 22.10, 1/6 conditions pass
+[00:03:24] [eval   ] round 1 design 2: new_topology 'PSSHI_Zener' (9 parts)
+[00:03:24] [sim    ] r01d2: simulating 6 conditions
+[00:03:32] [eval   ] r01d2: score 34.46, 2/6 conditions, 20/30 checks pass (8.0 s)
+[00:03:32] [eval   ] new best c0002 (PSSHI_Zener): score 34.46, 2/6 conditions pass
+[00:03:32] [eval   ] round 1 design 3: new_topology 'SyncBridge_Zener' (8 parts)
+[00:03:32] [sim    ] r01d3: simulating 6 conditions
+[00:03:41] [eval   ] r01d3: score 47.03, 3/6 conditions, 22/30 checks pass (8.7 s)
+[00:03:41] [eval   ] new best c0003 (SyncBridge_Zener): score 47.03, 3/6 conditions pass
+[00:03:41] [model  ] round 2: asking the model (thinking on)
+[00:04:26] [eval   ] new best c0008 (SyncBridge_Zener): score 59.01, 4/6 conditions pass
+[00:04:26] [eval   ] new best c0011 (SyncBridge_Zener): score 62.71, 4/6 conditions pass
+[00:04:26] [size   ] c0003 (SyncBridge_Zener) generation 1: best score 47.03 -> 62.71, 8/48 evaluations (46 s)
+[00:05:11] [size   ] c0003 (SyncBridge_Zener) generation 2: best score 62.71 -> 62.71, 16/48 evaluations (44 s)
+[00:05:54] [eval   ] new best c0021 (SyncBridge_Zener): score 67.98, 4/6 conditions pass
+[00:05:54] [size   ] c0003 (SyncBridge_Zener) generation 3: best score 62.71 -> 67.98, 24/48 evaluations (44 s)
+[00:06:37] [size   ] c0003 (SyncBridge_Zener) generation 4: best score 67.98 -> 67.98, 32/48 evaluations (42 s)
+[00:07:23] [size   ] c0003 (SyncBridge_Zener) generation 5: best score 67.98 -> 67.98, 40/48 evaluations (46 s)
+[00:08:06] [size   ] c0003 (SyncBridge_Zener) generation 6: best score 67.98 -> 67.98, 48/48 evaluations (44 s); budget
+[00:08:55] [size   ] c0002 (PSSHI_Zener) generation 1: best score 34.46 -> 62.48, 8/48 evaluations (49 s)
+[00:08:55] [model  ] reply after 312 s (7382 in / 11022 out)
+[00:08:55] [eval   ] round 2 design 1: new_topology 'Hybrid_SSHI_Sync' (10 parts)
+[00:08:55] [sim    ] r02d1: simulating 6 conditions
+[00:09:01] [eval   ] r02d1: score -5.70, 0/6 conditions, 12/30 checks pass (5.8 s)
+[00:09:01] [size   ] not sizing c0060 (Hybrid_SSHI_Sync): output never reaches 0.9 V
+[00:09:01] [model  ] round 3: asking the model (thinking on)
+[00:09:58] [eval   ] new best c0068 (PSSHI_Zener): score 77.13, 5/6 conditions pass
+[00:09:58] [size   ] c0002 (PSSHI_Zener) generation 2: best score 62.48 -> 77.13, 16/48 evaluations (57 s)
+[00:10:53] [size   ] c0002 (PSSHI_Zener) generation 3: best score 77.13 -> 77.13, 24/48 evaluations (55 s)
+[00:11:52] [size   ] c0002 (PSSHI_Zener) generation 4: best score 77.13 -> 77.13, 32/48 evaluations (59 s)
+[00:12:57] [size   ] c0002 (PSSHI_Zener) generation 5: best score 77.13 -> 77.13, 40/48 evaluations (65 s)
+[00:13:57] [size   ] c0002 (PSSHI_Zener) generation 6: best score 77.13 -> 77.13, 48/48 evaluations (60 s); budget
+[00:14:47] [size   ] c0001 (FBR_Zener) generation 1: best score 22.10 -> 53.10, 8/48 evaluations (50 s)
+[00:14:47] [model  ] reply after 335 s (5914 in / 12124 out)
+[00:14:47] [eval   ] round 3 design 1 'Hybrid_SSHI_Sync' repeats structure c0002; not simulated
+[00:14:47] [model  ] round 4: asking the model (thinking on)
+[00:15:34] [size   ] c0001 (FBR_Zener) generation 2: best score 53.10 -> 64.33, 16/48 evaluations (48 s)
+[00:16:24] [size   ] c0001 (FBR_Zener) generation 3: best score 64.33 -> 64.35, 24/48 evaluations (50 s)
+[00:17:11] [size   ] c0001 (FBR_Zener) generation 4: best score 64.35 -> 64.35, 32/48 evaluations (46 s)
+[00:18:04] [size   ] c0001 (FBR_Zener) generation 5: best score 64.35 -> 64.35, 40/48 evaluations (53 s)
+[00:18:04] [model  ] reply after 153 s (4926 in / 5615 out)
+[00:18:04] [eval   ] round 4: no usable design (1 problems); asking for a correction
+[00:18:04] [model  ] round 4: asking the model (thinking off)
+[00:18:19] [model  ] waiting 15 s (round 4)
+[00:18:28] [model  ] reply after 24 s (5757 in / 857 out)
+[00:18:28] [eval   ] round 4 design 1 'PSSHI_SyncHalf_Fixed' repeats structure c0002; not simulated
+[00:18:28] [model  ] round 5: asking the model (thinking on)
+[00:19:14] [size   ] c0001 (FBR_Zener) generation 6: best score 64.35 -> 64.35, 48/48 evaluations (46 s); budget
+[00:19:29] [model  ] waiting 61 s (round 5)
+[00:19:44] [model  ] waiting 76 s (round 5)
+[00:19:59] [model  ] waiting 91 s (round 5)
+[00:20:14] [model  ] waiting 106 s (round 5)
+[00:20:29] [model  ] waiting 121 s (round 5)
+[00:20:44] [model  ] waiting 136 s (round 5)
+[00:20:59] [model  ] waiting 151 s (round 5)
+[00:21:14] [model  ] waiting 166 s (round 5)
+[00:21:29] [model  ] waiting 181 s (round 5)
+[00:21:44] [model  ] waiting 196 s (round 5)
+[00:21:59] [model  ] waiting 211 s (round 5)
+[00:22:14] [model  ] waiting 226 s (round 5)
+[00:22:29] [model  ] waiting 241 s (round 5)
+[00:22:44] [model  ] waiting 256 s (round 5)
+[00:22:57] [model  ] reply after 270 s (4865 in / 10045 out)
+[00:22:57] [eval   ] round 5 design 2: new_topology 'PSSHI_Zener_Filtered' (10 parts)
+[00:22:57] [sim    ] r05d2: simulating 6 conditions
+[00:23:06] [eval   ] r05d2: score 10.49, 1/6 conditions, 13/30 checks pass (8.8 s)
+[00:23:06] [model  ] round 6: asking the model (thinking on)
+[00:24:14] [size   ] c0149 (PSSHI_Zener_Filtered) generation 1: best score 10.49 -> 36.25, 8/48 evaluations (68 s)

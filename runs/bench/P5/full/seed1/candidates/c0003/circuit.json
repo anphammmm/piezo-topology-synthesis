@@ -1,0 +1,69 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_HalfWave_Zener",
+ "rationale": "A simplified rectification path using a half-wave rectifier combined with SSHI and Zener clamping. By reducing the number of diodes, the voltage drop is minimized, which may help in achieving the minimum supply voltage for S4. The SSHI loop ensures that energy is harvested from both halves of the piezo cycle despite the half-wave rectification.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.7e-05
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": true,
+  "selected_id": "c0026",
+  "selected_name": "parallel_sshi_fbr_zener",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 492.01,
+    "n_sims": 243,
+    "id": "c0026"
+  },
+  "failed_checks": []
+}

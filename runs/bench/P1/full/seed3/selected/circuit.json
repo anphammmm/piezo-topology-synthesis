@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "psshi",
+ "rationale": "Implementing a Parallel-SSHI (Synchronized Switch Harvesting on Inductor) circuit. A full-bridge rectifier captures energy, while an LC flip circuit (L1 and S1) in parallel with the piezo inverts the voltage across Cp at the peaks. This significantly increases the power extraction efficiency, which should fix the low-voltage failures in S2 and S4. A DZ33 Zener clamp is added to prevent the output from exceeding 3.6V (fixing S3).",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.002
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 2.2214414690791832e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

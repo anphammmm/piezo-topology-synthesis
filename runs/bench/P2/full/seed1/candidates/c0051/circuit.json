@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "P-SSHI-Bleed",
+ "rationale": "The previous P-SSHI was very close to the target for nominal conditions but suffered from overvoltage in S3 (strong excitation, light load) and high ripple/slow settling. The overvoltage in S3 is caused by the power delivered exceeding the power consumed by the high-impedance load. I am adding a bleeder resistor (R_bleed) in parallel with the load to provide a baseline current sink, which should help clamp the output voltage in S3. To address the ripple and settling issues, the tuner will be encouraged to optimize the balance between the storage capacitor (C1) and the inductor (L1) and the switch time (ton). A larger C1 reduces ripple but slows startup; a smaller L1 reduces the voltage boost and the ripple per pulse. This combination should allow the system to stay within 4.5-5.5 V across all scenarios.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.006797442781205202
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.437101287548911e-05,
+   "phase": 0.010730463946610251,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.1897963919168624e-06
+  },
+  {
+   "id": "Rbleed",
+   "type": "R",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 968875.0331015444
+  }
+ ]
+}

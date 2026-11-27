@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0003",
+  "selected_name": "SSHI_FBR_Zener",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 338.4,
+    "n_sims": 87,
+    "id": "c0003"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.0881831645966,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.7636632919319999,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.12519290947999995,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -5.259645473999997,
+      "passed": false
+    }
+  ]
+}

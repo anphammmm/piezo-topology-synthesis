@@ -1,0 +1,252 @@
+{
+ "spec": "P4",
+ "title": "Wide band 50-200 Hz, Cp +/-30 %",
+ "hardness": "timing and resonance must hold over a 4x frequency and 1.9x capacitance range, including 85 C at heavy load",
+ "reference": {
+  "name": "FBR reference (4x Schottky, 2.2 uF)",
+  "search_pass": 0,
+  "search_met": false,
+  "failed": [
+   "S1:settled",
+   "S2:ripple",
+   "S2:settled",
+   "S2:startup",
+   "S3:settled",
+   "S3:vout_max",
+   "S4:ripple",
+   "S4:settled",
+   "S4:startup",
+   "S4:vout_min",
+   "S5:startup",
+   "S5:vout_min",
+   "S6:startup",
+   "S6:vout_min"
+  ],
+  "screen_ratio": {
+   "S2": 2.227007109048667,
+   "S4": 1.6093827630055555,
+   "S6": 0.6095806754944445
+  },
+  "heldout_pass": 1,
+  "heldout_n": 4
+ },
+ "textbook": {
+  "name": "witness: p-SSHI + bridge + zener clamp",
+  "search_pass": 4,
+  "search_met": false,
+  "failed": [
+   "S2:settled",
+   "S6:settled"
+  ],
+  "screen_ratio": {
+   "S2": 5.565060865273334,
+   "S4": 7.810796951444444,
+   "S6": 2.4222530883222224
+  },
+  "sized_search_pass": 6,
+  "sized_search_met": true,
+  "sized_evals": 8,
+  "sizer_stop": "spec_met",
+  "sized_circuit": {
+   "move": "new_topology",
+   "name": "witness: p-SSHI + bridge + zener clamp",
+   "rationale": "",
+   "done": false,
+   "components": [
+    {
+     "id": "D1",
+     "type": "D",
+     "nodes": [
+      "pzp",
+      "out"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "D2",
+     "type": "D",
+     "nodes": [
+      "pzn",
+      "out"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "D3",
+     "type": "D",
+     "nodes": [
+      "0",
+      "pzp"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "D4",
+     "type": "D",
+     "nodes": [
+      "0",
+      "pzn"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "C1",
+     "type": "C",
+     "nodes": [
+      "out",
+      "0"
+     ],
+     "value": 1.149207466932464e-06
+    },
+    {
+     "id": "L1",
+     "type": "L",
+     "nodes": [
+      "pzp",
+      "n1"
+     ],
+     "value": 0.006139206947258273
+    },
+    {
+     "id": "S1",
+     "type": "S",
+     "nodes": [
+      "n1",
+      "pzn"
+     ],
+     "ctrl": "G1"
+    },
+    {
+     "id": "G1",
+     "type": "SYNC",
+     "ton": 3.5604734252877845e-05,
+     "phase": 0.04322805581155522,
+     "edges": "both"
+    },
+    {
+     "id": "D5",
+     "type": "D",
+     "nodes": [
+      "0",
+      "out"
+     ],
+     "model": "DZ33"
+    }
+   ]
+  },
+  "sized_failed": [],
+  "heldout_pass": 4,
+  "heldout_n": 4
+ },
+ "witness": {
+  "name": "(same as textbook)",
+  "search_pass": 4,
+  "search_met": false,
+  "failed": [
+   "S2:settled",
+   "S6:settled"
+  ],
+  "screen_ratio": {
+   "S2": 5.565060865273334,
+   "S4": 7.810796951444444,
+   "S6": 2.4222530883222224
+  },
+  "sized_search_pass": 6,
+  "sized_search_met": true,
+  "sized_evals": 8,
+  "sizer_stop": "spec_met",
+  "sized_circuit": {
+   "move": "new_topology",
+   "name": "witness: p-SSHI + bridge + zener clamp",
+   "rationale": "",
+   "done": false,
+   "components": [
+    {
+     "id": "D1",
+     "type": "D",
+     "nodes": [
+      "pzp",
+      "out"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "D2",
+     "type": "D",
+     "nodes": [
+      "pzn",
+      "out"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "D3",
+     "type": "D",
+     "nodes": [
+      "0",
+      "pzp"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "D4",
+     "type": "D",
+     "nodes": [
+      "0",
+      "pzn"
+     ],
+     "model": "DSCH"
+    },
+    {
+     "id": "C1",
+     "type": "C",
+     "nodes": [
+      "out",
+      "0"
+     ],
+     "value": 1.149207466932464e-06
+    },
+    {
+     "id": "L1",
+     "type": "L",
+     "nodes": [
+      "pzp",
+      "n1"
+     ],
+     "value": 0.006139206947258273
+    },
+    {
+     "id": "S1",
+     "type": "S",
+     "nodes": [
+      "n1",
+      "pzn"
+     ],
+     "ctrl": "G1"
+    },
+    {
+     "id": "G1",
+     "type": "SYNC",
+     "ton": 3.5604734252877845e-05,
+     "phase": 0.04322805581155522,
+     "edges": "both"
+    },
+    {
+     "id": "D5",
+     "type": "D",
+     "nodes": [
+      "0",
+      "out"
+     ],
+     "model": "DZ33"
+    }
+   ]
+  },
+  "sized_failed": [],
+  "heldout_pass": 4,
+  "heldout_n": 4
+ },
+ "verdict": "textbook_solves",
+ "n_sims": 80,
+ "wall_s": 93.1
+}

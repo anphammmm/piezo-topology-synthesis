@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "sshi_fbr_zener",
+ "rationale": "Combines a Full-Bridge Rectifier (FBR) with an SSHI (Synchronized Switch Harvesting on Inductor) circuit to increase energy extraction and a Zener clamp to prevent overvoltage on light loads (S3). The inductor and switch in parallel with the piezo flip the voltage across Cp at the peaks, increasing the voltage seen by the rectifier and helping meet vavg on heavy loads (S5, S6).",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00038549364014802534,
+   "phase": -0.00524815781446418,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 9.383703657434405e-07
+  }
+ ]
+}

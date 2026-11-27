@@ -1,0 +1,76 @@
+{
+ "move": "new_topology",
+ "name": "SyncBridge_Zener",
+ "rationale": "To eliminate the forward voltage drops of the Schottky diodes which limit Vavg in heavy load conditions (S5, S6), a synchronous full-bridge rectifier is used. This uses SYNC switches to route current to the storage capacitor during the peaks of the piezo voltage, paired with a Zener clamp for overvoltage protection.",
+ "done": false,
+ "components": [
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "S3",
+   "type": "S",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S4",
+   "type": "S",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.000281989360799978,
+   "phase": 0.012618947283730692,
+   "edges": "pos"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 4.545024320737936e-05,
+   "phase": -0.05133639359775604,
+   "edges": "neg"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 6.852377593781078e-07
+  }
+ ]
+}

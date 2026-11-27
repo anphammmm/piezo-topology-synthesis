@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FullBridge",
+ "rationale": "Synchronous Switch Harvesting on Inductor (SSHI) flips the voltage on the piezo capacitance at the extrema, significantly increasing the energy extracted per cycle compared to a standard rectifier. By combining a full-bridge rectifier (for energy extraction) with a parallel inductor-switch loop (for voltage inversion), we can boost the available power for heavy loads (S2) and use a Zener clamp to protect the load from overvoltage (S3).",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0012842941854194156
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.790258249952909e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 2.1655649893147793e-05,
+   "phase": 0.025206519598486306,
+   "edges": "both"
+  }
+ ]
+}

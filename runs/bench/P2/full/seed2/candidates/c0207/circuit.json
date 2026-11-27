@@ -1,0 +1,141 @@
+{
+ "move": "new_topology",
+ "name": "p_sshi_pi_filter_clamp",
+ "rationale": "The previous best design failed only on S3 ripple (60mV vs 50mV limit). The current LC filter is not sufficiently suppressing the charging spikes from the SSHI rectifier. By adding a pre-filter capacitor (C_pre) at the rectifier output, we create a Pi-filter (C-L-C), which provides much better ripple suppression for the same total capacitance, thus maintaining fast startup (tup) and stability (dv) while meeting the strict ripple requirement on S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n_inv"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n_inv",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.97e-05,
+   "phase": 0.006,
+   "edges": "both"
+  },
+  {
+   "id": "C_pre",
+   "type": "C",
+   "nodes": [
+    "n_rect",
+    "0"
+   ],
+   "value": 1e-06
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.5e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "n_clamp",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "DC1",
+   "type": "D",
+   "nodes": [
+    "n_clamp",
+    "n_c1"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC2",
+   "type": "D",
+   "nodes": [
+    "n_c1",
+    "n_c2"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC3",
+   "type": "D",
+   "nodes": [
+    "n_c2",
+    "n_c3"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC4",
+   "type": "D",
+   "nodes": [
+    "n_c3",
+    "0"
+   ],
+   "model": "DSI"
+  }
+ ]
+}

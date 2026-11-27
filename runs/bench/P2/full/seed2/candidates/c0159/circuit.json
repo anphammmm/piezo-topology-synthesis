@@ -1,0 +1,123 @@
+{
+ "move": "new_topology",
+ "name": "p_sshi_full_bridge_zener_clamp",
+ "rationale": "The previous best design 'p_sshi_full_bridge' delivered sufficient power to meet vout_min and startup requirements but failed vout_max because the output was unregulated. I am adding a voltage clamp consisting of a Zener diode (DZ33) and a chain of four silicon diodes (DSI) to limit the output voltage to approximately 5.3V (3.3V + 4 * 0.5V). The Zener cathode is connected to the 'out' node to ensure conduction only when the voltage exceeds the threshold. This should satisfy vout_max while maintaining the power delivery of the full-bridge SSHI topology.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5.941822832231682e-05,
+   "phase": -0.06870533950366874,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 7.067986149472833e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "n2",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "DC1",
+   "type": "D",
+   "nodes": [
+    "n2",
+    "n3"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC2",
+   "type": "D",
+   "nodes": [
+    "n3",
+    "n4"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC3",
+   "type": "D",
+   "nodes": [
+    "n4",
+    "n5"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC4",
+   "type": "D",
+   "nodes": [
+    "n5",
+    "0"
+   ],
+   "model": "DSI"
+  }
+ ]
+}

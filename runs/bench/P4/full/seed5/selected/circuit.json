@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "p_sshi_lc_filter",
+ "rationale": "The p_sshi_zener design nearly passed but failed S6 on ripple and settlement. The ripple issue on heavy loads (S6) is caused by the storage capacitor not being large enough to buffer the rectifier pulses, but increasing it further can slow down the approach to equilibrium (increasing dv). By adding a small inductor (L2) between the bridge rectifier and the storage capacitor, we create an LC filter that significantly reduces peak-to-peak ripple and stabilizes the output voltage, allowing for a better trade-off between startup time and stability.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.004
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.1415926535897935e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "mid",
+    "out"
+   ],
+   "value": 0.005
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

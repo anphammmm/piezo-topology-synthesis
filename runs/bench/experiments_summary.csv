@@ -1,0 +1,7 @@
+spec,variant,runs,success_rate,met_all_rate,median_sims_to_success,min_sims_to_success,max_sims_to_success,median_time_to_success_s,median_sims,median_wall_s,median_model_s,median_model_calls,successes,successes_all,mean_completion_tokens,invalid_rate,screen_pass_rate,median_mc_pass,mean_heldout_pass
+P1,full,5,1.0,0.0,87,27,291,338.4,255,531.0,302.6,2,5,0,9084.8,0.0,0.5555555555555556,0.3125,3.0
+P1,no_screen,5,1.0,0.2,66,12,408,478.91,234,659.8,464.0,2,5,1,11640.8,0.0,0.0,0.1875,3.2
+P2,full,1,0.0,0.0,,,,,1143,2364.1,1682.7,7,0,0,60955.0,0.0,0.42857142857142855,0.0,1.0
+P3,full,2,0.5,0.0,981,981,981,2413.36,850.0,2373.6000000000004,2006.6,6.5,1,0,53356.0,0.0,0.35714285714285715,0.0625,1.5
+P4,full,5,1.0,0.4,249,207,651,492.01,417,701.7,439.5,2,5,2,14215.0,0.0,0.7647058823529411,0.4375,3.4
+P5,full,2,0.0,0.0,,,,,1257.0,3113.3500000000004,2163.45,9.5,0,0,68276.0,0.0,0.6666666666666666,0.0,1.0

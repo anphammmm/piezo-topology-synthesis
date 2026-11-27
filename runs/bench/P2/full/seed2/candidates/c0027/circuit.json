@@ -1,0 +1,60 @@
+{
+ "move": "new_topology",
+ "name": "p_sshi_half_bridge",
+ "rationale": "Similar to the full-bridge P-SSHI, but uses a half-bridge rectifier configuration to reduce the number of diodes in the conduction path from two to one. By placing a large bias capacitor from pzn to ground, the circuit can extract energy during one half-cycle with lower voltage drop, potentially improving startup time and minimum output voltage under light excitation.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C_bias",
+   "type": "C",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 1.0399087997636067e-05
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.060550788283938e-05,
+   "phase": 0.11654429873592745,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.1125566572292185e-05
+  }
+ ]
+}

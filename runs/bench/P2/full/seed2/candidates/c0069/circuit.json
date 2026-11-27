@@ -1,0 +1,78 @@
+{
+ "move": "new_topology",
+ "name": "p_sshi_full_bridge",
+ "rationale": "The reference FBR fails because the open-circuit voltage (3.8V) is too low to overcome diode drops and reach the 4.5V target. P-SSHI (Parallel Synchronized Switch Harvesting on Inductor) uses an LC resonance to invert the voltage across the piezo capacitance Cp at its extrema. This effectively boosts the voltage available to the rectifier, allowing the output to reach the target range. I use a full-bridge rectifier with low-drop Schottky diodes (DSCH) to maximize efficiency.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0005852538816715624,
+   "phase": -0.02086487950942103,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.131731090437709e-07
+  }
+ ]
+}

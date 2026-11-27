@@ -1,0 +1,78 @@
+{
+ "move": "new_topology",
+ "name": "P-SSHI",
+ "rationale": "The reference full-bridge rectifier (FBR) fails because the piezo's open-circuit voltage (3.8V) is lower than the required output (4.5V). I am implementing a Parallel Synchronized Switch Harvesting on Inductor (P-SSHI) circuit. This uses an inductor-switch combination to flip the voltage across the piezo capacitance at its extrema, effectively boosting the voltage seen by the rectifier. I use DSCH Schottky diodes for the full-bridge to minimize losses and a large storage capacitor (4.7uF) to buffer the energy and keep the voltage ripple low and the maximum voltage below 5.5V, especially under strong excitation (S3).",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0041068443178886496
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.562446465125561e-05,
+   "phase": -0.012307975944321651,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.934879862523951e-06
+  }
+ ]
+}

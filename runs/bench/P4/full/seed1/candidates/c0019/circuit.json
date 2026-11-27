@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "parallel_sshi_fbr_zener",
+ "rationale": "The reference FBR failed due to insufficient output voltage under heavy loads (S4-S6) and excessive voltage under light loads (S3). I am implementing a Parallel Synchronized Switch Harvesting on Inductor (SSHI) circuit. By adding an LC-tank (L1 and S1) in parallel with the piezo, we can invert the voltage on the piezo capacitance Cp at its extrema, significantly increasing the energy extracted per cycle. A full-bridge rectifier (FBR) is used to channel this energy to the storage capacitor, and a Zener diode (DZ33) is added to the output to clamp the voltage at 3.3V, ensuring v_max <= 3.6V for S3. A larger storage capacitor (4.7uF) is used to minimize ripple.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.235035859360494e-06
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.005738563084871108
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 2.3839956153351285e-05,
+   "phase": 0.0008718910089398069,
+   "edges": "both"
+  }
+ ]
+}

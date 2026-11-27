@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 647.3,
+  "iteration": 2,
+  "max_rounds": 12,
+  "best_id": "c0034",
+  "best_name": "SSHI_Bridge_Zener",
+  "best_scalar": 90.563,
+  "best_cond_pass": 6,
+  "n_candidates": 35,
+  "n_sims": 249,
+  "model_wait_s": 0
+}

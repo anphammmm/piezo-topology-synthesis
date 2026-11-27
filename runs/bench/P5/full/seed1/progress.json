@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "round_budget",
+  "elapsed_s": 3904.9,
+  "iteration": 12,
+  "max_rounds": 12,
+  "best_id": "c0245",
+  "best_name": "Clamped_LCLC_SSHI",
+  "best_scalar": 45.369,
+  "best_cond_pass": 2,
+  "n_candidates": 270,
+  "n_sims": 1803,
+  "model_wait_s": 0
+}

@@ -1,0 +1,199 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0000",
+  "selected_topology": {
+    "name": "FBR reference (4x Schottky, 2.2 uF)",
+    "topo_hash": "3b1b75bd21b9"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [
+    {
+      "condition": "S1",
+      "criterion": "vout_min",
+      "measured": "0.560315636868",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.6887135350733333,
+      "split": "search"
+    },
+    {
+      "condition": "S1",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S2",
+      "criterion": "vout_min",
+      "measured": "0.557571528816",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.6902380395466667,
+      "split": "search"
+    },
+    {
+      "condition": "S2",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S3",
+      "criterion": "settled",
+      "measured": "0.044879550390000134",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -1.2439775195000067,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "vout_min",
+      "measured": "0.33426731463",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.8142959363166667,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S5",
+      "criterion": "vout_min",
+      "measured": "0.57347078872",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.6814051173777778,
+      "split": "search"
+    },
+    {
+      "condition": "S5",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S6",
+      "criterion": "vout_min",
+      "measured": "0.458860185339",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.7450776748116666,
+      "split": "search"
+    },
+    {
+      "condition": "S6",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "H1",
+      "criterion": "vout_min",
+      "measured": "0.446911278937",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.7517159561461111,
+      "split": "heldout"
+    },
+    {
+      "condition": "H1",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "heldout"
+    },
+    {
+      "condition": "H2",
+      "criterion": "vout_min",
+      "measured": "0.715857193509",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.6023015591616667,
+      "split": "heldout"
+    },
+    {
+      "condition": "H2",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "heldout"
+    },
+    {
+      "condition": "H3",
+      "criterion": "settled",
+      "measured": "0.053859855899999864",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -1.692992794999993,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "vout_min",
+      "measured": "0.437991517521",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.7566713791549999,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "heldout"
+    }
+  ],
+  "timing": {
+    "wall_s": 2156.4,
+    "model_s": 1768.1,
+    "model_calls": 7,
+    "model_errors": 0,
+    "prompt_tokens": 25253,
+    "completion_tokens": 64094,
+    "reasoning_tokens": 0,
+    "sim_seconds": 5462.3,
+    "sim_wall_s": 750.3,
+    "n_sims": 551,
+    "cache_hits": 0,
+    "sim_failures": 0,
+    "size_s": 362.3,
+    "screen_s": 199.3,
+    "n_screen_sims": 87,
+    "n_proposals": 9,
+    "n_invalid": 0,
+    "n_duplicate": 2,
+    "n_topologies": 7,
+    "n_screen_pass": 1,
+    "rounds": 7,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

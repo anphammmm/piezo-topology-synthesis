@@ -1,0 +1,141 @@
+{
+ "move": "new_topology",
+ "name": "p_sshi_double_l_filter_clamp",
+ "rationale": "The previous L-C filter design was very close, failing only on S3 ripple (60mV vs 50mV limit). A second-order inductor filter (L2 and L3 in series) provides better high-frequency attenuation than a single inductor, which should push the ripple below 50mV. Since S4 startup has some margin in the L-C design, this approach is more likely to succeed than the pi-filter (which added too much capacitance and slowed startup).",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n_inv"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n_inv",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.9672941328980504e-05,
+   "phase": 0.006,
+   "edges": "both"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "n_filt"
+   ],
+   "value": 0.005
+  },
+  {
+   "id": "L3",
+   "type": "L",
+   "nodes": [
+    "n_filt",
+    "out"
+   ],
+   "value": 0.005
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.5e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "n_clamp",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "DC1",
+   "type": "D",
+   "nodes": [
+    "n_clamp",
+    "n_c1"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC2",
+   "type": "D",
+   "nodes": [
+    "n_c1",
+    "n_c2"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC3",
+   "type": "D",
+   "nodes": [
+    "n_c2",
+    "n_c3"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC4",
+   "type": "D",
+   "nodes": [
+    "n_c3",
+    "0"
+   ],
+   "model": "DSI"
+  }
+ ]
+}

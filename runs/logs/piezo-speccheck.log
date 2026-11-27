@@ -1,1 +1,19 @@
 [spec] P1: Sensor supply 1.8-3.6 V
+[spec] P1: reference 0/6; textbook 6/6 -> sized 6/6; witness sized 6/6; verdict textbook_solves (32 sims, 40 s)
+[spec] P2: High-voltage rail 4.5-5.5 V
+[spec] P2: reference 0/6; textbook 0/6 -> sized 0/6; witness sized 4/6; verdict unproven (1203 sims, 1495 s)
+[spec] P3: Very weak excitation, 1.8-3.6 V
+[spec] P3: reference 0/6; textbook 1/6 -> sized 4/6; witness sized 1/6; verdict unproven (1203 sims, 1388 s)
+[spec] P4: Wide band 50-200 Hz, Cp +/-30 %
+[spec] P4: reference 0/6; textbook 4/6 -> sized 6/6; witness sized 6/6; verdict textbook_solves (80 sims, 93 s)
+[spec] P5: Fast start, low ripple, 1.8-3.6 V
+[spec] P5: reference 0/6; textbook 1/6 -> sized 2/6; witness sized 2/6; verdict unproven (608 sims, 705 s)
+| spec | title | reference | textbook as given | textbook sized | witness sized | held-out (sized) | verdict |
+|---|---|---|---|---|---|---|---|
+| P1 | Sensor supply 1.8-3.6 V | 0/6 | 6/6 | 6/6 | 6/6 | 3/4 | textbook_solves |
+| P2 | High-voltage rail 4.5-5.5 V | 0/6 | 0/6 | 0/6 | 4/6 | 0/4 | unproven |
+| P3 | Very weak excitation, 1.8-3.6 V | 0/6 | 1/6 | 4/6 | 1/6 | 2/4 | unproven |
+| P4 | Wide band 50-200 Hz, Cp +/-30 % | 0/6 | 4/6 | 6/6 | 6/6 | 4/4 | textbook_solves |
+| P5 | Fast start, low ripple, 1.8-3.6 V | 0/6 | 1/6 | 2/6 | 2/6 | 1/4 | unproven |
+
+[done] spec check written to runs/speccheck/speccheck.md

@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "Buffered_SSHI",
+ "rationale": "The best previous design (SSHI_HalfBridge_Zener) suffered from excessive ripple caused by large charge pulses from the inductor. Adding a two-stage diode-capacitor filter (Buffered SSHI) creates an intermediate storage node n2, which acts as a buffer to smooth the charge delivery to the final output node 'out', significantly reducing vpp.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n2"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "n2",
+    "0"
+   ],
+   "value": 1e-06
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "n2",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-05
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "Csplit",
+   "type": "C",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 4.7e-06
+  }
+ ]
+}

@@ -1,0 +1,82 @@
+{
+  "stop_reason": "round_budget",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0245",
+  "selected_name": "Clamped_LCLC_SSHI",
+  "selected_origin": "llm",
+  "reference_id": "c0000",
+  "first_met": null,
+  "failed_checks": [
+    {
+      "split": "search",
+      "condition": "S2",
+      "criterion": "startup",
+      "measured": 0.153349217202,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -0.022328114680000104,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S3",
+      "criterion": "ripple",
+      "measured": 0.0278298854828,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -0.39149427414,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S4",
+      "criterion": "startup",
+      "measured": 0.222824207289,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -0.48549471526,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S5",
+      "criterion": "startup",
+      "measured": 0.167930153316,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -0.11953435544000006,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H1",
+      "criterion": "startup",
+      "measured": 0.197428515557,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -0.3161901037133334,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H3",
+      "criterion": "ripple",
+      "measured": 0.0285184383392,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -0.42592191696000004,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "startup",
+      "measured": 0.208192295483,
+      "limit": 0.15,
+      "op": "<=",
+      "margin": -0.3879486365533334,
+      "passed": false
+    }
+  ]
+}

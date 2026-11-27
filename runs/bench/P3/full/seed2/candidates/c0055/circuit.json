@@ -1,0 +1,69 @@
+{
+ "move": "new_topology",
+ "name": "sshi_half_bridge",
+ "rationale": "The previous 'sshi_fbr' design failed on ripple and settling on the weakest conditions (S4) because the storage capacitor C1 had to be kept small to meet the startup time (tup) requirement. However, the Full Bridge Rectifier (FBR) introduces two diode drops, significantly reducing efficiency. By tying pzn to ground (creating a half-bridge configuration), we reduce the rectification loss to a single diode drop. This increase in delivered voltage and current allows us to use a larger C1 to suppress ripple and stabilize the output (reducing dv) while still meeting the startup time constraint.",
+ "done": false,
+ "components": [
+  {
+   "id": "R_pzn",
+   "type": "R",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 1.9934392405263517
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0011435743660525648
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "0"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.815144108352992e-05,
+   "phase": 0.05201242262010262,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.200140267754736e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

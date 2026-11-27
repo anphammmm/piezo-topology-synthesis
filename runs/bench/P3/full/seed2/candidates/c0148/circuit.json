@@ -1,0 +1,105 @@
+{
+ "move": "new_topology",
+ "name": "sshi_fbr_pi",
+ "rationale": "The previous best design (sshi_fbr_lc) is extremely close to passing, failing only on the S3 ripple constraint (51.5 mV vs 50 mV). This ripple is caused by the high charging pulses of the strong excitation in S3. To reduce ripple without significantly increasing the startup time (tup) or the settling time (dv), I am adding a pre-filter capacitor (C_pre) at the output of the full-bridge rectifier. This transforms the existing L-C filter into a C-L-C pi-filter, which provides significantly better ripple rejection for the same total capacitance, allowing the optimizer to find a balance between S3 ripple and S4 startup/settling requirements.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.00847
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.71e-05,
+   "phase": -0.0403,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C_pre",
+   "type": "C",
+   "nodes": [
+    "n_mid",
+    "0"
+   ],
+   "value": 1e-07
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_mid",
+    "out"
+   ],
+   "value": 0.0028
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.87e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

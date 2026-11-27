@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 2590.8,
+  "iteration": 6,
+  "max_rounds": 12,
+  "best_id": "c0148",
+  "best_name": "sshi_fbr_pi",
+  "best_scalar": 90.589,
+  "best_cond_pass": 6,
+  "n_candidates": 149,
+  "n_sims": 981,
+  "model_wait_s": 285
+}

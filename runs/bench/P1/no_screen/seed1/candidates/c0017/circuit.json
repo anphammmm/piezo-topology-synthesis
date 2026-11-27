@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "sshi_fbr_zener",
+ "rationale": "To fix the low vavg in S2 and S4, I am implementing Synchronized Switch Harvesting on Inductor (SSHI). An inductor L1 and switch S1 in parallel with the piezo flip the voltage at the extrema, increasing the energy extracted per cycle. The FBR rectifies this energy, and the DZ33 clamp protects the load from overvoltage in S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "value": 0.00034686775453218955
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 8.004316613606983e-05,
+   "phase": -0.17645385325193713,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 5.68251158603907e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

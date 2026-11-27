@@ -1,0 +1,2 @@
+round,k,name,move,topo_hash,status,candidate,of,worst_ratio,ratio_S2,ratio_S4,ratio_S6,gain_S2,gain_S4,gain_S6,n_presets,hints,problems
+1,1,Parallel-SSHI-Zener,new_topology,40eae91a637a,evaluated,c0001,,2.512372865383333,2.512372865383333,9.680982304777778,5.1580030448833325,2.142385311401121,3.4397087602357064,2.3991292589158637,4,underpower | slow_start | not_settled | ripple,

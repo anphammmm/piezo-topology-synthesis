@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FBR_Zener",
+ "rationale": "The Reference Design (FBR) fails S2 and S4 because the open-circuit voltage (Voc) is too low to overcome the diode drops of the bridge (especially in S4 where Voc ~ 1.9V, leading to Vout ~ 1.4V). Additionally, S3 exceeds Vmax. I am introducing a Synchronous Switching Harvesting on Inductor (SSHI) stage using an inductor and a switch to invert the piezo voltage at its peaks, effectively boosting the voltage delivered to the rectifier. A Zener diode (DZ33) is added to clamp the output at 3.3V for S3, and a large storage capacitor is used to minimize ripple and stabilize the output.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.851639900369787e-05,
+   "phase": -0.25,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.7e-05
+  }
+ ]
+}

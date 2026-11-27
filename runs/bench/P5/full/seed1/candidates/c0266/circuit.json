@@ -1,0 +1,114 @@
+{
+ "move": "new_topology",
+ "name": "Clamped_LCLC_SSHI",
+ "rationale": "Previous designs faced a trade-off between startup time (slowed by input capacitance) and ripple (increased by low output capacitance). [c0154] showed that placing the Zener at the rectifier output (n_rect) and starting the filter with an inductor allows for fast startup. [c0162] showed that adding a capacitor at n_rect significantly slows startup. By combining these, I propose a Zener clamp at n_rect followed by a double L-C filter (L-C-L-C). This should maintain the fast startup of [c0154] while providing the superior ripple rejection of the double-L structure used in [c0228], thus satisfying both the startup and ripple requirements across all conditions.",
+ "done": false,
+ "components": [
+  {
+   "id": "L_sshi",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n_sshi"
+   ],
+   "value": 0.0007475750871458242
+  },
+  {
+   "id": "S_sshi",
+   "type": "S",
+   "nodes": [
+    "n_sshi",
+    "pzn"
+   ],
+   "ctrl": "G_sshi"
+  },
+  {
+   "id": "G_sshi",
+   "type": "SYNC",
+   "ton": 1.4458901006966422e-05,
+   "phase": -0.004596914956900095,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "n_rect"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "L_f1",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "n_mid"
+   ],
+   "value": 0.001141817245820246
+  },
+  {
+   "id": "C_mid",
+   "type": "C",
+   "nodes": [
+    "n_mid",
+    "0"
+   ],
+   "value": 7.310907990498348e-07
+  },
+  {
+   "id": "L_f2",
+   "type": "L",
+   "nodes": [
+    "n_mid",
+    "out"
+   ],
+   "value": 0.0019929815600448703
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.035226253104866e-06
+  }
+ ]
+}

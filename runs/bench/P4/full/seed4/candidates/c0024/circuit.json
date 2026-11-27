@@ -1,0 +1,76 @@
+{
+ "move": "new_topology",
+ "name": "SCE_SRECT",
+ "rationale": "Using Synchronous Charge Extraction (SCE). Instead of a full diode bridge, switches are used to dump the piezo charge directly into the storage capacitor at the voltage peaks. This eliminates two diode drops, improving efficiency for the low-power scenarios (S2, S4, S6).",
+ "done": false,
+ "components": [
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0006512349904324003,
+   "phase": -0.04445444219681373,
+   "edges": "pos"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 0.0002982287005209092,
+   "phase": -0.06650720486591948,
+   "edges": "neg"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 5.761471472479595e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

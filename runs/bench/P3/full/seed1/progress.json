@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "stagnation",
+  "elapsed_s": 2156.4,
+  "iteration": 7,
+  "max_rounds": 12,
+  "best_id": "c0000",
+  "best_name": "FBR reference (4x Schottky, 2.2 uF)",
+  "best_scalar": 9.77,
+  "best_cond_pass": 0,
+  "n_candidates": 50,
+  "n_sims": 387,
+  "model_wait_s": 240
+}

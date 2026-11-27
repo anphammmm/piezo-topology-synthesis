@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "sshi_fbr_L_filter",
+ "rationale": "The previous best design 'sshi_fbr' passed all conditions except for a slight ripple exceedance on S3 (61 mV vs 50 mV). S3 represents the strongest excitation, creating the largest charge pulses. To specifically target this ripple without significantly impacting startup time or average voltage, I am adding a second-order L-C filter by inserting an inductor L2 between the rectifier output (mid) and the storage capacitor (out). This structure will smooth the current pulses from the SSHI process more effectively than a single capacitor.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.004604249169094946
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 2.6815106677903354e-05,
+   "phase": 0.022751960601531118,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "mid",
+    "out"
+   ],
+   "value": 0.006383435032110643
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 5.332288242637327e-07
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

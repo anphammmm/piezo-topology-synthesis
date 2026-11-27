@@ -1,0 +1,132 @@
+{
+ "move": "new_topology",
+ "name": "p_sshi_full_bridge_filtered_clamp",
+ "rationale": "The previous best design (c0143) failed only on S3 ripple (60mV vs 50mV limit). S3 is the strong excitation case, which delivers larger charge pulses. To reduce ripple without simply increasing the storage capacitor C1 (which would slow down the S4 startup), I am adding a filter inductor L2 between the rectifier output and the storage node 'out'. This creates an LC filter that smooths the charging current spikes, reducing output ripple while maintaining the fast startup and precise clamping voltage of the existing design.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n_inv"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n_inv",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 7.590339939891353e-05,
+   "phase": -0.01848619321177255,
+   "edges": "both"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.7934580924052677e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "n_clamp",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "DC1",
+   "type": "D",
+   "nodes": [
+    "n_clamp",
+    "n_c1"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC2",
+   "type": "D",
+   "nodes": [
+    "n_c1",
+    "n_c2"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC3",
+   "type": "D",
+   "nodes": [
+    "n_c2",
+    "n_c3"
+   ],
+   "model": "DSI"
+  },
+  {
+   "id": "DC4",
+   "type": "D",
+   "nodes": [
+    "n_c3",
+    "0"
+   ],
+   "model": "DSI"
+  }
+ ]
+}

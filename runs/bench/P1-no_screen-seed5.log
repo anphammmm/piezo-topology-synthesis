@@ -1,0 +1,36 @@
+[00:00:00] [setup  ] output in runs/bench/P1/no_screen/seed5; mode search; spec P1 (Sensor supply 1.8-3.6 V); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:08] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (8.2 s)
+[00:00:08] [model  ] round 1: asking the model (thinking on)
+[00:00:23] [model  ] waiting 15 s (round 1)
+[00:00:38] [model  ] waiting 30 s (round 1)
+[00:00:53] [model  ] waiting 45 s (round 1)
+[00:01:08] [model  ] waiting 60 s (round 1)
+[00:01:23] [model  ] waiting 75 s (round 1)
+[00:01:38] [model  ] waiting 90 s (round 1)
+[00:01:53] [model  ] waiting 105 s (round 1)
+[00:02:08] [model  ] waiting 120 s (round 1)
+[00:02:23] [model  ] waiting 135 s (round 1)
+[00:02:38] [model  ] waiting 150 s (round 1)
+[00:02:53] [model  ] waiting 165 s (round 1)
+[00:02:57] [model  ] reply after 169 s (2219 in / 6082 out)
+[00:02:57] [eval   ] round 1 design 1: new_topology 'fbr_zener' (6 parts)
+[00:02:57] [sim    ] r01d1: simulating 6 conditions
+[00:03:05] [eval   ] r01d1: score 39.93, 2/6 conditions, 23/30 checks pass (8.6 s)
+[00:03:05] [eval   ] new best c0001 (fbr_zener): score 39.93, 2/6 conditions pass
+[00:03:05] [eval   ] round 1 design 2: new_topology 'sshi_fbr' (8 parts)
+[00:03:05] [sim    ] r01d2: simulating 6 conditions
+[00:03:13] [eval   ] r01d2: score -1.11, 0/6 conditions, 13/30 checks pass (7.7 s)
+[00:03:13] [eval   ] round 1 design 3: new_topology 'sshi_fbr_zener' (9 parts)
+[00:03:13] [sim    ] r01d3: simulating 6 conditions
+[00:03:21] [eval   ] r01d3: score 90.60, 6/6 conditions, 30/30 checks pass (7.8 s)
+[00:03:21] [eval   ] new best c0003 (sshi_fbr_zener): score 90.60, 6/6 conditions pass
+[00:03:21] [done   ] search stopped: search_spec_met; selected c0003 (sshi_fbr_zener)
+[00:03:21] [heldout] checking c0003 and the reference on 4 held-out conditions
+[00:03:36] [heldout] c0003: 3/4 held-out conditions pass; reference: 1/4
+[00:03:36] [robust ] Monte Carlo: 16 samples of c0003 on all 10 conditions
+[00:06:43] [robust ] 0 % of samples meet the spec on every condition; weakest: H4
+[00:06:43] [done   ] spec met on search conditions: True; on all conditions: False
+[00:06:43] [done   ] report: runs/bench/P1/no_screen/seed5/report.md

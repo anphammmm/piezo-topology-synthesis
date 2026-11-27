@@ -1,1 +1,21 @@
 spec,variant,seed,run,stop_reason,met_search,met_all,rounds,n_proposals,n_invalid,n_duplicate,n_topologies,n_screen_pass,n_sims,n_screen_sims,wall_s,model_s,model_calls,prompt_tokens,completion_tokens,first_met_t,first_met_sims,heldout_pass,mc_pass_all,selected_name,selected_origin
+P1,full,1,runs/bench/P1/full/seed1,search_spec_met,True,False,2,1,0,0,1,1,387,15,628.8,383.7,2,2316,6259,406.62,219,3,0.0,Parallel-SSHI-Zener,size
+P1,full,2,runs/bench/P1/full/seed2,search_spec_met,True,False,3,3,0,0,3,1,459,39,719.9,491.9,3,6970,15803,535.0,291,3,0.5625,SSHI_FBR_Zener,size
+P1,full,3,runs/bench/P1/full/seed3,search_spec_met,True,False,1,1,0,0,1,1,195,15,385.4,178.8,1,2316,6384,205.15,27,3,0.3125,psshi,llm
+P1,full,4,runs/bench/P1/full/seed4,search_spec_met,True,False,2,2,0,0,2,1,255,27,531.0,302.6,2,2316,8483,338.4,87,3,0.125,SSHI_FBR_Zener,size
+P1,full,5,runs/bench/P1/full/seed5,search_spec_met,True,False,1,2,0,0,2,1,207,27,513.6,263.1,1,2316,8495,300.39,39,3,0.3125,SSHI_FBR,llm
+P1,no_screen,1,runs/bench/P1/no_screen/seed1,search_spec_met,True,False,3,5,0,0,5,0,540,0,845.8,546.4,3,14939,19826,614.98,372,3,0.1875,sshi_fbr_res,size
+P1,no_screen,2,runs/bench/P1/no_screen/seed2,search_spec_met,True,False,2,2,0,0,2,0,234,0,561.9,362.3,2,2219,7967,386.56,66,3,0.0,SSHI_FBR,size
+P1,no_screen,3,runs/bench/P1/no_screen/seed3,search_spec_met,True,False,1,1,0,0,1,0,180,0,659.8,464.0,1,2219,7938,478.91,12,3,0.3125,sshi_fbr,llm
+P1,no_screen,4,runs/bench/P1/no_screen/seed4,search_spec_met,True,True,3,4,0,1,3,0,576,0,815.0,571.9,3,9255,16391,644.91,408,4,0.6875,sshi_zener,size
+P1,no_screen,5,runs/bench/P1/no_screen/seed5,search_spec_met,True,False,1,3,0,0,3,0,192,0,403.3,169.1,1,2219,6082,201.51,24,3,0.0,sshi_fbr_zener,llm
+P2,full,1,runs/bench/P2/full/seed1,stagnation,False,False,7,8,0,1,7,3,1143,87,2364.1,1682.7,7,30294,60955,,,1,0.0,P-SSHI-Shunt,size
+P3,full,1,runs/bench/P3/full/seed1,stagnation,False,False,7,9,0,2,7,1,551,87,2156.4,1768.1,7,25253,64094,,,0,0.0,"FBR reference (4x Schottky, 2.2 uF)",reference
+P3,full,2,runs/bench/P3/full/seed2,search_spec_met,True,False,6,7,0,0,7,4,1149,87,2590.8,2245.1,6,20501,42618,2413.36,981,3,0.125,sshi_fbr_pi,llm
+P4,full,1,runs/bench/P4/full/seed1,search_spec_met,True,True,2,3,0,0,3,1,411,39,701.7,439.5,2,2298,6481,492.01,243,4,0.75,parallel_sshi_fbr_zener,size
+P4,full,2,runs/bench/P4/full/seed2,search_spec_met,True,False,2,3,0,0,3,3,375,39,608.8,357.7,2,2332,6901,409.96,207,3,0.0,sshi_fbr_zener,size
+P4,full,3,runs/bench/P4/full/seed3,search_spec_met,True,True,2,3,0,0,3,2,417,39,647.3,377.0,2,2332,6068,421.08,249,4,0.75,SSHI_Bridge_Zener,size
+P4,full,4,runs/bench/P4/full/seed4,search_spec_met,True,False,3,4,0,0,4,4,585,51,977.9,641.5,3,9501,16385,781.77,417,3,0.4375,SSHI_FBR,size
+P4,full,5,runs/bench/P4/full/seed5,search_spec_met,True,False,4,5,0,1,4,3,819,51,2057.3,1452.1,4,16690,35240,1589.05,651,3,0.375,p_sshi_lc_filter,llm
+P5,full,1,runs/bench/P5/full/seed1,round_budget,False,False,12,16,0,1,15,13,1971,183,3904.9,2283.6,12,77527,80552,,,1,0.0,Clamped_LCLC_SSHI,llm
+P5,full,2,runs/bench/P5/full/seed2,stagnation,False,False,7,8,0,2,6,1,543,75,2321.8,2043.3,7,24258,56000,,,1,0.0,SSHI_FBR_Zener,size

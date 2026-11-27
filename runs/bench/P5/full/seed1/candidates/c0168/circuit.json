@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "Clamped_LC_Filtered_SSHI",
+ "rationale": "To meet the strict ripple requirement (20 mV) without failing the startup time (0.15 s), I cannot simply increase Cout. Instead, I am placing a Zener clamp (Dz) at the rectifier output (n_rect) BEFORE the LC filter (L_filt, Cout). This configuration converts the pulsed current from the rectifier into a more constant current flow through the inductor, significantly reducing the ripple at the output node 'out' while maintaining a fast startup since the inductor's series resistance is low.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0011546312789401506
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.417474234581531e-06,
+   "phase": -0.0072535206184849935,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "n_rect"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "L_filt",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 0.00046884669831242484
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.072901251694419e-06
+  }
+ ]
+}

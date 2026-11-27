@@ -1,0 +1,94 @@
+{
+ "move": "new_topology",
+ "name": "Hybrid_SSHI_Sync",
+ "rationale": "Combining the high energy extraction of SSHI with the efficiency of synchronous rectification. An inductor and switch (S3) provide inversion at both peaks using G1 (edges=both). Forward rectification at the positive peak is handled by S1 (synchronous) and D1 (diode return). Forward rectification at the negative peak is handled by S2 (synchronous) and D2 (diode return). This should increase power over the SyncBridge (fixing S4 vout_min) and reduce ripple compared to PSSHI by using a more efficient synchronous transfer.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "S3",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "0"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0001,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 0.0001,
+   "phase": 0.0,
+   "edges": "neg"
+  }
+ ]
+}

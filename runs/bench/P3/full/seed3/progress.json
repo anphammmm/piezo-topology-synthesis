@@ -1,0 +1,14 @@
+{
+  "phase": "robust",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 1574.2,
+  "iteration": 6,
+  "max_rounds": 12,
+  "best_id": "c0110",
+  "best_name": "sshi_fbr_L_filter",
+  "best_scalar": 90.596,
+  "best_cond_pass": 6,
+  "n_candidates": 116,
+  "n_sims": 759,
+  "model_wait_s": 0
+}

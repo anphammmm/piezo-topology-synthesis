@@ -1,0 +1,37 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,24.608,1,20,False
+c0001,1,llm,,new_topology,Parallel-SSHI-Zener,40eae91a637a,0f7b970fc90a,9,search,7.4272,1,12,False
+c0002,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,3c8042c50233,9,search,-12.0552,0,7,False
+c0003,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,665b1a47f009,9,search,6.9551,1,12,False
+c0004,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,ac0d40bd7337,9,search,11.9737,1,14,False
+c0005,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,3f821ce3e6ac,9,search,-12.1971,0,7,False
+c0006,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,a59dc3780678,9,search,-11.1025,0,7,False
+c0007,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,f88ef021ddde,9,search,-7.8594,0,9,False
+c0008,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,ad9250120ccb,9,search,35.697,2,22,False
+c0009,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,be47ae658c84,9,search,-11.587,0,7,False
+c0010,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,f34e1f4c80d4,9,search,-10.1553,0,8,False
+c0011,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,7b6f725ac175,9,search,8.6579,1,12,False
+c0012,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,f12cf886eb68,9,search,16.8101,1,16,False
+c0013,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,74595829f7f8,9,search,18.5909,1,18,False
+c0014,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,f243267bcbc3,9,search,10.8462,1,14,False
+c0015,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,1b5676612982,9,search,13.0982,1,14,False
+c0016,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,758f2972f345,9,search,13.7344,1,15,False
+c0017,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,a3d898f548c8,9,search,79.4707,5,29,False
+c0018,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,3a13ef6e1d97,9,search,79.3935,5,29,False
+c0019,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,797b78f44a9d,9,search,18.557,1,18,False
+c0020,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,e071b2145079,9,search,54.4693,3,26,False
+c0021,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,aaa33c8b282f,9,search,55.3012,3,26,False
+c0022,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,967f5850ba51,9,search,24.8836,1,21,False
+c0023,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,d7c03d9c18d1,9,search,19.9845,1,17,False
+c0024,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,65f7877f9102,9,search,22.5805,1,19,False
+c0025,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,4ff04c161795,9,search,30.4865,1,25,False
+c0026,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,2dad513ee610,9,search,34.7137,1,25,False
+c0027,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,85f6f988724a,9,search,79.3052,5,29,False
+c0028,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,91baec7f69cd,9,search,31.888,1,25,False
+c0029,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,26c5991626e6,9,search,90.6032,6,30,True
+c0030,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,23446bf63d1c,9,search,22.3064,1,20,False
+c0031,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,3517fddcec4b,9,search,67.8365,4,28,False
+c0032,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,f3406ad2aaa7,9,search,53.3564,3,25,False
+c0033,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,54ee079d2180,9,search,6.9303,1,11,False
+c0029,2,size,c0001,size,Parallel-SSHI-Zener,40eae91a637a,26c5991626e6,9,heldout,46.3494,3,18,False
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,heldout,18.1045,1,13,False

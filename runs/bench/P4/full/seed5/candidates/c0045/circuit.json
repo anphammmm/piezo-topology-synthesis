@@ -1,0 +1,62 @@
+{
+ "move": "new_topology",
+ "name": "fbr_zener",
+ "rationale": "This is a baseline improvement over the reference design. It keeps the full-bridge rectifier but adds a Zener clamp to fix the vmax failure in S3. The automatic tuner will optimize the storage capacitor value to attempt to fix the ripple and startup issues, although it is expected to still fail vmin on heavy loads (S5, S6) compared to the SSHI approach.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 8.754387995093126e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0148",
+  "selected_name": "sshi_fbr_pi",
+  "selected_origin": "llm",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 2413.36,
+    "n_sims": 981,
+    "id": "c0148"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.195640563965,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -2.912811279299999,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.2352578321600003,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -10.762891608000015,
+      "passed": false
+    }
+  ]
+}

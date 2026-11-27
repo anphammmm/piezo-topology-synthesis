@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 628.8,
+  "iteration": 2,
+  "max_rounds": 12,
+  "best_id": "c0029",
+  "best_name": "Parallel-SSHI-Zener",
+  "best_scalar": 90.603,
+  "best_cond_pass": 6,
+  "n_candidates": 34,
+  "n_sims": 219,
+  "model_wait_s": 0
+}

@@ -1,0 +1,69 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_HalfBridge_Zener",
+ "rationale": "Similar to the FBR design but uses a split-capacitor (Half-Bridge) approach. A large capacitor from pzn to ground creates a virtual ground, reducing the number of diode drops in the rectification path. This potentially increases the output voltage for weak excitations (S4) and may improve the efficiency, while the SSHI loop and Zener clamp handle energy enhancement and overvoltage protection respectively.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Csplit",
+   "type": "C",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 1.3937446656432984e-05
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.001970420165265352
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.629567821725741e-05,
+   "phase": -0.07114560957469011,
+   "edges": "both"
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.7033035068743533e-05
+  }
+ ]
+}

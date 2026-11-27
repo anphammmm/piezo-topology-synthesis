@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "stagnation",
+  "elapsed_s": 2364.1,
+  "iteration": 7,
+  "max_rounds": 12,
+  "best_id": "c0112",
+  "best_name": "P-SSHI-Shunt",
+  "best_scalar": 52.922,
+  "best_cond_pass": 3,
+  "n_candidates": 148,
+  "n_sims": 975,
+  "model_wait_s": 180
+}

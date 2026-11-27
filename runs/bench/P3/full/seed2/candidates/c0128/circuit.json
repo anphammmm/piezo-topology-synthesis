@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "sshi_fbr_lc",
+ "rationale": "The previous SSHI-FBR (c0012) nearly met all goals but struggled with the tradeoff between output ripple (vpp) and settling time (dv), especially on light loads (S3, S4). To decouple these, I am adding a filter inductor L2 between the full-bridge rectifier and the storage capacitor C1. This LC filter significantly reduces the peak-to-peak ripple without requiring a large C1, which in turn allows for a smaller time constant to improve the settling time (dv) and ensure the startup time (tup) remains within the 0.4s limit for S4.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.007999577716850453
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.0888879876840815e-05,
+   "phase": -0.19453993375517234,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_mid",
+    "out"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 9.888580269054418e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

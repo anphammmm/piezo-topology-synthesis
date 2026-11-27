@@ -1,0 +1,58 @@
+[00:00:00] [setup  ] output in runs/bench/P1/no_screen/seed1; mode search; spec P1 (Sensor supply 1.8-3.6 V); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:07] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (8.0 s)
+[00:00:07] [model  ] round 1: asking the model (thinking on)
+[00:00:22] [model  ] waiting 15 s (round 1)
+[00:00:37] [model  ] waiting 30 s (round 1)
+[00:00:52] [model  ] waiting 45 s (round 1)
+[00:01:07] [model  ] waiting 60 s (round 1)
+[00:01:22] [model  ] waiting 75 s (round 1)
+[00:01:37] [model  ] waiting 90 s (round 1)
+[00:01:52] [model  ] waiting 105 s (round 1)
+[00:02:07] [model  ] waiting 120 s (round 1)
+[00:02:22] [model  ] waiting 135 s (round 1)
+[00:02:37] [model  ] waiting 150 s (round 1)
+[00:02:45] [model  ] reply after 157 s (2219 in / 5514 out)
+[00:02:45] [eval   ] round 1 design 1: new_topology 'fbr_zener' (6 parts)
+[00:02:45] [sim    ] r01d1: simulating 6 conditions
+[00:02:51] [eval   ] r01d1: score 39.93, 2/6 conditions, 23/30 checks pass (6.7 s)
+[00:02:51] [eval   ] new best c0001 (fbr_zener): score 39.93, 2/6 conditions pass
+[00:02:51] [eval   ] round 1 design 2: new_topology 'sshi_fbr_zener' (9 parts)
+[00:02:51] [sim    ] r01d2: simulating 6 conditions
+[00:02:59] [eval   ] r01d2: score 62.98, 4/6 conditions, 26/30 checks pass (7.7 s)
+[00:02:59] [eval   ] new best c0002 (sshi_fbr_zener): score 62.98, 4/6 conditions pass
+[00:02:59] [eval   ] round 1 design 3: new_topology 'sshi_half_zener' (6 parts)
+[00:02:59] [sim    ] r01d3: simulating 6 conditions
+[00:03:07] [eval   ] r01d3: score 6.45, 0/6 conditions, 18/30 checks pass (8.0 s)
+[00:03:07] [size   ] not sizing c0003 (sshi_half_zener): output never reaches 0.9 V
+[00:03:07] [model  ] round 2: asking the model (thinking on)
+[00:04:08] [eval   ] new best c0007 (sshi_fbr_zener): score 67.47, 4/6 conditions pass
+[00:04:08] [size   ] c0002 (sshi_fbr_zener) generation 1: best score 62.98 -> 67.47, 8/48 evaluations (61 s)
+[00:05:01] [eval   ] new best c0016 (sshi_fbr_zener): score 78.65, 5/6 conditions pass
+[00:05:01] [eval   ] new best c0019 (sshi_fbr_zener): score 79.34, 5/6 conditions pass
+[00:05:01] [size   ] c0002 (sshi_fbr_zener) generation 2: best score 67.47 -> 79.34, 16/48 evaluations (53 s)
+[00:05:58] [eval   ] new best c0022 (sshi_fbr_zener): score 79.45, 5/6 conditions pass
+[00:05:58] [size   ] c0002 (sshi_fbr_zener) generation 3: best score 79.34 -> 79.45, 24/48 evaluations (57 s)
+[00:07:01] [size   ] c0002 (sshi_fbr_zener) generation 4: best score 79.45 -> 79.45, 32/48 evaluations (63 s)
+[00:07:58] [size   ] c0002 (sshi_fbr_zener) generation 5: best score 79.45 -> 79.45, 40/48 evaluations (56 s)
+[00:07:58] [model  ] reply after 274 s (6519 in / 10110 out)
+[00:07:58] [eval   ] round 2 design 1: modify_topology 'sshi_fbr_res' (10 parts)
+[00:07:58] [sim    ] r02d1: simulating 6 conditions
+[00:08:05] [eval   ] r02d1: score 62.98, 4/6 conditions, 26/30 checks pass (7.5 s)
+[00:08:05] [eval   ] round 2 design 2: new_topology 'sshi_half_gnd' (7 parts)
+[00:08:05] [sim    ] r02d2: simulating 6 conditions
+[00:08:14] [eval   ] r02d2: score 33.52, 1/6 conditions, 25/30 checks pass (8.8 s)
+[00:08:14] [model  ] round 3: asking the model (thinking on)
+[00:09:15] [size   ] c0002 (sshi_fbr_zener) generation 6: best score 79.45 -> 79.45, 48/48 evaluations (61 s); budget
+[00:10:14] [eval   ] new best c0054 (sshi_fbr_res): score 90.61, 6/6 conditions pass
+[00:10:14] [size   ] c0044 (sshi_fbr_res) generation 1: best score 62.98 -> 90.61, 8/48 evaluations (59 s); spec_met
+[00:10:14] [model  ] reply after 116 s (6201 in / 4202 out)
+[00:10:14] [done   ] search stopped: search_spec_met; selected c0054 (sshi_fbr_res)
+[00:10:14] [heldout] checking c0054 and the reference on 4 held-out conditions
+[00:10:27] [heldout] c0054: 3/4 held-out conditions pass; reference: 1/4
+[00:10:27] [robust ] Monte Carlo: 16 samples of c0054 on all 10 conditions
+[00:14:05] [robust ] 19 % of samples meet the spec on every condition; weakest: H4
+[00:14:05] [done   ] spec met on search conditions: True; on all conditions: False
+[00:14:05] [done   ] report: runs/bench/P1/no_screen/seed1/report.md

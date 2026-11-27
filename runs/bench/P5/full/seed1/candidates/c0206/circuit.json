@@ -1,0 +1,105 @@
+{
+ "move": "modify_topology",
+ "name": "Pi_Filtered_Zener_Out",
+ "rationale": "The Pi_Filtered_Clamped_SSHI design achieved excellent ripple results but failed on startup time (tup), particularly in weak excitation (S4). By moving the Zener clamp from the intermediate rectifier node (n_rect) to the final output node (out), we allow the intermediate node to reach a higher voltage during the initial cold-start phase. This increases the voltage differential across the filter inductor (L_filt), accelerating the transfer of charge from the piezo and the first stage capacitor (C_rect) to the output storage capacitor (Cout), thereby reducing tup. The Pi-filter structure is retained to keep the ripple below the 20mV limit, and the tuning process will optimize the C_rect/Cout ratio to balance startup speed and ripple rejection.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.002232532255815781
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.319341651104068e-05,
+   "phase": -0.022846213062550354,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C_rect",
+   "type": "C",
+   "nodes": [
+    "n_rect",
+    "0"
+   ],
+   "value": 5.117019514095476e-07
+  },
+  {
+   "id": "L_filt",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 0.0009497256193354161
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 8.832156525787592e-07
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

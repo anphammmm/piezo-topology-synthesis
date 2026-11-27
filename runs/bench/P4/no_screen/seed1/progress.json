@@ -1,0 +1,14 @@
+{
+  "phase": "size",
+  "stop_reason": null,
+  "elapsed_s": 1455.0,
+  "iteration": 6,
+  "max_rounds": 12,
+  "best_id": "c0068",
+  "best_name": "PSSHI_Zener",
+  "best_scalar": 77.126,
+  "best_cond_pass": 5,
+  "n_candidates": 158,
+  "n_sims": 948,
+  "model_wait_s": 0
+}

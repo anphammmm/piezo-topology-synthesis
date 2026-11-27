@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0003",
+  "selected_name": "sshi_fbr_zener",
+  "selected_origin": "llm",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 201.51,
+    "n_sims": 24,
+    "id": "c0003"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.132388353348,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -1.64776706696,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.13362997688,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -5.681498844,
+      "passed": false
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_Bridge_Zener",
+ "rationale": "The reference FBR failed S4, S5, and S6 due to insufficient voltage (power extraction) and S3 due to overvoltage. I am implementing a Synchronized Switch Harvesting on Inductor (SSHI) topology. By adding an inductor and a switch across the piezo that closes at the voltage extrema, the charge on the piezo capacitor Cp is inverted each half-cycle, significantly increasing the energy extracted. A full-bridge rectifier directs this energy to the storage capacitor, and a DZ33 Zener diode clamps the output voltage to 3.3V to satisfy the vmax <= 3.6V constraint for S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.006168561774673365
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.6710323531540376e-05,
+   "phase": 0.05848453212257836,
+   "edges": "both"
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.645491357562895e-05
+  }
+ ]
+}

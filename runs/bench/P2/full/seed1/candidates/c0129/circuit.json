@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "P-SSHI-Shunt",
+ "rationale": "The P-SSHI design was highly efficient and almost met all conditions, but lacked voltage regulation, leading to overvoltage on S3 and S5 and under-voltage on S4. I am adding a shunt regulator consisting of a resistor and a 3.3V Zener diode. This creates a leakage path that increases exponentially as Vout rises, clamping the maximum voltage. By optimizing the shunt resistor, we can maintain the output between 4.5V and 5.5V across all operating conditions while leveraging the high power extraction of the SSHI topology.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.004150008334797642
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.1626187685066353e-05,
+   "phase": -0.03118155628621097,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.312529877875097e-06
+  },
+  {
+   "id": "Rshunt",
+   "type": "R",
+   "nodes": [
+    "out",
+    "nz"
+   ],
+   "value": 10425.357626139981
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "nz"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

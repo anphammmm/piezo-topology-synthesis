@@ -1,0 +1,67 @@
+[00:00:00] [setup  ] output in runs/bench/P4/full/seed4; mode search; spec P4 (Wide band 50-200 Hz, Cp +/-30 %); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:08] [eval   ] reference: score 9.33, 0/6 conditions, 16/30 checks pass (8.2 s)
+[00:00:12] [screen ] reference: PASS, worst 61 % of the power needed (1 presets, 3.9 s)
+[00:00:12] [model  ] round 1: asking the model (thinking on)
+[00:00:27] [model  ] waiting 15 s (round 1)
+[00:00:42] [model  ] waiting 30 s (round 1)
+[00:00:57] [model  ] waiting 45 s (round 1)
+[00:01:12] [model  ] waiting 60 s (round 1)
+[00:01:27] [model  ] waiting 75 s (round 1)
+[00:01:42] [model  ] waiting 90 s (round 1)
+[00:01:57] [model  ] waiting 105 s (round 1)
+[00:02:12] [model  ] waiting 120 s (round 1)
+[00:02:27] [model  ] waiting 135 s (round 1)
+[00:02:42] [model  ] waiting 150 s (round 1)
+[00:02:57] [model  ] waiting 165 s (round 1)
+[00:03:12] [model  ] waiting 180 s (round 1)
+[00:03:27] [model  ] waiting 195 s (round 1)
+[00:03:42] [model  ] waiting 210 s (round 1)
+[00:03:57] [model  ] waiting 225 s (round 1)
+[00:04:12] [model  ] waiting 240 s (round 1)
+[00:04:27] [model  ] waiting 255 s (round 1)
+[00:04:42] [model  ] waiting 270 s (round 1)
+[00:04:57] [model  ] waiting 285 s (round 1)
+[00:04:58] [model  ] reply after 286 s (2332 in / 8103 out)
+[00:04:58] [eval   ] round 1 design 1: new_topology 'SSHI_FBR' (9 parts)
+[00:05:04] [screen ] r01d1: PASS, worst 239 % of the power needed (4 presets, 6.1 s)
+[00:05:04] [sim    ] r01d1: simulating 6 conditions
+[00:05:12] [eval   ] r01d1: score 55.15, 3/6 conditions, 27/30 checks pass (7.7 s)
+[00:05:12] [eval   ] new best c0001 (SSHI_FBR): score 55.15, 3/6 conditions pass
+[00:05:12] [eval   ] round 1 design 2: new_topology 'SCE_SRECT' (8 parts)
+[00:05:18] [screen ] r01d2: PASS, worst 109 % of the power needed (4 presets, 6.8 s)
+[00:05:18] [sim    ] r01d2: simulating 6 conditions
+[00:05:27] [eval   ] r01d2: score 65.05, 4/6 conditions, 26/30 checks pass (8.3 s)
+[00:05:27] [eval   ] new best c0002 (SCE_SRECT): score 65.05, 4/6 conditions pass
+[00:05:27] [eval   ] round 1 design 3: new_topology 'FBR_ZENER' (6 parts)
+[00:05:34] [screen ] r01d3: PASS, worst 61 % of the power needed (4 presets, 7.5 s)
+[00:05:34] [sim    ] r01d3: simulating 6 conditions
+[00:05:42] [eval   ] r01d3: score 22.10, 1/6 conditions, 18/30 checks pass (7.6 s)
+[00:05:42] [model  ] round 2: asking the model (thinking on)
+[00:06:23] [eval   ] new best c0005 (SCE_SRECT): score 65.62, 4/6 conditions pass
+[00:06:23] [size   ] c0002 (SCE_SRECT) generation 1: best score 65.05 -> 65.62, 8/48 evaluations (41 s)
+[00:07:17] [size   ] c0002 (SCE_SRECT) generation 2: best score 65.62 -> 65.62, 16/48 evaluations (54 s)
+[00:08:08] [size   ] c0002 (SCE_SRECT) generation 3: best score 65.62 -> 65.62, 24/48 evaluations (51 s)
+[00:09:08] [size   ] c0002 (SCE_SRECT) generation 4: best score 65.62 -> 65.62, 32/48 evaluations (60 s)
+[00:10:12] [eval   ] new best c0039 (SCE_SRECT): score 66.79, 4/6 conditions pass
+[00:10:12] [size   ] c0002 (SCE_SRECT) generation 5: best score 65.62 -> 66.79, 40/48 evaluations (65 s)
+[00:10:12] [model  ] reply after 228 s (7169 in / 8282 out)
+[00:10:12] [eval   ] round 2 design 1: new_topology 'SSHI_LC_Filter' (10 parts)
+[00:10:23] [screen ] r02d1: PASS, worst 239 % of the power needed (4 presets, 10.7 s)
+[00:10:23] [sim    ] r02d1: simulating 6 conditions
+[00:10:55] [eval   ] r02d1: score 19.26, 0/6 conditions, 24/30 checks pass (31.5 s)
+[00:10:55] [model  ] round 3: asking the model (thinking on)
+[00:11:53] [size   ] c0002 (SCE_SRECT) generation 6: best score 66.79 -> 66.79, 48/48 evaluations (59 s); budget
+[00:13:01] [eval   ] new best c0053 (SSHI_FBR): score 90.60, 6/6 conditions pass
+[00:13:01] [size   ] c0001 (SSHI_FBR) generation 1: best score 55.15 -> 90.60, 8/48 evaluations (68 s); spec_met
+[00:13:01] [model  ] spec met while waiting; not waiting for the model's answer
+[00:13:01] [model  ] reply after 127 s (no token counts); ERROR spec_met_during_wait
+[00:13:01] [done   ] search stopped: search_spec_met; selected c0053 (SSHI_FBR)
+[00:13:01] [heldout] checking c0053 and the reference on 4 held-out conditions
+[00:13:15] [heldout] c0053: 3/4 held-out conditions pass; reference: 1/4
+[00:13:15] [robust ] Monte Carlo: 16 samples of c0053 on all 10 conditions
+[00:16:17] [robust ] 44 % of samples meet the spec on every condition; weakest: H4
+[00:16:17] [done   ] spec met on search conditions: True; on all conditions: False
+[00:16:17] [done   ] report: runs/bench/P4/full/seed4/report.md

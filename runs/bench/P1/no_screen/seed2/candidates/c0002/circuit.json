@@ -1,0 +1,76 @@
+{
+ "move": "new_topology",
+ "name": "SR_FBR",
+ "rationale": "To eliminate the diode drops that cause failures in S2 and S4, this design replaces the diode bridge with a Synchronous Rectifier (SR). Using two SYNC controllers, it closes the appropriate switches for the positive and negative half-cycles of the piezo voltage. This minimizes power loss and ensures vavg stays above 1.8 V even for weak excitations. A Zener clamp is maintained for S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S3",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "S4",
+   "type": "S",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0005,
+   "phase": 0.0,
+   "edges": "pos"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 0.0005,
+   "phase": 0.0,
+   "edges": "neg"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-05
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

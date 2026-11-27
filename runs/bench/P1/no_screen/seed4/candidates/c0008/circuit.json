@@ -1,0 +1,62 @@
+{
+ "move": "new_topology",
+ "name": "fbr_zener",
+ "rationale": "The reference FBR fails on S3 due to overvoltage (vmax=5.72V) and on S2/S4 due to undervoltage. Adding a DZ33 Zener clamp will solve the S3 overvoltage issue. While it doesn't solve S2/S4, it provides a baseline to isolate the effect of the clamp.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 5.075968479215074e-06
+  }
+ ]
+}

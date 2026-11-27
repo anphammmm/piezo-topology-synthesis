@@ -1,0 +1,96 @@
+{
+ "move": "modify_topology",
+ "name": "sshi_fbr_res",
+ "rationale": "The previous SSHI FBR design delivered sufficient power (vavg > 1.8V) but suffered from high output ripple (vpp) and slow settling (dv) on marginal conditions (S2, S4). The ripple is dominated by the high-energy charge bursts transferred from Cp to the storage capacitor C1 during the synchronous flip. Adding a small series resistor (R_smooth) between the rectifier output and the storage capacitor limits these peak currents, reducing vpp without significantly increasing the DC settling time (since R_smooth << RL).",
+ "done": false,
+ "components": [
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "value": 0.0015589596639640948
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00015669861206570355,
+   "phase": -0.07678885290616229,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "R_smooth",
+   "type": "R",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 8.664797142586263
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.180746373884361e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

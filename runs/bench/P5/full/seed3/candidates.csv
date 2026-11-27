@@ -1,0 +1,11 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,0.1093,0,12,False
+c0001,1,llm,,new_topology,SSHI_FullBridge,40eae91a637a,ffd4330d3d63,9,search,12.2427,1,16,False
+c0002,2,size,c0001,size,SSHI_FullBridge,40eae91a637a,c2356a1bd5bf,9,search,-9.7733,0,8,False
+c0003,2,size,c0001,size,SSHI_FullBridge,40eae91a637a,68288df3fdfe,9,search,12.9292,0,20,False
+c0004,2,size,c0001,size,SSHI_FullBridge,40eae91a637a,4e1d2054f4f2,9,search,-2.0594,0,13,False
+c0005,2,size,c0001,size,SSHI_FullBridge,40eae91a637a,eca6c2a41c4e,9,search,-0.9322,0,14,False
+c0006,2,size,c0001,size,SSHI_FullBridge,40eae91a637a,75ab25615cad,9,search,-3.4991,0,12,False
+c0007,2,size,c0001,size,SSHI_FullBridge,40eae91a637a,4725090ec3c8,9,search,-2.4104,0,13,False
+c0008,2,size,c0001,size,SSHI_FullBridge,40eae91a637a,ea9c862480c9,9,search,-2.1035,0,13,False
+c0009,2,size,c0001,size,SSHI_FullBridge,40eae91a637a,6c2212063938,9,search,-9.6148,0,8,False

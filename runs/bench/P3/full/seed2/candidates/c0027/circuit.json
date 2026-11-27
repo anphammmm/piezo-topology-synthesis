@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "sshi_fbr",
+ "rationale": "The piezo open-circuit voltage (0.76 V) is too low to efficiently overcome the diode drops of a full-bridge rectifier (FBR) and reach the 1.8 V goal. I am implementing a Synchronous Switch Harvesting on Inductor (SSHI) topology. By using an inductor and a switch to flip the voltage on the piezo capacitance at the extrema, we can significantly increase the effective voltage amplitude seen by the rectifier, allowing the output to reach 1.8 V even under weak excitation (S4) and heavy load (S2). A Zener clamp is added to ensure vout_max <= 3.6 V.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.411777831101795e-05,
+   "phase": -0.16951663667287378,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.170548893302271e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

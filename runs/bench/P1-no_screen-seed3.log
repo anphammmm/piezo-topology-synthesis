@@ -1,0 +1,48 @@
+[00:00:00] [setup  ] output in runs/bench/P1/no_screen/seed3; mode search; spec P1 (Sensor supply 1.8-3.6 V); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:07] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (7.1 s)
+[00:00:07] [model  ] round 1: asking the model (thinking on)
+[00:00:22] [model  ] waiting 15 s (round 1)
+[00:00:37] [model  ] waiting 30 s (round 1)
+[00:00:52] [model  ] waiting 45 s (round 1)
+[00:01:07] [model  ] waiting 60 s (round 1)
+[00:01:22] [model  ] waiting 75 s (round 1)
+[00:01:37] [model  ] waiting 90 s (round 1)
+[00:01:52] [model  ] waiting 105 s (round 1)
+[00:02:07] [model  ] waiting 120 s (round 1)
+[00:02:22] [model  ] waiting 135 s (round 1)
+[00:02:37] [model  ] waiting 150 s (round 1)
+[00:02:52] [model  ] waiting 165 s (round 1)
+[00:03:07] [model  ] waiting 180 s (round 1)
+[00:03:22] [model  ] waiting 195 s (round 1)
+[00:03:37] [model  ] waiting 210 s (round 1)
+[00:03:52] [model  ] waiting 225 s (round 1)
+[00:04:07] [model  ] waiting 240 s (round 1)
+[00:04:22] [model  ] waiting 255 s (round 1)
+[00:04:37] [model  ] waiting 270 s (round 1)
+[00:04:52] [model  ] waiting 285 s (round 1)
+[00:05:07] [model  ] waiting 300 s (round 1)
+[00:05:22] [model  ] waiting 315 s (round 1)
+[00:05:37] [model  ] waiting 330 s (round 1)
+[00:05:52] [model  ] waiting 345 s (round 1)
+[00:06:07] [model  ] waiting 360 s (round 1)
+[00:06:22] [model  ] waiting 375 s (round 1)
+[00:06:37] [model  ] waiting 390 s (round 1)
+[00:06:52] [model  ] waiting 405 s (round 1)
+[00:07:07] [model  ] waiting 420 s (round 1)
+[00:07:22] [model  ] waiting 435 s (round 1)
+[00:07:37] [model  ] waiting 450 s (round 1)
+[00:07:51] [model  ] reply after 464 s (2219 in / 7938 out)
+[00:07:51] [eval   ] round 1 design 1: new_topology 'sshi_fbr' (9 parts)
+[00:07:51] [sim    ] r01d1: simulating 6 conditions
+[00:07:58] [eval   ] r01d1: score 90.61, 6/6 conditions, 30/30 checks pass (7.8 s)
+[00:07:58] [eval   ] new best c0001 (sshi_fbr): score 90.61, 6/6 conditions pass
+[00:07:58] [done   ] search stopped: search_spec_met; selected c0001 (sshi_fbr)
+[00:07:58] [heldout] checking c0001 and the reference on 4 held-out conditions
+[00:08:09] [heldout] c0001: 3/4 held-out conditions pass; reference: 1/4
+[00:08:09] [robust ] Monte Carlo: 16 samples of c0001 on all 10 conditions
+[00:10:59] [robust ] 31 % of samples meet the spec on every condition; weakest: H4
+[00:10:59] [done   ] spec met on search conditions: True; on all conditions: False
+[00:10:59] [done   ] report: runs/bench/P1/no_screen/seed3/report.md

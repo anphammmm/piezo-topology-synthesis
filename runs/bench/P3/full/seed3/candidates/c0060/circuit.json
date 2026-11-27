@@ -1,0 +1,105 @@
+{
+ "move": "new_topology",
+ "name": "sshi_fbr_filter",
+ "rationale": "The previous best design 'sshi_fbr' failed only on the ripple constraint for the strong excitation case (S3), with a vpp of 61 mV vs the 50 mV limit. To reduce ripple without significantly increasing the storage capacitor (which could violate the startup or settled constraints), I am adding a second-order LC filter after the full-bridge rectifier. This filter will smooth the charge pulses delivered to the final storage capacitor 'out', reducing vpp while maintaining the voltage boost provided by the SSHI stage.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 9.068550084567486e-05,
+   "phase": 0.08789675937153946,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "mid",
+    "0"
+   ],
+   "value": 3.304396137667948e-07
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "mid",
+    "out"
+   ],
+   "value": 0.0006822805169578274
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.0667259776888625e-07
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

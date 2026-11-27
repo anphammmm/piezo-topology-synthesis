@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "stagnation",
+  "elapsed_s": 2321.8,
+  "iteration": 7,
+  "max_rounds": 12,
+  "best_id": "c0027",
+  "best_name": "SSHI_FBR_Zener",
+  "best_scalar": 23.273,
+  "best_cond_pass": 1,
+  "n_candidates": 50,
+  "n_sims": 375,
+  "model_wait_s": 195
+}

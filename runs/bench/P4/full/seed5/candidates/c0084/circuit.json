@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "p_sshi_zener",
+ "rationale": "The reference FBR fails on minimum output voltage (S5, S6) because it cannot extract enough power to support heavy loads, especially when the open-circuit voltage is low. A Parallel-SSHI (Synchronized Switch Harvesting on Inductor) topology is implemented to flip the voltage across the piezo capacitance Cp at every extrema, significantly increasing the energy harvested per cycle. A Zener diode (DZ33) is added to clamp the output voltage to ~3.3V, preventing it from exceeding the 3.6V limit in light-load conditions (S3).",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 7.639334963035462e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0028499013460363243
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00013610332238468123,
+   "phase": 0.03169526030734421,
+   "edges": "both"
+  }
+ ]
+}

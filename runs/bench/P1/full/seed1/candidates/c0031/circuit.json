@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "Parallel-SSHI-Zener",
+ "rationale": "The Reference FBR failed due to insufficient power (S2, S4) and overvoltage/ripple (S3). I am proposing a Parallel Synchronized Switch Harvesting on Inductor (SSHI) topology. By adding an inductor L1 and a switch S1 that flips the piezoelectric capacitance voltage at its extrema, we significantly increase the energy extracted per cycle, which should fix the Vout_min and startup failures. To address the Vout_max and ripple failures in S3, I have added a Zener diode (DZ33) as a clamp on the output node and a larger storage capacitor. This combination provides higher efficiency, voltage regulation, and reduced ripple.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.1642923716951362e-06
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.002087866033077396
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 6.126472494699972e-05,
+   "phase": 0.10927483632459226,
+   "edges": "both"
+  }
+ ]
+}

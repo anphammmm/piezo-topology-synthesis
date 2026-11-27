@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0029",
+  "selected_name": "Parallel-SSHI-Zener",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 406.62,
+    "n_sims": 219,
+    "id": "c0029"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.109206438065,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -1.1841287612999998,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.10571458620999996,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -4.285729310499998,
+      "passed": false
+    }
+  ]
+}

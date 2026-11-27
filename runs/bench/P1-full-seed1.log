@@ -1,0 +1,39 @@
+[00:00:00] [setup  ] output in runs/bench/P1/full/seed1; mode search; spec P1 (Sensor supply 1.8-3.6 V); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.4 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:08] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (8.0 s)
+[00:00:11] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 3.5 s)
+[00:00:11] [model  ] round 1: asking the model (thinking on)
+[00:00:26] [model  ] waiting 15 s (round 1)
+[00:00:41] [model  ] waiting 30 s (round 1)
+[00:00:56] [model  ] waiting 45 s (round 1)
+[00:01:14] [model  ] waiting 60 s (round 1)
+[00:01:26] [model  ] waiting 75 s (round 1)
+[00:01:44] [model  ] waiting 90 s (round 1)
+[00:01:57] [model  ] waiting 106 s (round 1)
+[00:02:12] [model  ] waiting 121 s (round 1)
+[00:02:27] [model  ] waiting 136 s (round 1)
+[00:02:42] [model  ] waiting 151 s (round 1)
+[00:02:51] [model  ] reply after 160 s (2316 in / 6259 out)
+[00:02:51] [eval   ] round 1 design 1: new_topology 'Parallel-SSHI-Zener' (9 parts)
+[00:02:55] [screen ] r01d1: PASS, worst 251 % of the power needed (4 presets, 4.0 s)
+[00:02:55] [sim    ] r01d1: simulating 6 conditions
+[00:03:02] [eval   ] r01d1: score 7.43, 1/6 conditions, 12/30 checks pass (7.2 s)
+[00:03:02] [model  ] round 2: asking the model (thinking on)
+[00:03:51] [eval   ] new best c0008 (Parallel-SSHI-Zener): score 35.70, 2/6 conditions pass
+[00:03:51] [size   ] c0001 (Parallel-SSHI-Zener) generation 1: best score 7.43 -> 35.70, 8/48 evaluations (49 s)
+[00:04:41] [eval   ] new best c0017 (Parallel-SSHI-Zener): score 79.47, 5/6 conditions pass
+[00:04:41] [size   ] c0001 (Parallel-SSHI-Zener) generation 2: best score 35.70 -> 79.47, 16/48 evaluations (50 s)
+[00:05:43] [size   ] c0001 (Parallel-SSHI-Zener) generation 3: best score 79.47 -> 79.47, 24/48 evaluations (63 s)
+[00:06:46] [eval   ] new best c0029 (Parallel-SSHI-Zener): score 90.60, 6/6 conditions pass
+[00:06:46] [size   ] c0001 (Parallel-SSHI-Zener) generation 4: best score 79.47 -> 90.60, 32/48 evaluations (63 s); spec_met
+[00:06:46] [model  ] spec met while waiting; not waiting for the model's answer
+[00:06:46] [model  ] reply after 224 s (no token counts); ERROR spec_met_during_wait
+[00:06:46] [done   ] search stopped: search_spec_met; selected c0029 (Parallel-SSHI-Zener)
+[00:06:46] [heldout] checking c0029 and the reference on 4 held-out conditions
+[00:06:59] [heldout] c0029: 3/4 held-out conditions pass; reference: 1/4
+[00:06:59] [robust ] Monte Carlo: 16 samples of c0029 on all 10 conditions
+[00:10:28] [robust ] 0 % of samples meet the spec on every condition; weakest: H4
+[00:10:28] [done   ] spec met on search conditions: True; on all conditions: False
+[00:10:28] [done   ] report: runs/bench/P1/full/seed1/report.md

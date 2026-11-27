@@ -1,0 +1,114 @@
+{
+ "move": "new_topology",
+ "name": "Double_L_Filtered_SSHI",
+ "rationale": "The previous best design (Pi_Filtered_Zener_Out) almost met all goals but failed on startup time (tup) and ripple (vpp) in extreme cases (S3, S4). tup is limited by total capacitance, while vpp is limited by the filter's ability to buffer current pulses. By replacing the single-L Pi filter with a double-L (L-C-L-C) filter, we can achieve much higher ripple attenuation. This allows the tuner to reduce the total capacitance (C_mid + Cout) to meet the startup requirements without exceeding the ripple limit, while maintaining the high power extraction of the SSHI and full-bridge combination.",
+ "done": false,
+ "components": [
+  {
+   "id": "L_sshi",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n_sshi"
+   ],
+   "value": 0.0013552145831894258
+  },
+  {
+   "id": "S_sshi",
+   "type": "S",
+   "nodes": [
+    "n_sshi",
+    "pzn"
+   ],
+   "ctrl": "G_sshi"
+  },
+  {
+   "id": "G_sshi",
+   "type": "SYNC",
+   "ton": 2.9814865910193096e-05,
+   "phase": 0.007816641607084153,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L_f1",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "n_mid"
+   ],
+   "value": 0.0007736301283063355
+  },
+  {
+   "id": "C_mid",
+   "type": "C",
+   "nodes": [
+    "n_mid",
+    "0"
+   ],
+   "value": 8.801238381321891e-07
+  },
+  {
+   "id": "L_f2",
+   "type": "L",
+   "nodes": [
+    "n_mid",
+    "out"
+   ],
+   "value": 0.000587315236409521
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 8.796240227043282e-07
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

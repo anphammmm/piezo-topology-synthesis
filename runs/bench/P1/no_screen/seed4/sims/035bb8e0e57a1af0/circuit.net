@@ -1,0 +1,28 @@
+* c0001-size04-7 | condition S6
+Ipz pzn pzp SINE(0 5e-05 100)
+Cpz pzp pzn 3e-08
+Rpz pzp pzn 2e+07
+RL out 0 330000
+C1 0 out 5.78937e-07
+D1 0 pzn DSCH
+D2 0 pzp DSCH
+D3 pzn out DSCH
+D4 pzp out DSCH
+D5 0 out DZ33
+Rbleed_pzp pzp 0 1G
+Rbleed_pzn pzn 0 1G
+.model DSCH D(Is=5e-8 Rs=1 N=1.05 Cjo=10p BV=30 IBV=1u EG=0.69 XTI=2)
+.model DSI D(Is=2.5n Rs=0.6 N=1.75 Cjo=4p BV=75 IBV=1u)
+.model DZ33 D(Is=1e-12 Rs=5 N=1.5 BV=3.3 IBV=1u)
+.model SWI SW(Ron=2 Roff=1G Vt=0.5 Vh=0)
+.temp 60
+.tran 0 0.8 0 2e-06
+.save V(out) V(pzp) V(pzn) I(Ipz)
+.meas TRAN vavg AVG V(out) FROM=0.7 TO=0.8
+.meas TRAN vavg_prev AVG V(out) FROM=0.6 TO=0.7
+.meas TRAN vpp PP V(out) FROM=0.7 TO=0.8
+.meas TRAN vmax MAX V(out) FROM=0 TO=0.8
+.meas TRAN tup FIND time WHEN V(out)=1.8 RISE=1
+.meas TRAN pload AVG V(out)*V(out)/330000 FROM=0.7 TO=0.8
+.meas TRAN pext AVG V(pzp,pzn)*I(Ipz) FROM=0.7 TO=0.8
+.end

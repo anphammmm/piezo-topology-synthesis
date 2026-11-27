@@ -1,0 +1,14 @@
+{
+  "phase": "robust",
+  "stop_reason": "time_budget",
+  "elapsed_s": 3892.0,
+  "iteration": 12,
+  "max_rounds": 12,
+  "best_id": "c0228",
+  "best_name": "p_sshi_full_bridge_filtered_clamp",
+  "best_scalar": 79.395,
+  "best_cond_pass": 5,
+  "n_candidates": 250,
+  "n_sims": 1671,
+  "model_wait_s": 0
+}
