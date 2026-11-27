@@ -492,6 +492,37 @@ change that (three of the four scores did not move at all), and the run stopped 
 errors of a predictable kind should be caught by validation and named in the feedback, and effort spent
 sizing a structure that cannot work should be avoided, which the screen and the \SI{0.9}{V} rule do.
 
+\subsection{A first run of the full method}\label{sec:single}
+Before the campaign, one run of the full method (seed 1) shows the loop end to end. In round~1 the model
+proposed three structures: a parallel SSHI with a full bridge and a \SI{3.3}{V} zener clamp, the same
+bridge with only the clamp, and the SSHI bridge without the clamp. All three were valid. The screen
+rejected the clamped bridge: it has the reference's power ratios (96\,\% at S2, $-3$\,\% at S4), which the
+calibration of Table~\ref{tab:screenval} shows to be fatal. It passed the two SSHI structures, which
+deliver about 2.5 times the load's need at S2 and 2.1--3.4 times $P^\star$.
+
+With the proposed values, the clamped SSHI met only one condition. The evolution strategy, running while
+the model was answering round~2, raised it to five conditions after two generations and to all six after
+four (32 evaluations). The first design meeting the specification appeared after \SI{404}{s} and 249
+simulations, of which 51 were screen runs. The model answered round~2 after \SI{266}{s} with a
+dual-switch variant, which was evaluated but did not improve on the result.
+
+The selected design sizes the inductor to its upper limit (\SI{10}{mH}), the storage capacitor to
+\SI{2.0}{\micro F} and the switch on-time to \SI{55}{\micro s}, 11\,\% longer than the half resonance
+period $\pi\sqrt{L C_p}$ at nominal $C_p$. It passes three of the four held-out conditions. At H4
+(\SI{85}{\celsius}, heavy load) it holds the voltage window but is still rising at \SI{0.8}{s}: the mean
+output changes by \SI{89}{mV} between the last two windows, against a limit of \SI{20}{mV}. The hand-made
+witness fails the same check. In the Monte Carlo check, all 16 samples pass every search condition and
+H1--H3, and 25\,\% pass H4, so H4 is the design's only weak point. The run used two model calls (8.9k
+prompt and 17.8k completion tokens, \SI{437}{s} in the model), 531 simulations and \SI{11}{min} of wall
+time, including the held-out and Monte Carlo checks.
+
+Two observations matter for the campaign. First, the model's first proposal was the textbook structure
+for this problem, so this specification tests whether the loop can complete and size a known
+mechanism, not whether it can invent one (Section~\ref{sec:discussion}). Second, the specification was
+met during the model's second call, but this run still waited for that answer and evaluated it. The
+loop now stops as soon as sizing meets the specification. This does not change the time to the first
+success; it only removes the evaluation that came after it.
+
 \subsection{Comparison of variants}
 Table~\ref{tab:variants} and Fig.~\ref{fig:variants} summarise \NRuns{} runs.
 \pending{Describe the comparison once the campaign has run: success rates of the full method against the
@@ -545,7 +576,7 @@ colour, sizing steps in grey, best so far in black.}\label{fig:progress}
 the share of simulations spent on screening, full evaluations and sizing; and the fraction of sizing
 that overlapped model calls.}
 
-\section{Discussion}
+\section{Discussion}\label{sec:discussion}
 \emph{What the language model contributes.} The model supplies structures from a prior that includes
 the literature on nonlinear piezo interfaces. That makes it efficient on specifications whose solution
 recombines known mechanisms, which is the case here, and the random baseline quantifies how much this

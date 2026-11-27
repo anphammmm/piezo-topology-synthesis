@@ -186,7 +186,7 @@ class _Search:
         self.t["model_s"] += reply.seconds or 0.0
         for k in ("prompt_tokens", "completion_tokens", "reasoning_tokens"):
             self.t[k] += getattr(reply, k) or 0
-        if reply.error:
+        if reply.error and reply.error != "spec_met_during_wait":
             self.t["model_errors"] += 1
 
     def _hints(self, ev: Optional[Evaluation], scr: Optional[ScreenResult]) -> List[str]:
@@ -253,9 +253,14 @@ class _Search:
         topo.sizer.done, topo.sizer.reason = True, "budget"
         self.t["size_s"] += time.time() - t
 
+    def _met(self) -> bool:
+        """The search has what it was looking for and should stop as soon as possible."""
+        return (not self.cfg.continue_after_met and self.best_found is not None
+                and self.best_found.evaluation.all_pass)
+
     def _size_while(self, keep_going) -> None:
         gens = 0
-        while self._budget_left():
+        while self._budget_left() and not self._met():
             if not keep_going() and gens >= self.cfg.size_min_gens:
                 return
             topo = self._size_target()
@@ -288,6 +293,12 @@ class _Search:
             self._size_while(lambda: th.is_alive() and self.rec.elapsed() < deadline)
         last_beat = time.time()
         while th.is_alive():
+            if self._met():
+                # sizing met the spec while the model was thinking: stop waiting for an answer
+                # that can no longer change the result (the daemon thread is abandoned)
+                holder.setdefault("r", LLMReply(seconds=round(time.time() - t0, 1), error="spec_met_during_wait"))
+                self.rec.log("model", "spec met while waiting; not waiting for the model's answer")
+                break
             if self.rec.elapsed() >= deadline:
                 holder.setdefault("r", LLMReply(seconds=round(time.time() - t0, 1),
                                                 error="model call abandoned: wall-clock budget exceeded"))
@@ -435,6 +446,9 @@ class _Search:
             messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
             reply = self._ask(messages, cfg.think, 1)
             done = False
+            if self._met():
+                stop_reason = "search_spec_met"
+                break
             if reply.error:
                 consecutive_errors += 1
                 last = [{"kind": "error", "error": reply.error}]

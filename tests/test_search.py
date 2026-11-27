@@ -268,3 +268,42 @@ class DeadlineTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FirstFastThenSlowLLM:
+    """Round 1 answers at once; round 2 takes a long time (the model is still thinking)."""
+
+    def __init__(self, first):
+        self.first, self.calls = first, 0
+
+    def ask(self, messages, think, max_tokens=None, temperature=None, timeout=None):
+        import time as _t
+        self.calls += 1
+        if self.calls == 1:
+            return LLMReply(answer=self.first, seconds=0.0, prompt_tokens=10, completion_tokens=5)
+        _t.sleep(5)
+        return LLMReply(answer=multi(BRIDGE_CLAMP), seconds=5.0, prompt_tokens=10, completion_tokens=5)
+
+
+class StopWhenMetDuringWaitTest(unittest.TestCase):
+    def test_spec_met_by_sizing_stops_without_waiting_for_the_model(self):
+        import time as _t
+
+        def proposed_values_fail(text):          # any sized variant passes; the proposed values do not
+            if not uses(text, "SWI"):
+                return POOR                       # the reference bridge fails
+            if "100n 100n 3.4e-05 " in text:
+                return dict(GOOD, vmax=4.0)
+            return GOOD
+        with tempfile.TemporaryDirectory() as d:
+            out = Path(d)
+            t = _t.time()
+            res = run_search(SearchConfig(max_rounds=4, min_rounds=1, screen=False, size_budget=8, size_lambda=4,
+                                          mc_samples=0, heartbeat_s=0.05, stagnation=99),
+                             FirstFastThenSlowLLM(multi(WITNESS)), Simulator(FakeBackend(proposed_values_fail), out),
+                             RunRecorder(out, quiet=True))
+            self.assertLess(_t.time() - t, 4.0)
+            self.assertEqual(res.stop_reason, "search_spec_met")
+            self.assertEqual(res.selected.origin, "size")
+            rows = (out / "proposals.csv").read_text().splitlines()
+            self.assertEqual(len(rows), 2)          # header + round 1 only: round 2 never processed

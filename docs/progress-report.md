@@ -79,6 +79,26 @@ the witness at H4.
 This motivated three changes: diode-orientation validation, the screen, and diagnoses that name
 symptoms such as "the output never exceeds 0.9 V".
 
+### 3.4 First run of the full method (2026-11-27, seed 1)
+
+- **Spec met on all six search conditions** after 404 s and 249 simulations (51 of them screen runs),
+  with 2 model calls (17.8k completion tokens). Total: 531 simulations and 11 min, including the
+  held-out and Monte Carlo checks.
+- **Proposals:** round 1 brought three valid structures: SSHI + bridge + zener clamp, bridge + clamp,
+  and SSHI + bridge. The screen correctly rejected bridge + clamp, which has the reference's power
+  ratios. With the proposed values, the clamped SSHI met only 1 of 6 conditions; the evolution strategy
+  raised it to 5/6 after 2 generations and 6/6 after 4 (32 evaluations), while the model was still
+  answering round 2.
+- **Selected design:** SSHI (L = 10 mH, at the upper limit; t_on = 55 us, about 1.11 x pi*sqrt(L*Cp)),
+  full Schottky bridge, C = 2.0 uF, 3.3 V zener clamp.
+- **Held-out:** 3/4 pass. H4 (85 C, heavy load) fails only "settled" (89 mV drift vs 20 mV allowed), the
+  same check the hand-made witness fails.
+- **Monte Carlo (16 samples):** 100 % pass on S1-S6 and H1-H3; 25 % on H4.
+- **Caveat:** the model's first proposal is the textbook structure. This specification therefore tests
+  completing and sizing a known mechanism, not inventing one (see open questions).
+- **Fix made afterwards:** the loop now stops as soon as sizing meets the spec, instead of waiting for
+  the model's next answer and evaluating it.
+
 ## 4. Problems found and fixed on the way
 
 | problem | effect | fix |
@@ -90,7 +110,7 @@ symptoms such as "the output never exceeds 0.9 V".
 
 ## 5. Next steps
 
-1. **One single search run** (about 30-60 min) to check the complete loop with the real model.
+1. ~~One single search run~~: done, see 3.4.
 2. **Campaign**: 8 variants x 5 seeds at an equal budget of 3000 simulations per run. Variants are: full
    method; no screen; no diagnoses; one proposal per round; coordinate-search sizing; no model
    reasoning; a random-circuit baseline; and a screen audit.
