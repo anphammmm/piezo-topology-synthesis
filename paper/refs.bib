@@ -58,12 +58,12 @@
   year      = {2023}
 }
 
-% VERIFY
 @inproceedings{lai2025analogcoder,
   author    = {Lai, Yao and Lee, Sungyoung and Chen, Guojin and Poddar, Souradip and Hu, Mengkang and Pan, David Z. and Luo, Ping},
   title     = {{AnalogCoder}: Analog Circuit Design via Training-Free Code Generation},
   booktitle = {Proc. AAAI Conf. Artificial Intelligence},
-  year      = {2025}
+  volume    = {39}, number = {1}, pages = {379--387}, year = {2025},
+  doi       = {10.1609/aaai.v39i1.32016}
 }
 
 % VERIFY
@@ -74,9 +74,10 @@
   year      = {2024}
 }
 
-% VERIFY
+% VERIFY authors (title, venue and DOI confirmed)
 @inproceedings{chen2024artisan,
   author    = {Chen, Zihao and others},
+  doi       = {10.1145/3649329.3655903},
   title     = {Artisan: Automated Operational Amplifier Design via Domain-Specific Large Language Model},
   booktitle = {Proc. ACM/IEEE Design Automation Conf. (DAC)},
   year      = {2024}
@@ -89,12 +90,12 @@
   volume  = {52}, number = {4}, pages = {584--595}, year = {2005}
 }
 
-% VERIFY
 @article{lefeuvre2005sece,
   author  = {Lefeuvre, Elie and Badel, Adrien and Richard, Claude and Guyomar, Daniel},
   title   = {Piezoelectric Energy Harvesting Device Optimization by Synchronous Electric Charge Extraction},
   journal = {J. Intell. Mater. Syst. Struct.},
-  volume  = {16}, number = {10}, pages = {865--876}, year = {2005}
+  volume  = {16}, number = {10}, pages = {865--876}, year = {2005},
+  doi     = {10.1177/1045389X05056859}
 }
 
 % VERIFY
@@ -138,12 +139,11 @@
   volume  = {12}, pages = {2539--2561}, year = {2011}
 }
 
-% VERIFY: replace with the official model card or technical report of the model version used.
 @misc{gemma4,
   author       = {{Google DeepMind}},
   title        = {Gemma 4 Model Card},
   year         = {2026},
-  howpublished = {Model card}
+  howpublished = {\url{https://ai.google.dev/gemma/docs/core/model_card_4}}
 }
 
 @misc{ltspice,
@@ -151,4 +151,118 @@
   title        = {{LTspice}},
   howpublished = {Circuit simulator},
   year         = {2024}
+}
+
+@article{dicken2012power,
+  author  = {Dicken, James and Mitcheson, Paul D. and Stoianov, Ivan and Yeatman, Eric M.},
+  title   = {Power-Extraction Circuits for Piezoelectric Energy Harvesters in Miniature and Low-Power Applications},
+  journal = {IEEE Trans. Power Electron.},
+  volume  = {27}, number = {11}, pages = {4514--4529}, year = {2012},
+  doi     = {10.1109/TPEL.2012.2192291}
+}
+
+@article{szarka2012review,
+  author  = {Szarka, Gyorgy D. and Stark, Bernard H. and Burrow, Stephen G.},
+  title   = {Review of Power Conditioning for Kinetic Energy Harvesting Systems},
+  journal = {IEEE Trans. Power Electron.},
+  volume  = {27}, number = {2}, pages = {803--815}, year = {2012},
+  doi     = {10.1109/TPEL.2011.2161675}
+}
+
+@article{peng2019senseset,
+  author  = {Peng, Yimai and Choo, Kyojin D. and Oh, Sechang and Lee, Inhee and Jang, Taekwang and Kim, Yejoong and Lim, Jongyup and Blaauw, David and Sylvester, Dennis},
+  title   = {An Efficient Piezoelectric Energy Harvesting Interface Circuit Using a Sense-and-Set Rectifier},
+  journal = {IEEE J. Solid-State Circuits},
+  volume  = {54}, number = {12}, pages = {3348--3361}, year = {2019},
+  doi     = {10.1109/JSSC.2019.2945262}
+}
+
+% VERIFY journal, volume and pages (title and authors confirmed from the authors' repository)
+@article{du2017sshc,
+  author  = {Du, Sijun and Seshia, Ashwin A.},
+  title   = {An Inductorless Bias-Flip Rectifier for Piezoelectric Energy Harvesting},
+  journal = {IEEE J. Solid-State Circuits},
+  volume  = {52}, number = {10}, pages = {2746--2757}, year = {2017}
+}
+
+@article{koza1997analog,
+  author  = {Koza, John R. and Bennett III, Forrest H. and Andre, David and Keane, Martin A. and Dunlap, Frank},
+  title   = {Automated Synthesis of Analog Electrical Circuits by Means of Genetic Programming},
+  journal = {IEEE Trans. Evol. Comput.},
+  volume  = {1}, number = {2}, pages = {109--128}, year = {1997}
+}
+
+@inproceedings{gao2025analoggenie,
+  author    = {Gao, Jian and Cao, Weidong and Yang, Junyi and Zhang, Xuan},
+  title     = {{AnalogGenie}: A Generative Engine for Automatic Discovery of Analog Circuit Topologies},
+  booktitle = {Proc. Int. Conf. Learning Representations (ICLR)},
+  year      = {2025}
+}
+
+% VERIFY author list
+@misc{chang2025lamagic2,
+  author       = {Chang, Chen-Chia and others},
+  title        = {{LaMAGIC2}: Advanced Circuit Formulations for Language Model-Based Analog Topology Generation},
+  year         = {2025},
+  howpublished = {arXiv:2506.10235}
+}
+
+@inproceedings{zhou2026explore,
+  author    = {Zhou, Guanglei and Chang, Chen-Chia and Shen, Yikang and Ku, Jonathan and Jacobson, Isaac and Pan, Jingyu and Chen, Yiran and Zhang, Xin},
+  title     = {{EXPLORE}: Exploration with Guided Search for Analog Topology Generation using Language Models},
+  booktitle = {Proc. ACM/IEEE Workshop on Machine Learning for CAD (MLCAD)},
+  year      = {2026},
+  note      = {arXiv:2607.13416}
+}
+
+@misc{zhang2024analogxpert,
+  author       = {Zhang, Haoyi and Sun, Shizhao and Lin, Yibo and Wang, Runsheng and Bian, Jiang},
+  title        = {{AnalogXpert}: Automating Analog Topology Synthesis by Incorporating Circuit Design Expertise into Large Language Models},
+  year         = {2024},
+  howpublished = {arXiv:2412.19824}
+}
+
+@misc{nau2025smps,
+  author       = {Nau, Simon and Krummenauer, Jan and Zimmermann, Andr{\'e}},
+  title        = {Evaluating {LLM}-based Workflows for Switched-Mode Power Supply Design},
+  year         = {2025},
+  howpublished = {arXiv:2507.10639}
+}
+
+@misc{yin2024adollm,
+  author       = {Yin, Yuxuan and Wang, Yu and Xu, Boxun and Li, Peng},
+  title        = {{ADO-LLM}: Analog Design {Bayesian} Optimization with In-Context Learning of Large Language Models},
+  year         = {2024},
+  howpublished = {arXiv:2406.18770}
+}
+
+% VERIFY author list
+@misc{lehman2022elm,
+  author       = {Lehman, Joel and Gordon, Jonathan and Jain, Shawn and Ndousse, Kamal and Yeh, Cathy and Stanley, Kenneth O.},
+  title        = {Evolution through Large Models},
+  year         = {2022},
+  howpublished = {arXiv:2206.08896}
+}
+
+@article{romera2024funsearch,
+  author  = {Romera-Paredes, Bernardino and Barekatain, Mohammadamin and Novikov, Alexander and Balog, Matej and Kumar, M. Pawan and Dupont, Emilien and Ruiz, Francisco J. R. and Ellenberg, Jordan S. and Wang, Pengming and Fawzi, Omar and Kohli, Pushmeet and Fawzi, Alhussein},
+  title   = {Mathematical Discoveries from Program Search with Large Language Models},
+  journal = {Nature},
+  volume  = {625}, pages = {468--475}, year = {2024},
+  doi     = {10.1038/s41586-023-06924-6}
+}
+
+% VERIFY author list and identifier
+@misc{novikov2025alphaevolve,
+  author       = {Novikov, Alexander and others},
+  title        = {{AlphaEvolve}: A Coding Agent for Scientific and Algorithmic Discovery},
+  year         = {2025},
+  howpublished = {arXiv:2506.13131}
+}
+
+@misc{xu2024contamination,
+  author       = {Xu, Cheng and Guan, Shuhao and Greene, Derek and Kechadi, M-Tahar},
+  title        = {Benchmark Data Contamination of Large Language Models: A Survey},
+  year         = {2024},
+  howpublished = {arXiv:2406.04244}
 }

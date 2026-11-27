@@ -10,7 +10,8 @@ Nothing in the results is typed by hand except the pilot run (Section VI-A), who
 first Panda runs (smoke test and the first search, before the screen and diagnostics existed).
 
 - `generated/tab_conditions.tex`, `generated/tab_criteria.tex`: written from `piezo_synth/spec.py`.
-- `generated/tab_reference.tex`: reference and witness per condition, from the smoke-test run folder.
+- `generated/tab_reference.tex`, `generated/tab_screen_validation.tex`: reference and witness per condition, and the
+  screen against full simulation, from the smoke-test run folder (already filled from the 2026-11-27 Panda smoke test).
 - `generated/tab_variants.tex`, `generated/tab_screen_audit.tex`, `generated/macros.tex`,
   `generated/fig_variants.pdf`, `generated/fig_progress.pdf`: from the experiment campaign.
 

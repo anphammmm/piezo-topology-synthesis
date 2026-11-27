@@ -250,6 +250,31 @@ def _reference_table(smoke: Optional[Path]) -> str:
                                    r"Witness $V_{max}$", "Witness"], rows, 7)
 
 
+def _screen_validation_table(smoke: Optional[Path]) -> str:
+    """Screen prediction (net power at 1.8 V vs the load's need) against the full 0.8 s simulation,
+    for the reference (c0000) and the witness (c0001) on the screen conditions."""
+    rows = []
+    scr = _json(smoke / "smoke_screen.json") if smoke else None
+    if scr and (smoke / "measurements.csv").exists():
+        with (smoke / "measurements.csv").open(newline="", encoding="utf-8") as f:
+            vavg = {(r["candidate"], r["condition"]): r.get("vavg") for r in csv.DictReader(f)
+                    if r.get("split", "search") == "search"}
+        vmin = next(c.limit for c in spec.CRITERIA if c.id == "vout_min")
+        for cid, origin, label in (("c0000", "reference", "FBR"), ("c0001", "witness", "Witness")):
+            for cond in sorted(scr[origin]["ratio"]):
+                ratio = scr[origin]["ratio"][cond]
+                pn = scr[origin]["p_net"].get(cond)
+                gain = scr[origin]["gain"].get(cond)
+                v = vavg.get((cid, cond))
+                v = float(v) if v not in (None, "") else None
+                rows.append([label, cond, _num(pn, "{:.1f}", 1e6), _num(scr[origin]["p_req"][cond], "{:.1f}", 1e6),
+                             _num(ratio, "{:.0f}\%", 100), _num(gain, "{:.2f}"),
+                             r"$\geq$1.8 V" if ratio >= 1 else r"$<$1.8 V",
+                             _num(v, "{:.2f} V"), "yes" if (v is not None and (v >= vmin) == (ratio >= 1)) else "no"])
+    return _tabular("llrrrrlll", ["Circuit", "Cond.", r"$P_{net}$ ($\mu$W)", r"Need ($\mu$W)", "Ratio",
+                                  r"$P_{net}/P^\star$", "Predicted", r"Simulated $\bar V$", "Agrees"], rows, 9)
+
+
 def _macros(summary: List[dict], runs: List[dict], audit: Tuple[int, int]) -> str:
     def m(name, val):
         return "\\newcommand{\\" + name + "}{" + (val if val is not None else r"\textbf{[pending]}") + "}\n"
@@ -274,6 +299,7 @@ def write_paper_tables(gen_dir, root, smoke=None) -> None:
     files = {"tab_conditions.tex": _conditions_table(), "tab_criteria.tex": _criteria_table(),
              "tab_variants.tex": _variants_table(summary), "tab_screen_audit.tex": _audit_table(*audit),
              "tab_reference.tex": _reference_table(Path(smoke) if smoke else None),
+             "tab_screen_validation.tex": _screen_validation_table(Path(smoke) if smoke else None),
              "macros.tex": _macros(summary, runs, audit)}
     for name, text in files.items():
         (gen / name).write_text(text, encoding="utf-8")

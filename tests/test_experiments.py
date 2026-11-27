@@ -71,3 +71,19 @@ class CampaignTest(unittest.TestCase):
         self.assertNotIn("'", loop)
         for s in ("--label random", "--seed 2", "--baseline random", "runs/exp/random/seed1/outcome.json"):
             self.assertIn(s, loop)
+
+
+class ScreenValidationTableTest(unittest.TestCase):
+    def test_table_from_smoke_and_pending_without(self):
+        with tempfile.TemporaryDirectory() as d:
+            run_mod.main(["--fake", "--smoke", "--out", str(Path(d) / "smoke")])
+            gen = Path(d) / "gen"
+            write_paper_tables(gen, Path(d) / "none", smoke=Path(d) / "smoke")
+            t = (gen / "tab_screen_validation.tex").read_text()
+            for s in ("S2", "S4", "S6", "FBR", "Witness"):
+                self.assertIn(s, t)
+            self.assertNotIn("pending", t)
+            self.assertIn(chr(92) + "bar V", t)
+            self.assertFalse([c for c in t if ord(c) < 32 and c not in chr(10) + chr(9)])
+            write_paper_tables(gen, Path(d) / "none", smoke=None)
+            self.assertIn("pending", (gen / "tab_screen_validation.tex").read_text())

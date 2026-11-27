@@ -38,7 +38,8 @@ storage voltage it is a necessary condition for meeting the minimum-voltage requ
 evolution strategy sizes the surviving structures in parallel batches while the model is reasoning, so
 the model's latency hides the sizing cost. Third, results are returned to the model with plain-language
 diagnoses that name the failing function of the circuit. On a specification that a full-bridge rectifier
-fails under all six search conditions, \pending{summarise the main result with the numbers in
+fails under five of six search conditions, and on which the screen agrees with full simulation in every
+calibration case, \pending{summarise the main result with the numbers in
 Table~\ref{tab:variants}: success rate \FullSuccess{} versus \RandomSuccess{} for a model-free baseline at
 the same simulation budget, median \FullSimsToSuccess{} simulations to the first design meeting the
 specification, held-out and Monte Carlo results}.
@@ -98,26 +99,128 @@ circuit (Section~\ref{sec:diag}).
 model-free baseline at an equal simulation budget (Sections~\ref{sec:setup}--\ref{sec:results}).
 \end{enumerate}
 
-\section{Related Work}
-\emph{Topology synthesis.} Topology-selection methods choose from a library; topology-generation methods
-construct circuits from building blocks by genetic operators~\cite{mcconaghy2011mojito} or graph
-grammars~\cite{meissner2015feats,zhao2020gctg}; refinement methods modify known circuits using mined
-knowledge~\cite{jiao2015kmr}. Zhao and Zhang cast generation as a sequential decision process and train a
-policy-gradient network that learns which building block to add~\cite{zhao2022drl}; their evaluation
-pipeline (hash table, a symbolic DC-gain filter with a deliberately relaxed threshold, NSGA-II
-sizing~\cite{deb2002nsga2} that stops at the first feasible design) is the direct model for ours.
-Fast-evaluation filters for unsized topologies were studied in~\cite{zhao2018fast}.
+\section{Literature Review}\label{sec:lit}
+This section reviews the two fields the method joins (interface circuits for piezoelectric harvesters and
+automated topology synthesis), the recent use of language models in circuit design, and how such methods
+are evaluated. Table~\ref{tab:related} positions the closest works.
 
-\emph{Learning for circuit design.} Reinforcement learning has been used for
-sizing~\cite{settaluri2020autockt} and graph neural networks for predicting circuit
-properties~\cite{dong2023cktgnn}. LLM-based approaches generate SPICE netlists or code with simulator
-feedback~\cite{lai2025analogcoder}, fine-tune models on amplifier design knowledge~\cite{chen2024artisan},
-or generate converter topologies from language descriptions~\cite{chang2024lamagic}.
+\subsection{Interface circuits for piezoelectric harvesters}
+\emph{Passive rectification and its limit.} The full-bridge rectifier wastes, every half cycle, the charge
+needed to swing the piezoelectric capacitance between the positive and the negative rectified voltage, so
+the power it can deliver is bounded by $P^\star = f C_p V_{oc}^2$ even with ideal diodes, and diode drops
+reduce it further when $V_{oc}$ is a few volts~\cite{lefeuvre2006comparison}. Szarka \emph{et al.} review
+power conditioning for kinetic harvesters below \SI{10}{mW} and judge circuits by efficiency, quiescent
+power, start-up behaviour and how well they use the harvester relative to an optimal load~\cite{szarka2012review};
+these are the properties that our specification encodes as a voltage window, a start-up time and an
+explicit supply current for every controller.
 
-\emph{Piezoelectric interfaces.} Nonlinear interfaces such as SSHI~\cite{guyomar2005sshi},
-SECE~\cite{lefeuvre2005sece} and the bias-flip rectifier~\cite{ramadass2010biasflip} are designed by
-hand from an analysis of the charge flow in each half cycle; comparisons such
-as~\cite{lefeuvre2006comparison} show that the best structure depends on the excitation and load.
+\emph{Synchronous switching.} Guyomar \emph{et al.} introduced synchronized switch harvesting on an
+inductor (SSHI), which closes an inductive path at the extrema of the piezoelectric voltage so that the
+voltage is inverted rather than discharged~\cite{guyomar2005sshi}. Synchronous electric charge
+extraction (SECE) instead removes the whole charge at each extremum through an inductor, which makes the
+extracted power independent of the load; its authors reported a fourfold gain over impedance
+adaptation~\cite{lefeuvre2005sece}. Dicken \emph{et al.} compared the main extraction circuits in one
+analytical framework under realistic constraints and found that the ranking depends on the inductor's
+quality factor and on whether the transducer is weakly or strongly coupled~\cite{dicken2012power};
+Lefeuvre \emph{et al.} reached a similar conclusion about the dependence on excitation and
+load~\cite{lefeuvre2006comparison}.
+
+\emph{Integrated implementations.} The bias-flip rectifier of Ramadass and Chandrakasan shares one
+inductor between the flipping circuit and DC--DC converters and extracts more than four times the power of
+a full bridge~\cite{ramadass2010biasflip}. Synchronized switch harvesting on capacitors (SSHC) flips the
+voltage with switched capacitors and so removes the inductor~\cite{du2017sshc}, and the sense-and-set
+rectifier adds maximum-power-point tracking, reporting 512\,\% and 541\,\% of the power of an ideal full
+bridge on and off resonance~\cite{peng2019senseset}. Two observations from this line of work shape our
+study. First, results are reported as a figure of merit normalised to the ideal full-bridge power
+$P^\star$~\cite{ramadass2010biasflip,peng2019senseset}, which our screen measures for every structure.
+Second, every one of these structures was conceived by hand from an analysis of the charge flow in a half
+cycle. Optimisation in the harvesting literature tunes parameters of a chosen circuit or of the
+transducer; to our knowledge no prior work searches over interface \emph{topologies} automatically.
+
+\subsection{Automated analog topology synthesis}
+Koza \emph{et al.} evolved both the topology and the sizing of analog circuits by genetic programming from
+a small problem description~\cite{koza1997analog}, at the price of very large populations and circuit
+evaluation counts. MOJITO restricted genetic programming to trustworthy, hierarchically composed building
+blocks of operational amplifiers~\cite{mcconaghy2011mojito}; FEATS and GCTG construct topologies from
+building blocks by graph composition and decomposition~\cite{meissner2015feats,zhao2020gctg} and face a
+combinatorial explosion as the allowed size grows; knowledge-mining approaches refine known circuits with
+mined design knowledge~\cite{jiao2015kmr}. Zhao and Zhang cast topology construction as a sequential
+decision process and train a policy-gradient network online for each specification~\cite{zhao2022drl}.
+Their evaluation pipeline is the direct model for ours: a hash table of evaluated topologies, a symbolic
+DC-gain filter for unsized circuits whose threshold is deliberately relaxed (at \SI{30}{dB} for a
+\SI{60}{dB} specification, 99\,\% of rejected circuits also failed full sizing), and NSGA-II
+sizing~\cite{deb2002nsga2} that stops at the first feasible design. With this pipeline, 10k to 28k
+generated topologies per run reduce to 73--174 fast evaluations and 20--86 sizings, in 3--9 hours.
+Fast-evaluation filters for unsized topologies were studied separately in~\cite{zhao2018fast}.
+
+\subsection{Learned generative models of topology}
+Graph neural networks learn to generate and evaluate operational-amplifier topologies from datasets of
+simulated circuits~\cite{dong2023cktgnn}. AnalogGenie trains a GPT-style model to emit a circuit pin by
+pin and scales to topologies with more than fifty devices~\cite{gao2025analoggenie}. LaMAGIC fine-tunes
+a language model to generate power-converter topologies from a specification and measures success as the
+fraction of generated circuits whose simulated performance falls within a tolerance of the
+target~\cite{chang2024lamagic}; it notes that a reinforcement-learning baseline needs about 500 simulation
+queries for each new design. LaMAGIC2 improves the circuit formulation~\cite{chang2025lamagic2}, and
+EXPLORE adds simulator-guided Monte Carlo tree search to language-model decoding so that the simulation
+budget is spent on topology-altering choices~\cite{zhou2026explore}. These methods require a training set
+of simulated circuits of the target class, and the converter benchmarks contain circuits of a few
+components.
+
+\subsection{Language-model agents with a simulator in the loop}
+AnalogCoder prompts a general LLM to write circuit code, checks it with a simulator, feeds errors back and
+keeps a library of verified sub-circuits; it solved 20 of 24 benchmark tasks without
+training~\cite{lai2025analogcoder}. AnalogXpert adds a sub-circuit library, chain-of-thought prompting
+and a proofreading step, and reports 40\,\% and 23\,\% success on synthetic and real topology-synthesis
+sets against 3\,\% for GPT-4o alone~\cite{zhang2024analogxpert}. Artisan fine-tunes a model on
+operational-amplifier knowledge and sizes the result with the $g_m/I_D$ method~\cite{chen2024artisan}.
+For switched-mode power supplies, Nau \emph{et al.} found that SPICE feedback and reasoning raise the solve
+rate on 269 tasks from 15\,\% to 91\,\%, that parameter-tuning tasks are mostly solved, and that adapting
+the topology remains the weak point~\cite{nau2025smps}. Language models have also been combined with
+Bayesian optimisation for sizing~\cite{yin2024adollm}. Reinforcement learning has also been used for sizing alone~\cite{settaluri2020autockt}. Our division of labour follows these findings: the
+model chooses structures, and values are left to a numerical optimiser.
+
+\subsection{Language models as variation operators}
+Evolution through large models uses an LLM as the mutation operator of genetic
+programming~\cite{lehman2022elm}. FunSearch pairs an LLM that proposes programs with an automatic
+evaluator and feeds the best programs back into the prompt, and found new constructions in
+combinatorics~\cite{romera2024funsearch}; AlphaEvolve extends the pattern to whole
+code bases~\cite{novikov2025alphaevolve}. Our loop is an instance of this pattern for circuits. What is
+specific to the domain is the evaluator: a cheap physical necessary condition before the expensive
+transient simulations, analogous to the filter of~\cite{zhao2022drl}, and a sizer that runs while the
+proposer reasons.
+
+\subsection{How synthesis methods are evaluated}
+The works above report different things: success within a tolerance of the
+specification~\cite{chang2024lamagic,zhang2024analogxpert}, tasks solved~\cite{lai2025analogcoder,nau2025smps},
+the fraction of valid circuits~\cite{gao2025analoggenie}, and the number of circuit evaluations or
+simulations and the run time~\cite{koza1997analog,zhao2022drl}. Circuit papers in the harvesting field
+report the power gain over an ideal full bridge~\cite{ramadass2010biasflip,peng2019senseset}. Few report
+how a synthesised design behaves under operating conditions or component values that were not used
+during the search, and results obtained with pretrained language models can be inflated when the
+answer is in the training data~\cite{xu2024contamination}. Section~\ref{sec:setup} defines a protocol that
+measures all of these quantities.
+
+\begin{table*}[t]
+\centering\footnotesize
+\caption{Closest related approaches. ``Training'': needs a dataset of simulated circuits of the target class.
+``Unseen conditions'': the synthesised design is evaluated under operating conditions not used in the search.}
+\label{tab:related}
+\begin{tabular}{lllccc}
+\toprule
+Work & Domain & Proposer & Training & Simulator in loop & Unseen conditions \\
+\midrule
+Koza \emph{et al.}~\cite{koza1997analog} & filters, amplifiers & genetic programming & no & yes & no \\
+MOJITO~\cite{mcconaghy2011mojito} & op-amps & GP over building blocks & no & yes & no \\
+FEATS, GCTG~\cite{meissner2015feats,zhao2020gctg} & op-amps & graph construction & no & yes & no \\
+Zhao and Zhang~\cite{zhao2022drl} & op-amps & policy-gradient RL & no (online) & yes & no \\
+AnalogGenie~\cite{gao2025analoggenie} & analog blocks & generative GPT & yes & evaluation only & no \\
+LaMAGIC(2), EXPLORE~\cite{chang2024lamagic,chang2025lamagic2,zhou2026explore} & power converters & fine-tuned LM (+MCTS) & yes & EXPLORE & no \\
+AnalogCoder, AnalogXpert~\cite{lai2025analogcoder,zhang2024analogxpert} & analog blocks & prompted LLM agent & no & yes & no \\
+Nau \emph{et al.}~\cite{nau2025smps} & switched-mode supplies & LLM workflow & no & yes & no \\
+This work & piezo harvesting interfaces & prompted LLM + screen + ES & no & yes & yes (+ Monte Carlo) \\
+\bottomrule
+\end{tabular}
+\end{table*}
 
 \section{Problem Formulation}\label{sec:problem}
 \subsection{Source, load and conditions}
@@ -294,34 +397,65 @@ ten conditions for 16 Monte Carlo samples with $R$ $\pm$5\,\%, $C$ $\pm$20\,\%, 
 $t_{on}$ $\pm$5\,\% and switch timing $\pm$2\,\% of a period (uniform).
 
 \section{Experimental Setup}\label{sec:setup}
+\subsection{Implementation}
 The proposer is Gemma~4 31B~\cite{gemma4} served by vLLM, with reasoning enabled and temperature 1.0;
 repairs of unusable replies use one call without reasoning. Simulations use LTspice~\cite{ltspice} in
-batch mode under Wine, eight in parallel, with a \SI{2}{\micro s} maximum time step. Each run has a budget
-of 12 rounds of up to $k=3$ proposals, \SI{1}{h} of wall-clock time and 3000 simulations. We compare the
-variants in Table~\ref{tab:variants}, each over five seeds: the full method; without the screen; without
-diagnoses; one proposal per round (with 24 rounds); coordinate search instead of the evolution strategy;
-without model reasoning; and a model-free baseline that proposes random valid circuits over the same
-vocabulary through the same screen and sizing. The \texttt{audit} variant equals the full method but also
-sizes every structure the screen rejects, outside selection. Because all variants share a simulation
-budget, they are compared by the number of simulations used, which does not depend on the load of the
-shared model server; wall-clock times are reported for completeness. Metrics are the fraction of runs
-meeting the specification on the search conditions and on all conditions, the number of simulations
-and minutes until the first design meeting the specification, the fraction of invalid proposals, and the
-Monte Carlo pass rate of the selected design.
+batch mode under Wine, eight in parallel, with a \SI{2}{\micro s} maximum time step; waveform files are
+deleted once the measurements are read. Each run has a budget of 12 rounds of up to $k=3$ proposals,
+\SI{1}{h} of wall-clock time and 3000 simulations.
+
+\subsection{Baselines and variants}
+No published method addresses this design problem, and the generative models of
+Section~\ref{sec:lit} would need a training set of harvesting interfaces, so we compare against four
+references that isolate what each part of the method contributes:
+(i) the full-bridge rectifier, the standard passive interface;
+(ii) a hand-designed SSHI interface with a zener clamp (the \emph{witness}), standing for the expert
+solution from the literature~\cite{guyomar2005sshi};
+(iii) a model-free baseline that proposes random valid circuits over the same vocabulary through the same
+screen and sizing, which measures the value of the language model's prior at equal simulation cost; and
+(iv) ablations of the full method: without the screen, without diagnoses, one proposal per round (with 24
+rounds), coordinate search instead of the evolution strategy, and without model reasoning. The
+\texttt{audit} variant equals the full method but also sizes every structure the screen rejects, outside
+selection, to measure the screen's error rate as in~\cite{zhao2022drl}. Every variant runs five seeds.
+
+\subsection{Metrics}
+Following the practice reviewed in Section~\ref{sec:lit}, we report:
+\begin{enumerate}
+\item \emph{Success rate}: the fraction of runs whose selected design meets every criterion on the six
+search conditions~\cite{chang2024lamagic,zhang2024analogxpert}, and on all ten conditions including the
+held-out ones (generalisation).
+\item \emph{Cost to success}: simulations, and minutes, until the first design meeting the specification;
+total simulations, model calls and tokens per run~\cite{koza1997analog,zhao2022drl}. Variants are compared
+by simulations, which do not depend on the load of the shared model server.
+\item \emph{Validity}: the fraction of proposals rejected by validation, and of structures that repeat
+earlier ones~\cite{gao2025analoggenie}.
+\item \emph{Screen accuracy}: agreement of the screen with full simulation, and the fraction of rejected
+structures that sizing could still make feasible (\texttt{audit}).
+\item \emph{Circuit quality}: the power gain over an ideal full bridge, $P_{net}(V_s)/P^\star$, the
+figure of merit of~\cite{ramadass2010biasflip,peng2019senseset}, and the end-to-end efficiency
+$P_{load}/P_{ext}$.
+\item \emph{Robustness}: the Monte Carlo pass rate of the selected design under component tolerances and
+switch-timing error.
+\item \emph{Novelty}: whether the selected structure belongs to a known family (bridge, SSHI, SECE, SSHC,
+voltage multiplier, clamp) or combines them in a way not found in the cited literature, judged from its
+netlist.
+\end{enumerate}
 
 \section{Results}\label{sec:results}
-\subsection{Pilot run and calibration}\label{sec:pilot}
-A smoke test simulated the reference FBR (four Schottky diodes, \SI{2.2}{\micro F}) and a hand-designed
-witness (parallel SSHI with \SI{4.7}{mH}, $t_{on}=\SI{34}{\micro s}$, the FBR and a \SI{3.3}{V} zener
-clamp), which is never shown to the model. The reference failed all six search conditions: its mean
-output was \SI{1.76}{V} under S2 and \SI{1.51}{V} under S4, consistent with \eqref{eq:fbr}, and it reached
-\SI{5.7}{V} under S3; at S1 and S5 it met the voltage window but had not settled by \SI{0.8}{s}. The
-witness met every criterion on all six search conditions, so the specification is feasible. The smoke
-test also exposed a modelling error: without temperature parameters the Schottky model took silicon
-defaults, its saturation current at \SI{85}{\celsius} became comparable to the piezo current, and both circuits
-collapsed under H4. The model was corrected (Schottky barrier height and saturation-current exponent)
-before all runs reported below; Table~\ref{tab:reference} gives the reference and witness under the
-corrected models.
+\subsection{Calibration: reference, witness and screen}\label{sec:pilot}
+A smoke test simulates the reference full bridge (four Schottky diodes, \SI{2.2}{\micro F}) and the
+witness (parallel SSHI with \SI{4.7}{mH} and $t_{on}=\SI{34}{\micro s}$, the bridge and a \SI{3.3}{V}
+zener clamp) on all ten conditions, and runs the screen on both (Tables~\ref{tab:reference}
+and~\ref{tab:screenval}). It took 26 simulations and \SI{32}{s} of wall time with eight in parallel,
+about \SI{4.7}{s} of simulator time per simulation.
+
+The reference fails five of the six search conditions and three of the four held-out ones. Its mean
+output is \SI{1.76}{V} under S2 and \SI{1.51}{V} under S4, below \SI{1.8}{V} as \eqref{eq:fbr} predicts;
+under strong excitation and light load it rises to \SI{5.7}{V} (S3) and \SI{6.9}{V} (H3); at S1 and S5 it
+holds the voltage window but has not settled by \SI{0.8}{s}. The witness meets every criterion on all six
+search conditions and fails only the settling criterion under H4 (\SI{85}{\celsius}), so the
+specification is feasible but not trivial, and the held-out set can expose a design that only fits the
+search conditions.
 
 \begin{table}[t]
 \centering\footnotesize
@@ -329,7 +463,25 @@ corrected models.
 \resizebox{\columnwidth}{!}{\input{generated/tab_reference.tex}}
 \end{table}
 
-A pilot search with an earlier version of the loop (one proposal per call, no screen, no diagnoses,
+\begin{table}[t]
+\centering\footnotesize
+\caption{The screen against full simulation. $P_{net}$: net power into the storage node fixed at
+\SI{1.8}{V}; need: $V_s^2/R_L$; prediction from \eqref{eq:screen}; simulated $\bar V$: mean output of the
+\SI{0.8}{s} cold-start run.}\label{tab:screenval}
+\resizebox{\columnwidth}{!}{\input{generated/tab_screen_validation.tex}}
+\end{table}
+
+The screen agrees with the full simulation in all six cases of Table~\ref{tab:screenval}, including the
+near-miss of the reference under S2, where it delivers 96\,\% of the load's need at \SI{1.8}{V} and the
+simulated output settles at \SI{1.76}{V}. Under S4 the reference's net power is slightly negative: the
+open-circuit voltage (\SI{1.9}{V}) is below \SI{1.8}{V} plus two diode drops, so the bridge never conducts
+and the storage node only loses the diodes' reverse leakage. The witness delivers 2.1--3.4 times the
+ideal full-bridge power $P^\star$, the range reported for SSHI-type interfaces~\cite{ramadass2010biasflip}.
+The smoke test also exposed a modelling error, fixed before all runs reported here: without temperature
+parameters, the Schottky model took silicon defaults and its saturation current at \SI{85}{\celsius}
+approached the piezo current, collapsing both circuits under H4.
+
+\emph{A pilot search} with an earlier version of the loop (one proposal per call, no screen, no diagnoses,
 coordinate-search tuning) is instructive. Each model call took \SIrange{110}{220}{s} with 4.6k--8.7k
 completion tokens. The model proposed sensible structures by name (parallel SSHI with a clamp, SECE,
 a synchronous switched bridge), but all four distinct proposals connected the \SI{3.3}{V} zener with its
