@@ -1,0 +1,105 @@
+{
+ "move": "new_topology",
+ "name": "PSSHI_PiFilter",
+ "rationale": "The previous best design (PSSHI_LCFilter) failed on S4 because of a conflict between the storage capacitor size: a larger C1 was needed to suppress ripple (vpp), but this made the time constant (tau = RL*C) too long for the output to settle (dv) within 0.8s. By introducing a Pi-filter (C2-L2-C1) at the output of the rectifier, we can achieve superior ripple suppression with a smaller total capacitance. This reduces the settling time for the light-load S4 condition while maintaining low ripple for the heavy-load S6 condition.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.000453
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00045,
+   "phase": 0.0166,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_bridge"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_bridge"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C2",
+   "type": "C",
+   "nodes": [
+    "n_bridge",
+    "0"
+   ],
+   "value": 1e-06
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_bridge",
+    "out"
+   ],
+   "value": 0.00104
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 9.69e-07
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

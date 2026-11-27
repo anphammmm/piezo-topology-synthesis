@@ -1,0 +1,9 @@
+{
+  "label": "no_diag",
+  "baseline": null,
+  "fake": false,
+  "smoke": false,
+  "seed": 2,
+  "spec": "P1",
+  "argv": null
+}

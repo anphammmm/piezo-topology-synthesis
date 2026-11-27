@@ -1,0 +1,114 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_DoubleL_Filter",
+ "rationale": "The SSHI_PiFilter was very close to passing, but failed slightly on ripple and startup. The Pi filter (C-L-C) provided good ripple suppression but slowed down the cold start. A Double-L filter (L-C-L-C) offers even more aggressive ripple attenuation (second-order filtering at the output) while potentially allowing for a smaller first capacitor (C2), which can speed up the initial charging process compared to a Pi filter. By using two inductors (L2, L3) and two capacitors (C2, C1), we create a low-pass structure that should push the ripple below 20 mV while keeping the total capacitance manageable for startup within 0.15 s.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.007
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.155936441033041e-05,
+   "phase": 0.05,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "n_mid"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "C2",
+   "type": "C",
+   "nodes": [
+    "n_mid",
+    "0"
+   ],
+   "value": 4.7e-07
+  },
+  {
+   "id": "L3",
+   "type": "L",
+   "nodes": [
+    "n_mid",
+    "out"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

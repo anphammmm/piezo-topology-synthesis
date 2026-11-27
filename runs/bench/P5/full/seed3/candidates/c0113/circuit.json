@@ -1,0 +1,105 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_SeriesL_Filter",
+ "rationale": "The SSHI_LC_Filter was very close to passing but failed on ripple (48-74mV), needing <20mV. To reduce ripple without increasing output capacitance (which slows startup 'tup' and settling 'dv'), I am increasing the total filter inductance by placing two inductors L2 and L3 in series. This increases the total inductance to potentially 20mH, reducing the current ripple. By using a single output capacitor C1 instead of an intermediate one (as in the DoubleL filter), I keep the total capacitance low enough to meet the startup and settling time requirements.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 2.9522291203336387e-05,
+   "phase": 0.04758911672922008,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "n_mid"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "L3",
+   "type": "L",
+   "nodes": [
+    "n_mid",
+    "out"
+   ],
+   "value": 0.004709565462472135
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.117426707463629e-06
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

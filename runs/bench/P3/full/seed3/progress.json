@@ -1,7 +1,7 @@
 {
-  "phase": "robust",
+  "phase": "done",
   "stop_reason": "search_spec_met",
-  "elapsed_s": 1574.2,
+  "elapsed_s": 1898.0,
   "iteration": 6,
   "max_rounds": 12,
   "best_id": "c0110",

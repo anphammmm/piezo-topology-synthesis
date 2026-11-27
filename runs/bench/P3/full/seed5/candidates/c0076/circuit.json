@@ -1,0 +1,112 @@
+{
+ "move": "new_topology",
+ "name": "Pulsed_Output_SSHI",
+ "rationale": "The best previous design (SSHI_FullBridge) failed marginally on ripple (S3) and settling (S4). This is a classic trade-off: increasing C_out reduces ripple but increases settling time. To break this, I am adding a second stage of energy transfer. The first stage is the standard SSHI flipping and a full-bridge rectifier that charges a buffer capacitor (C_mid). The second stage uses a synchronous switch (S2) to transfer charge from C_mid to C_out in controlled pulses. This creates a second-order filtering effect and allows the tuner to optimize the energy delivery rate independently of the storage capacitance, which should simultaneously reduce ripple and improve settling stability.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0002
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 7.024814731040727e-06,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cmid",
+   "type": "C",
+   "nodes": [
+    "mid",
+    "0"
+   ],
+   "value": 1e-06
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "mid",
+    "out"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 7.024814731040727e-06,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

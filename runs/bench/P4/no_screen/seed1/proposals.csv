@@ -7,3 +7,10 @@ round,k,name,move,topo_hash,status,candidate,of,worst_ratio,ratio_S2,ratio_S4,ra
 4,1,PSSHI_SyncHalf_Fixed,new_topology,40eae91a637a,duplicate,,c0002,,,,,,,,,,
 5,1,SyncHalf_PSSHI,,,invalid,,,,,,,,,,,,3 SYNC controllers; at most 2 allowed
 5,2,PSSHI_Zener_Filtered,new_topology,c2996e3d6878,evaluated,c0149,,,,,,,,,,underpower | slow_start | not_settled | ripple,
+6,1,PSSHI_LCFilter,new_topology,797ef4cba6c7,evaluated,c0174,,,,,,,,,,sim_failed | not_settled | ripple,
+7,1,PSSHI_SyncBridge,,,invalid,,,,,,,,,,,,5 switches; at most 4 allowed | 3 SYNC controllers; at most 2 allowed
+7,2,PSSHI_HalfEdge,new_topology,ca5b9d4dba55,evaluated,c0183,,,,,,,,,,not_settled | ripple,
+8,1,SyncBridge_Filtered,new_topology,f5cf98bad746,evaluated,c0192,,,,,,,,,,ripple,
+9,1,PSSHI_PiFilter,new_topology,55d1b27ebd06,evaluated,c0201,,,,,,,,,,not_settled | ripple,
+10,1,SyncBridge_PSSHI_LC,new_topology,a83829c0e491,evaluated,c0218,,,,,,,,,,pinned,
+11,1,SyncBridge_LC,new_topology,f5cf98bad746,duplicate,,c0192,,,,,,,,,,

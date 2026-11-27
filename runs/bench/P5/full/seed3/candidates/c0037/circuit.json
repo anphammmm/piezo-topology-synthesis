@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FullBridge",
+ "rationale": "The reference FBR fails mainly due to inefficient energy extraction from the piezo capacitance and poor voltage regulation. I am implementing a Synchronized Switch Harvesting on Inductor (SSHI) topology. By using a switch and an inductor to invert the voltage across the piezo capacitance at its peaks, we significantly increase the energy harvested per cycle. This should improve the average output voltage for heavy (S2) and weak (S4) excitations and speed up the startup time (tup). A Zener diode (DZ33) is added to the output to clamp the voltage at 3.3 V, ensuring vout_max <= 3.6 V even under strong excitation (S3).",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00019180111946516442,
+   "phase": 0.05516251386114064,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2930207002427725e-07
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

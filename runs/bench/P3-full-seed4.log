@@ -1,0 +1,33 @@
+[00:00:00] [setup  ] output in runs/bench/P3/full/seed4; mode search; spec P3 (Very weak excitation, 1.8-3.6 V); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:10] [eval   ] reference: score 9.77, 0/6 conditions, 19/30 checks pass (10.2 s)
+[00:00:12] [screen ] reference: fail, worst -839 % of the power needed (1 presets, 2.0 s)
+[00:00:12] [model  ] round 1: asking the model (thinking on)
+[00:00:27] [model  ] waiting 15 s (round 1)
+[00:00:42] [model  ] waiting 30 s (round 1)
+[00:00:57] [model  ] waiting 45 s (round 1)
+[00:01:12] [model  ] waiting 60 s (round 1)
+[00:01:27] [model  ] waiting 75 s (round 1)
+[00:01:42] [model  ] waiting 90 s (round 1)
+[00:01:57] [model  ] waiting 105 s (round 1)
+[00:02:12] [model  ] waiting 120 s (round 1)
+[00:02:27] [model  ] waiting 135 s (round 1)
+[00:02:42] [model  ] waiting 150 s (round 1)
+[00:02:57] [model  ] waiting 165 s (round 1)
+[00:03:12] [model  ] waiting 180 s (round 1)
+[00:03:27] [model  ] waiting 195 s (round 1)
+[00:03:30] [model  ] reply after 198 s (2333 in / 7216 out)
+[00:03:30] [eval   ] round 1 design 1: new_topology 'SSHI_FullBridge' (9 parts)
+[00:03:34] [screen ] r01d1: PASS, worst 2040 % of the power needed (4 presets, 4.5 s)
+[00:03:34] [sim    ] r01d1: simulating 6 conditions
+[00:03:42] [eval   ] r01d1: score 90.59, 6/6 conditions, 30/30 checks pass (8.0 s)
+[00:03:42] [eval   ] new best c0001 (SSHI_FullBridge): score 90.59, 6/6 conditions pass
+[00:03:42] [done   ] search stopped: search_spec_met; selected c0001 (SSHI_FullBridge)
+[00:03:42] [heldout] checking c0001 and the reference on 4 held-out conditions
+[00:03:53] [heldout] c0001: 3/4 held-out conditions pass; reference: 0/4
+[00:03:53] [robust ] Monte Carlo: 16 samples of c0001 on all 10 conditions
+[00:06:28] [robust ] 19 % of samples meet the spec on every condition; weakest: H4
+[00:06:28] [done   ] spec met on search conditions: True; on all conditions: False
+[00:06:28] [done   ] report: runs/bench/P3/full/seed4/report.md

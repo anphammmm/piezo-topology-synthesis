@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "PSSHI_LCFilter",
+ "rationale": "The PSSHI_Zener design is highly efficient but fails S4 due to large charge packets from the LC flip causing high ripple and slow settling (large C_out needed for ripple, but large C_out slows settling). Replacing the rectifier's direct connection to the storage capacitor with an LC filter (L2 and C1) allows us to suppress the high-frequency ripple from the flipping pulses while keeping C1 small enough for fast startup and settling. This combines the high voltage headroom of the PSSHI with the ripple suppression of a second-order filter, avoiding the voltage drop issues seen in PSSHI_Zener_Filtered's resistive filter.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.00017458760525906056
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0007137671924483275,
+   "phase": -0.03762683886403301,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_bridge"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_bridge"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_bridge",
+    "out"
+   ],
+   "value": 0.0008203825613931002
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 8.595220343661102e-07
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

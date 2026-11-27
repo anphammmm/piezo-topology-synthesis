@@ -1,0 +1,26 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0001",
+  "selected_name": "SSHI_FullBridge",
+  "selected_origin": "llm",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 222.65,
+    "n_sims": 27,
+    "id": "c0001"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.10821699271000007,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -4.4108496355000035,
+      "passed": false
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "phase": "size",
+  "stop_reason": null,
+  "elapsed_s": 414.3,
+  "iteration": 2,
+  "max_rounds": 12,
+  "best_id": "c0025",
+  "best_name": "SSHI_FullBridge_Zener",
+  "best_scalar": 68.156,
+  "best_cond_pass": 4,
+  "n_candidates": 34,
+  "n_sims": 243,
+  "model_wait_s": 0
+}

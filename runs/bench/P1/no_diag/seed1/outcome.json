@@ -1,0 +1,52 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0030",
+  "selected_name": "SSHI_FullBridge",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": null,
+  "failed_checks": [
+    {
+      "split": "search",
+      "condition": "S2",
+      "criterion": "ripple",
+      "measured": 0.0741794109344,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.483588218688,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S2",
+      "criterion": "settled",
+      "measured": 0.07903947463000005,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -2.951973731500002,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.115956544876,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -1.31913089752,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.1082475459200003,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -4.412377296000015,
+      "passed": false
+    }
+  ]
+}

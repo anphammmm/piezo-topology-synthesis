@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FBR_Bleeder",
+ "rationale": "In S3, the light load (10 kOhm) and strong excitation might lead to an output voltage exceeding 5.5 V. Adding a bleeder resistor in parallel with the load provides a constant current sink to help regulate the voltage and satisfy v_max <= 5.5 V, while the SSHI boost ensures v_avg >= 4.5 V for the heavier loads.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.00343548343419422
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 9.671835977992213e-07,
+   "phase": 0.13007934665834936,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.832364305441212e-06
+  },
+  {
+   "id": "R1",
+   "type": "R",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 841590.2693155525
+  }
+ ]
+}

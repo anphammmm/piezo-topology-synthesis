@@ -1,0 +1,103 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FBR_Dump",
+ "rationale": "To prevent overvoltage in S3 without compromising S4, I use a synchronous dump. A switch and resistor from 'out' to '0' triggered at the piezo's peaks creates a pulsed load. This allows for more aggressive power dumping than a constant bleeder, potentially keeping v_max <= 5.5 V while allowing high efficiency during the rest of the cycle.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 8.94446188477559e-05,
+   "phase": 0.005318801689762854,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.971091438100806e-05
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "out",
+    "n2"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "R2",
+   "type": "R",
+   "nodes": [
+    "n2",
+    "0"
+   ],
+   "value": 215808.67828951668
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 2.958439418984776e-05,
+   "phase": -0.03247370540472236,
+   "edges": "both"
+  }
+ ]
+}

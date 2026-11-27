@@ -88,3 +88,53 @@
 [00:23:06] [eval   ] r05d2: score 10.49, 1/6 conditions, 13/30 checks pass (8.8 s)
 [00:23:06] [model  ] round 6: asking the model (thinking on)
 [00:24:14] [size   ] c0149 (PSSHI_Zener_Filtered) generation 1: best score 10.49 -> 36.25, 8/48 evaluations (68 s)
+[00:25:24] [size   ] c0149 (PSSHI_Zener_Filtered) generation 2: best score 36.25 -> 38.07, 16/48 evaluations (69 s)
+[00:26:32] [size   ] c0149 (PSSHI_Zener_Filtered) generation 3: best score 38.07 -> 50.91, 24/48 evaluations (69 s)
+[00:26:32] [model  ] reply after 183 s (5936 in / 6915 out)
+[00:26:32] [eval   ] round 6 design 1: new_topology 'PSSHI_LCFilter' (10 parts)
+[00:26:32] [sim    ] r06d1: simulating 6 conditions
+[00:28:32] [eval   ] r06d1: score 56.80, 4/6 conditions, 23/30 checks pass (120.0 s)
+[00:28:32] [model  ] round 7: asking the model (thinking on)
+[00:33:41] [size   ] c0174 (PSSHI_LCFilter) generation 1: best score 56.80 -> 56.80, 8/48 evaluations (309 s)
+[00:33:41] [model  ] reply after 282 s (5384 in / 10274 out)
+[00:33:41] [eval   ] round 7 design 2: new_topology 'PSSHI_HalfEdge' (9 parts)
+[00:33:41] [sim    ] r07d2: simulating 6 conditions
+[00:33:52] [eval   ] r07d2: score 29.43, 1/6 conditions, 23/30 checks pass (10.2 s)
+[00:33:52] [model  ] round 8: asking the model (thinking on)
+[00:39:52] [eval   ] new best c0187 (PSSHI_LCFilter): score 77.36, 5/6 conditions pass
+[00:39:52] [size   ] c0174 (PSSHI_LCFilter) generation 2: best score 56.80 -> 77.36, 16/48 evaluations (360 s)
+[00:39:52] [model  ] reply after 224 s (5577 in / 7892 out)
+[00:39:52] [eval   ] round 8 design 1: new_topology 'SyncBridge_Filtered' (9 parts)
+[00:39:52] [sim    ] r08d1: simulating 6 conditions
+[00:39:58] [eval   ] r08d1: score 44.75, 2/6 conditions, 26/30 checks pass (6.6 s)
+[00:39:58] [model  ] round 9: asking the model (thinking on)
+[00:45:18] [size   ] c0174 (PSSHI_LCFilter) generation 3: best score 77.36 -> 77.36, 24/48 evaluations (320 s)
+[00:45:18] [model  ] reply after 205 s (5407 in / 7369 out)
+[00:45:18] [eval   ] round 9 design 1: new_topology 'PSSHI_PiFilter' (11 parts)
+[00:45:18] [sim    ] r09d1: simulating 6 conditions
+[00:45:25] [eval   ] r09d1: score 38.91, 2/6 conditions, 24/30 checks pass (7.0 s)
+[00:45:26] [model  ] round 10: asking the model (thinking on)
+[00:49:32] [size   ] c0174 (PSSHI_LCFilter) generation 4: best score 77.36 -> 77.36, 32/48 evaluations (246 s)
+[00:54:05] [size   ] c0174 (PSSHI_LCFilter) generation 5: best score 77.36 -> 77.36, 40/48 evaluations (273 s)
+[00:54:05] [model  ] reply after 252 s (5577 in / 9079 out)
+[00:54:05] [eval   ] round 10 design 1: new_topology 'SyncBridge_PSSHI_LC' (11 parts)
+[00:54:05] [sim    ] r10d1: simulating 6 conditions
+[00:54:15] [eval   ] r10d1: score 6.45, 0/6 conditions, 18/30 checks pass (10.2 s)
+[00:54:15] [size   ] not sizing c0218 (SyncBridge_PSSHI_LC): output never reaches 0.9 V
+[00:54:15] [model  ] round 11: asking the model (thinking on)
+[00:58:42] [size   ] c0174 (PSSHI_LCFilter) generation 6: best score 77.36 -> 77.36, 48/48 evaluations (267 s); budget
+[00:58:42] [model  ] reply after 142 s (5645 in / 5233 out)
+[00:58:42] [eval   ] round 11 design 1 'SyncBridge_LC' repeats structure c0192; not simulated
+[00:58:42] [model  ] round 12: asking the model (thinking on)
+[00:59:33] [size   ] c0149 (PSSHI_Zener_Filtered) generation 4: best score 50.91 -> 63.44, 32/48 evaluations (51 s)
+[01:00:31] [size   ] c0149 (PSSHI_Zener_Filtered) generation 5: best score 63.44 -> 63.44, 40/48 evaluations (58 s)
+[01:00:46] [model  ] waiting 125 s (round 12)
+[01:01:01] [model  ] waiting 140 s (round 12)
+[01:01:16] [model  ] waiting 155 s (round 12)
+[01:01:31] [model  ] waiting 170 s (round 12)
+[01:01:46] [model  ] waiting 185 s (round 12)
+[01:01:58] [model  ] reply after 197 s (4862 in / 7261 out)
+[01:01:58] [done   ] search stopped: time_budget; selected c0187 (PSSHI_LCFilter)
+[01:01:58] [heldout] checking c0187 and the reference on 4 held-out conditions
+[01:03:04] [heldout] c0187: 3/4 held-out conditions pass; reference: 1/4
+[01:03:04] [robust ] Monte Carlo: 16 samples of c0187 on all 10 conditions

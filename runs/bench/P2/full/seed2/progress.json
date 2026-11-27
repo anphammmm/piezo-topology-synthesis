@@ -1,7 +1,7 @@
 {
-  "phase": "robust",
+  "phase": "done",
   "stop_reason": "time_budget",
-  "elapsed_s": 3892.0,
+  "elapsed_s": 4338.0,
   "iteration": 12,
   "max_rounds": 12,
   "best_id": "c0228",

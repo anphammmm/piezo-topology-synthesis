@@ -1,0 +1,85 @@
+{
+ "move": "new_topology",
+ "name": "SyncBridge_Filtered",
+ "rationale": "The SyncBridge_Zener (c0021) was very robust, especially on S4 where PSSHI failed, but it suffered from slight ripple issues on S2 and S6. By introducing an output inductor L1 between the synchronous bridge output and the storage capacitor, we create a second-order LC filter. This should significantly reduce the peak-to-peak ripple (vpp) without requiring a massive increase in C1, which would otherwise degrade the startup time (tup) and settling time (dv).",
+ "done": false,
+ "components": [
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "n_bridge"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "n_bridge"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "S3",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S4",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "0"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 2e-05,
+   "phase": 0.0,
+   "edges": "pos"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 2e-05,
+   "phase": 0.0,
+   "edges": "neg"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "n_bridge",
+    "out"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-06
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

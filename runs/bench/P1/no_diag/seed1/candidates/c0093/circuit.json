@@ -1,0 +1,69 @@
+{
+ "move": "new_topology",
+ "name": "HalfBridge_SSHI",
+ "rationale": "The previous best design (SSHI_FullBridge) failed on ripple and settling for the heavy load (S2), and potentially had a slow startup due to the two-diode drop of the full-bridge rectifier (approx 0.5V). This topology implements a Half-Bridge SSHI: one piezo terminal (pzn) is tied to ground, and the other (pzp) is flipped using an inductor L1 and switch S1 at every peak. The resulting positive voltage is rectified by a single diode D1, reducing the forward voltage drop to 0.25V. This should improve startup time (tup) and, combined with a larger output capacitor C1 (which the optimizer can now better utilize), reduce the ripple (vpp) and settling (dv) issues on S2.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0006526182331457422
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "0"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 5.035043991031357e-07
+  },
+  {
+   "id": "R1",
+   "type": "R",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 3.8325608933644544
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 2.0598783777942384e-05,
+   "phase": -0.008947745149929388,
+   "edges": "both"
+  }
+ ]
+}

@@ -1,0 +1,69 @@
+{
+ "move": "modify_topology",
+ "name": "HalfBridge_SSHI_Symmetric",
+ "rationale": "The SSHI_FullBridge was nearly successful but failed on S2 ripple and settling due to a conflict between storage capacitor size (ripple) and startup time (settling). The HalfBridge_SSHI settled at a lower voltage (2.14V in S2), which avoided these issues, but it slightly failed the minimum voltage and startup for S4 (1.78V vs 1.8V). By changing the flipping switch S1 from connecting to 0 (ground) to connecting to pzn (the other piezo terminal), we implement a more efficient SSHI flip, increasing the extracted energy. Combined with a half-bridge rectifier (D1, R1), we expect to maintain a lower steady-state voltage than the FullBridge (reducing ripple and dV) while increasing the power enough to pass S4.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0006485487419958829
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.652181899914271e-06
+  },
+  {
+   "id": "R1",
+   "type": "R",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 17.78554203860621
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 2.9381451680484165e-05,
+   "phase": -0.042867844216280704,
+   "edges": "both"
+  }
+ ]
+}

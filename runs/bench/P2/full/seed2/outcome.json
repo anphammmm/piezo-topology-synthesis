@@ -1,0 +1,62 @@
+{
+  "stop_reason": "time_budget",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0228",
+  "selected_name": "p_sshi_full_bridge_filtered_clamp",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": null,
+  "failed_checks": [
+    {
+      "split": "search",
+      "condition": "S3",
+      "criterion": "ripple",
+      "measured": 0.0514531135559,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.02906227111799997,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H3",
+      "criterion": "vout_max",
+      "measured": 5.75521802902,
+      "limit": 5.5,
+      "op": "<=",
+      "margin": -0.04640327800363635,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H3",
+      "criterion": "ripple",
+      "measured": 0.0594305992126,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.18861198425199996,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "vout_min",
+      "measured": 4.44877533968,
+      "limit": 4.5,
+      "op": ">=",
+      "margin": -0.011383257848888877,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.4,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+[00:00:00] [setup  ] output in runs/bench/P1/no_diag/seed3; mode search; spec P1 (Sensor supply 1.8-3.6 V); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:08] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (8.4 s)
+[00:00:10] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 2.2 s)
+[00:00:10] [model  ] round 1: asking the model (thinking on)
+[00:00:25] [model  ] waiting 15 s (round 1)
+[00:00:40] [model  ] waiting 30 s (round 1)
+[00:00:55] [model  ] waiting 45 s (round 1)
+[00:01:10] [model  ] waiting 60 s (round 1)
+[00:01:25] [model  ] waiting 75 s (round 1)
+[00:01:40] [model  ] waiting 90 s (round 1)
+[00:01:55] [model  ] waiting 105 s (round 1)
+[00:02:10] [model  ] waiting 120 s (round 1)
+[00:02:25] [model  ] waiting 135 s (round 1)
+[00:02:40] [model  ] waiting 150 s (round 1)
+[00:02:55] [model  ] waiting 165 s (round 1)
+[00:03:05] [model  ] reply after 175 s (2316 in / 6455 out)
+[00:03:05] [eval   ] round 1 design 1: new_topology 'SSHI_FullBridge_Zener' (9 parts)
+[00:03:10] [screen ] r01d1: PASS, worst 251 % of the power needed (4 presets, 5.0 s)
+[00:03:10] [sim    ] r01d1: simulating 6 conditions
+[00:03:19] [eval   ] r01d1: score -12.89, 0/6 conditions, 7/30 checks pass (8.4 s)
+[00:03:19] [eval   ] round 1 design 2: new_topology 'SyncRect_Zener' (6 parts)
+[00:03:25] [screen ] r01d2: fail, worst -56 % of the power needed (4 presets, 5.9 s)
+[00:03:25] [eval   ] round 1 design 3: new_topology 'FBR_Zener_HighC' (6 parts)
+[00:03:32] [screen ] r01d3: fail, worst -3 % of the power needed (4 presets, 7.7 s)
+[00:03:32] [model  ] round 2: asking the model (thinking on)
+[00:04:18] [size   ] c0001 (SSHI_FullBridge_Zener) generation 1: best score -12.89 -> -10.14, 8/48 evaluations (46 s)
+[00:05:10] [size   ] c0001 (SSHI_FullBridge_Zener) generation 2: best score -10.14 -> 20.97, 16/48 evaluations (51 s)
+[00:06:04] [eval   ] new best c0018 (SSHI_FullBridge_Zener): score 38.28, 2/6 conditions pass
+[00:06:04] [eval   ] new best c0023 (SSHI_FullBridge_Zener): score 53.35, 3/6 conditions pass
+[00:06:04] [eval   ] new best c0025 (SSHI_FullBridge_Zener): score 68.16, 4/6 conditions pass
+[00:06:04] [size   ] c0001 (SSHI_FullBridge_Zener) generation 3: best score 20.97 -> 68.16, 24/48 evaluations (54 s)
+[00:06:54] [size   ] c0001 (SSHI_FullBridge_Zener) generation 4: best score 68.16 -> 68.16, 32/48 evaluations (50 s)

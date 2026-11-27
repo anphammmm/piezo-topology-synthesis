@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FullBridge",
+ "rationale": "The open-circuit voltage of the piezo (~0.76V) is lower than the required load voltage (1.8V). A standard SSHI (Synchronous Switch Harvesting on Inductor) topology is used to invert the voltage across the piezo capacitance at each peak, effectively boosting the voltage to a level that can overcome the diode drops of a full-bridge rectifier and charge the storage capacitor to 1.8V. A Zener diode is added to clamp the output at 3.3V to prevent exceeding the absolute maximum of 3.6V.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.00904089061572412
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.355889683744659e-05,
+   "phase": 0.07241897934923815,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 6.928595541203195e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

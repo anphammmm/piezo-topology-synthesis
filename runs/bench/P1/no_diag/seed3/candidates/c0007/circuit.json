@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FullBridge_Zener",
+ "rationale": "This design implements a Synchronized Switch Harvesting on Inductor (SSHI) circuit combined with a full-bridge rectifier and a Zener clamp. The SSHI flip (L1, S1) increases the voltage amplitude across the rectifier by inverting the capacitor charge at the voltage extrema, which should address the Vavg failures in S2 and S4. The Zener diode (DZ1) clamps the output voltage to ~3.3V to prevent exceeding the 3.6V limit in S3. A large storage capacitor C1 is used to minimize ripple and stabilize the output.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0044452859388823575
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.91559354300509e-05,
+   "phase": 0.08005482372826134,
+   "edges": "both"
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.794440235570485e-05
+  }
+ ]
+}

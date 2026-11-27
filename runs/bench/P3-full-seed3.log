@@ -84,3 +84,6 @@
 [00:25:56] [heldout] checking c0110 and the reference on 4 held-out conditions
 [00:26:14] [heldout] c0110: 4/4 held-out conditions pass; reference: 0/4
 [00:26:14] [robust ] Monte Carlo: 16 samples of c0110 on all 10 conditions
+[00:31:37] [robust ] 25 % of samples meet the spec on every condition; weakest: H4
+[00:31:37] [done   ] spec met on search conditions: True; on all conditions: True
+[00:31:37] [done   ] report: runs/bench/P3/full/seed3/report.md

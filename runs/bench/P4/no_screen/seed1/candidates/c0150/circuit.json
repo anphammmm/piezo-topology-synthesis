@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "PSSHI_Zener_Filtered",
+ "rationale": "Based on the best design (PSSHI_Zener), but adds a series resistor between the rectifier output and the storage capacitor. This creates a low-pass filter that should significantly reduce the peak-to-peak ripple (Vpp) and the settling drift (dV) on S4, as the capacitor will be charged more smoothly. The Zener clamp is maintained to protect the load.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.00015402296499518822
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0002325774072866762,
+   "phase": 0.07869236666157597,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n2"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n2"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "R1",
+   "type": "R",
+   "nodes": [
+    "n2",
+    "out"
+   ],
+   "value": 117.33018636765051
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 9.877426203642412e-06
+  }
+ ]
+}

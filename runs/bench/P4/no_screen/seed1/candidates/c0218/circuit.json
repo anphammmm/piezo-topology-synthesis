@@ -1,0 +1,103 @@
+{
+ "move": "new_topology",
+ "name": "SyncBridge_PSSHI_LC",
+ "rationale": "The previous best PSSHI_LCFilter failed on S4 due to a tradeoff between settling time (requiring smaller C_out) and ripple (requiring larger C_out). To break this, I am replacing the diode bridge with a synchronous half-bridge (two switches on the top, two diodes on the bottom). This reduces the voltage drop and improves power delivery. I use two SYNC controllers: one specifically for the PSSHI inverter (G1, edges=both) and one for the rectifier (G2, edges=both), which controls both top switches. Because only one top switch can be forward-biased at a time, a single 'both' SYNC effectively handles both half-cycles. The LC filter is retained to suppress ripple, and the Zener clamp protects the load. This combination aims to achieve the high voltage of PSSHI with the fast settling and low ripple of a synchronous interface.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0004
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0004,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "S3",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 0.0008,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-06
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

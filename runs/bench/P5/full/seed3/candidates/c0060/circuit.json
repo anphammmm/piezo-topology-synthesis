@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_LC_Filter",
+ "rationale": "The SSHI_FullBridge design successfully achieved the target average voltage and startup time, but failed the ripple requirement. The high ripple is a consequence of the energy being delivered in sharp pulses, and increasing the storage capacitor (Cout) to reduce ripple would increase the startup time (tup) beyond the 0.15s limit, especially under weak excitation (S4). To break this trade-off, I am introducing a second inductor (L2) to form a low-pass LC filter between the rectifier and the output capacitor. This inductor smooths the current delivery, reducing the peak-to-peak ripple without significantly increasing the time required to reach 1.8V, as the peak charging current remains high enough during cold start.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.004957073176237804
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 6.424086961320668e-05,
+   "phase": -0.06854768352983301,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 0.0019145455881232325
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.49095298498497e-06
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

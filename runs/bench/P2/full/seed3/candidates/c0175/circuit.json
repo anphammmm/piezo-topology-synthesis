@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FBR_ZClamp",
+ "rationale": "The best design so far (SSHI_FBR) is close on S4/S6 but fails significantly on S3 (12V) and S5 (5.8V) due to the light load and strong excitation. To solve the over-voltage without a high-voltage Zener, I'm adding a non-linear shunt regulator: a DZ33 Zener diode in series with a resistor. This creates a clamp that is weakly conductive at 4.5V (preventing it from killing the underpowered S4/S6 conditions) but becomes significantly more conductive as the voltage rises toward 12V, helping to limit vmax. The tuner will optimize the resistor value to balance the power loss on S4/S6 against the clamping effect on S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.002920893822131079
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.4460741444955336e-05,
+   "phase": 0.12708022158801147,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.9211905700432894e-07
+  },
+  {
+   "id": "R_clamp",
+   "type": "R",
+   "nodes": [
+    "out",
+    "n_clamp"
+   ],
+   "value": 11810792.780310286
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "n_clamp",
+    "0"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}
