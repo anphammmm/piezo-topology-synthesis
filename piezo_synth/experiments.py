@@ -60,17 +60,20 @@ def campaign_loop(name: str, seeds, root: str = "runs/exp") -> str:
         for s in seeds)
 
 # The benchmark: every spec of spec.SPECS with these variants (one cluster job per spec).
-BENCH_VARIANTS = ["full", "no_screen", "no_diag", "coord", "random"]
-BENCH_EXTRA = ["hinted"]      # run on some specs only (tools/panda_campaign.py --bench --variants ...)
+# Benchmark v2: every variant uses the neutral prompt except hinted (the original prompt); coord was
+# dropped (the P1 campaign compares the sizers) and random runs fewer seeds (0/5 on P1).
+BENCH_VARIANTS = ["full", "no_screen", "no_diag", "hinted", "random"]
+BENCH_ROOT = "runs/bench2"
+BENCH_RANDOM_SEEDS = 3
 
 
-def bench_loop(spec_name: str, variants, seeds, root: str = "runs/bench") -> str:
+def bench_loop(spec_name: str, variants, seeds, root: str = BENCH_ROOT) -> str:
     """Shell command running one spec's variants and seeds in turn, skipping runs already finished.
     The variant configs are root/<variant>.json (write_campaign_configs(root)). No single quotes."""
     parts = []
     for v in variants:
         extra = VARIANTS[v][1]
-        for s in seeds:
+        for s in (list(seeds)[:BENCH_RANDOM_SEEDS] if v == "random" else seeds):
             d = f"{root}/{spec_name}/{v}/seed{s}"
             parts.append(f"( test -f {d}/outcome.json || python3 -u -m piezo_synth.run --spec {spec_name} "
                          f"--config {root}/{v}.json --label {v} --seed {s} {extra} --out {d} "
@@ -392,7 +395,7 @@ def write_paper_tables(gen_dir, root, smoke=None) -> None:
 def _bench_table(summary: List[dict]) -> str:
     """Specs as rows, variants as columns: runs meeting the search spec / runs (and also held-out)."""
     specs = [sp for sp in spec.SPECS if any(s["spec"] == sp for s in summary)]
-    variants = [v for v in BENCH_VARIANTS + BENCH_EXTRA if any(s["variant"] == v for s in summary)]
+    variants = [v for v in BENCH_VARIANTS if any(s["variant"] == v for s in summary)]
     cell = {(s["spec"], s["variant"]): s for s in summary}
     rows = []
     for sp in specs:

@@ -135,8 +135,15 @@ class CostTableAndMacrosTest(unittest.TestCase):
 
 class BenchmarkTest(unittest.TestCase):
     def test_bench_loop_command(self):
-        from piezo_synth.experiments import BENCH_VARIANTS, bench_loop
-        self.assertEqual(BENCH_VARIANTS, ["full", "no_screen", "no_diag", "coord", "random"])
+        from piezo_synth.experiments import BENCH_ROOT, BENCH_VARIANTS, bench_loop
+        self.assertEqual(BENCH_VARIANTS, ["full", "no_screen", "no_diag", "hinted", "random"])
+        self.assertEqual(BENCH_ROOT, "runs/bench2")
+        cmd2 = bench_loop("P2", BENCH_VARIANTS, [1, 2, 3, 4, 5])
+        self.assertIn("runs/bench2/P2/random/seed3/outcome.json", cmd2)
+        self.assertNotIn("runs/bench2/P2/random/seed4", cmd2)
+        self.assertIn("runs/bench2/P2/hinted/seed5", cmd2)
+        self.assertNotIn("coord", cmd2)
+        self.assertNotIn("'", cmd2)
         cmd = bench_loop("P2", ["full", "random"], [1, 2], root="runs/bench")
         self.assertNotIn("'", cmd)
         for s in ("--spec P2", "--label full", "--baseline random", "runs/bench/P2/random/seed2/outcome.json",
