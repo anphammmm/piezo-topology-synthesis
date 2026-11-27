@@ -1,7 +1,7 @@
 {
   "phase": "model",
   "stop_reason": null,
-  "elapsed_s": 53.9,
+  "elapsed_s": 83.9,
   "iteration": 0,
   "max_rounds": 12,
   "best_id": "c0000",
@@ -10,5 +10,5 @@
   "best_cond_pass": 1,
   "n_candidates": 1,
   "n_sims": 6,
-  "model_wait_s": 45
+  "model_wait_s": 75
 }
