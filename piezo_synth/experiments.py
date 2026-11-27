@@ -28,7 +28,8 @@ VARIANTS: Dict[str, Tuple[dict, str]] = {
     "single": ({"proposals_per_round": 1, "max_rounds": 24}, ""),
     "coord": ({"sizer": "coord"}, ""),
     "no_think": ({"think": False}, ""),
-    "random": ({}, "--baseline random"),
+    # stopped only by the simulation budget or the wall clock, like a model run that never succeeds
+    "random": ({"stagnation": 10 ** 6, "max_rounds": 10 ** 4}, "--baseline random"),
     "audit": ({"screen_audit": True}, ""),
 }
 CAMPAIGN_BASE = {"max_sims": 3000, "wall_clock_s": 3600, "mc_samples": 16}
@@ -105,6 +106,28 @@ def _median(xs) -> Optional[float]:
     return statistics.median(xs) if xs else None
 
 
+def _min(xs):
+    xs = [x for x in xs if x is not None]
+    return min(xs) if xs else None
+
+
+def _max(xs):
+    xs = [x for x in xs if x is not None]
+    return max(xs) if xs else None
+
+
+def fisher_two_sided(a: int, n_a: int, b: int, n_b: int) -> float:
+    """Two-sided Fisher exact test for success counts a of n_a against b of n_b."""
+    from math import comb
+    k, n = a + b, n_a + n_b
+    total = comb(n, k)
+    def p(x):
+        return comb(n_a, x) * comb(n_b, k - x) / total
+    obs = p(a)
+    lo, hi = max(0, k - n_b), min(k, n_a)
+    return min(1.0, sum(p(x) for x in range(lo, hi + 1) if p(x) <= obs * (1 + 1e-9)))
+
+
 def _mean(xs) -> Optional[float]:
     xs = [x for x in xs if x is not None]
     return sum(xs) / len(xs) if xs else None
@@ -143,9 +166,15 @@ def aggregate(root) -> Tuple[List[dict], List[dict]]:
             "success_rate": sum(r["met_search"] for r in rs) / len(rs),
             "met_all_rate": sum(r["met_all"] for r in rs) / len(rs),
             "median_sims_to_success": _median(r["first_met_sims"] for r in rs if r["met_search"]),
+            "min_sims_to_success": _min(r["first_met_sims"] for r in rs if r["met_search"]),
+            "max_sims_to_success": _max(r["first_met_sims"] for r in rs if r["met_search"]),
             "median_time_to_success_s": _median(r["first_met_t"] for r in rs if r["met_search"]),
             "median_sims": _median(r["n_sims"] for r in rs),
             "median_wall_s": _median(r["wall_s"] for r in rs),
+            "median_model_s": _median(r["model_s"] for r in rs),
+            "median_model_calls": _median(r["model_calls"] for r in rs),
+            "successes": sum(r["met_search"] for r in rs),
+            "successes_all": sum(r["met_all"] for r in rs),
             "mean_completion_tokens": _mean(r["completion_tokens"] for r in rs),
             "invalid_rate": (sum(r["n_invalid"] or 0 for r in rs) / props) if props else None,
             "screen_pass_rate": (sum(r["n_screen_pass"] or 0 for r in rs) /
@@ -212,16 +241,36 @@ def _variants_table(summary: List[dict]) -> str:
     rows = []
     for s in sorted(summary, key=lambda s: order.get(s["variant"], 99)):
         rows.append([tex(s["variant"]), str(s["runs"]), _num(s["success_rate"], "{:.0f}\\%", 100),
-                     _num(s["met_all_rate"], "{:.0f}\\%", 100), _num(s["median_sims_to_success"]),
+                     _num(s["met_all_rate"], "{:.0f}\\%", 100), _range(s.get("median_sims_to_success"), s.get("min_sims_to_success"),
+                                                          s.get("max_sims_to_success")),
                      _num(s["median_time_to_success_s"], "{:.0f}", 1 / 60), _num(s["median_sims"]),
                      _num(s["invalid_rate"], "{:.0f}\\%", 100), _num(s["median_mc_pass"], "{:.0f}\\%", 100)])
     return _tabular("lrrrrrrrr", ["Variant", "Runs", "Spec met", "+held-out", "Sims to success",
                                   "Min to success", "Sims", "Invalid", "MC pass"], rows, 9)
 
 
+def _range(med, lo, hi) -> str:
+    if med is None:
+        return "--"
+    if lo is None or hi is None or lo == hi:
+        return _num(med)
+    return f"{_num(med)} [{_num(lo)}--{_num(hi)}]"
+
+
 def _audit_table(n: int, met: int) -> str:
     rows = [[str(n), str(met), _num((n - met) / n if n else None, "{:.0f}\\%", 100)]] if n else []
     return _tabular("rrr", ["Rejected and audited", "Met spec after sizing", "Correct rejections"], rows, 3)
+
+
+def _cost_table(summary: List[dict]) -> str:
+    order = {v: k for k, v in enumerate(VARIANT_ORDER)}
+    rows = []
+    for s in sorted(summary, key=lambda s: order.get(s["variant"], 99)):
+        rows.append([tex(s["variant"]), _num(s.get("median_wall_s"), "{:.1f}", 1 / 60),
+                     _num(s.get("median_model_s"), "{:.1f}", 1 / 60), _num(s.get("median_model_calls")),
+                     _num(s.get("mean_completion_tokens"), "{:.1f}", 1e-3), _num(s.get("median_sims"))])
+    return _tabular("lrrrrr", ["Variant", "Wall (min)", "Model (min)", "Model calls", "Completion tokens (k)",
+                               "Sims"], rows, 6)
 
 
 def _reference_table(smoke: Optional[Path]) -> str:
@@ -284,6 +333,16 @@ def _macros(summary: List[dict], runs: List[dict], audit: Tuple[int, int]) -> st
     out += m("FullSuccess", _num(full["success_rate"], "{:.0f}\\%", 100) if full else None)
     out += m("RandomSuccess", _num(rnd["success_rate"], "{:.0f}\\%", 100) if rnd else None)
     out += m("FullSimsToSuccess", _num(full["median_sims_to_success"]) if full else None)
+    out += m("RandomMedianSims", _num(rnd["median_sims"]) if rnd else None)
+    if full and rnd:
+        out += m("RandomVsFullP", "{:.3f}".format(fisher_two_sided(full["successes"], full["runs"],
+                                                                    rnd["successes"], rnd["runs"])))
+    else:
+        out += m("RandomVsFullP", None)
+    model = [s for s in summary if s["variant"] not in ("random",)]
+    pairs = [fisher_two_sided(a[k], a["runs"], b[k], b["runs"])
+             for i, a in enumerate(model) for b in model[i + 1:] for k in ("successes", "successes_all")]
+    out += m("MinPairP", "{:.2f}".format(min(pairs)) if pairs else None)
     out += m("AuditN", str(audit[0]) if audit[0] else None)
     out += m("AuditMet", str(audit[1]) if audit[0] else None)
     return out
@@ -298,6 +357,7 @@ def write_paper_tables(gen_dir, root, smoke=None) -> None:
     audit = _audits(run_dirs)
     files = {"tab_conditions.tex": _conditions_table(), "tab_criteria.tex": _criteria_table(),
              "tab_variants.tex": _variants_table(summary), "tab_screen_audit.tex": _audit_table(*audit),
+             "tab_cost.tex": _cost_table(summary),
              "tab_reference.tex": _reference_table(Path(smoke) if smoke else None),
              "tab_screen_validation.tex": _screen_validation_table(Path(smoke) if smoke else None),
              "macros.tex": _macros(summary, runs, audit)}

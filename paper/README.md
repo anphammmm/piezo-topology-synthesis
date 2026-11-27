@@ -12,20 +12,18 @@ first Panda runs (smoke test and the first search, before the screen and diagnos
 - `generated/tab_conditions.tex`, `generated/tab_criteria.tex`: written from `piezo_synth/spec.py`.
 - `generated/tab_reference.tex`, `generated/tab_screen_validation.tex`: reference and witness per condition, and the
   screen against full simulation, from the smoke-test run folder (already filled from the 2026-11-27 Panda smoke test).
-- `generated/tab_variants.tex`, `generated/tab_screen_audit.tex`, `generated/macros.tex`,
-  `generated/fig_variants.pdf`, `generated/fig_progress.pdf`: from the experiment campaign.
+- `generated/tab_variants.tex`, `generated/tab_cost.tex`, `generated/tab_screen_audit.tex`, `generated/macros.tex`:
+  from the experiment campaign (`python3 -m piezo_synth.experiments runs/exp --paper paper/generated --smoke runs/smoke`).
+- `generated/fig_variants.pdf`, `generated/fig_progress.pdf`: `python3 tools/paper_figures.py runs/exp paper/generated`.
 
-All of `generated/` is produced by the notebook's **Aggregate** cell (it calls
-`python -m piezo_synth.experiments runs/exp --paper paper_generated --smoke runs/smoke` and draws the
-figures). Download `paper_generated.zip` from Panda and unpack it here as `generated/`. Until then the
-tables say "pending" and the figures are placeholder boxes.
+All of `generated/` is currently filled from the 2026-11-27 campaign (40 runs). Cell 4 of `panda_sync.ipynb`
+regenerates it on Panda into `runs/paper_generated` and publishes it on the `results` branch.
 
 ## Before submission
 
-1. Run the smoke test again (device models changed), then the campaign, then Aggregate; replace `generated/`.
-2. Search `main.tex` for `\pending`: each marks text that can only be written from the results
-   (red in the PDF). Write those paragraphs from the generated tables; claim differences between
-   variants only where the five seeds support them.
+1. Re-run the random baseline at the full budget (`TASK = "random_rerun"`), regenerate `generated/`.
+2. Only the author list is still marked `\pending`. The results text uses the macros of `generated/macros.tex`
+   and counts from the run folders; re-check it if the random re-run changes the numbers.
 3. Check every entry of `refs.bib` against the publisher's record; entries marked `VERIFY` were written
    from memory. Replace the Gemma entry with the model card or report of the exact model version.
 4. Fill in authors and affiliations.

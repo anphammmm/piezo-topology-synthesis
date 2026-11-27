@@ -11,7 +11,7 @@ between a piezoelectric transducer and a sensor-node load. The circuit must keep
 vary load, excitation, frequency, piezo capacitance and temperature. Four further conditions are
 **held out**: the method never sees them, and they are used only to check the final design.
 
-## 2. Method (implemented, 151 unit tests)
+## 2. Method (implemented, 157 unit tests)
 
 1. **Gemma 4 31B proposes structures**, up to three per round. Each proposal is a JSON component list
    over R, C, L, diodes, switches and an ideal synchronous switch controller. Proposals are validated,
@@ -99,6 +99,40 @@ symptoms such as "the output never exceeds 0.9 V".
 - **Fix made afterwards:** the loop now stops as soon as sizing meets the spec, instead of waiting for
   the model's next answer and evaluating it.
 
+### 3.5 Campaign (2026-11-27): 8 variants x 5 seeds, 40 runs
+
+| variant | spec met (search) | + held-out | sims to success, median [min-max] | wall min | model min | MC pass |
+|---|---|---|---|---|---|---|
+| full | 5/5 | 1/5 | 147 [27-291] | 11.1 | 6.4 | 50 % |
+| no_screen | 5/5 | 0/5 | 156 [12-558] | 11.2 | 6.4 | 0 % |
+| no_diag | 5/5 | 2/5 | 27 [27-303] | 10.7 | 6.9 | 25 % |
+| single | 5/5 | 2/5 | 237 [27-699] | 13.8 | 8.1 | 31 % |
+| coord | 5/5 | 2/5 | 27 [27-87] | 10.7 | 7.5 | 38 % |
+| no_think | 5/5 | 0/5 | 165 [87-549] | 7.4 | 1.6 | 6 % |
+| audit | 5/5 | 1/5 | 27 [27-1251] | 10.3 | 6.6 | 31 % |
+| random | 0/5 | 0/5 | - | 6.1 | 0 | 0 % |
+
+(MC pass: median fraction of Monte Carlo samples passing all ten conditions.)
+
+- **Model vs random:** 35/35 model-based runs met the search spec, 0/5 random runs did (full vs random,
+  two-sided Fisher exact p = 0.008).
+- **Ablations do not separate.** Smallest Fisher p over all pairs of model variants, on either success
+  measure, is 0.44. Simulations to success are bimodal: in 13/35 runs the first proposal met the spec with
+  the model's own values (27 simulations). The rest needed sizing (16 runs) or a value refinement (2).
+- **Every selected design is the same family:** parallel SSHI + Schottky full bridge + 3.3 V zener clamp
+  (29 with one inductor, 6 with an extra inductor).
+- **Held-out:** 8/35 pass all ten conditions. Every failure is H4 (85 C, heavy load), always on "settled"
+  and in 12 runs also on ripple. Monte Carlo median pass is 100 % on every condition except H4 (25 %).
+- **Screen:** it rejected 27 of 70 structures. In the audit, 3 rejected structures were sized anyway and
+  0 met the spec. All three were far below the threshold, so the audit does not test the relaxation.
+- **Validation** rejected 5 of 90 proposals.
+- **Cost:** a full-method run takes about 11 min wall time, of which 6.4 min is the model. It uses 2 model
+  calls, 8.6k completion tokens and 315 simulations; screen runs are about 8 % of the simulations.
+- **Protocol flaw found:** the random baseline stopped on "stagnation" after 5 rounds (353 simulations),
+  not at the 3000-simulation budget. It is fixed (stagnation off for random), and the random variant
+  must be re-run (`TASK = "random_rerun"` in `panda_sync.ipynb`) before the comparison claims an
+  equal budget.
+
 ## 4. Problems found and fixed on the way
 
 | problem | effect | fix |
@@ -111,7 +145,7 @@ symptoms such as "the output never exceeds 0.9 V".
 ## 5. Next steps
 
 1. ~~One single search run~~: done, see 3.4.
-2. **Campaign**: 8 variants x 5 seeds at an equal budget of 3000 simulations per run. Variants are: full
+2. ~~**Campaign**~~ (done, see 3.5; random baseline to be re-run at full budget): 8 variants x 5 seeds at an equal budget of 3000 simulations per run. Variants are: full
    method; no screen; no diagnoses; one proposal per round; coordinate-search sizing; no model
    reasoning; a random-circuit baseline; and a screen audit.
 3. **Metrics**, chosen after a literature review (section "Literature Review" of the paper):
@@ -122,8 +156,12 @@ symptoms such as "the output never exceeds 0.9 V".
    - power gain over the ideal full bridge;
    - Monte Carlo pass rate;
    - novelty of the selected structure.
-4. Write the results paragraphs of the paper from the generated tables. Seven places are marked
-   `\pending`.
+4. ~~Write the results paragraphs of the paper~~: done; only the author list is still marked `\pending`.
+5. **Second specification** whose solution is not a textbook circuit (see open questions): the campaign
+   shows that the current one is solved by the model's prior, so it cannot show what the screen, the
+   diagnoses or the sizing strategy add.
+6. **Close the H4 gap**: add a hot, heavily loaded condition to the search set (or report H4 as an
+   intended extrapolation test).
 
 ## 6. Open questions for discussion
 

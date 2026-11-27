@@ -77,7 +77,9 @@ TASK_MD = """## 2. Chạy việc
 - `"smoke"`: kiểm tra nhanh, khoảng 2 phút (chạy đầu tiên, và sau mỗi lần đổi mô hình linh kiện).
 - `"single"`: một lần tìm kiếm đầy đủ, khoảng 30-60 phút.
 - `"waves"`: waveform của thiết kế tốt nhất trong lần `single` gần nhất.
-- `"campaign"`: toàn bộ thí nghiệm cho paper (8 biến thể x 5 seed, vài tiếng; chạy lại thì chạy tiếp)."""
+- `"campaign"`: toàn bộ thí nghiệm cho paper (8 biến thể x 5 seed, vài tiếng; chạy lại thì chạy tiếp).
+- `"random_rerun"`: chạy lại baseline random với đủ ngân sách 3000 mô phỏng. Các run random cũ được chuyển
+  (không xóa) sang `runs/exp_superseded/`."""
 
 TASK = '''TASK = "smoke"
 stamp = time.strftime("%Y%m%d-%H%M%S")
@@ -96,6 +98,17 @@ elif TASK == "waves":
            1800)
 elif TASK == "campaign":
     tools.panda_campaign.main(["--cwd", str(REPO)])
+elif TASK == "random_rerun":
+    import shutil
+    old = REPO / "runs/exp/random"
+    if old.exists():
+        dest = REPO / f"runs/exp_superseded/random-{stamp}"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.move(str(old), str(dest))
+        for f in REPO.glob("runs/exp/random-seed*.log"):
+            shutil.move(str(f), str(dest / f.name))
+        print(f"old random runs moved to {dest.relative_to(REPO)}")
+    tools.panda_campaign.main(["--cwd", str(REPO), "--variants", "random"])
 else:
     raise ValueError(TASK)'''
 
@@ -118,6 +131,7 @@ PUBLISH = '''MESSAGE = "smoke test"
 if (REPO / "runs/exp").exists():
     sh(sys.executable, "-m", "piezo_synth.experiments", "runs/exp", "--paper", "runs/paper_generated",
        "--smoke", "runs/smoke", check=False)
+    sh(sys.executable, "tools/paper_figures.py", "runs/exp", "runs/paper_generated", check=False)
 if TOKEN_FILE.exists():
     sh(sys.executable, "tools/publish_results.py", "--message", MESSAGE, check=False)
 else:

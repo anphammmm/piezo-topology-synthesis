@@ -39,10 +39,14 @@ evolution strategy sizes the surviving structures in parallel batches while the 
 the model's latency hides the sizing cost. Third, results are returned to the model with plain-language
 diagnoses that name the failing function of the circuit. On a specification that a full-bridge rectifier
 fails under five of six search conditions, and on which the screen agrees with full simulation in every
-calibration case, \pending{summarise the main result with the numbers in
-Table~\ref{tab:variants}: success rate \FullSuccess{} versus \RandomSuccess{} for a model-free baseline at
-the same simulation budget, median \FullSimsToSuccess{} simulations to the first design meeting the
-specification, held-out and Monte Carlo results}.
+calibration case, the full method met the search specification in \FullSuccess{} of its
+runs, as did every other model-based variant (35 of 35 runs), against \RandomSuccess{} for a model-free
+baseline (two-sided Fisher exact test, $p=\RandomVsFullP{}$), with a median of \FullSimsToSuccess{}
+simulations to the first design meeting the specification. Every selected design is a synchronous-switch
+(SSHI) interface with a full bridge and a zener clamp. Only 8 of the 35 designs also pass the four held-out
+conditions: all others fail at the hottest, most heavily loaded condition, which the hand-made witness fails
+as well. With five seeds per variant, the ablations do not separate the screen, the diagnoses or the
+sizing strategy from one another; on this specification the language model's prior does most of the work..
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -525,32 +529,62 @@ success; it only removes the evaluation that came after it.
 
 \subsection{Comparison of variants}
 Table~\ref{tab:variants} and Fig.~\ref{fig:variants} summarise \NRuns{} runs.
-\pending{Describe the comparison once the campaign has run: success rates of the full method against the
-random baseline and each ablation; the simulations to first success; which mechanism contributes most;
-the invalid-proposal rate with and without diagnoses. State differences only where the five seeds
-support them, and report the spread.}
+Every one of the 35 runs of the seven model-based variants met the
+search specification within its budget; none of the five random-baseline runs did. The random baseline
+proposed 15 structures per run, none of which passed the screen, so its selected design remained the
+reference full bridge, after a median of \RandomMedianSims{} simulations. The difference between the full
+method and the random baseline is significant even with five seeds (two-sided Fisher exact test,
+$p=\RandomVsFullP{}$).
+
+Between the model-based variants, the five seeds do not support any ranking. Success on the search
+conditions is 100\,\% everywhere, success on all ten conditions ranges from 0 to 2 runs of 5, and the
+smallest Fisher $p$ over all pairs of variants and both success measures is \MinPairP{}. The number of
+simulations to the first success spreads over more than an order of magnitude within each variant
+(Fig.~\ref{fig:variants}): in 13 of the 35 runs the model's first proposal met the specification with its
+own component values (27 simulations: 15 screen runs, 6 full evaluations and the reference), and in the
+others the specification was reached by sizing (16 runs) or by a value-only refinement from the model (2
+runs). This bimodality, set by whether the first proposal happens to be well sized, dominates the medians
+in Table~\ref{tab:variants}, so we do not read the differences in median simulations as effects of the
+ablated mechanisms. Two observations are consistent across seeds. Without reasoning (\texttt{no\_think})
+no first proposal met the specification as proposed, the model needed more proposals (median 5 against
+3), and its invalid-proposal rate was the highest (11\,\%); in exchange its model time per run was a
+quarter of the full method's (Table~\ref{tab:cost}). Validation rejected 5 of the 90 model proposals
+overall, so diagnoses had little left to correct on this specification: the orientation errors that
+dominated the pilot run (Section~\ref{sec:pilot}) did not reappear once the prompt stated the diode
+convention.
 
 \begin{table*}[t]
 \centering\footnotesize
-\caption{Variants over five seeds at an equal budget of 3000 simulations. ``Spec met'': runs whose selected
-design meets every criterion on the six search conditions; ``+held-out'': also on the four held-out
-conditions; simulations and minutes to success: medians over successful runs; ``Invalid'': proposals
-rejected by validation; ``MC pass'': median Monte Carlo pass rate of the selected design.}\label{tab:variants}
+\caption{Variants over five seeds with a budget of 3000 simulations per run. ``Spec met'': runs whose
+selected design meets every criterion on the six search conditions; ``+held-out'': also on the four
+held-out conditions; simulations to success: median [min--max] over successful runs; minutes to success:
+median; ``Sims'': median simulations per run including the held-out and Monte Carlo checks; ``Invalid'':
+proposals rejected by validation; ``MC pass'': median fraction of Monte Carlo samples passing all ten
+conditions.}\label{tab:variants}
 \input{generated/tab_variants.tex}
 \end{table*}
 
 \begin{figure}[t]
 \centering
 \maybegraphic{generated/fig_variants.pdf}{\columnwidth}
-\caption{Fraction of runs meeting the specification (left) and simulations until the first design that
-meets it (right), per variant.}\label{fig:variants}
+\caption{Simulations until the first design meeting the search specification, one marker per seed
+(diamonds: the selected design also passes the held-out conditions). Crosses: runs that never met it,
+drawn at the simulations they used.}\label{fig:variants}
 \end{figure}
 
 \subsection{How often does the screen reject a workable structure?}\label{sec:audit}
 In the \texttt{audit} variant every structure rejected by the screen was evaluated and sized with the
 same budget, outside selection. Table~\ref{tab:audit} reports how many of them still met the
-specification. \pending{Interpret: the fraction of correct rejections and what it implies for $\alpha$;
-compare with the 99\,\% correct rejections of the relaxed DC-gain filter in~\cite{zhao2022drl}.}
+specification. Over the 70 structures screened in the six screened
+model-based variants, the screen rejected 27. In the audit runs \AuditN{} rejected structures were sized
+with the full sizing budget and \AuditMet{} of them met the specification, so no rejection was shown to be
+wrong. The sample is small, because the model's first proposals usually passed, and it covers only the
+structures the model happened to propose: a synchronously switched bridge, a bridge with a clamp
+and a larger capacitor, and a voltage doubler with a clamp. In all three the screen's worst power ratio
+was negative, far from the threshold, so the audit does not probe the relaxation near $\alpha$. It is consistent with the calibration of Table~\ref{tab:screenval} and with
+the high rate of correct rejections reported for the relaxed filter of~\cite{zhao2022drl}, but it does not
+establish a false-rejection rate; for that, the relaxation $\alpha$ would have to be varied over a larger
+set of rejected structures.
 
 \begin{table}[t]
 \centering\footnotesize
@@ -559,22 +593,49 @@ compare with the 99\,\% correct rejections of the relaxed DC-gain filter in~\cit
 \end{table}
 
 \subsection{Synthesized designs}
-\pending{Show the structure of the best design from the full method (schematic), its per-condition
-results against the reference, its held-out results, its power gain over the ideal bridge from the
-screen ($P_{net}/P^\star$) and its Monte Carlo pass rate by condition. Discuss whether the model recombined
-known mechanisms (e.g.\ SSHI with a clamp) or proposed a structure not in the cited literature.}
+All 35 selected designs share one structure
+family: a parallel SSHI interface (an inductor and a switch across the transducer, driven by the ideal
+synchronous controller at both voltage extrema), a full bridge of four Schottky diodes, a storage
+capacitor and a \SI{3.3}{V} zener clamp across the output. Twenty-nine use one inductor; six add a
+second inductor, either as an output filter or in series with the switch, and one of these adds a second
+capacitor. The model named the mechanism in its rationale in every run (for example ``SSHI to boost power
+extraction (fixing S2, S4) with a full-bridge rectifier and a Zener clamp (fixing S3)''), so these designs
+recombine mechanisms that are textbook for this problem~\cite{guyomar2005sshi,lefeuvre2006comparison}
+rather than invent new ones. Sizing mattered: in 16 runs the selected design came from the evolution
+strategy rather than from the model's values.
+
+The held-out results are uniform. Every selected design passes H1--H3, and every failure is at H4
+(\SI{85}{\celsius}, heavy load): of the 27 designs that fail it, the failing criteria are settling (27
+designs) and, for 12 of them, ripple. The Monte Carlo results show the same pattern: the median pass rate
+over the 35 designs is 100\,\% for every condition except H4, where it is 25\,\%. The worst design on a
+search condition still passes 31\,\% of samples at S2. H4 thus marks the edge of the specification, which
+the search conditions do not constrain: no search condition combines the highest temperature with the
+heaviest load. Fig.~\ref{fig:progress} shows how the best number of search conditions passed grows with
+simulations in the runs of the full method and of the variant without the screen.
 
 \begin{figure}[t]
 \centering
 \maybegraphic{generated/fig_progress.pdf}{\columnwidth}
-\caption{Score of every design evaluated in a representative run of the full method; proposals in
-colour, sizing steps in grey, best so far in black.}\label{fig:progress}
+\caption{Best number of search conditions passed
+against simulations, for every seed of the full method and of the variant without the screen. Runs whose
+first proposal met the specification appear as single points at 6.}\label{fig:progress}
 \end{figure}
 
 \subsection{Cost}
-\pending{Report median wall time, model time, tokens per run and simulations per run for the full method;
-the share of simulations spent on screening, full evaluations and sizing; and the fraction of sizing
-that overlapped model calls.}
+Table~\ref{tab:cost} reports the cost per run. A run of
+the full method took a median of 11 minutes of wall time, of which 6.4 minutes were spent waiting for the
+model, with two model calls and 8.6k completion tokens, and 315 simulations, including the 10 held-out
+and 160 Monte Carlo simulations of the final checks. Screen runs were about 8\,\% of all simulations in the
+screened variants. The search itself is therefore cheap in simulations; its cost is dominated by model
+latency, and the reasoning mode accounts for most of it: without reasoning, model time fell to 1.6 minutes
+per run at the price of more proposals, and none of its five designs passed the held-out conditions.
+
+\begin{table}[t]
+\centering\footnotesize
+\caption{Cost per run: medians of wall time, model time, model calls and simulations; mean completion
+tokens.}\label{tab:cost}
+\resizebox{\columnwidth}{!}{\input{generated/tab_cost.tex}}
+\end{table}
 
 \section{Discussion}\label{sec:discussion}
 \emph{What the language model contributes.} The model supplies structures from a prior that includes
@@ -604,7 +665,11 @@ We presented a closed-loop method in which a language model proposes the structu
 harvesting interfaces and a simulation pipeline (validation, structure hashing, a power screen for
 unsized structures, asynchronous evolution-strategy sizing and diagnostic feedback) turns the proposals
 into verified, sized designs, checked on held-out conditions and under component tolerances.
-\pending{State the main quantitative result.} Future work includes a benchmark of specifications whose
+On a specification that a full-bridge rectifier
+fails, every model-based run produced a design meeting it on all search conditions within a few hundred
+simulations, while random structures at the same cost did not, but most designs failed the hottest
+held-out condition, and the ablations did not separate the contributions of the screen, the diagnoses and
+the sizing strategy. Future work includes a benchmark of specifications whose
 solutions are not textbook circuits, realistic controller and transducer models, and sharing learned
 structures across runs.
 
