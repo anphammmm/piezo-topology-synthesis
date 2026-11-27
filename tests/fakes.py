@@ -23,3 +23,6 @@ class FakeBackend:
         if meas is None:
             return _Res(False, {}, "singular matrix: fake failure", folder)
         return _Res(True, dict(meas), "", folder)
+
+
+from piezo_synth.llm import ScriptedLLM as FakeLLM  # noqa: E402
