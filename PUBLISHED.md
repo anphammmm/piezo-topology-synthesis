@@ -1,5 +1,5 @@
 # Results published from Panda
 
-Last publish: 2026-11-27 18:26:05, code at commit 7d63b63.
+Last publish: 2026-11-27 19:26:17, code at commit 9a46d14.
 
-single run
+speccheck
