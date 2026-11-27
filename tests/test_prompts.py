@@ -99,6 +99,20 @@ class PromptTest(unittest.TestCase):
         self.assertIn("S4", t)
         self.assertIn("FAIL", t)
 
+    def test_neutral_prompt_hides_textbook_fragments(self):
+        """The neutral prompt must not hand the model pieces of the textbook answer (SSHI branch, its timing
+        formula, bridge and zener-clamp wiring), while keeping the spec, the components and the reference."""
+        p = system_prompt(REF_EV, neutral=True)
+        for s in ['"type": "L"', '"type": "S"', '"type": "SYNC"', "pi*sqrt", '["0", "out"]', '["0", "pzp"]',
+                  "full bridge", "zener clamp", "3.4e-05"]:
+            self.assertNotIn(s, p, s)
+        for s in ["S1", "S6", "1.8", "3.6", "DZ33", "DSCH", "SYNC", "\"components\"", "FBR", "anode", "ctrl",
+                  "new_topology"]:
+            self.assertIn(s, p, s)
+        d = system_prompt(REF_EV)            # the default prompt is unchanged
+        self.assertIn("pi*sqrt", d)
+        self.assertIn('"type": "SYNC"', d)
+
     def test_repair_messages(self):
         m = repair_messages("sys", "user", "bad answer", ["C1: value 1 outside"])
         self.assertEqual([x["role"] for x in m], ["system", "user", "assistant", "user"])

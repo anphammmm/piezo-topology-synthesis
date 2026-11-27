@@ -110,6 +110,14 @@ class SearchTest(unittest.TestCase):
         self.assertEqual(json.loads((self.out / "progress.json").read_text())["phase"], "done")
         self.assertEqual(json.loads((self.out / "robust.json").read_text())["n"], 3)
 
+    def test_neutral_prompt_config_reaches_the_model(self):
+        llm = FakeLLM([multi(WITNESS)])
+        run_search(self.cfg(neutral_prompt=True), llm, self.sim, self.rec)
+        self.assertNotIn("pi*sqrt", llm.received[0][0]["content"])
+        llm = FakeLLM([multi(WITNESS)])
+        run_search(self.cfg(), llm, self.sim, self.rec)
+        self.assertIn("pi*sqrt", llm.received[0][0]["content"])
+
     def test_several_designs_per_round_each_screened(self):
         llm = FakeLLM([multi(BRIDGE_CLAMP, WITNESS)])
         out = run_search(self.cfg(), llm, self.sim, self.rec)

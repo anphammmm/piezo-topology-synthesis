@@ -98,6 +98,16 @@ The benchmark (`python3 tools/panda_campaign.py --bench`) runs every spec with t
 no_screen, no_diag, coord and random, five seeds each, into `runs/bench/<spec>/<variant>/seed<n>`;
 `python3 -m piezo_synth.experiments runs/bench --bench --paper paper/generated` writes `tab_bench.tex`.
 
+**Prompt-leakage control (`neutral_prompt`).** The default system prompt contains fragments of the textbook
+answer: its JSON example is the parallel-SSHI branch (L 4.7 mH from pzp, a switch to pzn, a SYNC with
+ton = 34 us, the witness's own values), it gives the L-Cp inversion timing ton = pi*sqrt(L*Cp), and it shows
+the full-bridge and zener-clamp wiring as diode-orientation examples. The `neutral_prompt` variant removes
+all three (a meaningless R-C example, a generic orientation rule) and keeps the spec, the vocabulary and the
+reference. It runs on P1 (textbook-solvable) and P3 (not) after the benchmark:
+`python3 tools/panda_campaign.py --bench --variants neutral_prompt --specs P1,P3` (jobs
+`piezo-bench-p1-neutral-prompt`, `piezo-bench-p3-neutral-prompt`; notebook task `"neutral"`). Compare it with
+`full` on the same spec: a large drop means the results depend on the hints in the prompt.
+
 ## Design choices
 
 - **Circuits as structured data.** The model returns `{"proposals": [...]}`, each design a JSON list of

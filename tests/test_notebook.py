@@ -91,3 +91,12 @@ class SyncSetupTest(unittest.TestCase):
         self.assertIn('ME = "ltspice/claude"', SETUP)
         self.assertIn("timeout=", SETUP)
         self.assertIn("TimeoutExpired", SETUP)
+
+
+class SyncNeutralTaskTest(unittest.TestCase):
+    def test_neutral_prompt_task_submits_p1_p3_bench_variant(self):
+        from build_sync_notebook import TASK, TASK_MD
+        self.assertIn('TASK == "neutral"', TASK)
+        self.assertIn('"--variants", "neutral_prompt"', TASK)
+        self.assertIn('"--specs", "P1,P3"', TASK)
+        self.assertIn('"neutral"', TASK_MD)

@@ -5,6 +5,7 @@ running its seeds in turn (finished seeds are skipped, so re-running this resume
     python3 tools/panda_campaign.py --variants full,random --seeds 1,2
     python3 tools/panda_campaign.py --bench                # every spec x 5 variants x 5 seeds, one job per spec
     python3 tools/panda_campaign.py --bench --specs P2,P3
+    python3 tools/panda_campaign.py --bench --variants neutral_prompt --specs P1,P3   # prompt-leakage control
 
 Run it from the repository folder. Then: python3 -m piezo_synth.experiments runs/exp
 """
@@ -39,13 +40,16 @@ def main(argv=None) -> int:
     seeds = [int(s) for s in a.seeds.split(",") if s.strip()]
     cwd = Path(a.cwd or os.getcwd())
     if a.bench:
-        variants = names if a.variants != ",".join(VARIANTS) else BENCH_VARIANTS
+        custom = a.variants != ",".join(VARIANTS)
+        variants = names if custom else BENCH_VARIANTS
+        # extra variants get their own job names, so they never collide with the spec's main bench job
+        suffix = "".join("-" + v.replace("_", "-") for v in variants) if custom else ""
         write_campaign_configs(cwd / "runs" / "bench")
         common = ["--work-root", a.work_root, "--cwd", str(cwd)] + (["--image", a.image] if a.image else [])
         for sp in [x.strip() for x in a.specs.split(",") if x.strip()]:
             if sp not in spec.SPECS:
                 ap.error(f"unknown spec {sp}")
-            panda_submit.main(common + ["--name", f"piezo-bench-{sp.lower()}", "--timeout", str(36 * 3600),
+            panda_submit.main(common + ["--name", f"piezo-bench-{sp.lower()}{suffix}", "--timeout", str(36 * 3600),
                                         "--", bench_loop(sp, variants, seeds, "runs/bench")])
         return 0
     write_campaign_configs(cwd / "runs" / "exp")

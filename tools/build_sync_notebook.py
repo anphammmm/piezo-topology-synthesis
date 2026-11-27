@@ -90,7 +90,10 @@ TASK_MD = """## 2. Chạy việc
 - `"speccheck"`: kiểm tra 5 spec (P1-P5) không cần Gemma: FBR, mạch sách giáo khoa (có sizing) và witness
   trên từng spec, khoảng 1 tiếng. Chạy cái này TRƯỚC `"bench"`.
 - `"bench"`: benchmark cho paper: 5 spec x 5 biến thể x 5 seed, mỗi spec một job (khoảng 1 ngày; chạy lại
-  thì chạy tiếp)."""
+  thì chạy tiếp).
+- `"neutral"`: kiểm tra prompt có mớm đáp án không: biến thể `neutral_prompt` (prompt không có nhánh SSHI
+  trong ví dụ JSON, không có công thức ton, không có ví dụ cầu chỉnh lưu/zener kẹp áp) trên P1 và P3,
+  5 seed mỗi spec (khoảng nửa ngày). Chạy SAU khi `"bench"` xong."""
 
 TASK = '''TASK = "smoke"
 stamp = time.strftime("%Y%m%d-%H%M%S")
@@ -113,6 +116,8 @@ elif TASK == "speccheck":
     submit("piezo-speccheck", "python3 -u -m piezo_synth.speccheck --out runs/speccheck", 4 * 3600)
 elif TASK == "bench":
     tools.panda_campaign.main(["--cwd", str(REPO), "--bench"])
+elif TASK == "neutral":
+    tools.panda_campaign.main(["--cwd", str(REPO), "--bench", "--variants", "neutral_prompt", "--specs", "P1,P3"])
 elif TASK == "random_rerun":
     import shutil
     old = REPO / "runs/exp/random"
@@ -138,7 +143,7 @@ if (REPO / "runs/exp").exists():
     print(f"\\ncampaign: {done} of 40 runs finished")
 bench = len(glob.glob(str(REPO / "runs/bench/*/*/seed*/outcome.json")))
 if (REPO / "runs/bench").exists():
-    print(f"benchmark: {bench} of 125 runs finished")
+    print(f"benchmark: {bench} runs finished (125 for the 5 specs x 5 variants, +10 with neutral)")
 if (REPO / "runs/speccheck/speccheck.md").exists():
     print((REPO / "runs/speccheck/speccheck.md").read_text())'''
 

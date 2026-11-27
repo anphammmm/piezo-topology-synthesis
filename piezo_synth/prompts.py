@@ -27,6 +27,29 @@ EXAMPLE_CIRCUIT = {
 }
 EXAMPLE_JSON = {"proposals": [EXAMPLE_CIRCUIT]}
 
+# For the neutral_prompt variant: the same JSON syntax with a meaningless R-C network, so the example
+# carries no piece of a known interface (EXAMPLE_CIRCUIT's L-S-SYNC branch is the SSHI branch).
+NEUTRAL_EXAMPLE_JSON = {"proposals": [{
+    "move": "new_topology",
+    "name": "short label for this design",
+    "rationale": "what you changed and why it should fix the failing checks",
+    "done": False,
+    "components": [
+        {"id": "R1", "type": "R", "nodes": ["pzp", "n1"], "value": 1e3},
+        {"id": "C1", "type": "C", "nodes": ["n1", "out"], "value": 1e-6},
+        {"id": "C2", "type": "C", "nodes": ["out", "pzn"], "value": 1e-6},
+    ],
+}]}
+
+_DIODE_WIRING = """     Orientation matters:
+       full bridge: ["pzp", "out"], ["pzn", "out"], ["0", "pzp"], ["0", "pzn"] (return diodes have
+       their anode on ground);
+       zener clamp on out: ["0", "out"] (cathode on out, so it is reverse-biased and breaks down at
+       3.3 V). ["out", "0"] would be forward-biased and hold out near 0.7 V; it is rejected."""
+_DIODE_WIRING_NEUTRAL = """     Orientation matters: a diode with nodes ["a", "b"] conducts forward from a to b; a DZ33 with
+       nodes ["a", "b"] also conducts in reverse once V(b) - V(a) exceeds 3.3 V. A diode forward-biased
+       from out to ground would hold out near 0.7 V; it is rejected."""
+
 REPEATED_TEXT = {
     "pinned": "the output stays pinned near 0 V (a wiring or orientation error, not a value problem)",
     "sim_failed": "the simulation fails",
@@ -60,7 +83,10 @@ def condition_table(ev: Evaluation, conditions) -> str:
     return "\n".join(rows)
 
 
-def system_prompt(reference_eval: Evaluation, per_round: int = 3, screen: bool = True, size_budget: int = 48) -> str:
+def system_prompt(reference_eval: Evaluation, per_round: int = 3, screen: bool = True, size_budget: int = 48,
+                  neutral: bool = False) -> str:
+    """neutral: the neutral_prompt variant, without the fragments of the textbook answer (SSHI branch in
+    the JSON example, its switch-timing formula, bridge and zener-clamp wiring examples)."""
     conds = spec.search_conditions()
     sc = spec.SCREEN
     screen_text = (f"""- Each proposal is first SCREENED: with out fixed at {sc['vstore']:g} V, the net power it delivers is
@@ -77,6 +103,9 @@ def system_prompt(reference_eval: Evaluation, per_round: int = 3, screen: bool =
     L = spec.LIMITS
     nom = conds[0]
     voc_nom = nom.ip / (2 * math.pi * nom.freq * nom.cp)
+    ton_hint = "" if neutral else "\n     For L-Cp inversion, ton is about pi*sqrt(L*Cp)."
+    diode_wiring = _DIODE_WIRING_NEUTRAL if neutral else _DIODE_WIRING
+    example = json.dumps(NEUTRAL_EXAMPLE_JSON if neutral else EXAMPLE_JSON, indent=1)
     return f"""You are an expert power-electronics designer synthesising the interface circuit of a
 piezoelectric energy harvester. You work by experiment: you propose a circuit, it is simulated in
 LTspice under several operating conditions, and you receive the measurements.
@@ -108,18 +137,13 @@ COMPONENTS YOU MAY USE (at most {L['max_components']} components)
      Model one of {', '.join(DIODE_MODELS)}:
      DSCH = low-drop Schottky (~0.25 V at uA), DSI = silicon small-signal (~0.5 V at uA),
      DZ33 = 3.3 V zener (reverse breakdown 3.3 V, conducts ~1 uA at 3.3 V and much more above)
-     Orientation matters:
-       full bridge: ["pzp", "out"], ["pzn", "out"], ["0", "pzp"], ["0", "pzn"] (return diodes have
-       their anode on ground);
-       zener clamp on out: ["0", "out"] (cathode on out, so it is reverse-biased and breaks down at
-       3.3 V). ["out", "0"] would be forward-biased and hold out near 0.7 V; it is rejected.
+{diode_wiring}
 - S  switch, nodes [a, b], "ctrl": id of a SYNC; Ron = 2 Ohm, Roff = 1 GOhm (at most {L['max_switches']})
 - SYNC ideal synchronous controller (no nodes, at most {L['max_sync']}): closes its switches for "ton"
      seconds ({L['ton'][0]:g}..{L['ton'][1]:g}) at the piezo voltage extrema, which occur at the zero
      crossings of the piezo current. "edges": "both" (every half period), "pos" (positive peak only)
      or "neg" (negative peak only). "phase" shifts the pulses by that fraction of the excitation
-     period ({L['phase'][0]}..{L['phase'][1]}). It tracks the excitation frequency automatically.
-     For L-Cp inversion, ton is about pi*sqrt(L*Cp).
+     period ({L['phase'][0]}..{L['phase'][1]}). It tracks the excitation frequency automatically.{ton_hint}
 Nodes: "0" is ground; pzp, pzn are the piezo terminals; out is the load/storage node; name any other
 nodes yourself (lower-case, e.g. n1, mid). Every node needs at least two connections, and out must
 connect to the piezo through your circuit.
@@ -137,7 +161,7 @@ HOW TO WORK
   in "rationale". Set "done": true only when you believe no further structural change can improve on
   the best design so far.
 - Reply with ONE JSON object only, in this form:
-{json.dumps(EXAMPLE_JSON, indent=1)}
+{example}
 """
 
 
