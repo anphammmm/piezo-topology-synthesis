@@ -92,3 +92,26 @@ class SyncSetupTest(unittest.TestCase):
         self.assertIn("timeout=", SETUP)
         self.assertIn("TimeoutExpired", SETUP)
 
+
+
+class SyncBench2TaskTest(unittest.TestCase):
+    def test_bench2_task_stops_old_jobs_migrates_and_submits(self):
+        from build_sync_notebook import PUBLISH, STATUS, TASK, TASK_MD
+        for s in ('TASK == "bench2"', "migrate_hinted.py", "jobs.jsonl", "piezo-bench-p", '"--bench"'):
+            self.assertIn(s, TASK)
+        self.assertNotIn('TASK == "neutral"', TASK)
+        self.assertIn('"bench2"', TASK_MD)
+        self.assertIn("runs/bench2", STATUS)
+        self.assertIn("115", STATUS)
+        self.assertIn("runs/bench2", PUBLISH)
+        self.assertNotIn('"runs/bench",', PUBLISH)
+
+    def test_bench2_cancels_only_old_bench_jobs(self):
+        """The cancel filter must accept exactly piezo-bench-p1..p5 (CLAUDE.md: only our own old jobs)."""
+        from build_sync_notebook import OLD_BENCH_JOB
+        import re
+        pat = re.compile(OLD_BENCH_JOB)
+        for ok in ("piezo-bench-p1", "piezo-bench-p5"):
+            self.assertTrue(pat.fullmatch(ok), ok)
+        for no in ("piezo-bench2-p1", "piezo-bench-p6", "piezo-bench-p1-hinted", "piezo-full", "piezo-speccheck"):
+            self.assertFalse(pat.fullmatch(no), no)

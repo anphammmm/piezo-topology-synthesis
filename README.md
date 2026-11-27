@@ -94,19 +94,22 @@ and the spec's own hand-made witness (`netlist.spec_witness`), and writes `runs/
 a verdict per spec: `textbook_solves`, `witness_solves` or `unproven`. Run it before the benchmark: a spec
 the textbook solves only repeats P1, and an unproven spec may be infeasible.
 
-The benchmark (`python3 tools/panda_campaign.py --bench`) runs every spec with the variants full,
-no_screen, no_diag, coord and random, five seeds each, into `runs/bench/<spec>/<variant>/seed<n>`;
-`python3 -m piezo_synth.experiments runs/bench --bench --paper paper/generated` writes `tab_bench.tex`.
+The benchmark v2 (`python3 tools/panda_campaign.py --bench`, notebook task `"bench2"`) runs every spec with
+the variants full, no_screen, no_diag and hinted (five seeds each) and random (three seeds) into
+`runs/bench2/<spec>/<variant>/seed<n>`, one job per spec (`piezo-bench2-p1` ...): 115 runs. coord is not in it
+(the P1 campaign compares the sizers). `python3 -m piezo_synth.experiments runs/bench2 --bench --paper
+paper/generated` writes `tab_bench.tex`.
 
-**Prompt-leakage control (`neutral_prompt`).** The default system prompt contains fragments of the textbook
-answer: its JSON example is the parallel-SSHI branch (L 4.7 mH from pzp, a switch to pzn, a SYNC with
-ton = 34 us, the witness's own values), it gives the L-Cp inversion timing ton = pi*sqrt(L*Cp), and it shows
-the full-bridge and zener-clamp wiring as diode-orientation examples. The `neutral_prompt` variant removes
-all three (a meaningless R-C example, a generic orientation rule) and keeps the spec, the vocabulary and the
-reference. It runs on P1 (textbook-solvable) and P3 (not) after the benchmark:
-`python3 tools/panda_campaign.py --bench --variants neutral_prompt --specs P1,P3` (jobs
-`piezo-bench-p1-neutral-prompt`, `piezo-bench-p3-neutral-prompt`; notebook task `"neutral"`). Compare it with
-`full` on the same spec: a large drop means the results depend on the hints in the prompt.
+**Neutral prompt (default) and the `hinted` variant.** The original system prompt contained fragments of the
+textbook answer: its JSON example was the parallel-SSHI branch (L 4.7 mH from pzp, a switch to pzn, a SYNC
+with ton = 34 us, the witness's own values), it gave the L-Cp inversion timing ton = pi*sqrt(L*Cp), and it
+showed the full-bridge and zener-clamp wiring as diode-orientation examples. The default prompt now has
+none of them (a meaningless R-C example, a generic orientation rule) and keeps the spec, the vocabulary and
+the reference. `hinted_prompt: true` (the `hinted` variant) restores the original prompt; comparing it with
+`full` on each spec measures how much the results depend on the hints. The P1 campaign (`runs/exp`) and the
+first benchmark (`runs/bench`) used the original prompt. The finished `full` runs of the first benchmark are
+moved into `runs/bench2/<spec>/hinted/` by `tools/migrate_hinted.py --apply` (the `"bench2"` task does it
+after stopping the old `piezo-bench-p*` jobs), so they are not run again.
 
 ## Design choices
 

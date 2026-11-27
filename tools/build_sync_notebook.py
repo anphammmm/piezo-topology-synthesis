@@ -89,8 +89,14 @@ TASK_MD = """## 2. Chạy việc
   (không xóa) sang `runs/exp_superseded/`.
 - `"speccheck"`: kiểm tra 5 spec (P1-P5) không cần Gemma: FBR, mạch sách giáo khoa (có sizing) và witness
   trên từng spec, khoảng 1 tiếng. Chạy cái này TRƯỚC `"bench"`.
-- `"bench"`: benchmark cho paper: 5 spec x 5 biến thể x 5 seed, mỗi spec một job (khoảng 1 ngày; chạy lại
-  thì chạy tiếp)."""
+- `"bench2"`: benchmark cho paper (bản 2, prompt trung tính): dừng các job `piezo-bench-p1..p5` cũ, chuyển các
+  run `full` đã xong của chúng (prompt cũ) thành biến thể `hinted` trong `runs/bench2`, rồi submit 5 job
+  (mỗi spec một job): 5 spec x (full, no_screen, no_diag, hinted x 5 seed + random x 3 seed) = 115 run,
+  khoảng 18 run đã có sẵn nhờ bước chuyển. Chạy NGAY sau khi ô 1 lấy code mới, để các job cũ không chạy tiếp
+  với prompt mới. Chạy lại thì chạy tiếp."""
+
+# job names of the first benchmark, the only jobs the "bench2" task stops (all submitted from this notebook)
+OLD_BENCH_JOB = r"piezo-bench-p[1-5]"
 
 TASK = '''TASK = "smoke"
 stamp = time.strftime("%Y%m%d-%H%M%S")
@@ -111,7 +117,22 @@ elif TASK == "campaign":
     tools.panda_campaign.main(["--cwd", str(REPO)])
 elif TASK == "speccheck":
     submit("piezo-speccheck", "python3 -u -m piezo_synth.speccheck --out runs/speccheck", 4 * 3600)
-elif TASK == "bench":
+elif TASK == "bench2" or TASK == "bench":   # "bench" kept as an alias
+    import re
+    stopped = set()
+    jl = REPO / "runs/jobs.jsonl"
+    for line in (jl.read_text().splitlines() if jl.exists() else []):
+        j = json.loads(line)
+        if re.fullmatch(r"@OLD_BENCH_JOB@", j.get("name", "")) and j["job"] not in stopped:
+            stopped.add(j["job"])
+            try:
+                cancel(j["job"])
+                print("stopped old benchmark job", j["job"])
+            except Exception as e:
+                print("could not stop", j["job"], "(probably finished already):", e)
+    if stopped:
+        time.sleep(30)                          # let the stopped pods exit before their runs are moved
+    sh(sys.executable, "tools/migrate_hinted.py", "--apply")
     tools.panda_campaign.main(["--cwd", str(REPO), "--bench"])
 elif TASK == "random_rerun":
     import shutil
@@ -125,7 +146,7 @@ elif TASK == "random_rerun":
         print(f"old random runs moved to {dest.relative_to(REPO)}")
     tools.panda_campaign.main(["--cwd", str(REPO), "--variants", "random"])
 else:
-    raise ValueError(TASK)'''
+    raise ValueError(TASK)'''.replace("@OLD_BENCH_JOB@", OLD_BENCH_JOB)
 
 STATUS_MD = """## 3. Tiến độ (chạy bất cứ lúc nào)"""
 
@@ -136,9 +157,9 @@ for f in sorted(REPO.glob("runs/logs/*.log"), key=lambda p: p.stat().st_mtime)[-
 done = len(glob.glob(str(REPO / "runs/exp/*/seed*/outcome.json")))
 if (REPO / "runs/exp").exists():
     print(f"\\ncampaign: {done} of 40 runs finished")
-bench = len(glob.glob(str(REPO / "runs/bench/*/*/seed*/outcome.json")))
-if (REPO / "runs/bench").exists():
-    print(f"benchmark: {bench} of 125 runs finished")
+bench = len(glob.glob(str(REPO / "runs/bench2/*/*/seed*/outcome.json")))
+if (REPO / "runs/bench2").exists():
+    print(f"benchmark v2: {bench} of 115 runs finished")
 if (REPO / "runs/speccheck/speccheck.md").exists():
     print((REPO / "runs/speccheck/speccheck.md").read_text())'''
 
@@ -152,8 +173,8 @@ if (REPO / "runs/exp").exists():
     sh(sys.executable, "-m", "piezo_synth.experiments", "runs/exp", "--paper", "runs/paper_generated",
        "--smoke", "runs/smoke", check=False)
     sh(sys.executable, "tools/paper_figures.py", "runs/exp", "runs/paper_generated", check=False)
-if (REPO / "runs/bench").exists():
-    sh(sys.executable, "-m", "piezo_synth.experiments", "runs/bench", "--bench", "--paper",
+if (REPO / "runs/bench2").exists():
+    sh(sys.executable, "-m", "piezo_synth.experiments", "runs/bench2", "--bench", "--paper",
        "runs/paper_generated", check=False)
 if TOKEN_FILE.exists():
     sh(sys.executable, "tools/publish_results.py", "--message", MESSAGE, check=False, timeout=1800)
