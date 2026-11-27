@@ -11,7 +11,7 @@ from . import spec
 from .circuit import DIODE_MODELS, MOVES
 from .evaluate import Evaluation
 
-EXAMPLE_JSON = {
+EXAMPLE_CIRCUIT = {
     "move": "new_topology",
     "name": "short label for this design",
     "rationale": "what you changed and why it should fix the failing checks",
@@ -23,6 +23,14 @@ EXAMPLE_JSON = {
         {"id": "S1", "type": "S", "nodes": ["n1", "pzn"], "ctrl": "G1"},
         {"id": "G1", "type": "SYNC", "ton": 3.4e-5, "phase": 0.0, "edges": "both"},
     ],
+}
+EXAMPLE_JSON = {"proposals": [EXAMPLE_CIRCUIT]}
+
+REPEATED_TEXT = {
+    "pinned": "the output stays pinned near 0 V (a wiring or orientation error, not a value problem)",
+    "sim_failed": "the simulation fails",
+    "underpower": "too little power reaches the output on some conditions",
+    "overvoltage": "the output exceeds 3.6 V on some conditions",
 }
 
 
@@ -51,8 +59,16 @@ def condition_table(ev: Evaluation, conditions) -> str:
     return "\n".join(rows)
 
 
-def system_prompt(reference_eval: Evaluation) -> str:
+def system_prompt(reference_eval: Evaluation, per_round: int = 3, screen: bool = True, size_budget: int = 48) -> str:
     conds = spec.search_conditions()
+    sc = spec.SCREEN
+    screen_text = (f"""- Each proposal is first SCREENED: with out fixed at {sc['vstore']:g} V, the net power it delivers is
+  measured on {', '.join(sc['conditions'])} for its proposed values and a few automatic value presets.
+  If the best preset delivers less than {sc['alpha'] * 100:.0f} % of the load's need (V^2/RL) on any of them,
+  the design is reported back with those powers and is not tuned or simulated further.
+""" if screen else "")
+    how_many = ("exactly 1 design" if per_round == 1 else
+                f"up to {per_round} designs with DIFFERENT connectivity (different structures, not value variants)")
     ctable = "\n".join(
         f"  {c.id}: {c.label}; Ip = {c.ip * 1e6:g} uA peak, f = {c.freq:g} Hz, Cp = {c.cp * 1e9:g} nF, "
         f"RL = {c.rl / 1e3:g} kOhm, temperature {c.temp:g} C" for c in conds)
@@ -108,11 +124,14 @@ REFERENCE DESIGN: FBR (full-bridge rectifier, 4 x DSCH, 2.2 uF on out). Its resu
 {condition_table(reference_eval, conds)}
 
 HOW TO WORK
-- Component values are tuned automatically by a numerical optimiser after each proposal, so spend
-  your reasoning on circuit CONNECTIVITY (topology): which structure can meet every condition.
-- Classify each proposal with "move": {', '.join(MOVES)} (resize = same connectivity, new values).
-- Explain the expected effect in "rationale". Set "done": true only when you believe no further
-  structural change can improve on the best design so far.
+- Component values are optimised automatically (an evolution strategy, up to {size_budget} full
+  evaluations per structure, running while you think), so spend your reasoning on circuit
+  CONNECTIVITY (topology): which structure can meet every condition. A structure that was already
+  explored is not simulated again, whatever its values.
+{screen_text}- Each round, propose {how_many}.
+- Classify each design with "move": new_topology or modify_topology, and explain the expected effect
+  in "rationale". Set "done": true only when you believe no further structural change can improve on
+  the best design so far.
 - Reply with ONE JSON object only, in this form:
 {json.dumps(EXAMPLE_JSON, indent=1)}
 """
@@ -125,37 +144,65 @@ def required_move(moves: List[str]) -> Optional[str]:
     return None
 
 
+def _hints(d: dict) -> str:
+    hs = d.get("hints") or []
+    return ("\nwhat this means:\n" + "\n".join(f"- {h}" for h in hs)) if hs else ""
+
+
 def _design_block(d: dict) -> str:
+    extra = ""
+    if d.get("screen"):
+        extra += f"\nscreen (out fixed at 1.8 V): {d['screen']}"
+    if d.get("sizing"):
+        extra += f"\nvalue sizing: {d['sizing']}"
     return (f"[{d['id']}] {d['name']}  (topology {d['topo_hash']}, score {d['scalar']:.2f}, "
             f"conditions passed {d['cond_pass']}/{len(spec.search_conditions())})\n"
             f"{d['circuit_text']}\n{d['table']}\n"
-            f"failing: {d['diagnosis'] or 'nothing - all checks pass'}")
+            f"failing: {d['diagnosis'] or 'nothing - all checks pass'}{extra}{_hints(d)}")
 
 
-def iteration_prompt(iteration: int, max_proposals: int, top: List[dict], last: Optional[dict],
-                     explored: List[dict], required: Optional[str]) -> str:
-    parts = [f"Proposal {iteration} of {max_proposals}."]
-    if last is None:
-        parts.append("This is your first proposal: choose the topology you think most likely to meet "
+def _result_block(k: int, d: dict) -> str:
+    name = d.get("name", "")
+    kind = d.get("kind")
+    if kind is None:   # older dict form
+        kind = ("invalid" if d.get("invalid_problems") else "duplicate" if d.get("duplicate")
+                else "error" if d.get("error") else "evaluated")
+    head = f"Design {k} '{name}': "
+    if kind == "invalid":
+        return head + "rejected before simulation:\n- " + "\n- ".join(d["invalid_problems"])
+    if kind == "duplicate":
+        return head + (f"duplicate: same structure as an earlier design ({d.get('id', '?')}); nothing new was simulated. "
+                       f"Values are tuned automatically, so propose a different structure.")
+    if kind == "error":
+        return f"Your previous request failed: {d['error']}"
+    if kind == "screen_failed":
+        return (head + f"failed the screen and was not tuned (topology {d.get('topo_hash', '?')}).\n"
+                f"{d.get('circuit_text', '')}\nscreen (out fixed at 1.8 V): {d.get('screen', '')}{_hints(d)}")
+    return head + "simulated with the best screening preset (it is being tuned):\n" + _design_block(d)
+
+
+def iteration_prompt(iteration: int, max_rounds: int, top: List[dict], last, explored: List[dict],
+                     required: Optional[str], repeated: Optional[List[str]] = None) -> str:
+    parts = [f"Round {iteration} of {max_rounds}."]
+    if isinstance(last, dict):
+        last = [last]
+    if not last and iteration <= 1:
+        parts.append("This is your first round: choose the structures you think most likely to meet "
                      "every condition.")
-    elif last.get("invalid_problems"):
-        parts.append("Your previous proposal was rejected before simulation:\n- " +
-                     "\n- ".join(last["invalid_problems"]))
-    elif last.get("duplicate"):
-        parts.append(f"Your previous proposal '{last.get('name', '')}' was a duplicate of an earlier design "
-                     f"({last.get('id', '?')}); nothing new was simulated. Propose something different.")
-    elif last.get("error"):
-        parts.append(f"Your previous request failed: {last['error']}")
-    else:
-        parts.append("Result of your previous proposal, with the values you proposed (it is tuned automatically "
-                     "while you think; tuned versions appear under BEST DESIGNS):\n" + _design_block(last))
+    elif last:
+        parts.append("RESULTS OF YOUR PREVIOUS ROUND:\n\n" +
+                     "\n\n".join(_result_block(k, d) for k, d in enumerate(last, 1)))
+    if repeated:
+        parts.append("REPEATED PROBLEM: your last three designs all show the same failure: " +
+                     "; ".join(REPEATED_TEXT.get(c, c) + f" [{c}]" for c in repeated) +
+                     ". Change the part of the circuit responsible for it rather than its values.")
     if top:
         parts.append("BEST DESIGNS SO FAR (values already tuned):\n\n" + "\n\n".join(_design_block(d) for d in top))
     if explored:
         parts.append("Topologies explored so far (hash: name, best score):\n" + "\n".join(
             f"  {e['topo_hash']}: {e['name']} ({e['best_scalar']:.2f})" for e in explored))
     if required:
-        parts.append(f"Your last three proposals only changed values. This proposal MUST change the "
+        parts.append(f"Your last three designs only changed values. This round MUST change the "
                      f"connectivity (move = {required}).")
     parts.append("Reply with one JSON object only.")
     return "\n\n".join(parts)

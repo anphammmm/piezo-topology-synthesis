@@ -73,6 +73,19 @@ SIM = {"tstop": 0.8, "maxstep": 2e-6, "win": (0.7, 0.8), "win_prev": (0.6, 0.7)}
 
 CTRL_SINK_A = 0.5e-6   # supply current charged per SYNC controller, drawn from "out"
 
+# Fast screen (before any value tuning): the storage node is held at vstore by a source behind a
+# sense resistor, and the net power delivered into it is averaged over the last avg_cycles of a
+# short run. A design whose net power at 1.8 V is below the load's demand V^2/RL on some condition
+# cannot hold vout >= 1.8 V there whatever its storage capacitor; alpha < 1 relaxes the test because
+# the values are not tuned yet (the same idea as a relaxed DC-gain filter for unsized amplifiers).
+# Robustness check of the selected design (after the search): each Monte Carlo sample draws every
+# value uniformly within +/- these relative tolerances (phase: absolute, in periods, standing for
+# controller timing error), and is evaluated on all conditions.
+TOLERANCES = {"R": 0.05, "C": 0.2, "L": 0.1, "ton": 0.05, "phase": 0.02}
+
+SCREEN = {"vstore": 1.8, "rsense": 100.0, "cycles": 10, "avg_cycles": 4, "alpha": 0.5,
+          "conditions": ("S2", "S4", "S6"), "presets": 4, "spread": 3.0}
+
 
 def search_conditions() -> List[Condition]:
     return [c for c in CONDITIONS if c.split == "search"]
@@ -100,4 +113,6 @@ def spec_dict() -> dict:
         "limits": {k: _jsonable(v) for k, v in LIMITS.items()},
         "sim": {k: _jsonable(v) for k, v in SIM.items()},
         "ctrl_sink_a": CTRL_SINK_A,
+        "screen": {k: _jsonable(v) for k, v in SCREEN.items()},
+        "tolerances": dict(TOLERANCES),
     }

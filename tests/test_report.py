@@ -9,11 +9,11 @@ from piezo_synth.report import build_report
 from piezo_synth.search import SearchConfig, run_search
 from piezo_synth.sim import Simulator
 from tests.fakes import FakeBackend, FakeLLM
-from tests.test_search import SSHI_NO_CLAMP, WITNESS, physics
+from tests.test_search import BRIDGE_CLAMP, SSHI_NO_CLAMP, WITNESS, multi, physics
 
 
 def fake_run(out, replies, **cfg):
-    base = dict(max_proposals=4, min_proposals=1, refine_budget=2, refine_min=2, heartbeat_s=0.01)
+    base = dict(max_rounds=4, min_rounds=1, size_budget=4, size_lambda=2, mc_samples=2, heartbeat_s=0.01)
     base.update(cfg)
     run_search(SearchConfig(**base), FakeLLM(replies), Simulator(FakeBackend(physics), out, workers=2),
                RunRecorder(out, quiet=True))
@@ -28,16 +28,20 @@ class ReportTest(unittest.TestCase):
         self.tmp.cleanup()
 
     def test_report_sections(self):
-        fake_run(self.out, [json.dumps(SSHI_NO_CLAMP), json.dumps(WITNESS)])
+        fake_run(self.out, [multi(BRIDGE_CLAMP, SSHI_NO_CLAMP), json.dumps(WITNESS)])
         text = build_report(self.out)
         heads = ["## Specification", "## Test conditions", "## Reference results", "## Proposals tried",
-                 "## Selected design", "## Held-out check", "## Unmet requirements", "## Stop reason",
-                 "## Time and tokens", "## Files"]
+                 "## Value sizing", "## Selected design", "## Held-out check", "## Robustness",
+                 "## Unmet requirements", "## Stop reason", "## Time and tokens", "## Files"]
         pos = [text.index(h) for h in heads]
         self.assertEqual(pos, sorted(pos))
         self.assertIn("search_spec_met", text)
         self.assertIn("sshi + clamp", text)
         self.assertIn("H3", text)
+        props = text[text.index("## Proposals tried"):text.index("## Value sizing")]
+        self.assertIn("screen_failed", props)
+        self.assertIn("30 %", props)
+        self.assertIn("Monte Carlo", text)
         self.assertTrue((self.out / "report.md").exists())
         s = json.loads((self.out / "summary.json").read_text())
         self.assertEqual(s["stop_reason"], "search_spec_met")
@@ -46,7 +50,7 @@ class ReportTest(unittest.TestCase):
         self.assertIn("model_calls", s["timing"])
 
     def test_unmet_requirements_listed(self):
-        fake_run(self.out, [json.dumps(SSHI_NO_CLAMP)], max_proposals=2, stagnation=99)
+        fake_run(self.out, [json.dumps(SSHI_NO_CLAMP)], max_rounds=2, stagnation=99)
         text = build_report(self.out)
         unmet = text[text.index("## Unmet requirements"):text.index("## Stop reason")]
         self.assertIn("vout_max", unmet)

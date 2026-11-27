@@ -9,7 +9,7 @@ from __future__ import annotations
 from typing import Tuple
 
 from .circuit import Circuit, Component, canonical
-from .spec import CTRL_SINK_A, LIMITS, SIM, Condition
+from .spec import CTRL_SINK_A, LIMITS, SCREEN, SIM, Condition
 
 MODELS_TEXT = """.model DSCH D(Is=5e-8 Rs=1 N=1.05 Cjo=10p BV=30 IBV=1u EG=0.69 XTI=2)
 .model DSI D(Is=2.5n Rs=0.6 N=1.75 Cjo=4p BV=75 IBV=1u)
@@ -17,6 +17,7 @@ MODELS_TEXT = """.model DSCH D(Is=5e-8 Rs=1 N=1.05 Cjo=10p BV=30 IBV=1u EG=0.69 
 .model SWI SW(Ron=2 Roff=1G Vt=0.5 Vh=0)"""
 
 MEAS_NAMES = ("vavg", "vavg_prev", "vpp", "vmax", "tup", "pload", "pext")
+SCREEN_MEAS_NAMES = ("isn", "vout")
 
 
 def fmt(v: float) -> str:
@@ -56,16 +57,13 @@ def _component_line(x: Component) -> str:
     raise ValueError(x.type)
 
 
-def build_netlist(c: Circuit, cond: Condition, title: str = "", save_all: bool = False) -> str:
-    cc = canonical(c)
-    w0, w1 = SIM["win"]
-    p0, p1 = SIM["win_prev"]
-    tstop = SIM["tstop"]
+def _bench(cc: Circuit, cond: Condition, title: str, load_lines) -> list:
+    """Piezo, load lines, controller sinks, proposed components, pulse sources, bleeds, models, .temp."""
     lines = [f"* {title or cc.name} | condition {cond.id}",
              f"Ipz pzn pzp SINE(0 {fmt(cond.ip)} {fmt(cond.freq)})",
              f"Cpz pzp pzn {fmt(cond.cp)}",
              f"Rpz pzp pzn {fmt(cond.rp)}",
-             f"RL out 0 {fmt(cond.rl)}"]
+             *load_lines]
     syncs = [x for x in cc.components if x.type == "SYNC"]
     for k, _ in enumerate(syncs, 1):
         lines.append(f"Ictl{k} out 0 {fmt(CTRL_SINK_A)}")
@@ -81,6 +79,30 @@ def build_netlist(c: Circuit, cond: Condition, title: str = "", save_all: bool =
         lines.append(f"Rbleed_{n} {n} 0 1G")
     lines.append(MODELS_TEXT)
     lines.append(f".temp {fmt(cond.temp)}")
+    return lines
+
+
+def build_screen_netlist(c: Circuit, cond: Condition, title: str = "") -> str:
+    """Short run with out held at SCREEN['vstore'] behind a sense resistor (see spec.SCREEN)."""
+    cc = canonical(c)
+    vst, rs = SCREEN["vstore"], SCREEN["rsense"]
+    tstop = SCREEN["cycles"] / cond.freq
+    w0 = tstop - SCREEN["avg_cycles"] / cond.freq
+    lines = _bench(cc, cond, title, [f"Rsense out vsn {fmt(rs)}", f"Vst vsn 0 {fmt(vst)}"])
+    lines += [f".tran 0 {fmt(tstop)} 0 {fmt(SIM['maxstep'])}",
+              ".save V(out) V(vsn)",
+              f".meas TRAN isn AVG V(out,vsn) FROM={fmt(w0)} TO={fmt(tstop)}",
+              f".meas TRAN vout AVG V(out) FROM={fmt(w0)} TO={fmt(tstop)}",
+              ".end"]
+    return "\n".join(lines) + "\n"
+
+
+def build_netlist(c: Circuit, cond: Condition, title: str = "", save_all: bool = False) -> str:
+    cc = canonical(c)
+    w0, w1 = SIM["win"]
+    p0, p1 = SIM["win_prev"]
+    tstop = SIM["tstop"]
+    lines = _bench(cc, cond, title, [f"RL out 0 {fmt(cond.rl)}"])
     lines.append(f".tran 0 {fmt(tstop)} 0 {fmt(SIM['maxstep'])}")
     if not save_all:
         lines.append(".save V(out) V(pzp) V(pzn) I(Ipz)")

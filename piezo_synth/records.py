@@ -20,6 +20,9 @@ from .netlist import MEAS_NAMES
 CANDIDATE_FIELDS = ["id", "iteration", "origin", "parent", "move", "name", "topo_hash", "design_hash",
                     "n_components", "split", "scalar", "cond_pass", "checks_pass", "all_pass"]
 MEAS_FIELDS = ["candidate", "split", "condition", *MEAS_NAMES, "dv", "sim_ok", "sim_error"]
+PROPOSAL_FIELDS = ["round", "k", "name", "move", "topo_hash", "status", "candidate", "of", "worst_ratio",
+                   *[f"ratio_{c}" for c in ("S2", "S4", "S6")], *[f"gain_{c}" for c in ("S2", "S4", "S6")],
+                   "n_presets", "hints", "problems"]
 CHECK_FIELDS = ["candidate", "split", "condition", "criterion", "measured", "op", "limit", "margin", "passed"]
 
 
@@ -27,7 +30,7 @@ CHECK_FIELDS = ["candidate", "split", "condition", "criterion", "measured", "op"
 class Candidate:
     id: str
     iteration: int
-    origin: str            # reference | witness | llm | refine
+    origin: str            # reference | witness | llm | size | refine | audit
     parent: Optional[str]
     circuit: Circuit
     topo_hash: str
@@ -100,6 +103,11 @@ class RunRecorder:
         folder = self.out / "candidates" / c.id
         folder.mkdir(parents=True, exist_ok=True)
         (folder / "circuit.json").write_text(json.dumps(to_dict(c.circuit), indent=1), encoding="utf-8")
+
+    def proposal(self, row: dict) -> None:
+        """One row per design the model proposed: its fate (invalid, duplicate, screen_failed, evaluated)."""
+        with self._lock:
+            self._append_csv("proposals.csv", PROPOSAL_FIELDS, [row])
 
     def progress(self, **fields) -> None:
         with self._lock:

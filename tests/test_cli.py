@@ -25,6 +25,9 @@ class CLITest(unittest.TestCase):
             self.assertEqual(p.returncode, 0, p.stderr[-2000:])
             s = json.loads((Path(d) / "s" / "summary.json").read_text())
             self.assertEqual(s["stop_reason"], "smoke")
+            self.assertIn("[screen", p.stdout)
+            scr = json.loads((Path(d) / "s" / "smoke_screen.json").read_text())
+            self.assertEqual(sorted(scr), ["reference", "witness"])
             circ = Path(d) / "s" / "candidates" / "c0001" / "circuit.json"
             p = run("piezo_synth.reproduce", str(circ), "--out", str(Path(d) / "rep"), "--conditions", "S1,H2",
                     "--fake", "--waveforms")

@@ -151,46 +151,67 @@ def build_report(out_dir) -> str:
     s += ["", _table(mhead, cond_rows(ref_id, search_ids + held_ids))] if ref_id else ["", "(not evaluated)"]
     # 4. proposals
     s += ["", "## Proposals tried", ""]
-    rows = []
-    per_iter: Dict[int, dict] = defaultdict(lambda: {"s": 0.0, "tok": 0, "calls": 0})
+    props = _read_csv(out / "proposals.csv", ("round", "k", "status"))
+    per_round: Dict[int, dict] = defaultdict(lambda: {"s": 0.0, "tok": 0, "calls": 0})
     for e in events:
         if e["kind"] == "model_reply":
-            d = per_iter[e["iteration"]]
+            d = per_round[e["iteration"]]
             d["s"] += e.get("seconds") or 0
             d["tok"] += (e.get("completion_tokens") or 0)
             d["calls"] += 1
-    llm_by_iter = {int(c["iteration"]): c for c in search_rows if c["origin"] == "llm"}
-    outcome_by_iter: Dict[int, str] = {}
-    for e in events:
-        it = e.get("iteration")
-        if e["kind"] == "duplicate":
-            outcome_by_iter[it] = f"duplicate of {e['of']}"
-        elif e["kind"] == "proposal_invalid":
-            outcome_by_iter[it] = "invalid: " + "; ".join(e.get("problems", []))[:120]
-        elif e["kind"] == "model_error":
-            outcome_by_iter[it] = "model error: " + str(e.get("error"))[:80]
-    for it in sorted(set(per_iter) | set(llm_by_iter) | set(outcome_by_iter)):
-        c = llm_by_iter.get(it)
-        d = per_iter.get(it, {"s": 0, "tok": 0, "calls": 0})
-        if c:
-            rows.append([it, c["id"], c["move"], c["name"], c["topo_hash"], "simulated",
-                         f"{c['cond_pass']}/{len(search_ids)}", _f(c["scalar"], "{:.2f}"), f"{d['s']:.0f}", d["tok"] or "-"])
+    screen_ids = list(spec.get("screen", {}).get("conditions", []))
+    rows = []
+    for p in props:
+        c = by_id.get(p.get("candidate") or "", {})
+        ratios = " ".join(f"{cid} {float(p['ratio_' + cid]) * 100:.0f} %" for cid in screen_ids
+                          if p.get("ratio_" + cid) not in (None, "", "-inf"))
+        if p["status"] == "invalid":
+            detail = (p.get("problems") or "")[:120]
+        elif p["status"] == "duplicate":
+            detail = f"same as {p.get('of')}"
         else:
-            rows.append([it, "-", "-", "-", "-", outcome_by_iter.get(it, "-"), "-", "-", f"{d['s']:.0f}", d["tok"] or "-"])
-    s.append(_table(["#", "candidate", "move", "name", "topology", "outcome", "cond. pass", "score",
-                     "model s", "completion tokens"], rows) if rows else "(none)")
-    refines = [c for c in search_rows if c["origin"] == "refine"]
-    if refines:
+            detail = ratios
+        rows.append([p["round"], p["k"], p.get("name", ""), p.get("move", ""), p.get("topo_hash", ""), p["status"],
+                     detail, p.get("candidate") or "-",
+                     f"{c['cond_pass']}/{len(search_ids)}" if c else "-", _f(c.get("scalar"), "{:.2f}") if c else "-",
+                     p.get("hints") or "-"])
+    s.append(_table(["round", "#", "name", "move", "topology", "outcome", "screen (power vs need) / detail",
+                     "candidate", "cond. pass", "score", "problems found"], rows) if rows else "(none)")
+    errors = [e for e in events if e["kind"] == "model_error"]
+    if per_round:
+        s += ["", "Model calls per round:", "",
+              _table(["round", "calls", "model s", "completion tokens"],
+                     [[r, d["calls"], f"{d['s']:.0f}", d["tok"] or "-"] for r, d in sorted(per_round.items())])]
+    if errors:
+        s += ["", f"{len(errors)} model call(s) failed: " + "; ".join(str(e.get("error"))[:80] for e in errors[:3])]
+    rscreen = _read_json(out / "reference_screen.json")
+    if rscreen:
+        s += ["", "Reference on the screen (power delivered at 1.8 V vs need): " +
+              ", ".join(f"{k} {v * 100:.0f} %" for k, v in sorted(rscreen.get("ratio", {}).items())) + "."]
+    # 4b. sizing
+    s += ["", "## Value sizing", ""]
+    tuned = [c for c in search_rows if c["origin"] in ("size", "refine")]
+    if tuned:
         grp: Dict[str, List[dict]] = defaultdict(list)
-        for c in refines:
+        for c in tuned:
             grp[c["parent"]].append(c)
-        s += ["", "Value tuning (automatic, between model calls):", ""]
-        s.append(_table(["tuned from", "evaluations", "start score", "best score", "best candidate"],
-                        [[p, len(v), _f(by_id.get(p, {}).get("scalar"), "{:.2f}"),
-                          _f(max(float(x["scalar"]) for x in v), "{:.2f}"),
-                          max(v, key=lambda x: float(x["scalar"]))["id"]] for p, v in grp.items()]))
-    ntopo = len({c["topo_hash"] for c in search_rows if c["origin"] != "reference"})
-    s += ["", f"{len(search_rows)} designs evaluated on the search conditions, {ntopo} distinct topologies "
+        trows = []
+        for p, v in grp.items():
+            top = max(v, key=lambda x: float(x["scalar"]))
+            trows.append([p, by_id.get(p, {}).get("name", ""), len(v), _f(by_id.get(p, {}).get("scalar"), "{:.2f}"),
+                          _f(top["scalar"], "{:.2f}"), top["id"], f"{top['cond_pass']}/{len(search_ids)}"])
+        s.append(_table(["structure (first evaluation)", "name", "evaluations", "start score", "best score",
+                         "best candidate", "conditions passed"], trows))
+    else:
+        s.append("No structure was sized (none passed the screen with an output to tune, or sizing was off).")
+    audits = [e for e in events if e["kind"] == "audit"]
+    if audits:
+        s += ["", "Screen audit (structures rejected by the screen, sized anyway to check the filter):", "",
+              _table(["structure", "screen worst %", "evaluations", "best score", "spec met"],
+                     [[a.get("name"), f"{(a.get('worst_ratio') or 0) * 100:.0f}", a.get("n_evals"),
+                       _f(a.get("best_scalar"), "{:.2f}"), a.get("met")] for a in audits])]
+    ntopo = len({c["topo_hash"] for c in search_rows if c["origin"] not in ("reference", "audit")})
+    s += ["", f"{len(search_rows)} designs evaluated on the search conditions, {ntopo} distinct structures "
               f"(excluding the reference)."]
     # 5. selected design
     s += ["", "## Selected design", ""]
@@ -212,6 +233,19 @@ def build_report(out_dir) -> str:
             s += ["Reference:", "", _table(mhead, cond_rows(ref_id, held_ids))]
     else:
         s.append("Not run (the search did not finish).")
+    # 6b. robustness
+    s += ["", "## Robustness", ""]
+    rob = _read_json(out / "robust.json")
+    if rob:
+        tol = rob.get("tolerances", {})
+        s.append(f"Monte Carlo on {rob.get('candidate')}: {rob['n']} samples, values drawn uniformly within "
+                 f"R +/-{tol.get('R', 0) * 100:g} %, C +/-{tol.get('C', 0) * 100:g} %, L +/-{tol.get('L', 0) * 100:g} %, "
+                 f"switch on-time +/-{tol.get('ton', 0) * 100:g} %, switch timing +/-{tol.get('phase', 0) * 100:g} % "
+                 f"of a period. **{rob['pass_all'] * 100:.0f} %** of samples meet every criterion on every condition.")
+        s += ["", _table(["condition", "samples passing"],
+                         [[k, f"{v * 100:.0f} %"] for k, v in rob.get("per_condition", {}).items()])]
+    else:
+        s.append("Not run.")
     # 7. unmet
     fails = [dict(f, split="search") for f in failed(sel_id, search_ids)] + \
             [dict(f, split="heldout") for f in failed(sel_id, held_ids)] if sel_id else []
@@ -233,6 +267,8 @@ def build_report(out_dir) -> str:
         "stagnation": "the best score stopped improving",
         "time_budget": "the wall-clock budget was used up",
         "proposal_budget": "the maximum number of proposals was reached",
+        "round_budget": "the maximum number of rounds was reached",
+        "sim_budget": "the simulation budget was used up",
         "smoke": "smoke test (reference and witness only, no model)",
         "incomplete": "the job ended before the search finished (killed, timed out, or still running)",
     }
@@ -249,18 +285,25 @@ def build_report(out_dir) -> str:
             ["simulations run", timing.get("n_sims")], ["cache hits (not re-simulated)", timing.get("cache_hits")],
             ["simulator time (sum over parallel runs)", f"{timing.get('sim_seconds', 0):.0f} s"],
             ["simulation wall time", f"{timing.get('sim_wall_s', 0):.0f} s"],
-            ["value tuning wall time", f"{timing.get('refine_s', 0):.0f} s"]]))
-        s += ["", "Value tuning runs while the model is thinking, so model and simulation times overlap."]
+            ["screening simulations", timing.get("n_screen_sims", "-")],
+            ["screening wall time", f"{timing.get('screen_s', 0):.0f} s"],
+            ["value sizing wall time", f"{timing.get('size_s', timing.get('refine_s', 0)):.0f} s"],
+            ["designs proposed / invalid / duplicate", f"{timing.get('n_proposals', '-')} / "
+             f"{timing.get('n_invalid', '-')} / {timing.get('n_duplicate', '-')}"],
+            ["structures / passed the screen", f"{timing.get('n_topologies', '-')} / {timing.get('n_screen_pass', '-')}"]]))
+        s += ["", "Value sizing runs while the model is thinking, so model and simulation times overlap."]
     else:
         s.append("Not available (run incomplete).")
     # 10. files
     s += ["", "## Files", "", _table(["file", "contents"], [
         ["selected/circuit.json, selected/<cond>.net", "selected design and its exact netlist for every condition"],
+        ["proposals.csv", "every design the model proposed and what happened to it (screen powers)"],
         ["candidates.csv", "every design evaluated (one row per design and condition set)"],
+        ["robust.json, reference_screen.json", "Monte Carlo result; the reference's screen powers"],
         ["measurements.csv", "every measurement, per design and condition"],
         ["checks.csv", "every pass/fail decision with margin"],
         ["candidates/<id>/circuit.json", "each design's circuit"],
-        ["llm/iter-NN-a.json", "prompts, replies and model reasoning"],
+        ["llm/iter-NN-a.json", "prompts, replies and model reasoning (NN = round)"],
         ["events.jsonl", "timeline of the run"], ["sims/<hash>/", "LTspice netlists, logs and waveforms"],
         ["timing.json, outcome.json, spec.json, config.json", "timing, result, spec and settings"]])]
     text = "\n".join(s) + "\n"

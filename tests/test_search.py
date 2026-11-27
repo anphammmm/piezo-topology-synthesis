@@ -1,11 +1,13 @@
 import copy
-import re
+import csv
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
 
 from piezo_synth import spec
+from piezo_synth.baselines import RandomProposer
 from piezo_synth.circuit import to_dict
 from piezo_synth.llm import LLMReply
 from piezo_synth.netlist import reference_circuit, witness_circuit
@@ -16,15 +18,24 @@ from tests.fakes import FakeBackend, FakeLLM
 
 GOOD = dict(vavg=2.5, vavg_prev=2.49, vpp=0.02, vmax=2.6, tup=0.2, pload=1e-5, pext=2e-5)
 POOR = dict(vavg=1.2, vavg_prev=1.19, vpp=0.03, vmax=1.3, pload=1e-6, pext=2e-6)   # no tup
+PINNED = dict(vavg=0.6, vavg_prev=0.6, vpp=0.01, vmax=0.65, pload=1e-9, pext=1e-6)
 
 
 def uses(text, model):
     return re.search(rf"^[DS]\w* .* {model}$", text, re.M) is not None
 
 
+def screen_meas(text, ratio):
+    cid = re.search(r"condition (S\d)", text).group(1)
+    need = spec.SCREEN["vstore"] ** 2 / spec.condition(cid).rl
+    return {"isn": need * ratio * spec.SCREEN["rsense"] / spec.SCREEN["vstore"], "vout": 1.8}
+
+
 def physics(text):
     if uses(text, "DSI"):
         return None                         # this design does not simulate
+    if "Vst vsn" in text:                   # screening bench
+        return screen_meas(text, 2.0 if uses(text, "SWI") else 0.3)
     if uses(text, "DZ33") and uses(text, "SWI"):
         return GOOD
     if uses(text, "SWI"):
@@ -32,22 +43,29 @@ def physics(text):
     return POOR
 
 
+def pinned(text):
+    return screen_meas(text, 0.0) if "Vst vsn" in text else PINNED
+
+
 WITNESS = dict(to_dict(witness_circuit()), move="new_topology", name="sshi + clamp")
 SSHI_NO_CLAMP = copy.deepcopy(WITNESS)
 SSHI_NO_CLAMP["components"] = [c for c in SSHI_NO_CLAMP["components"] if c.get("model") != "DZ33"]
 SSHI_NO_CLAMP["name"] = "sshi"
+SSHI_OTHER_VALUES = copy.deepcopy(SSHI_NO_CLAMP)
+for _c in SSHI_OTHER_VALUES["components"]:
+    if _c["id"] == "L1":
+        _c["value"] = 1e-3
 BROKEN = copy.deepcopy(SSHI_NO_CLAMP)
 for comp in BROKEN["components"]:
     if comp.get("model") == "DSCH":
         comp["model"] = "DSI"
+BRIDGE_CLAMP = dict(to_dict(reference_circuit()), move="new_topology", name="bridge + clamp")
+BRIDGE_CLAMP["components"] = BRIDGE_CLAMP["components"] + [
+    {"id": "D5", "type": "D", "nodes": ["0", "out"], "model": "DZ33"}]
 
 
-def renamed(obj, old, new):
-    o = copy.deepcopy(obj)
-    for comp in o["components"]:
-        if "nodes" in comp:
-            comp["nodes"] = [new if n == old else n for n in comp["nodes"]]
-    return o
+def multi(*designs):
+    return json.dumps({"proposals": list(designs)})
 
 
 class SearchTest(unittest.TestCase):
@@ -62,55 +80,80 @@ class SearchTest(unittest.TestCase):
         self.tmp.cleanup()
 
     def cfg(self, **kw):
-        base = dict(max_proposals=6, min_proposals=1, refine_budget=0, refine_min=0, heartbeat_s=0.01)
+        base = dict(max_rounds=6, min_rounds=1, proposals_per_round=3, size_budget=8, size_lambda=4,
+                    size_min_gens=1, mc_samples=0, heartbeat_s=0.01, drain_top=1)
         base.update(kw)
         return SearchConfig(**base)
 
     def events(self):
         return [json.loads(l) for l in (self.out / "events.jsonl").read_text().splitlines()]
 
+    def proposals(self):
+        with (self.out / "proposals.csv").open() as f:
+            return list(csv.DictReader(f))
+
+    def origins(self):
+        with (self.out / "candidates.csv").open() as f:
+            return [r["origin"] for r in csv.DictReader(f)]
+
     def test_search_meets_spec_and_runs_heldout(self):
-        out = run_search(self.cfg(), FakeLLM([json.dumps(WITNESS)]), self.sim, self.rec)
+        out = run_search(self.cfg(mc_samples=3), FakeLLM([multi(WITNESS)]), self.sim, self.rec)
         self.assertEqual(out.stop_reason, "search_spec_met")
         self.assertTrue(out.met_search)
         self.assertTrue(out.met_all)
         self.assertEqual({c.condition for c in out.heldout_selected.checks}, {"H1", "H2", "H3", "H4"})
         self.assertEqual({c.condition for c in out.heldout_reference.checks}, {"H1", "H2", "H3", "H4"})
-        self.assertTrue((self.out / "selected" / "circuit.json").exists())
-        self.assertTrue((self.out / "selected" / "S1.net").exists())
-        self.assertTrue((self.out / "selected" / "H1.net").exists())
-        self.assertEqual(json.loads((self.out / "progress.json").read_text())["phase"], "done")
         for f in ("candidates.csv", "checks.csv", "measurements.csv", "spec.json", "config.json", "timing.json",
-                  "outcome.json"):
+                  "outcome.json", "proposals.csv", "robust.json", "reference_screen.json",
+                  "selected/circuit.json", "selected/S1.net", "selected/H1.net"):
             self.assertTrue((self.out / f).exists(), f)
+        self.assertEqual(json.loads((self.out / "progress.json").read_text())["phase"], "done")
+        self.assertEqual(json.loads((self.out / "robust.json").read_text())["n"], 3)
 
-    def test_duplicate_proposal_not_resimulated(self):
-        llm = FakeLLM([json.dumps(SSHI_NO_CLAMP), json.dumps(renamed(SSHI_NO_CLAMP, "n1", "mid")),
-                       json.dumps(WITNESS)])
+    def test_several_designs_per_round_each_screened(self):
+        llm = FakeLLM([multi(BRIDGE_CLAMP, WITNESS)])
         out = run_search(self.cfg(), llm, self.sim, self.rec)
-        kinds = [e["kind"] for e in self.events()]
-        self.assertIn("duplicate", kinds)
-        # reference 6 + sshi 6 + witness 6 + held-out 2 x 4
-        self.assertEqual(len(self.backend.calls), 26)
+        self.assertEqual(out.stop_reason, "search_spec_met")
+        self.assertEqual([p["status"] for p in self.proposals()], ["screen_failed", "evaluated"])
+        self.assertAlmostEqual(float(self.proposals()[0]["worst_ratio"]), 0.3, places=6)
+
+    def test_screen_failed_design_reported_and_not_sized(self):
+        llm = FakeLLM([multi(BRIDGE_CLAMP), multi(WITNESS)])
+        run_search(self.cfg(), llm, self.sim, self.rec)
+        p2 = llm.received[1][1]["content"]
+        self.assertIn("failed the screen", p2)
+        self.assertIn("30 % of the load's need", p2)
+        self.assertNotIn("size", self.origins())
+
+    def test_same_topology_is_duplicate_even_with_new_values(self):
+        llm = FakeLLM([multi(SSHI_NO_CLAMP), multi(SSHI_OTHER_VALUES), multi(WITNESS)])
+        out = run_search(self.cfg(), llm, self.sim, self.rec)
+        self.assertIn("duplicate", [p["status"] for p in self.proposals()])
         self.assertIn("duplicate", llm.received[2][1]["content"].lower())
         self.assertEqual(out.stop_reason, "search_spec_met")
 
+    def test_sizing_runs_while_model_thinks(self):
+        llm = FakeLLM([multi(SSHI_NO_CLAMP), multi(SSHI_NO_CLAMP)])
+        run_search(self.cfg(max_rounds=2, stagnation=99), llm, self.sim, self.rec)
+        self.assertIn("size", self.origins())
+        self.assertIn("value sizing", llm.received[1][1]["content"])
+
     def test_invalid_then_repaired(self):
         bad = {"move": "new_topology", "components": [{"id": "C1", "type": "C", "nodes": ["out", "0"], "value": 9}]}
-        llm = FakeLLM([json.dumps(bad), json.dumps(WITNESS)])
+        llm = FakeLLM([multi(bad), multi(WITNESS)])
         out = run_search(self.cfg(), llm, self.sim, self.rec)
         self.assertEqual(out.selected.origin, "llm")
         self.assertIn("could not be used", llm.received[1][-1]["content"])
         self.assertEqual(out.stop_reason, "search_spec_met")
 
     def test_invalid_twice_fed_back(self):
-        llm = FakeLLM(["no json at all", "still none", json.dumps(WITNESS)])
+        llm = FakeLLM(["no json at all", "still none", multi(WITNESS)])
         run_search(self.cfg(), llm, self.sim, self.rec)
         self.assertIn("rejected", llm.received[2][1]["content"])
         self.assertIn("proposal_invalid", [e["kind"] for e in self.events()])
 
     def test_search_survives_sim_failure(self):
-        llm = FakeLLM([json.dumps(BROKEN), json.dumps(WITNESS)])
+        llm = FakeLLM([multi(BROKEN), multi(WITNESS)])
         out = run_search(self.cfg(), llm, self.sim, self.rec)
         self.assertIn("simulation failed", llm.received[1][1]["content"])
         self.assertEqual(out.stop_reason, "search_spec_met")
@@ -120,59 +163,78 @@ class SearchTest(unittest.TestCase):
         self.assertEqual(out.stop_reason, "model_unavailable")
         self.assertEqual(out.selected.origin, "reference")
         self.assertFalse(out.met_all)
-        self.assertTrue((self.out / "outcome.json").exists())
 
-    def test_proposal_budget(self):
-        out = run_search(self.cfg(max_proposals=2, stagnation=99), FakeLLM([json.dumps(SSHI_NO_CLAMP)]),
-                         self.sim, self.rec)
-        self.assertEqual(out.stop_reason, "proposal_budget")
+    def test_round_budget(self):
+        out = run_search(self.cfg(max_rounds=2, stagnation=99), FakeLLM([multi(SSHI_NO_CLAMP)]), self.sim, self.rec)
+        self.assertEqual(out.stop_reason, "round_budget")
         self.assertFalse(out.met_search)
         self.assertIn("sshi", out.selected.name)
 
     def test_stagnation(self):
-        out = run_search(self.cfg(max_proposals=10, stagnation=2), FakeLLM([json.dumps(SSHI_NO_CLAMP)]),
+        out = run_search(self.cfg(max_rounds=10, stagnation=2, size_budget=0), FakeLLM([multi(SSHI_NO_CLAMP)]),
                          self.sim, self.rec)
         self.assertEqual(out.stop_reason, "stagnation")
 
     def test_model_done(self):
         done = dict(SSHI_NO_CLAMP, done=True)
-        out = run_search(self.cfg(min_proposals=1), FakeLLM([json.dumps(done)]), self.sim, self.rec)
+        out = run_search(self.cfg(), FakeLLM([multi(done)]), self.sim, self.rec)
         self.assertEqual(out.stop_reason, "model_done")
 
+    def test_sim_budget(self):
+        out = run_search(self.cfg(max_rounds=50, stagnation=99, max_sims=60), FakeLLM([multi(SSHI_NO_CLAMP),
+                         multi(BRIDGE_CLAMP)]), self.sim, self.rec)
+        self.assertEqual(out.stop_reason, "sim_budget")
+
     def test_heldout_not_in_any_prompt(self):
-        llm = FakeLLM([json.dumps(SSHI_NO_CLAMP), json.dumps(WITNESS)])
+        llm = FakeLLM([multi(SSHI_NO_CLAMP), multi(WITNESS)])
         run_search(self.cfg(), llm, self.sim, self.rec)
         text = json.dumps(llm.received)
         for h in spec.heldout_conditions():
             self.assertNotIn(f"{h.id}:", text)
             self.assertNotIn(h.label, text)
 
-    def test_refinement_runs_and_is_recorded(self):
-        llm = FakeLLM([json.dumps(SSHI_NO_CLAMP)])
-        run_search(self.cfg(max_proposals=2, refine_budget=4, refine_min=4, stagnation=99), llm, self.sim, self.rec)
-        origins = [l.split(",")[2] for l in (self.out / "candidates.csv").read_text().splitlines()[1:]]
-        self.assertIn("refine", origins)
+    def test_no_screen_ablation_simulates_no_screen_bench(self):
+        run_search(self.cfg(screen=False), FakeLLM([multi(WITNESS)]), self.sim, self.rec)
+        self.assertFalse(any("Vst vsn" in t for t in self.backend.calls))
 
-    def test_dead_design_not_tuned(self):
-        dead = FakeBackend(lambda text: dict(vavg=0.6, vavg_prev=0.6, vpp=0.01, vmax=0.65, pload=1e-9, pext=1e-6))
-        sim = Simulator(dead, self.out / "dead", workers=4)
-        llm = FakeLLM([json.dumps(SSHI_NO_CLAMP)])
-        run_search(self.cfg(max_proposals=2, refine_budget=4, refine_min=4, stagnation=99), llm, sim, self.rec)
-        origins = [l.split(",")[2] for l in (self.out / "candidates.csv").read_text().splitlines()[1:]]
-        self.assertNotIn("refine", origins)
+    def test_repeated_problem_flagged_and_dead_not_sized(self):
+        sim = Simulator(FakeBackend(pinned), self.out / "p", workers=4)
+        llm = FakeLLM([multi(WITNESS), multi(SSHI_NO_CLAMP), multi(BRIDGE_CLAMP), multi(BRIDGE_CLAMP)])
+        run_search(self.cfg(screen=False, max_rounds=4, stagnation=99, proposals_per_round=1), llm, sim, self.rec)
+        self.assertIn("REPEATED", llm.received[3][1]["content"])
+        self.assertNotIn("size", self.origins())
+
+    def test_no_diagnostics_ablation(self):
+        sim = Simulator(FakeBackend(pinned), self.out / "p", workers=4)
+        llm = FakeLLM([multi(WITNESS), multi(SSHI_NO_CLAMP), multi(BRIDGE_CLAMP), multi(BRIDGE_CLAMP)])
+        run_search(self.cfg(screen=False, diagnostics=False, max_rounds=4, stagnation=99), llm, sim, self.rec)
+        text = json.dumps(llm.received)
+        self.assertNotIn("REPEATED", text)
+        self.assertNotIn("what this means", text)
+
+    def test_screen_audit_sizes_rejected_but_never_selects_them(self):
+        out = run_search(self.cfg(screen_audit=True, max_rounds=1), FakeLLM([multi(BRIDGE_CLAMP)]), self.sim, self.rec)
+        self.assertIn("audit", self.origins())
+        self.assertNotEqual(out.selected.origin, "audit")
+        self.assertIn("audit", [e["kind"] for e in self.events()])
+
+    def test_random_baseline_runs(self):
+        never = FakeBackend(lambda t: None if uses(t, "DSI") else
+                            screen_meas(t, 2.0) if "Vst vsn" in t else dict(GOOD, vmax=4.0))
+        sim = Simulator(never, self.out / "r", workers=4)
+        out = run_search(self.cfg(max_rounds=3, stagnation=99), RandomProposer(seed=3), sim, self.rec)
+        self.assertEqual(out.stop_reason, "round_budget")
+        self.assertEqual(len(self.proposals()), 9)
 
     def test_timing_has_tokens(self):
-        run_search(self.cfg(), FakeLLM([json.dumps(WITNESS)]), self.sim, self.rec)
+        run_search(self.cfg(), FakeLLM([multi(WITNESS)]), self.sim, self.rec)
         t = json.loads((self.out / "timing.json").read_text())
         self.assertEqual(t["model_calls"], 1)
         self.assertEqual(t["prompt_tokens"], 100)
         self.assertEqual(t["completion_tokens"], 50)
-        for k in ("wall_s", "model_s", "sim_seconds", "sim_wall_s", "n_sims", "cache_hits", "refine_s"):
+        for k in ("wall_s", "model_s", "sim_seconds", "sim_wall_s", "n_sims", "cache_hits", "size_s", "screen_s",
+                  "n_screen_sims"):
             self.assertIn(k, t)
-
-
-if __name__ == "__main__":
-    unittest.main()
 
 
 class SlowLLM:
@@ -193,8 +255,8 @@ class DeadlineTest(unittest.TestCase):
             out = Path(d)
             llm = SlowLLM()
             t = _t.time()
-            res = run_search(SearchConfig(max_proposals=5, wall_clock_s=0.5, model_grace_s=0.3, refine_budget=0,
-                                          refine_min=0, heartbeat_s=0.05), llm,
+            res = run_search(SearchConfig(max_rounds=5, wall_clock_s=0.5, model_grace_s=0.3, size_budget=0,
+                                          mc_samples=0, heartbeat_s=0.05), llm,
                              Simulator(FakeBackend(physics), out), RunRecorder(out, quiet=True))
             self.assertLess(_t.time() - t, 3.0)
             self.assertEqual(res.stop_reason, "time_budget")
@@ -202,3 +264,7 @@ class DeadlineTest(unittest.TestCase):
             self.assertLessEqual(llm.timeouts[0], 0.5 + 0.3 + 1e-6)
             ev = [json.loads(l) for l in (out / "events.jsonl").read_text().splitlines()]
             self.assertTrue(any(e["kind"] == "model_error" and "budget" in e["error"] for e in ev))
+
+
+if __name__ == "__main__":
+    unittest.main()

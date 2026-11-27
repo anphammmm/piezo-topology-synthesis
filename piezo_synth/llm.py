@@ -79,7 +79,7 @@ class GemmaClient:
                 )
             except _HTTPError as e:
                 last = str(e)
-                if e.status < 500:
+                if e.status < 500 and e.status != 429:   # 429 = rate limited: worth waiting and retrying
                     break
             except Exception as e:   # connection errors, timeouts, malformed bodies
                 last = f"{type(e).__name__}: {e}"
@@ -134,3 +134,45 @@ def json_from(text: str) -> Optional[dict]:
             if first is None:
                 first = d
     return first
+
+
+def _top_level_json(text: str) -> list:
+    """Every top-level JSON value (object or array) in the text: fenced blocks first, then bare ones."""
+    out = []
+    for m in re.finditer(r"```(?:json)?\s*([\[{].*?[\]}])\s*```", text, re.S):
+        try:
+            out.append(json.loads(m.group(1)))
+        except ValueError:
+            pass
+    dec = json.JSONDecoder()
+    i = 0
+    while i < len(text):
+        m = re.compile(r"[\[{]").search(text, i)
+        if not m:
+            break
+        try:
+            d, end = dec.raw_decode(text, m.start())
+        except ValueError:
+            i = m.start() + 1
+            continue
+        out.append(d)
+        i = end
+    return out
+
+
+def proposals_from(text: str) -> Optional[list]:
+    """The proposed circuits in a reply: {"proposals": [...]}, a bare circuit object, or a list of them.
+    None if the reply holds no such JSON."""
+    if not text:
+        return None
+    values = _top_level_json(text)
+    for v in values:
+        if isinstance(v, dict) and isinstance(v.get("proposals"), list):
+            return [x for x in v["proposals"] if isinstance(x, dict)]
+    for v in values:
+        if isinstance(v, list) and any(isinstance(x, dict) and "components" in x for x in v):
+            return [x for x in v if isinstance(x, dict)]
+    for v in values:
+        if isinstance(v, dict) and "components" in v:
+            return [v]
+    return None

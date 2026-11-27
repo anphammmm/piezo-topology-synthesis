@@ -1,6 +1,6 @@
 import unittest
 
-from piezo_synth.llm import GemmaClient, LLMReply, ScriptedLLM, json_from
+from piezo_synth.llm import GemmaClient, LLMReply, ScriptedLLM, json_from, proposals_from
 
 
 class _Resp:
@@ -89,6 +89,26 @@ class LLMTest(unittest.TestCase):
         self.assertEqual(json_from('only {"a": {"b": 1}} here'), {"a": {"b": 1}})
         self.assertIsNone(json_from("no json"))
         self.assertIsNone(json_from(""))
+
+    def test_429_is_retried(self):
+        calls, slept = [], []
+        r = GemmaClient(post=post_returning(calls, status=429, body={}), sleep=slept.append, retries=3).ask(
+            [{"role": "user", "content": "x"}], think=False)
+        self.assertEqual(len(calls), 3)
+        self.assertIn("429", r.error)
+
+    def test_proposals_from_list_wrapper(self):
+        text = 'Here:' + chr(10) + '```json' + chr(10) + '{"proposals": [{"name": "a", "components": []}, {"name": "b", "components": []}, 3]}' + chr(10) + '```'
+        self.assertEqual([p["name"] for p in proposals_from(text)], ["a", "b"])
+
+    def test_proposals_from_bare_object_and_list(self):
+        self.assertEqual(proposals_from('x {"name": "a", "components": [{"id": "C1"}]} y')[0]["name"], "a")
+        self.assertEqual(len(proposals_from('[{"components": []}, {"components": []}]')), 2)
+
+    def test_proposals_from_unfenced_wrapper_not_split(self):
+        text = '{"proposals": [{"name": "a", "components": [{"id": "D1"}]}]} trailing'
+        self.assertEqual(len(proposals_from(text)), 1)
+        self.assertIsNone(proposals_from("no json"))
 
     def test_scripted_llm(self):
         s = ScriptedLLM(["one", LLMReply(error="503")])
