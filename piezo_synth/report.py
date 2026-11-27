@@ -15,11 +15,12 @@ from . import spec as spec_mod
 from .circuit import describe, parse_circuit
 
 
-def _read_csv(path: Path) -> List[dict]:
+def _read_csv(path: Path, required=()) -> List[dict]:
+    """Rows of a CSV; rows cut short by a killed or still-writing job (missing required fields) are skipped."""
     if not path.exists():
         return []
     with path.open(newline="", encoding="utf-8") as f:
-        return list(csv.DictReader(f))
+        return [r for r in csv.DictReader(f) if all(r.get(k) not in (None, "") for k in required)]
 
 
 def _read_json(path: Path, default=None):
@@ -62,9 +63,9 @@ def _true(v) -> bool:
 def build_report(out_dir) -> str:
     out = Path(out_dir)
     spec = _read_json(out / "spec.json") or spec_mod.spec_dict()
-    cands = _read_csv(out / "candidates.csv")
-    meas = _read_csv(out / "measurements.csv")
-    checks = _read_csv(out / "checks.csv")
+    cands = _read_csv(out / "candidates.csv", ("id", "split", "scalar", "n_components", "all_pass"))
+    meas = _read_csv(out / "measurements.csv", ("candidate", "condition"))
+    checks = _read_csv(out / "checks.csv", ("candidate", "condition", "criterion", "limit", "margin", "passed"))
     events = _events(out / "events.jsonl")
     timing = _read_json(out / "timing.json", {}) or {}
     outcome = _read_json(out / "outcome.json")

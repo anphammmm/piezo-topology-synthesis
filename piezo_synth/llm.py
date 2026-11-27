@@ -42,8 +42,11 @@ class GemmaClient:
         self.post, self.sleep = post, sleep
 
     def ask(self, messages: List[dict], think: bool, max_tokens: Optional[int] = None,
-            temperature: Optional[float] = None) -> LLMReply:
-        """Never raises: on repeated failure the reply carries `error`."""
+            temperature: Optional[float] = None, timeout: Optional[float] = None) -> LLMReply:
+        """Never raises: on repeated failure the reply carries `error`. `timeout` (s) caps this call's
+        read timeout, e.g. to the remaining wall-clock budget. A read timeout is not retried: resending
+        the same request would take as long again."""
+        read_timeout = self.timeout if timeout is None else max(1.0, min(self.timeout, timeout))
         body = {
             "model": self.model,
             "messages": messages,
@@ -55,7 +58,7 @@ class GemmaClient:
         last = ""
         for attempt in range(1, self.retries + 1):
             try:
-                r = self.post(self.url, json=body, timeout=self.timeout)
+                r = self.post(self.url, json=body, timeout=read_timeout)
                 status = getattr(r, "status_code", 200)
                 if status >= 400:
                     text = getattr(r, "text", "") or ""
@@ -80,6 +83,8 @@ class GemmaClient:
                     break
             except Exception as e:   # connection errors, timeouts, malformed bodies
                 last = f"{type(e).__name__}: {e}"
+                if "Timeout" in type(e).__name__:
+                    break
             if attempt < self.retries:
                 self.sleep(self.backoff * attempt)
         return LLMReply(seconds=round(time.time() - t, 1), error=last or "unknown error")
@@ -94,7 +99,7 @@ class ScriptedLLM:
         self._i = 0
 
     def ask(self, messages: List[dict], think: bool, max_tokens: Optional[int] = None,
-            temperature: Optional[float] = None) -> LLMReply:
+            temperature: Optional[float] = None, timeout: Optional[float] = None) -> LLMReply:
         self.received.append(list(messages))
         r = self.replies[min(self._i, len(self.replies) - 1)]
         self._i += 1

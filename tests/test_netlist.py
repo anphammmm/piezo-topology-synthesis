@@ -16,7 +16,7 @@ class NetlistTest(unittest.TestCase):
         n = build_netlist(reference_circuit(), spec.condition("S1"))
         for s in ["Ipz pzn pzp SINE(0 5e-05 100)", "Cpz pzp pzn 2.5e-08", "Rpz pzp pzn 2e+07",
                   "RL out 0 330000", ".temp 27", ".tran 0 0.8 0 2e-06",
-                  ".meas TRAN tup WHEN V(out)=1.8 RISE=1", ".model DSCH", ".save V(out)",
+                  ".meas TRAN tup FIND time WHEN V(out)=1.8 RISE=1", ".model DSCH", ".save V(out)",
                   ".meas TRAN pload AVG V(out)*V(out)/330000 FROM=0.7 TO=0.8", ".end"]:
             self.assertIn(s, n)
         for m in MEAS_NAMES:
@@ -41,11 +41,12 @@ class NetlistTest(unittest.TestCase):
         self.assertAlmostEqual(t0, 0.004)          # -1 ms wrapped into [0, 5 ms)
         self.assertAlmostEqual(sync_timing(1e-5, 0.1, "neg", 100)[0], 0.001)
 
-    def test_bleed_on_internal_nodes_only(self):
+    def test_bleed_on_internal_and_piezo_nodes(self):
         n = build_netlist(witness_circuit(), spec.condition("S1"))
         self.assertIn("Rbleed_n1 n1 0 1G", n)
         self.assertNotIn("Rbleed_out", n)
-        self.assertNotIn("Rbleed_pzp", n)
+        self.assertIn("Rbleed_pzp pzp 0 1G", n)
+        self.assertIn("Rbleed_pzn pzn 0 1G", n)
 
     def test_renamed_circuits_same_netlist(self):
         a = parse_circuit(EXAMPLE)

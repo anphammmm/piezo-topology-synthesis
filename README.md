@@ -83,8 +83,8 @@ smoke test; edit the tables in `piezo_synth/spec.py` to change the spec.
 - **Stateless prompts.** Each prompt is rebuilt from a compact summary (best five topologies with tables
   and failure diagnoses, the last proposal's result, all topologies explored) instead of a growing chat,
   which keeps prompt size, and with it the model's time, bounded.
-- **Avoiding repeated work.** Simulations are cached by the exact netlist text (persisted in the run
-  folder); duplicate designs are not re-simulated; the six conditions of a design run in parallel.
+- **Avoiding repeated work.** Successful simulations are cached by the exact netlist text (persisted in the run
+  folder; failed ones are retried by a later run); duplicate designs are not re-simulated; the six conditions of a design run in parallel.
 - **Held-out hygiene.** Held-out conditions never appear in prompts and are not used for scoring,
   selection or stopping. They are simulated once, for the selected design and the reference, after the
   search has stopped. The selected design is the best one on the search conditions.
@@ -95,7 +95,8 @@ smoke test; edit the tables in `piezo_synth/spec.py` to change the spec.
 - **Stop rules** (first that applies): `search_spec_met` (a design passes every search check),
   `model_done` (the model says no structural change can help, after at least `min_proposals`),
   `model_unavailable` (three failed model calls in a row), `stagnation` (no score gain of 0.01 in
-  `stagnation` proposals), `time_budget`, `proposal_budget`.
+  `stagnation` proposals), `time_budget`, `proposal_budget`. A model call that hangs is abandoned
+  `model_grace_s` (default 300 s) after the wall-clock budget, so the run cannot overrun it by more.
 
 ## Interpreting the results
 
@@ -141,11 +142,13 @@ Everything is in `runs/<RUN_ID>/`:
    the `pext` `.meas` line in `piezo_synth/netlist.py` (only the `P_ext` column is affected).
 3. The reference fails at least S2, S3 and S4. If it passes everything, the spec is too easy: lower `rl`
    for S2 or `ip` for S4 in `spec.py` and repeat.
-4. The witness (a hand-made SSHI + bridge + zener clamp, never shown to the model) passes more conditions
+4. The witness's `t_up` values are crossing times (not all exactly 1.8); the job prints a WARNING otherwise,
+   meaning ltspice_run reads the wrong number from the `tup` line.
+5. The witness (a hand-made SSHI + bridge + zener clamp, never shown to the model) passes more conditions
    than the reference. If it passes none, look at `runs/smoke/sims/*/*.log` for convergence errors
    before starting the full run. The witness does not have to pass everything: it only shows that the
    building blocks work.
-5. Then run the full experiment and check for `[model] waiting ...` heartbeats, `[refine]` and `[sim]`
+6. Then run the full experiment and check for `[model] waiting ...` heartbeats, `[refine]` and `[sim]`
    lines, a final `search stopped:` line, and `report.md`, `summary.json` and `figures/` in the run folder.
 
 ## Observed performance

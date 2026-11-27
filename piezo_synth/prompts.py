@@ -78,7 +78,7 @@ Its open-circuit voltage amplitude is Ip/(2*pi*f*Cp), about 3.2 V at nominal: lo
 TEST BENCH (fixed, added automatically - do not include these)
 - the piezo model between pzp and pzn; the load RL from out to 0;
 - for every SYNC controller you use, a 0.5 uA supply current drawn from out (its power cost);
-- a 1 GOhm resistor from every internal node to 0 (prevents floating nodes).
+- a 1 GOhm resistor to 0 from pzp, pzn and every internal node (prevents floating nodes).
 
 COMPONENTS YOU MAY USE (at most {L['max_components']} components)
 - R  resistor, value {L['R'][0]:g}..{L['R'][1]:g} Ohm, nodes [a, b]

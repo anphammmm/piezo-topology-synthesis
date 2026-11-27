@@ -55,6 +55,19 @@ class SimTest(unittest.TestCase):
         self.assertEqual(be2.calls, [])
         self.assertEqual(r.meas["vavg"], 3.0)
 
+    def test_failures_not_persisted_across_instances(self):
+        Simulator(FakeBackend(lambda t: None), self.root).run([("a", "F 1")])
+        be2 = FakeBackend(lambda t: {"vavg": 2.0})
+        r = Simulator(be2, self.root).run([("a", "F 1")])[0]
+        self.assertEqual(len(be2.calls), 1)
+        self.assertTrue(r.ok)
+
+    def test_failures_cached_within_instance(self):
+        be = FakeBackend(lambda t: None)
+        s = Simulator(be, self.root)
+        s.run([("a", "F 2")]); s.run([("a", "F 2")])
+        self.assertEqual(len(be.calls), 1)
+
     def test_backend_exception_becomes_failed_result(self):
         r = Simulator(FakeBackend(lambda t: 1 / 0), self.root).run([("a", "X 1")])[0]
         self.assertFalse(r.ok)

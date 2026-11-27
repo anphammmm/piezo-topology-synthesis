@@ -78,6 +78,7 @@ class Simulator:
             self.stats["failures"] += 0 if res.ok else 1
             if cacheable:
                 self._cache[key] = res
+            if cacheable and res.ok:   # failures (timeouts, Wine trouble) are retried by a later run here
                 with self._cache_file.open("a", encoding="utf-8") as f:
                     f.write(json.dumps({"key": key, "result": asdict(res)}) + "\n")
         return res

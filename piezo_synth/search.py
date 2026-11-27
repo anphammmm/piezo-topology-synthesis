@@ -33,6 +33,7 @@ class SearchConfig:
     seed: int = 1
     continue_after_met: bool = False
     heartbeat_s: float = 15
+    model_grace_s: float = 300   # a model call may run this long past wall_clock_s before it is abandoned
 
 
 @dataclass
@@ -176,10 +177,12 @@ class _Search:
     # ---------------------------------------------------------------- model call
     def _ask(self, messages: List[dict], think: bool, attempt: int) -> LLMReply:
         holder: dict = {}
+        deadline = self.cfg.wall_clock_s + self.cfg.model_grace_s      # in run-elapsed seconds
+        budget = max(0.0, deadline - self.rec.elapsed())
 
         def call():
             try:
-                holder["r"] = self.llm.ask(messages, think=think)
+                holder["r"] = self.llm.ask(messages, think=think, timeout=budget)
             except Exception as e:   # the client should not raise, but never let the thread die silently
                 holder["r"] = LLMReply(error=f"{type(e).__name__}: {e}")
 
@@ -191,16 +194,21 @@ class _Search:
         if attempt == 1:
             target = self._refine_target()
             if target is not None and self.cfg.refine_budget > 0:
-                self._refine(target, lambda: not th.is_alive())
+                self._refine(target, lambda: not th.is_alive() or self.rec.elapsed() >= deadline)
         last_beat = time.time()
         while th.is_alive():
+            if self.rec.elapsed() >= deadline:
+                # the HTTP call is still hanging: abandon the (daemon) thread rather than overrun the budget
+                holder.setdefault("r", LLMReply(seconds=round(time.time() - t0, 1),
+                                                error="model call abandoned: wall-clock budget exceeded"))
+                break
             th.join(timeout=min(1.0, self.cfg.heartbeat_s))
             if th.is_alive() and time.time() - last_beat >= self.cfg.heartbeat_s:
                 last_beat = time.time()
                 waited = time.time() - t0
                 self.rec.progress(phase="model", model_wait_s=round(waited))
                 self.rec.log("model", f"waiting {waited:.0f} s (proposal {self.iteration})")
-        reply = holder["r"]
+        reply = holder.get("r") or LLMReply(error="model call abandoned: wall-clock budget exceeded")
         self._account(reply)
         self.rec.llm_exchange(self.iteration, attempt, messages, reply)
         tok = f"{reply.prompt_tokens} in / {reply.completion_tokens} out" if reply.completion_tokens is not None else "no token counts"

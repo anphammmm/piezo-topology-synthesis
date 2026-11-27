@@ -58,6 +58,24 @@ class LLMTest(unittest.TestCase):
         self.assertEqual(len(calls), 3)
         self.assertIn("down", r.error)
 
+    def test_read_timeout_not_retried(self):
+        class ReadTimeout(Exception):
+            pass
+        calls = []
+        r = GemmaClient(post=post_returning(calls, exc=ReadTimeout("read timed out")), sleep=lambda s: None).ask(
+            [{"role": "user", "content": "x"}], think=True)
+        self.assertEqual(len(calls), 1)
+        self.assertIn("ReadTimeout", r.error)
+
+    def test_timeout_override(self):
+        seen = []
+
+        def post(url, json, timeout):
+            seen.append(timeout)
+            return _Resp(200, BODY)
+        GemmaClient(post=post, timeout=900).ask([{"role": "user", "content": "x"}], think=True, timeout=42)
+        self.assertEqual(seen, [42])
+
     def test_4xx_not_retried(self):
         calls = []
         r = GemmaClient(post=post_returning(calls, status=400), sleep=lambda s: None).ask(

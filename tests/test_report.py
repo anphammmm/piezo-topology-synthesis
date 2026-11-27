@@ -67,6 +67,18 @@ class ReportTest(unittest.TestCase):
         self.assertEqual(s["stop_reason"], "incomplete")
         self.assertIsNotNone(s["selected_id"])
 
+    def test_report_survives_half_written_rows(self):
+        fake_run(self.out, [json.dumps(SSHI_NO_CLAMP), json.dumps(WITNESS)])
+        (self.out / "outcome.json").unlink()
+        with (self.out / "candidates.csv").open("a") as f:
+            f.write("c0099,7,llm,,new_topology,cut,abc,def,5,search,")
+        with (self.out / "checks.csv").open("a") as f:
+            f.write("c0099,search,S1,vout_min,1.2,>=,")
+        build_report(self.out)
+        s = json.loads((self.out / "summary.json").read_text())
+        self.assertEqual(s["stop_reason"], "incomplete")
+        self.assertNotEqual(s["selected_id"], "c0099")
+
 
 if __name__ == "__main__":
     unittest.main()

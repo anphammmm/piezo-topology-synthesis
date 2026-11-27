@@ -21,7 +21,7 @@ class NotebookTest(unittest.TestCase):
         for f in sources:
             self.assertIn(f"%%writefile piezo_synth/{f.name}\n" + f.read_text(encoding="utf-8"), cells, f.name)
         joined = "\n".join(cells)
-        for s in ["--smoke", "progress.json", "run_config.json", "gpus=0", "ltspice-cpu", "read_raw", "report.md"]:
+        for s in ["--smoke", "progress.json", "run_config.json", "gpus=0", "ltspice-cpu", "read_raw", "report.md", "rm -rf runs/smoke"]:
             self.assertIn(s, joined)
         for c in nb["cells"]:
             if c["cell_type"] == "code":

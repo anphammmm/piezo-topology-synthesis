@@ -77,7 +77,7 @@ Expect: 20 simulations, `[sim]`/`[eval]` lines and two tables per circuit. Check
 **fails** several search conditions (that is what makes the spec challenging) and that the witness
 passes more of them. If the job prints a WARNING about `P_ext`, read the README section "First run"."""
 
-SMOKE = '''smoke = run("bash -o pipefail -c 'mkdir -p runs && python3 -u -m piezo_synth.run --smoke --out runs/smoke "
+SMOKE = '''smoke = run("bash -o pipefail -c 'rm -rf runs/smoke && mkdir -p runs && python3 -u -m piezo_synth.run --smoke --out runs/smoke "
             "2>&1 | tee runs/smoke.log'",
             image=LTSPICE, gpus=0, cpus=8, memory="16Gi", timeout=3600, name="piezo-smoke")
 log(smoke)'''

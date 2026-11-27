@@ -1,7 +1,7 @@
 """LTspice netlist for one circuit under one operating condition, plus the reference and witness circuits.
 
 The harness owns everything except the proposed components: the piezo model, the load, controller
-supply sinks, 1 GOhm bleed resistors on internal nodes (to avoid floating-node errors), device
+supply sinks, 1 GOhm bleed resistors on internal nodes and the piezo terminals (to avoid floating-node errors), device
 models, the 0.8 s cold-start transient and the measurements.
 """
 from __future__ import annotations
@@ -75,7 +75,8 @@ def build_netlist(c: Circuit, cond: Condition, title: str = "", save_all: bool =
     for x in syncs:
         t0, period = sync_timing(x.ton, x.phase, x.edges or "both", cond.freq)
         lines.append(f"V{x.id} {x.id}_g 0 PULSE(0 1 {fmt(t0)} 100n 100n {fmt(x.ton)} {fmt(period)})")
-    internal = sorted({n for x in cc.components for n in x.nodes} - {"0", "pzp", "pzn", "out"})
+    # bleed resistors: internal nodes, and the piezo terminals (a design may couple them only through capacitors)
+    internal = ["pzp", "pzn"] + sorted({n for x in cc.components for n in x.nodes} - {"0", "pzp", "pzn", "out"})
     for n in internal:
         lines.append(f"Rbleed_{n} {n} 0 1G")
     lines.append(MODELS_TEXT)
@@ -88,7 +89,7 @@ def build_netlist(c: Circuit, cond: Condition, title: str = "", save_all: bool =
         f".meas TRAN vavg_prev AVG V(out) FROM={fmt(p0)} TO={fmt(p1)}",
         f".meas TRAN vpp PP V(out) FROM={fmt(w0)} TO={fmt(w1)}",
         f".meas TRAN vmax MAX V(out) FROM=0 TO={fmt(tstop)}",
-        ".meas TRAN tup WHEN V(out)=1.8 RISE=1",
+        ".meas TRAN tup FIND time WHEN V(out)=1.8 RISE=1",
         f".meas TRAN pload AVG V(out)*V(out)/{fmt(cond.rl)} FROM={fmt(w0)} TO={fmt(w1)}",
         f".meas TRAN pext AVG V(pzp,pzn)*I(Ipz) FROM={fmt(w0)} TO={fmt(w1)}",
         ".end",

@@ -86,6 +86,10 @@ def run_smoke(sim: Simulator, rec: RunRecorder) -> None:
     if pext is None or pext <= 0:
         rec.log("eval", f"WARNING: reference P_ext on S1 is {pext}; expected > 0. Check the sign of the pext "
                         f".meas in netlist.py before trusting P_ext columns.")
+    wit_tup = [m.get("tup") for m in out[("witness", "search")].meas.values() if m.get("tup") is not None]
+    if wit_tup and all(abs(t - 1.8) < 1e-9 for t in wit_tup):
+        rec.log("eval", "WARNING: every t_up equals 1.8: ltspice_run is reading the threshold, not the crossing "
+                        "time, from the 'tup' measurement line. Fix its parsing before the full run.")
     ref_fail = [c for c in spec.search_conditions()
                 if not all(ch.passed for ch in out[("reference", "search")].checks if ch.condition == c.id)]
     rec.log("eval", f"reference fails {len(ref_fail)}/6 search conditions: {', '.join(c.id for c in ref_fail)} "

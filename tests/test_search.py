@@ -165,3 +165,32 @@ class SearchTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SlowLLM:
+    def __init__(self):
+        self.timeouts = []
+
+    def ask(self, messages, think, max_tokens=None, temperature=None, timeout=None):
+        self.timeouts.append(timeout)
+        import time as _t
+        _t.sleep(5)
+        return LLMReply(answer="{}")
+
+
+class DeadlineTest(unittest.TestCase):
+    def test_hung_model_does_not_overrun_wall_clock(self):
+        import time as _t
+        with tempfile.TemporaryDirectory() as d:
+            out = Path(d)
+            llm = SlowLLM()
+            t = _t.time()
+            res = run_search(SearchConfig(max_proposals=5, wall_clock_s=0.5, model_grace_s=0.3, refine_budget=0,
+                                          refine_min=0, heartbeat_s=0.05), llm,
+                             Simulator(FakeBackend(physics), out), RunRecorder(out, quiet=True))
+            self.assertLess(_t.time() - t, 3.0)
+            self.assertEqual(res.stop_reason, "time_budget")
+            self.assertIsNotNone(llm.timeouts[0])
+            self.assertLessEqual(llm.timeouts[0], 0.5 + 0.3 + 1e-6)
+            ev = [json.loads(l) for l in (out / "events.jsonl").read_text().splitlines()]
+            self.assertTrue(any(e["kind"] == "model_error" and "budget" in e["error"] for e in ev))
