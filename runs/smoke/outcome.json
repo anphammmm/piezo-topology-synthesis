@@ -1,0 +1,10 @@
+{
+  "stop_reason": "smoke",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0001",
+  "selected_name": "witness: p-SSHI + bridge + zener clamp",
+  "selected_origin": "witness",
+  "reference_id": "c0000",
+  "failed_checks": []
+}
