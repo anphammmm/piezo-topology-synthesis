@@ -18,6 +18,7 @@ class CLITest(unittest.TestCase):
             self.assertTrue((Path(d) / "r" / "report.md").exists())
             self.assertIn("[model", p.stdout)
             self.assertIn("[sim", p.stdout)
+            self.assertIn("free disk", p.stdout)
 
     def test_cli_fake_smoke_and_reproduce(self):
         with tempfile.TemporaryDirectory() as d:

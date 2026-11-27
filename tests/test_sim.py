@@ -81,3 +81,33 @@ class SimTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def writes_raw(text, folder, timeout):
+    """Backend that, like LTspice, leaves a waveform file (and an operating-point one) in the folder."""
+    Path(folder).mkdir(parents=True, exist_ok=True)
+    (Path(folder) / "circuit.net").write_text(text)
+    (Path(folder) / "circuit.log").write_text("vavg: 2.5")
+    (Path(folder) / "circuit.raw").write_bytes(b"\0" * 4096)
+    (Path(folder) / "circuit.op.raw").write_bytes(b"\0" * 64)
+
+    class R:
+        ok, meas, error = True, {"vavg": 2.5}, ""
+    return R()
+
+
+class RawCleanupTest(unittest.TestCase):
+    def test_raw_files_deleted_after_measurements_are_read(self):
+        with tempfile.TemporaryDirectory() as d:
+            res = Simulator(writes_raw, Path(d)).run([("a", "net a")])[0]
+            self.assertTrue(res.ok)
+            self.assertEqual(res.meas, {"vavg": 2.5})
+            folder = Path(res.folder)
+            self.assertEqual(list(folder.glob("*.raw")), [])
+            self.assertTrue((folder / "circuit.log").exists())
+            self.assertTrue((folder / "circuit.net").exists())
+
+    def test_keep_raw_for_waveforms(self):
+        with tempfile.TemporaryDirectory() as d:
+            res = Simulator(writes_raw, Path(d), keep_raw=True).run([("a", "net a")])[0]
+            self.assertTrue((Path(res.folder) / "circuit.raw").exists())

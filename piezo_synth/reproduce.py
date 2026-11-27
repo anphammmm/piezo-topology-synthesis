@@ -53,10 +53,10 @@ def main(argv=None) -> int:
         backend = analytic_backend
     else:
         backend = ltspice_backend()
-    sim = Simulator(backend, Path(a.out), workers=a.workers)
+    sim = Simulator(backend, Path(a.out), workers=a.workers, keep_raw=a.waveforms)
     jobs = []
     for cond in conds:
-        text = build_netlist(circ, cond, title=f"reproduce {circ.name}", save_all=a.waveforms)
+        text = build_netlist(circ, cond, title=f"reproduce {circ.name}")   # only the signals the plots use
         if a.waveforms:
             text = text.replace("\n.end\n", "\n.options plotwinsize=0\n.end\n")
         jobs.append((cond.id, text))

@@ -12,6 +12,7 @@ import json
 import random
 import math
 import re
+import shutil
 import time
 from dataclasses import fields
 from pathlib import Path
@@ -170,6 +171,11 @@ def main(argv=None) -> int:
     rec.log("setup", f"output in {out}; mode {'smoke' if a.smoke else 'search'}{' (fake)' if a.fake else ''}"
                      f"{' (baseline ' + a.baseline + ')' if a.baseline else ''}; "
                      f"{a.workers} parallel simulations")
+    free = shutil.disk_usage(out).free / 2**30
+    rec.log("setup", f"free disk where results go: {free:.1f} GiB")
+    if free < 2:
+        rec.log("setup", "WARNING: less than 2 GiB free; a full disk makes simulations fail. Free space first, "
+                         "e.g. python3 tools/clean_raw.py runs --delete")
     try:
         if a.smoke:
             run_smoke(sim, rec)

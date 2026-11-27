@@ -152,7 +152,7 @@ Everything is in `runs/<RUN_ID>/`:
 | `llm/iter-NN-a.json` | each prompt, the model's answer, its reasoning text and token counts (NN = round) |
 | `events.jsonl` | timeline of the run |
 | `timing.json` | wall time, time in model calls, tokens (prompt, completion, reasoning if reported), simulations, cache hits, simulator time |
-| `sims/<hash>/` | LTspice netlist, log and `.raw` of every simulation |
+| `sims/<hash>/` | LTspice netlist and log of every simulation (the `.raw` waveform is deleted once measured, to save disk; `reproduce --waveforms` keeps it) |
 | `figures/` | PNG and PDF figures produced by the notebook |
 
 - **Unmet requirements** in `report.md` (and `failed_checks` in `summary.json`) list every condition and
@@ -166,6 +166,9 @@ Everything is in `runs/<RUN_ID>/`:
   a rough end-to-end efficiency, useful for comparing topologies.
 
 ## Reproducing and inspecting
+
+- Disk: each run prints the free space at start and warns below 2 GiB. Runs made before this change left
+  their `.raw` files behind: `python3 tools/clean_raw.py runs` reports how much they take, `--delete` removes them.
 
 - Re-simulate any design: `python3 -m piezo_synth.reproduce runs/<RUN_ID>/selected/circuit.json --out
   <dir> --conditions all --waveforms` (as a job with `image=LTSPICE, gpus=0`; the Waveforms cell does this).

@@ -38,8 +38,9 @@ class Simulator:
     """backend(netlist_text, folder, timeout) -> object with .ok, .meas, .error (ltspice_run.simulate)."""
 
     def __init__(self, backend: Callable[[str, str, float], Any], root: Path, workers: int = 8,
-                 timeout: float = 120.0):
+                 timeout: float = 120.0, keep_raw: bool = False):
         self.backend = backend
+        self.keep_raw = keep_raw     # waveform files are deleted once the measurements are read
         self.root = Path(root)
         self.workers = max(1, int(workers))
         self.timeout = timeout
@@ -72,6 +73,8 @@ class Simulator:
             res = SimResult(False, {}, f"{type(e).__name__}: {e}\n{traceback.format_exc(limit=2)}",
                             round(time.time() - t, 3), str(folder))
             cacheable = False
+        if not self.keep_raw:
+            self._drop_raw(folder)
         with self._lock:
             self.stats["n_sims"] += 1
             self.stats["sim_seconds"] += res.seconds
@@ -82,6 +85,18 @@ class Simulator:
                 with self._cache_file.open("a", encoding="utf-8") as f:
                     f.write(json.dumps({"key": key, "result": asdict(res)}) + "\n")
         return res
+
+    @staticmethod
+    def _drop_raw(folder: Path) -> None:
+        """The .raw waveforms are the bulk of a simulation folder (MB each, tens of thousands per
+        campaign) and are not needed once the .meas results are in hand; netlist and log stay."""
+        if not folder.exists():
+            return
+        for f in folder.rglob("*.raw"):
+            try:
+                f.unlink()
+            except OSError:
+                pass
 
     def run(self, jobs: List[Tuple[str, str]]) -> List[SimResult]:
         """jobs: (label, netlist_text). Results come back in input order."""
