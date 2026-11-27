@@ -268,7 +268,7 @@ def _screen_validation_table(smoke: Optional[Path]) -> str:
                 v = vavg.get((cid, cond))
                 v = float(v) if v not in (None, "") else None
                 rows.append([label, cond, _num(pn, "{:.1f}", 1e6), _num(scr[origin]["p_req"][cond], "{:.1f}", 1e6),
-                             _num(ratio, "{:.0f}\%", 100), _num(gain, "{:.2f}"),
+                             _num(ratio, "{:.0f}\\%", 100), _num(gain, "{:.2f}"),
                              r"$\geq$1.8 V" if ratio >= 1 else r"$<$1.8 V",
                              _num(v, "{:.2f} V"), "yes" if (v is not None and (v >= vmin) == (ratio >= 1)) else "no"])
     return _tabular("llrrrrlll", ["Circuit", "Cond.", r"$P_{net}$ ($\mu$W)", r"Need ($\mu$W)", "Ratio",
