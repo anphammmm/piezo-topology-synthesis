@@ -137,7 +137,8 @@ def tex(s) -> str:
     for a, b in (("\\", r"\textbackslash{}"), ("&", r"\&"), ("%", r"\%"), ("$", r"\$"), ("#", r"\#"),
                  ("_", r"\_"), ("{", r"\{"), ("}", r"\}"), ("~", r"\textasciitilde{}"), ("^", r"\^{}")):
         s = s.replace(a, b)
-    return s
+    s = s.replace("−", "$-$").replace("µ", r"$\mu$").replace("°", r"$^\circ$")
+    return s.encode("ascii", "replace").decode("ascii")   # pdflatex-safe whatever else a label holds
 
 
 def _num(v, fmt="{:.0f}", scale=1.0) -> str:

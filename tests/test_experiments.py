@@ -45,3 +45,13 @@ class ExperimentsTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TexEscapeTest(unittest.TestCase):
+    def test_generated_tables_are_ascii(self):
+        with tempfile.TemporaryDirectory() as d:
+            gen = Path(d) / "gen"
+            write_paper_tables(gen, Path(d) / "none", smoke=None)
+            for f in gen.iterdir():
+                text = f.read_text(encoding="utf-8")
+                self.assertTrue(text.isascii(), f"{f.name}: {[c for c in text if not c.isascii()]}")
