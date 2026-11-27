@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": true,
+  "selected_id": "c0012",
+  "selected_topology": {
+    "name": "Parallel-SSHI-FullBridge",
+    "topo_hash": "40eae91a637a"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [],
+  "timing": {
+    "wall_s": 756.8,
+    "model_s": 470.0,
+    "model_calls": 2,
+    "model_errors": 0,
+    "prompt_tokens": 2308,
+    "completion_tokens": 7731,
+    "reasoning_tokens": 0,
+    "sim_seconds": 2897.9,
+    "sim_wall_s": 408.0,
+    "n_sims": 321,
+    "cache_hits": 0,
+    "sim_failures": 0,
+    "size_s": 121.3,
+    "screen_s": 37.8,
+    "n_screen_sims": 39,
+    "n_proposals": 3,
+    "n_invalid": 0,
+    "n_duplicate": 0,
+    "n_topologies": 3,
+    "n_screen_pass": 2,
+    "rounds": 2,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0008",
+  "selected_name": "SSHI_Simplified",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 132.62,
+    "n_sims": 87,
+    "id": "c0008"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.0697321891785,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.3946437835700001,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.05143225918999983,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -1.5716129594999912,
+      "passed": false
+    }
+  ]
+}

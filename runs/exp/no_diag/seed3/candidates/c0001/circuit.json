@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "Parallel-SSHI-FullBridge",
+ "rationale": "The reference FBR failed on S2 and S4 due to insufficient voltage (likely diode drops and low efficiency) and on S3 due to overvoltage. The Parallel-SSHI (Synchronized Switch Harvesting on Inductor) topology significantly increases the extraction efficiency by flipping the voltage across the piezo capacitance at the extrema, effectively boosting the voltage seen by the rectifier. A full-bridge rectifier (DSCH) is used to collect energy from both half-cycles, and a Zener diode (DZ33) is added as a clamp on the output to ensure the voltage never exceeds 3.6 V, addressing the S3 failure.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.9672941328980504e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-06
+  }
+ ]
+}

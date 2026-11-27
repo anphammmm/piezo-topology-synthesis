@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": true,
+  "selected_id": "c0036",
+  "selected_topology": {
+    "name": "sshi_fbr",
+    "topo_hash": "40eae91a637a"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [],
+  "timing": {
+    "wall_s": 865.0,
+    "model_s": 524.2,
+    "model_calls": 3,
+    "model_errors": 0,
+    "prompt_tokens": 6690,
+    "completion_tokens": 16291,
+    "reasoning_tokens": 0,
+    "sim_seconds": 4763.8,
+    "sim_wall_s": 647.9,
+    "n_sims": 471,
+    "cache_hits": 0,
+    "sim_failures": 3,
+    "size_s": 363.4,
+    "screen_s": 35.8,
+    "n_screen_sims": 51,
+    "n_proposals": 4,
+    "n_invalid": 0,
+    "n_duplicate": 0,
+    "n_topologies": 4,
+    "n_screen_pass": 1,
+    "rounds": 3,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

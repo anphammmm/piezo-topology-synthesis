@@ -1,0 +1,26 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0001",
+  "selected_name": "SSHI-FBR",
+  "selected_origin": "llm",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 263.49,
+    "n_sims": 12,
+    "id": "c0001"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.09894907211000037,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -3.947453605500018,
+      "passed": false
+    }
+  ]
+}

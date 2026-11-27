@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0015",
+  "selected_name": "SSHI_lite",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 260.02,
+    "n_sims": 171,
+    "id": "c0015"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.151327848434,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -2.0265569686799996,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.1542085792300001,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -6.710428961500004,
+      "passed": false
+    }
+  ]
+}

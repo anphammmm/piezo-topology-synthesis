@@ -1,0 +1,56 @@
+[00:00:00] [setup  ] output in runs/exp/no_diag/seed5; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:07] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (7.3 s)
+[00:00:11] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 4.0 s)
+[00:00:11] [model  ] round 1: asking the model (thinking on)
+[00:00:26] [model  ] waiting 15 s (round 1)
+[00:00:41] [model  ] waiting 30 s (round 1)
+[00:00:56] [model  ] waiting 45 s (round 1)
+[00:01:11] [model  ] waiting 60 s (round 1)
+[00:01:26] [model  ] waiting 75 s (round 1)
+[00:01:41] [model  ] waiting 90 s (round 1)
+[00:01:56] [model  ] waiting 105 s (round 1)
+[00:02:11] [model  ] waiting 120 s (round 1)
+[00:02:26] [model  ] waiting 135 s (round 1)
+[00:02:41] [model  ] waiting 150 s (round 1)
+[00:02:56] [model  ] waiting 165 s (round 1)
+[00:03:11] [model  ] waiting 180 s (round 1)
+[00:03:26] [model  ] waiting 195 s (round 1)
+[00:03:41] [model  ] waiting 210 s (round 1)
+[00:03:56] [model  ] waiting 225 s (round 1)
+[00:04:11] [model  ] waiting 240 s (round 1)
+[00:04:26] [model  ] waiting 255 s (round 1)
+[00:04:41] [model  ] waiting 270 s (round 1)
+[00:04:56] [model  ] waiting 285 s (round 1)
+[00:05:11] [model  ] waiting 300 s (round 1)
+[00:05:26] [model  ] waiting 315 s (round 1)
+[00:05:41] [model  ] waiting 330 s (round 1)
+[00:05:56] [model  ] waiting 345 s (round 1)
+[00:05:59] [model  ] reply after 349 s (2308 in / 7731 out)
+[00:05:59] [eval   ] round 1 design 1: new_topology 'Parallel-SSHI-FullBridge' (9 parts)
+[00:06:06] [screen ] r01d1: PASS, worst 251 % of the power needed (4 presets, 6.7 s)
+[00:06:06] [sim    ] r01d1: simulating 6 conditions
+[00:06:14] [eval   ] r01d1: score 21.80, 1/6 conditions, 20/30 checks pass (8.3 s)
+[00:06:14] [eval   ] round 1 design 2: new_topology 'Parallel-SSHI-HalfBridge' (6 parts)
+[00:06:20] [screen ] r01d2: fail, worst -28 % of the power needed (4 presets, 5.6 s)
+[00:06:20] [eval   ] round 1 design 3: new_topology 'Series-SSHI-FullBridge' (9 parts)
+[00:06:42] [screen ] r01d3: PASS, worst 174 % of the power needed (4 presets, 21.5 s)
+[00:06:42] [sim    ] r01d3: simulating 6 conditions
+[00:07:26] [eval   ] r01d3: score 13.66, 1/6 conditions, 15/30 checks pass (44.1 s)
+[00:07:26] [model  ] round 2: asking the model (thinking on)
+[00:08:27] [eval   ] new best c0006 (Parallel-SSHI-FullBridge): score 62.59, 4/6 conditions pass
+[00:08:27] [eval   ] new best c0010 (Parallel-SSHI-FullBridge): score 79.49, 5/6 conditions pass
+[00:08:27] [size   ] c0001 (Parallel-SSHI-FullBridge) generation 1: best score 21.80 -> 79.49, 8/48 evaluations (61 s)
+[00:09:27] [eval   ] new best c0012 (Parallel-SSHI-FullBridge): score 90.51, 6/6 conditions pass
+[00:09:27] [size   ] c0001 (Parallel-SSHI-FullBridge) generation 2: best score 79.49 -> 90.51, 16/48 evaluations (60 s); spec_met
+[00:09:27] [model  ] spec met while waiting; not waiting for the model's answer
+[00:09:27] [model  ] reply after 121 s (no token counts); ERROR spec_met_during_wait
+[00:09:27] [done   ] search stopped: search_spec_met; selected c0012 (Parallel-SSHI-FullBridge)
+[00:09:27] [heldout] checking c0012 and the reference on 4 held-out conditions
+[00:09:39] [heldout] c0012: 4/4 held-out conditions pass; reference: 1/4
+[00:09:39] [robust ] Monte Carlo: 16 samples of c0012 on all 10 conditions
+[00:12:36] [robust ] 44 % of samples meet the spec on every condition; weakest: S3
+[00:12:36] [done   ] spec met on search conditions: True; on all conditions: True
+[00:12:36] [done   ] report: runs/exp/no_diag/seed5/report.md

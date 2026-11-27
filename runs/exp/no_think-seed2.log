@@ -1,0 +1,35 @@
+[00:00:00] [setup  ] output in runs/exp/no_think/seed2; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:09] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (9.6 s)
+[00:00:13] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 3.6 s)
+[00:00:13] [model  ] round 1: asking the model (thinking off)
+[00:00:28] [model  ] waiting 15 s (round 1)
+[00:00:43] [model  ] waiting 30 s (round 1)
+[00:00:52] [model  ] reply after 39 s (2310 in / 1413 out)
+[00:00:52] [eval   ] round 1 design 1: new_topology 'SSHI_basic' (9 parts)
+[00:01:04] [screen ] r01d1: PASS, worst 253 % of the power needed (4 presets, 11.7 s)
+[00:01:04] [sim    ] r01d1: simulating 6 conditions
+[00:01:17] [eval   ] r01d1: score 23.01, 1/6 conditions, 21/30 checks pass (13.6 s)
+[00:01:17] [eval   ] round 1 design 2: new_topology 'Active_Rectifier_Simplified' (6 parts)
+[00:01:28] [screen ] r01d2: fail, worst -3 % of the power needed (4 presets, 11.0 s)
+[00:01:28] [eval   ] round 1 design 3: new_topology 'Parallel_Sync_Switch' (5 parts)
+[00:01:37] [screen ] r01d3: fail, worst -28 % of the power needed (4 presets, 8.6 s)
+[00:01:37] [model  ] round 2: asking the model (thinking off)
+[00:02:43] [eval   ] new best c0005 (SSHI_basic): score 62.47, 4/6 conditions pass
+[00:02:43] [size   ] c0001 (SSHI_basic) generation 1: best score 23.01 -> 62.47, 8/48 evaluations (66 s)
+[00:02:43] [model  ] reply after 29 s (4762 in / 1056 out)
+[00:02:43] [eval   ] round 2 design 1 'SSHI_optimized_storage' repeats structure c0001; not simulated
+[00:02:43] [model  ] round 3: asking the model (thinking off)
+[00:03:53] [eval   ] new best c0013 (SSHI_basic): score 64.39, 4/6 conditions pass
+[00:03:53] [eval   ] new best c0017 (SSHI_basic): score 90.58, 6/6 conditions pass
+[00:03:53] [size   ] c0001 (SSHI_basic) generation 2: best score 62.47 -> 90.58, 16/48 evaluations (71 s); spec_met
+[00:03:53] [model  ] reply after 18 s (3192 in / 666 out)
+[00:03:53] [done   ] search stopped: search_spec_met; selected c0017 (SSHI_basic)
+[00:03:53] [heldout] checking c0017 and the reference on 4 held-out conditions
+[00:04:08] [heldout] c0017: 3/4 held-out conditions pass; reference: 1/4
+[00:04:08] [robust ] Monte Carlo: 16 samples of c0017 on all 10 conditions
+[00:07:26] [robust ] 12 % of samples meet the spec on every condition; weakest: H4
+[00:07:26] [done   ] spec met on search conditions: True; on all conditions: False
+[00:07:26] [done   ] report: runs/exp/no_think/seed2/report.md

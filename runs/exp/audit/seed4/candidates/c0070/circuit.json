@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "sshi_fbr_zener",
+ "rationale": "Implements a Parallel Synchronized Switch Harvesting on Inductor (SSHI) circuit combined with a full-bridge rectifier and a Zener clamp. The inductor-switch combination flips the piezoelectric capacitance voltage at the extrema, significantly increasing energy extraction efficiency over a standard FBR. This should fix the vavg and tup failures in S2 and S4. The DZ33 Zener diode clamps the output voltage to avoid exceeding the 3.6V limit in S3 (strong excitation).",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.001197387240298407
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.9434102066758844e-05,
+   "phase": 0.14636610633913077,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.8066623260754212e-06
+  }
+ ]
+}

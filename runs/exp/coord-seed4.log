@@ -1,0 +1,49 @@
+[00:00:00] [setup  ] output in runs/exp/coord/seed4; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:09] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (9.6 s)
+[00:00:13] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 3.8 s)
+[00:00:13] [model  ] round 1: asking the model (thinking on)
+[00:00:28] [model  ] waiting 15 s (round 1)
+[00:00:43] [model  ] waiting 30 s (round 1)
+[00:00:58] [model  ] waiting 45 s (round 1)
+[00:01:13] [model  ] waiting 60 s (round 1)
+[00:01:28] [model  ] waiting 75 s (round 1)
+[00:01:43] [model  ] waiting 90 s (round 1)
+[00:01:58] [model  ] waiting 105 s (round 1)
+[00:02:13] [model  ] waiting 120 s (round 1)
+[00:02:28] [model  ] waiting 135 s (round 1)
+[00:02:43] [model  ] waiting 150 s (round 1)
+[00:02:58] [model  ] waiting 165 s (round 1)
+[00:03:13] [model  ] waiting 180 s (round 1)
+[00:03:28] [model  ] waiting 195 s (round 1)
+[00:03:43] [model  ] waiting 210 s (round 1)
+[00:03:58] [model  ] waiting 225 s (round 1)
+[00:04:13] [model  ] waiting 240 s (round 1)
+[00:04:28] [model  ] waiting 255 s (round 1)
+[00:04:43] [model  ] waiting 270 s (round 1)
+[00:04:58] [model  ] waiting 285 s (round 1)
+[00:05:13] [model  ] waiting 300 s (round 1)
+[00:05:28] [model  ] waiting 315 s (round 1)
+[00:05:43] [model  ] waiting 330 s (round 1)
+[00:05:58] [model  ] waiting 345 s (round 1)
+[00:06:13] [model  ] waiting 360 s (round 1)
+[00:06:28] [model  ] waiting 375 s (round 1)
+[00:06:43] [model  ] waiting 390 s (round 1)
+[00:06:58] [model  ] waiting 405 s (round 1)
+[00:07:13] [model  ] waiting 420 s (round 1)
+[00:07:28] [model  ] waiting 435 s (round 1)
+[00:07:40] [model  ] reply after 448 s (2308 in / 8456 out)
+[00:07:40] [eval   ] round 1 design 1: new_topology 'sshi_fbr' (9 parts)
+[00:07:46] [screen ] r01d1: PASS, worst 254 % of the power needed (4 presets, 5.2 s)
+[00:07:46] [sim    ] r01d1: simulating 6 conditions
+[00:07:54] [eval   ] r01d1: score 90.61, 6/6 conditions, 30/30 checks pass (8.6 s)
+[00:07:54] [eval   ] new best c0001 (sshi_fbr): score 90.61, 6/6 conditions pass
+[00:07:54] [done   ] search stopped: search_spec_met; selected c0001 (sshi_fbr)
+[00:07:54] [heldout] checking c0001 and the reference on 4 held-out conditions
+[00:08:05] [heldout] c0001: 3/4 held-out conditions pass; reference: 1/4
+[00:08:05] [robust ] Monte Carlo: 16 samples of c0001 on all 10 conditions
+[00:10:42] [robust ] 38 % of samples meet the spec on every condition; weakest: H4
+[00:10:42] [done   ] spec met on search conditions: True; on all conditions: False
+[00:10:42] [done   ] report: runs/exp/coord/seed4/report.md

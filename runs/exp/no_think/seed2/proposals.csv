@@ -1,0 +1,6 @@
+round,k,name,move,topo_hash,status,candidate,of,worst_ratio,ratio_S2,ratio_S4,ratio_S6,gain_S2,gain_S4,gain_S6,n_presets,hints,problems
+1,1,SSHI_basic,new_topology,40eae91a637a,evaluated,c0001,,2.5285339291000004,2.5285339291000004,9.787593349611111,5.198825569409999,2.156166397003605,3.477588278378211,2.4181169392569775,4,slow_start | not_settled | ripple,
+1,2,Active_Rectifier_Simplified,new_topology,ba973e766678,screen_failed,,,-0.027563955815777776,0.9608926774083334,-0.027563955815777776,1.4071457862476664,0.8193856836606185,-0.009793632226709988,0.6545022556153423,4,underpower,
+1,3,Parallel_Sync_Switch,new_topology,5e5cbccc86ad,screen_failed,,,-0.27950285246833334,-0.04192646984375,-0.27950285246833334,-0.09224026711203333,-0.03575211879963012,-0.09930897298218572,-0.042903488375838926,4,underpower,
+2,1,SSHI_optimized_storage,modify_topology,40eae91a637a,duplicate,,c0001,,,,,,,,,,
+2,2,SECE_variant,,,invalid,,,,,,,,,,,,node pzn is not connected to any component

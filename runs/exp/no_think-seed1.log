@@ -1,0 +1,39 @@
+[00:00:00] [setup  ] output in runs/exp/no_think/seed1; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:08] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (7.7 s)
+[00:00:12] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 3.3 s)
+[00:00:12] [model  ] round 1: asking the model (thinking off)
+[00:00:27] [model  ] waiting 15 s (round 1)
+[00:00:42] [model  ] waiting 30 s (round 1)
+[00:00:57] [model  ] waiting 45 s (round 1)
+[00:01:04] [model  ] reply after 53 s (2310 in / 1547 out)
+[00:01:04] [eval   ] round 1 design 1: new_topology 'SSHI_simplified' (9 parts)
+[00:01:10] [screen ] r01d1: PASS, worst 249 % of the power needed (4 presets, 5.6 s)
+[00:01:10] [sim    ] r01d1: simulating 6 conditions
+[00:01:18] [eval   ] r01d1: score 20.98, 1/6 conditions, 20/30 checks pass (7.6 s)
+[00:01:18] [eval   ] round 1 design 2: new_topology 'Active_Rectifier_Approx' (6 parts)
+[00:01:23] [screen ] r01d2: fail, worst -56 % of the power needed (4 presets, 5.2 s)
+[00:01:23] [eval   ] round 1 design 3: new_topology 'FBR_with_Zener_and_Large_C' (6 parts)
+[00:01:28] [screen ] r01d3: fail, worst -3 % of the power needed (4 presets, 5.1 s)
+[00:01:28] [model  ] round 2: asking the model (thinking off)
+[00:02:18] [eval   ] new best c0007 (SSHI_simplified): score 49.28, 3/6 conditions pass
+[00:02:18] [size   ] c0001 (SSHI_simplified) generation 1: best score 20.98 -> 49.28, 8/48 evaluations (50 s)
+[00:02:18] [model  ] reply after 41 s (4795 in / 1180 out)
+[00:02:18] [eval   ] round 2 design 1: new_topology 'SSHI_with_FlyingCap' (10 parts)
+[00:02:23] [screen ] r02d1: PASS, worst 164 % of the power needed (4 presets, 5.5 s)
+[00:02:23] [sim    ] r02d1: simulating 6 conditions
+[00:02:33] [eval   ] r02d1: score -7.99, 0/6 conditions, 9/30 checks pass (9.1 s)
+[00:02:33] [model  ] round 3: asking the model (thinking off)
+[00:03:26] [eval   ] new best c0012 (SSHI_simplified): score 54.95, 3/6 conditions pass
+[00:03:26] [eval   ] new best c0015 (SSHI_simplified): score 90.60, 6/6 conditions pass
+[00:03:26] [size   ] c0001 (SSHI_simplified) generation 2: best score 49.28 -> 90.60, 16/48 evaluations (54 s); spec_met
+[00:03:26] [model  ] reply after 24 s (5183 in / 675 out)
+[00:03:26] [done   ] search stopped: search_spec_met; selected c0015 (SSHI_simplified)
+[00:03:26] [heldout] checking c0015 and the reference on 4 held-out conditions
+[00:03:37] [heldout] c0015: 3/4 held-out conditions pass; reference: 1/4
+[00:03:37] [robust ] Monte Carlo: 16 samples of c0015 on all 10 conditions
+[00:07:11] [robust ] 6 % of samples meet the spec on every condition; weakest: H4
+[00:07:11] [done   ] spec met on search conditions: True; on all conditions: False
+[00:07:11] [done   ] report: runs/exp/no_think/seed1/report.md

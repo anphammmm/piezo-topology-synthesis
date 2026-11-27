@@ -1,0 +1,5 @@
+round,k,name,move,topo_hash,status,candidate,of,worst_ratio,ratio_S2,ratio_S4,ratio_S6,gain_S2,gain_S4,gain_S6,n_presets,hints,problems
+1,1,SSHI_FBR_Zener,new_topology,40eae91a637a,evaluated,c0001,,2.4857657659083334,2.4857657659083334,9.505474044833331,5.0889549645,2.119696537819923,3.377349664823798,2.367013095261413,4,underpower | slow_start | not_settled | ripple,
+1,2,FBR_Zener,new_topology,ba973e766678,screen_failed,,,-0.027451475816388883,0.96111986,-0.027451475816388883,1.408159193657333,0.8195794099399055,-0.009753667435217874,0.6549736193091161,4,underpower,
+1,3,Doubler_Zener,,,invalid,,,,,,,,,,,,node pzn is not connected to any component
+2,1,SECE_Improved,new_topology,2c7f143a90f6,screen_failed,,,-0.5582968393944444,-0.08374452590916667,-0.5582968393944444,-0.18423795700016668,-0.07141178950389387,-0.19836608195526076,-0.08569414740467264,4,underpower,

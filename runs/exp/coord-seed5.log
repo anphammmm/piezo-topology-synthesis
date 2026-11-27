@@ -1,0 +1,49 @@
+[00:00:00] [setup  ] output in runs/exp/coord/seed5; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:07] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (7.4 s)
+[00:00:09] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 2.4 s)
+[00:00:09] [model  ] round 1: asking the model (thinking on)
+[00:00:24] [model  ] waiting 15 s (round 1)
+[00:00:39] [model  ] waiting 30 s (round 1)
+[00:00:54] [model  ] waiting 45 s (round 1)
+[00:01:09] [model  ] waiting 60 s (round 1)
+[00:01:24] [model  ] waiting 75 s (round 1)
+[00:01:39] [model  ] waiting 90 s (round 1)
+[00:01:54] [model  ] waiting 105 s (round 1)
+[00:02:09] [model  ] waiting 120 s (round 1)
+[00:02:24] [model  ] waiting 135 s (round 1)
+[00:02:39] [model  ] waiting 150 s (round 1)
+[00:02:54] [model  ] waiting 165 s (round 1)
+[00:03:09] [model  ] waiting 180 s (round 1)
+[00:03:24] [model  ] waiting 195 s (round 1)
+[00:03:39] [model  ] waiting 210 s (round 1)
+[00:03:54] [model  ] waiting 225 s (round 1)
+[00:04:09] [model  ] waiting 240 s (round 1)
+[00:04:24] [model  ] waiting 255 s (round 1)
+[00:04:39] [model  ] waiting 270 s (round 1)
+[00:04:54] [model  ] waiting 285 s (round 1)
+[00:05:09] [model  ] waiting 300 s (round 1)
+[00:05:24] [model  ] waiting 315 s (round 1)
+[00:05:39] [model  ] waiting 330 s (round 1)
+[00:05:54] [model  ] waiting 345 s (round 1)
+[00:06:09] [model  ] waiting 360 s (round 1)
+[00:06:24] [model  ] waiting 375 s (round 1)
+[00:06:28] [model  ] reply after 379 s (2308 in / 5985 out)
+[00:06:28] [eval   ] round 1 design 1: new_topology 'SSHI_FBR_Zener' (9 parts)
+[00:06:33] [screen ] r01d1: PASS, worst 249 % of the power needed (4 presets, 5.1 s)
+[00:06:33] [sim    ] r01d1: simulating 6 conditions
+[00:06:42] [eval   ] r01d1: score 7.37, 1/6 conditions, 12/30 checks pass (8.3 s)
+[00:06:42] [model  ] round 2: asking the model (thinking on)
+[00:08:02] [eval   ] new best c0011 (SSHI_FBR_Zener): score 90.61, 6/6 conditions pass
+[00:09:56] [eval   ] new best c0024 (SSHI_FBR_Zener): score 90.61, 6/6 conditions pass
+[00:12:43] [model  ] spec met while waiting; not waiting for the model's answer
+[00:12:43] [model  ] reply after 361 s (no token counts); ERROR spec_met_during_wait
+[00:12:43] [done   ] search stopped: search_spec_met; selected c0024 (SSHI_FBR_Zener)
+[00:12:43] [heldout] checking c0024 and the reference on 4 held-out conditions
+[00:12:56] [heldout] c0024: 4/4 held-out conditions pass; reference: 1/4
+[00:12:56] [robust ] Monte Carlo: 16 samples of c0024 on all 10 conditions
+[00:15:51] [robust ] 88 % of samples meet the spec on every condition; weakest: H4
+[00:15:51] [done   ] spec met on search conditions: True; on all conditions: True
+[00:15:51] [done   ] report: runs/exp/coord/seed5/report.md

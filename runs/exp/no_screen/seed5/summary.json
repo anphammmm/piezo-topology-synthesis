@@ -1,0 +1,55 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0014",
+  "selected_topology": {
+    "name": "full_bridge_sshi",
+    "topo_hash": "40eae91a637a"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [
+    {
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": "0.066477060318",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -0.32954120636000006,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": "0.07474303952999994",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -2.7371519764999968,
+      "split": "heldout"
+    }
+  ],
+  "timing": {
+    "wall_s": 466.1,
+    "model_s": 278.7,
+    "model_calls": 2,
+    "model_errors": 0,
+    "prompt_tokens": 2211,
+    "completion_tokens": 5695,
+    "reasoning_tokens": 0,
+    "sim_seconds": 2130.8,
+    "sim_wall_s": 287.6,
+    "n_sims": 282,
+    "cache_hits": 0,
+    "sim_failures": 0,
+    "size_s": 100.4,
+    "screen_s": 0.0,
+    "n_screen_sims": 0,
+    "n_proposals": 3,
+    "n_invalid": 1,
+    "n_duplicate": 0,
+    "n_topologies": 2,
+    "n_screen_pass": 0,
+    "rounds": 2,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

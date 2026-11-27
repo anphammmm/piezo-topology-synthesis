@@ -1,0 +1,66 @@
+[00:00:00] [setup  ] output in runs/exp/single/seed1; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:06] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (6.1 s)
+[00:00:11] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 5.3 s)
+[00:00:11] [model  ] round 1: asking the model (thinking on)
+[00:00:26] [model  ] waiting 15 s (round 1)
+[00:00:41] [model  ] waiting 30 s (round 1)
+[00:00:56] [model  ] waiting 45 s (round 1)
+[00:01:11] [model  ] waiting 60 s (round 1)
+[00:01:26] [model  ] waiting 75 s (round 1)
+[00:01:41] [model  ] waiting 90 s (round 1)
+[00:01:56] [model  ] waiting 105 s (round 1)
+[00:02:11] [model  ] waiting 120 s (round 1)
+[00:02:26] [model  ] waiting 135 s (round 1)
+[00:02:41] [model  ] waiting 150 s (round 1)
+[00:02:56] [model  ] waiting 165 s (round 1)
+[00:03:11] [model  ] waiting 180 s (round 1)
+[00:03:16] [model  ] reply after 185 s (2297 in / 5449 out)
+[00:03:16] [eval   ] round 1 design 1: new_topology 'Parallel-SSHI-Bridge' (9 parts)
+[00:03:22] [screen ] r01d1: PASS, worst 249 % of the power needed (4 presets, 5.5 s)
+[00:03:22] [sim    ] r01d1: simulating 6 conditions
+[00:03:31] [eval   ] r01d1: score -12.89, 0/6 conditions, 7/30 checks pass (9.6 s)
+[00:03:31] [model  ] round 2: asking the model (thinking on)
+[00:04:23] [size   ] c0001 (Parallel-SSHI-Bridge) generation 1: best score -12.89 -> -9.68, 8/48 evaluations (51 s)
+[00:05:25] [size   ] c0001 (Parallel-SSHI-Bridge) generation 2: best score -9.68 -> 10.93, 16/48 evaluations (62 s)
+[00:06:37] [size   ] c0001 (Parallel-SSHI-Bridge) generation 3: best score 10.93 -> 13.43, 24/48 evaluations (72 s)
+[00:07:47] [size   ] c0001 (Parallel-SSHI-Bridge) generation 4: best score 13.43 -> 20.54, 32/48 evaluations (70 s)
+[00:07:47] [model  ] reply after 220 s (4268 in / 7336 out)
+[00:07:47] [eval   ] round 2 design 1: new_topology 'Half-Bridge-SSHI' (7 parts)
+[00:07:55] [screen ] r02d1: PASS, worst 270 % of the power needed (4 presets, 8.1 s)
+[00:07:55] [sim    ] r02d1: simulating 6 conditions
+[00:08:06] [eval   ] r02d1: score 19.06, 0/6 conditions, 24/30 checks pass (11.2 s)
+[00:08:06] [model  ] round 3: asking the model (thinking on)
+[00:09:18] [eval   ] new best c0038 (Parallel-SSHI-Bridge): score 67.43, 4/6 conditions pass
+[00:09:18] [size   ] c0001 (Parallel-SSHI-Bridge) generation 5: best score 20.54 -> 67.43, 40/48 evaluations (72 s)
+[00:10:30] [size   ] c0001 (Parallel-SSHI-Bridge) generation 6: best score 67.43 -> 67.43, 48/48 evaluations (72 s); budget
+[00:11:33] [size   ] c0034 (Half-Bridge-SSHI) generation 1: best score 19.06 -> 32.74, 8/48 evaluations (63 s)
+[00:11:33] [model  ] reply after 169 s (4788 in / 6352 out)
+[00:11:33] [eval   ] round 3 design 1: new_topology 'Full-Wave-Half-Drop-SSHI' (7 parts)
+[00:11:40] [screen ] r03d1: fail, worst -26 % of the power needed (4 presets, 7.6 s)
+[00:11:40] [model  ] round 4: asking the model (thinking on)
+[00:12:29] [size   ] c0034 (Half-Bridge-SSHI) generation 2: best score 32.74 -> 52.99, 16/48 evaluations (48 s)
+[00:13:24] [size   ] c0034 (Half-Bridge-SSHI) generation 3: best score 52.99 -> 53.86, 24/48 evaluations (55 s)
+[00:14:20] [size   ] c0034 (Half-Bridge-SSHI) generation 4: best score 53.86 -> 53.86, 32/48 evaluations (57 s)
+[00:15:22] [size   ] c0034 (Half-Bridge-SSHI) generation 5: best score 53.86 -> 53.86, 40/48 evaluations (62 s)
+[00:16:24] [size   ] c0034 (Half-Bridge-SSHI) generation 6: best score 53.86 -> 54.08, 48/48 evaluations (62 s); budget
+[00:16:24] [model  ] reply after 260 s (4096 in / 9581 out)
+[00:16:24] [eval   ] round 4 design 1: new_topology 'SSHI-LC-Filter-Bridge' (10 parts)
+[00:16:35] [screen ] r04d1: PASS, worst 208 % of the power needed (4 presets, 10.5 s)
+[00:16:35] [sim    ] r04d1: simulating 6 conditions
+[00:16:48] [eval   ] r04d1: score 79.41, 5/6 conditions, 29/30 checks pass (12.9 s)
+[00:16:48] [eval   ] new best c0099 (SSHI-LC-Filter-Bridge): score 79.41, 5/6 conditions pass
+[00:16:48] [model  ] round 5: asking the model (thinking on)
+[00:19:16] [eval   ] new best c0101 (SSHI-LC-Filter-Bridge): score 90.57, 6/6 conditions pass
+[00:19:16] [size   ] c0099 (SSHI-LC-Filter-Bridge) generation 1: best score 79.41 -> 90.57, 8/48 evaluations (148 s); spec_met
+[00:19:16] [model  ] spec met while waiting; not waiting for the model's answer
+[00:19:16] [model  ] reply after 148 s (no token counts); ERROR spec_met_during_wait
+[00:19:16] [done   ] search stopped: search_spec_met; selected c0101 (SSHI-LC-Filter-Bridge)
+[00:19:16] [heldout] checking c0101 and the reference on 4 held-out conditions
+[00:19:41] [heldout] c0101: 4/4 held-out conditions pass; reference: 1/4
+[00:19:41] [robust ] Monte Carlo: 16 samples of c0101 on all 10 conditions
+[00:29:11] [robust ] 44 % of samples meet the spec on every condition; weakest: H4
+[00:29:11] [done   ] spec met on search conditions: True; on all conditions: True
+[00:29:11] [done   ] report: runs/exp/single/seed1/report.md

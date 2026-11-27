@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_LC_Filter",
+ "rationale": "The previous best design 'SSHI_FullBridge' failed only on S3 ripple (51.4 mV vs 50 mV). S3 has a very light load, meaning the ripple is dominated by the charge packets delivered by the SSHI inversion. To reduce this without increasing the output capacitor (which would increase cold-start time too much for S4), I am introducing an LC filter. By inserting an inductor between the bridge output node (n_bridge) and the storage capacitor node (out), the high-frequency current spikes from the rectifier are smoothed, significantly reducing the peak-to-peak ripple on the output.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_bridge"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_bridge"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n_inv"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n_inv",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.5707963267948967e-05,
+   "phase": 0.05,
+   "edges": "both"
+  },
+  {
+   "id": "Lf",
+   "type": "L",
+   "nodes": [
+    "n_bridge",
+    "out"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_with_FlyingCap",
+ "rationale": "The previous SSHI_simplified used a full bridge which is inefficient. A true SSHI uses a flying capacitor to flip the voltage across Cp, significantly increasing power extraction. By using a flying capacitor (Cfly) and a synchronous switch, we can achieve higher voltage gain and faster startup. The Zener clamp ensures vmax <= 3.6V, and a larger Cout will be tuned to fix the ripple and settling issues.",
+ "done": false,
+ "components": [
+  {
+   "id": "Cfly",
+   "type": "C",
+   "nodes": [
+    "n1",
+    "n2"
+   ],
+   "value": 1e-07
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "n2"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-05
+  },
+  {
+   "id": "Z1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

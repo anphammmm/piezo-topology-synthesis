@@ -1,0 +1,61 @@
+[00:00:00] [setup  ] output in runs/exp/audit/seed1; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:09] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (9.3 s)
+[00:00:11] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 2.0 s)
+[00:00:11] [model  ] round 1: asking the model (thinking on)
+[00:00:26] [model  ] waiting 15 s (round 1)
+[00:00:41] [model  ] waiting 30 s (round 1)
+[00:00:56] [model  ] waiting 45 s (round 1)
+[00:01:11] [model  ] waiting 60 s (round 1)
+[00:01:26] [model  ] waiting 75 s (round 1)
+[00:01:41] [model  ] waiting 90 s (round 1)
+[00:01:56] [model  ] waiting 105 s (round 1)
+[00:02:11] [model  ] waiting 120 s (round 1)
+[00:02:26] [model  ] waiting 135 s (round 1)
+[00:02:41] [model  ] waiting 150 s (round 1)
+[00:02:56] [model  ] waiting 165 s (round 1)
+[00:03:11] [model  ] waiting 180 s (round 1)
+[00:03:26] [model  ] waiting 195 s (round 1)
+[00:03:33] [model  ] reply after 202 s (2308 in / 5893 out)
+[00:03:33] [eval   ] round 1 design 1: new_topology 'PSSHI_FBR_Zener' (9 parts)
+[00:03:41] [screen ] r01d1: PASS, worst 249 % of the power needed (4 presets, 7.5 s)
+[00:03:41] [sim    ] r01d1: simulating 6 conditions
+[00:03:49] [eval   ] r01d1: score -12.89, 0/6 conditions, 7/30 checks pass (8.3 s)
+[00:03:49] [model  ] round 2: asking the model (thinking on)
+[00:04:56] [size   ] c0001 (PSSHI_FBR_Zener) generation 1: best score -12.89 -> -9.68, 8/48 evaluations (67 s)
+[00:06:13] [size   ] c0001 (PSSHI_FBR_Zener) generation 2: best score -9.68 -> 10.93, 16/48 evaluations (77 s)
+[00:07:34] [size   ] c0001 (PSSHI_FBR_Zener) generation 3: best score 10.93 -> 13.43, 24/48 evaluations (81 s)
+[00:08:41] [size   ] c0001 (PSSHI_FBR_Zener) generation 4: best score 13.43 -> 20.54, 32/48 evaluations (67 s)
+[00:08:41] [model  ] reply after 250 s (4288 in / 8855 out)
+[00:08:41] [eval   ] round 2 design 1: new_topology 'Sync_Full_Bridge' (8 parts)
+[00:08:47] [screen ] r02d1: fail, worst -72 % of the power needed (4 presets, 5.8 s)
+[00:09:54] [size   ] c0034 (Sync_Full_Bridge) generation 1: best score -11.53 -> 7.87, 8/48 evaluations (58 s)
+[00:10:45] [size   ] c0034 (Sync_Full_Bridge) generation 2: best score 7.87 -> 38.47, 16/48 evaluations (52 s)
+[00:11:35] [size   ] c0034 (Sync_Full_Bridge) generation 3: best score 38.47 -> 38.47, 24/48 evaluations (50 s)
+[00:12:30] [size   ] c0034 (Sync_Full_Bridge) generation 4: best score 38.47 -> 53.13, 32/48 evaluations (54 s)
+[00:13:27] [size   ] c0034 (Sync_Full_Bridge) generation 5: best score 53.13 -> 53.13, 40/48 evaluations (57 s)
+[00:14:37] [size   ] c0034 (Sync_Full_Bridge) generation 6: best score 53.13 -> 53.13, 48/48 evaluations (70 s); budget
+[00:14:37] [audit  ] screen-rejected 'Sync_Full_Bridge': best after sizing 53.13, spec met: False
+[00:14:37] [eval   ] round 2 design 2 'PSSHI_Fixed' repeats structure c0001; not simulated
+[00:14:37] [model  ] round 3: asking the model (thinking on)
+[00:15:51] [eval   ] new best c0086 (PSSHI_FBR_Zener): score 67.43, 4/6 conditions pass
+[00:15:51] [size   ] c0001 (PSSHI_FBR_Zener) generation 5: best score 20.54 -> 67.43, 40/48 evaluations (74 s)
+[00:17:21] [size   ] c0001 (PSSHI_FBR_Zener) generation 6: best score 67.43 -> 67.43, 48/48 evaluations (90 s); budget
+[00:17:36] [model  ] waiting 179 s (round 3)
+[00:17:51] [model  ] waiting 194 s (round 3)
+[00:18:06] [model  ] waiting 209 s (round 3)
+[00:18:18] [model  ] reply after 221 s (3628 in / 7939 out)
+[00:18:18] [eval   ] round 3 design 1: new_topology 'PSSHI_FBR_LC' (10 parts)
+[00:18:30] [screen ] r03d1: PASS, worst 249 % of the power needed (4 presets, 12.2 s)
+[00:18:30] [sim    ] r03d1: simulating 6 conditions
+[00:18:43] [eval   ] r03d1: score 90.55, 6/6 conditions, 30/30 checks pass (13.3 s)
+[00:18:43] [eval   ] new best c0099 (PSSHI_FBR_LC): score 90.55, 6/6 conditions pass
+[00:18:43] [done   ] search stopped: search_spec_met; selected c0099 (PSSHI_FBR_LC)
+[00:18:43] [heldout] checking c0099 and the reference on 4 held-out conditions
+[00:19:08] [heldout] c0099: 4/4 held-out conditions pass; reference: 1/4
+[00:19:08] [robust ] Monte Carlo: 16 samples of c0099 on all 10 conditions
+[00:25:56] [robust ] 75 % of samples meet the spec on every condition; weakest: H2
+[00:25:56] [done   ] spec met on search conditions: True; on all conditions: True
+[00:25:56] [done   ] report: runs/exp/audit/seed1/report.md

@@ -1,0 +1,63 @@
+[00:00:00] [setup  ] output in runs/exp/single/seed4; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:06] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (7.0 s)
+[00:00:09] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 2.6 s)
+[00:00:09] [model  ] round 1: asking the model (thinking on)
+[00:00:24] [model  ] waiting 15 s (round 1)
+[00:00:39] [model  ] waiting 30 s (round 1)
+[00:00:54] [model  ] waiting 45 s (round 1)
+[00:01:09] [model  ] waiting 60 s (round 1)
+[00:01:24] [model  ] waiting 75 s (round 1)
+[00:01:39] [model  ] waiting 90 s (round 1)
+[00:01:54] [model  ] waiting 105 s (round 1)
+[00:02:09] [model  ] waiting 120 s (round 1)
+[00:02:24] [model  ] waiting 135 s (round 1)
+[00:02:34] [model  ] reply after 145 s (2297 in / 5274 out)
+[00:02:34] [eval   ] round 1 design 1: new_topology 'SSHI_FullBridge' (9 parts)
+[00:02:39] [screen ] r01d1: PASS, worst 251 % of the power needed (4 presets, 4.7 s)
+[00:02:39] [sim    ] r01d1: simulating 6 conditions
+[00:02:48] [eval   ] r01d1: score -12.89, 0/6 conditions, 7/30 checks pass (8.4 s)
+[00:02:48] [model  ] round 2: asking the model (thinking on)
+[00:03:39] [size   ] c0001 (SSHI_FullBridge) generation 1: best score -12.89 -> 5.59, 8/48 evaluations (51 s)
+[00:04:24] [size   ] c0001 (SSHI_FullBridge) generation 2: best score 5.59 -> 17.88, 16/48 evaluations (45 s)
+[00:05:13] [eval   ] new best c0020 (SSHI_FullBridge): score 68.11, 4/6 conditions pass
+[00:05:13] [eval   ] new best c0025 (SSHI_FullBridge): score 79.53, 5/6 conditions pass
+[00:05:13] [size   ] c0001 (SSHI_FullBridge) generation 3: best score 17.88 -> 79.53, 24/48 evaluations (49 s)
+[00:06:04] [size   ] c0001 (SSHI_FullBridge) generation 4: best score 79.53 -> 79.53, 32/48 evaluations (51 s)
+[00:06:51] [size   ] c0001 (SSHI_FullBridge) generation 5: best score 79.53 -> 79.53, 40/48 evaluations (47 s)
+[00:07:41] [size   ] c0001 (SSHI_FullBridge) generation 6: best score 79.53 -> 79.53, 48/48 evaluations (50 s); budget
+[00:07:56] [model  ] waiting 309 s (round 2)
+[00:08:11] [model  ] waiting 324 s (round 2)
+[00:08:26] [model  ] waiting 339 s (round 2)
+[00:08:29] [model  ] reply after 341 s (4274 in / 9958 out)
+[00:08:29] [eval   ] round 2 design 1: new_topology 'VoltageDoubler_Clamp' (6 parts)
+[00:08:34] [screen ] r02d1: fail, worst -0 % of the power needed (4 presets, 5.1 s)
+[00:08:34] [model  ] round 3: asking the model (thinking on)
+[00:08:49] [model  ] waiting 15 s (round 3)
+[00:09:04] [model  ] waiting 30 s (round 3)
+[00:09:19] [model  ] waiting 45 s (round 3)
+[00:09:34] [model  ] waiting 60 s (round 3)
+[00:09:49] [model  ] waiting 75 s (round 3)
+[00:10:04] [model  ] waiting 90 s (round 3)
+[00:10:19] [model  ] waiting 105 s (round 3)
+[00:10:34] [model  ] waiting 120 s (round 3)
+[00:10:49] [model  ] waiting 135 s (round 3)
+[00:11:04] [model  ] waiting 150 s (round 3)
+[00:11:19] [model  ] waiting 165 s (round 3)
+[00:11:34] [model  ] waiting 180 s (round 3)
+[00:11:49] [model  ] waiting 195 s (round 3)
+[00:12:03] [model  ] reply after 209 s (3233 in / 8541 out)
+[00:12:03] [eval   ] round 3 design 1: new_topology 'SSHI_LC_Filter' (10 parts)
+[00:12:13] [screen ] r03d1: PASS, worst 241 % of the power needed (4 presets, 9.5 s)
+[00:12:13] [sim    ] r03d1: simulating 6 conditions
+[00:12:24] [eval   ] r03d1: score 90.61, 6/6 conditions, 30/30 checks pass (11.1 s)
+[00:12:24] [eval   ] new best c0050 (SSHI_LC_Filter): score 90.61, 6/6 conditions pass
+[00:12:24] [done   ] search stopped: search_spec_met; selected c0050 (SSHI_LC_Filter)
+[00:12:24] [heldout] checking c0050 and the reference on 4 held-out conditions
+[00:12:54] [heldout] c0050: 3/4 held-out conditions pass; reference: 1/4
+[00:12:54] [robust ] Monte Carlo: 16 samples of c0050 on all 10 conditions
+[00:18:57] [robust ] 12 % of samples meet the spec on every condition; weakest: H4
+[00:18:57] [done   ] spec met on search conditions: True; on all conditions: False
+[00:18:57] [done   ] report: runs/exp/single/seed4/report.md

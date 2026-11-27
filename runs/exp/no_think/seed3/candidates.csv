@@ -1,0 +1,21 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,24.608,1,20,False
+c0001,1,llm,,new_topology,SSHI_lite,40eae91a637a,3d15963e5745,9,search,23.0113,1,21,False
+c0002,2,size,c0001,size,SSHI_lite,40eae91a637a,774e16924a46,9,search,-6.9849,0,9,False
+c0003,2,size,c0001,size,SSHI_lite,40eae91a637a,59e05c5aa8f3,9,search,64.5151,4,27,False
+c0004,2,size,c0001,size,SSHI_lite,40eae91a637a,1ec1c2b2667e,9,search,14.0401,1,14,False
+c0005,2,size,c0001,size,SSHI_lite,40eae91a637a,63f95a46d6e1,9,search,15.3293,1,16,False
+c0006,2,size,c0001,size,SSHI_lite,40eae91a637a,1529734e4f64,9,search,9.9265,1,13,False
+c0007,2,size,c0001,size,SSHI_lite,40eae91a637a,39445aadb004,9,search,10.9566,1,14,False
+c0008,2,size,c0001,size,SSHI_lite,40eae91a637a,2daae58fa544,9,search,9.5833,1,13,False
+c0009,2,size,c0001,size,SSHI_lite,40eae91a637a,b1f96b15fc67,9,search,-7.3868,0,9,False
+c0010,3,size,c0001,size,SSHI_lite,40eae91a637a,4d3544d234d2,9,search,17.7745,1,18,False
+c0011,3,size,c0001,size,SSHI_lite,40eae91a637a,7dd168137918,9,search,66.3886,4,27,False
+c0012,3,size,c0001,size,SSHI_lite,40eae91a637a,dc0bcd401660,9,search,5.7628,1,11,False
+c0013,3,size,c0001,size,SSHI_lite,40eae91a637a,b6f8d8f4e3a4,9,search,7.6117,1,11,False
+c0014,3,size,c0001,size,SSHI_lite,40eae91a637a,ccb293cee905,9,search,34.2741,1,25,False
+c0015,3,size,c0001,size,SSHI_lite,40eae91a637a,643ea05e11a6,9,search,90.5996,6,30,True
+c0016,3,size,c0001,size,SSHI_lite,40eae91a637a,4d79d0ab97b8,9,search,11.5335,1,14,False
+c0017,3,size,c0001,size,SSHI_lite,40eae91a637a,7ed8dbf2f156,9,search,-11.592,0,7,False
+c0015,3,size,c0001,size,SSHI_lite,40eae91a637a,643ea05e11a6,9,heldout,46.3418,3,18,False
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,heldout,18.1045,1,13,False

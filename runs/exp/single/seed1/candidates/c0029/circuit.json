@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "Parallel-SSHI-Bridge",
+ "rationale": "To address the low voltage (S2, S4) and overvoltage (S3) issues, I am replacing the passive FBR with a Parallel-SSHI (Synchronous Switch Harvesting on Inductor) topology. The L-S combination in parallel with the piezo flips the capacitor voltage at each peak, significantly increasing the energy extracted per cycle. A Zener diode (DZ33) is added to clamp the output voltage at ~3.3V, ensuring it stays below the 3.6V limit for strong excitations (S3). A larger storage capacitor (22uF) is used to minimize the peak-to-peak ripple and stabilize the output voltage across different load conditions.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00023015227042963023,
+   "phase": 0.06153707004632879,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.8298478603081823e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

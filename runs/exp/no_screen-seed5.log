@@ -1,0 +1,39 @@
+[00:00:00] [setup  ] output in runs/exp/no_screen/seed5; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:07] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (7.4 s)
+[00:00:07] [model  ] round 1: asking the model (thinking on)
+[00:00:22] [model  ] waiting 15 s (round 1)
+[00:00:37] [model  ] waiting 30 s (round 1)
+[00:00:52] [model  ] waiting 45 s (round 1)
+[00:01:07] [model  ] waiting 60 s (round 1)
+[00:01:22] [model  ] waiting 75 s (round 1)
+[00:01:37] [model  ] waiting 90 s (round 1)
+[00:01:52] [model  ] waiting 105 s (round 1)
+[00:02:07] [model  ] waiting 120 s (round 1)
+[00:02:22] [model  ] waiting 135 s (round 1)
+[00:02:37] [model  ] waiting 150 s (round 1)
+[00:02:52] [model  ] waiting 165 s (round 1)
+[00:03:05] [model  ] reply after 178 s (2211 in / 5695 out)
+[00:03:05] [eval   ] round 1 design 1: new_topology 'half_wave_sshi' (6 parts)
+[00:03:05] [sim    ] r01d1: simulating 6 conditions
+[00:03:11] [eval   ] r01d1: score 6.45, 0/6 conditions, 18/30 checks pass (6.0 s)
+[00:03:11] [size   ] not sizing c0001 (half_wave_sshi): output never reaches 0.9 V
+[00:03:11] [eval   ] round 1 design 2: new_topology 'full_bridge_sshi' (9 parts)
+[00:03:11] [sim    ] r01d2: simulating 6 conditions
+[00:03:19] [eval   ] r01d2: score 21.08, 1/6 conditions, 20/30 checks pass (7.7 s)
+[00:03:19] [model  ] round 2: asking the model (thinking on)
+[00:04:12] [eval   ] new best c0008 (full_bridge_sshi): score 62.90, 4/6 conditions pass
+[00:04:12] [size   ] c0002 (full_bridge_sshi) generation 1: best score 21.08 -> 62.90, 8/48 evaluations (53 s)
+[00:04:59] [eval   ] new best c0014 (full_bridge_sshi): score 90.60, 6/6 conditions pass
+[00:04:59] [size   ] c0002 (full_bridge_sshi) generation 2: best score 62.90 -> 90.60, 16/48 evaluations (48 s); spec_met
+[00:04:59] [model  ] spec met while waiting; not waiting for the model's answer
+[00:04:59] [model  ] reply after 100 s (no token counts); ERROR spec_met_during_wait
+[00:04:59] [done   ] search stopped: search_spec_met; selected c0014 (full_bridge_sshi)
+[00:04:59] [heldout] checking c0014 and the reference on 4 held-out conditions
+[00:05:11] [heldout] c0014: 3/4 held-out conditions pass; reference: 1/4
+[00:05:11] [robust ] Monte Carlo: 16 samples of c0014 on all 10 conditions
+[00:07:46] [robust ] 25 % of samples meet the spec on every condition; weakest: H4
+[00:07:46] [done   ] spec met on search conditions: True; on all conditions: False
+[00:07:46] [done   ] report: runs/exp/no_screen/seed5/report.md

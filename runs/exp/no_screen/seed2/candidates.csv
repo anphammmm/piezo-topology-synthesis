@@ -1,0 +1,29 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,24.608,1,20,False
+c0001,1,llm,,new_topology,Parallel_SSHI_FullBridge,40eae91a637a,6569f616b058,9,search,17.7723,1,18,False
+c0002,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,c277f6f1c7ba,9,search,12.051,1,14,False
+c0003,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,b9de97e71dd2,9,search,13.7262,1,14,False
+c0004,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,bb1b0beeb20e,9,search,11.3939,1,14,False
+c0005,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,ddb92722c9b4,9,search,21.0568,1,20,False
+c0006,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,3773f16b4b19,9,search,21.7967,1,19,False
+c0007,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,a212be74a42b,9,search,-10.5406,0,8,False
+c0008,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,ecc479e39f50,9,search,13.5081,1,14,False
+c0009,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,4913e309c6ba,9,search,14.2906,1,15,False
+c0010,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,5e8de1139638,9,search,-7.3587,0,9,False
+c0011,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,6a0ca32470dc,9,search,37.1531,2,22,False
+c0012,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,5b7679cb385f,9,search,19.8126,1,19,False
+c0013,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,f8437d937495,9,search,7.6899,1,12,False
+c0014,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,98c0cb80e920,9,search,38.876,2,23,False
+c0015,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,d91a158d5fb2,9,search,12.1357,1,14,False
+c0016,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,cdf997c81c92,9,search,79.253,5,29,False
+c0017,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,82139159a7be,9,search,64.5775,4,26,False
+c0018,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,ec7255fcc23f,9,search,24.3843,1,20,False
+c0019,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,4c45c4fb9491,9,search,55.3482,3,26,False
+c0020,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,d47a8470c303,9,search,32.121,1,25,False
+c0021,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,d0de5727caf1,9,search,90.5564,6,30,True
+c0022,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,563849219477,9,search,67.9096,4,28,False
+c0023,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,b8942ac663c5,9,search,24.269,1,20,False
+c0024,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,ae65007f2657,9,search,33.1549,1,25,False
+c0025,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,74cdee6b167d,9,search,52.8828,3,25,False
+c0021,2,size,c0001,size,Parallel_SSHI_FullBridge,40eae91a637a,d0de5727caf1,9,heldout,48.0025,3,18,False
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,heldout,18.1045,1,13,False

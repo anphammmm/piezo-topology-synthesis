@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FBR_LC_Filter",
+ "rationale": "The previous SSHI-FBR design provided sufficient power (vavg) but suffered from high output ripple (vpp) and slow settling/startup (dv, tup) due to the trade-off in storage capacitor C1 size. By adding a filter inductor L2 between the rectifier bridge and the storage capacitor, we create an LC low-pass filter. This suppresses the high-current spikes inherent to the SSHI inversion process, allowing us to significantly reduce the value of C1. A smaller C1 will shorten the system time constant (tau = RL * C1), thereby improving startup time and settling behavior without sacrificing ripple performance.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_filt"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_filt"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0047
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.4e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_filt",
+    "out"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

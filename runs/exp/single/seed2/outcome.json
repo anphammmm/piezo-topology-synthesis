@@ -1,0 +1,15 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": true,
+  "selected_id": "c0034",
+  "selected_name": "SSHI_FBR_LC_Filter",
+  "selected_origin": "llm",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 539.18,
+    "n_sims": 237,
+    "id": "c0034"
+  },
+  "failed_checks": []
+}

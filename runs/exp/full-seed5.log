@@ -1,0 +1,57 @@
+[00:00:00] [setup  ] output in runs/exp/full/seed5; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:06] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (6.7 s)
+[00:00:10] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 3.3 s)
+[00:00:10] [model  ] round 1: asking the model (thinking on)
+[00:00:25] [model  ] waiting 15 s (round 1)
+[00:00:40] [model  ] waiting 30 s (round 1)
+[00:00:55] [model  ] waiting 45 s (round 1)
+[00:01:10] [model  ] waiting 60 s (round 1)
+[00:01:25] [model  ] waiting 75 s (round 1)
+[00:01:40] [model  ] waiting 90 s (round 1)
+[00:01:55] [model  ] waiting 105 s (round 1)
+[00:02:10] [model  ] waiting 120 s (round 1)
+[00:02:25] [model  ] waiting 135 s (round 1)
+[00:02:40] [model  ] waiting 150 s (round 1)
+[00:02:55] [model  ] waiting 165 s (round 1)
+[00:03:10] [model  ] waiting 180 s (round 1)
+[00:03:25] [model  ] waiting 195 s (round 1)
+[00:03:40] [model  ] waiting 210 s (round 1)
+[00:03:55] [model  ] waiting 225 s (round 1)
+[00:04:10] [model  ] waiting 240 s (round 1)
+[00:04:25] [model  ] waiting 255 s (round 1)
+[00:04:40] [model  ] waiting 270 s (round 1)
+[00:04:49] [model  ] reply after 280 s (2308 in / 5786 out)
+[00:04:49] [eval   ] round 1 design 1: new_topology 'SSHI_FBR_Zener' (9 parts)
+[00:04:55] [screen ] r01d1: PASS, worst 251 % of the power needed (4 presets, 5.9 s)
+[00:04:55] [sim    ] r01d1: simulating 6 conditions
+[00:05:03] [eval   ] r01d1: score 7.43, 1/6 conditions, 12/30 checks pass (8.0 s)
+[00:05:03] [eval   ] round 1 design 2: new_topology 'SSHI_PosEdge_FBR_Zener' (9 parts)
+[00:05:08] [screen ] r01d2: PASS, worst 172 % of the power needed (4 presets, 5.5 s)
+[00:05:08] [sim    ] r01d2: simulating 6 conditions
+[00:05:16] [eval   ] r01d2: score -7.91, 0/6 conditions, 9/30 checks pass (7.5 s)
+[00:05:16] [eval   ] round 1 design 3: new_topology 'FBR_Zener_Only' (6 parts)
+[00:05:22] [screen ] r01d3: fail, worst -3 % of the power needed (4 presets, 5.7 s)
+[00:05:22] [model  ] round 2: asking the model (thinking on)
+[00:06:26] [eval   ] new best c0008 (SSHI_FBR_Zener): score 33.24, 2/6 conditions pass
+[00:06:26] [eval   ] new best c0009 (SSHI_FBR_Zener): score 49.43, 3/6 conditions pass
+[00:06:26] [size   ] c0001 (SSHI_FBR_Zener) generation 1: best score 7.43 -> 49.43, 8/48 evaluations (64 s)
+[00:07:20] [eval   ] new best c0011 (SSHI_FBR_Zener): score 50.08, 3/6 conditions pass
+[00:07:20] [eval   ] new best c0013 (SSHI_FBR_Zener): score 53.03, 3/6 conditions pass
+[00:07:20] [eval   ] new best c0015 (SSHI_FBR_Zener): score 76.92, 5/6 conditions pass
+[00:07:20] [size   ] c0001 (SSHI_FBR_Zener) generation 2: best score 49.43 -> 76.92, 16/48 evaluations (54 s)
+[00:08:15] [size   ] c0001 (SSHI_FBR_Zener) generation 3: best score 76.92 -> 76.92, 24/48 evaluations (56 s)
+[00:09:11] [eval   ] new best c0028 (SSHI_FBR_Zener): score 79.41, 5/6 conditions pass
+[00:09:11] [eval   ] new best c0030 (SSHI_FBR_Zener): score 90.57, 6/6 conditions pass
+[00:09:11] [size   ] c0001 (SSHI_FBR_Zener) generation 4: best score 76.92 -> 90.57, 32/48 evaluations (55 s); spec_met
+[00:09:11] [model  ] spec met while waiting; not waiting for the model's answer
+[00:09:11] [model  ] reply after 229 s (no token counts); ERROR spec_met_during_wait
+[00:09:11] [done   ] search stopped: search_spec_met; selected c0030 (SSHI_FBR_Zener)
+[00:09:11] [heldout] checking c0030 and the reference on 4 held-out conditions
+[00:09:23] [heldout] c0030: 4/4 held-out conditions pass; reference: 1/4
+[00:09:23] [robust ] Monte Carlo: 16 samples of c0030 on all 10 conditions
+[00:12:19] [robust ] 62 % of samples meet the spec on every condition; weakest: H4
+[00:12:19] [done   ] spec met on search conditions: True; on all conditions: True
+[00:12:19] [done   ] report: runs/exp/full/seed5/report.md

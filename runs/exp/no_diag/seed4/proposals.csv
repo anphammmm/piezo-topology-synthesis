@@ -1,0 +1,2 @@
+round,k,name,move,topo_hash,status,candidate,of,worst_ratio,ratio_S2,ratio_S4,ratio_S6,gain_S2,gain_S4,gain_S6,n_presets,hints,problems
+1,1,SSHI_FBR_Zener,new_topology,40eae91a637a,evaluated,c0001,,2.503709977233333,2.503709977233333,9.624030439888887,5.150834921851666,2.1349981736945374,3.4194734346868314,2.3957951674957667,4,,

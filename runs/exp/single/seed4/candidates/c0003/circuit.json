@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FullBridge",
+ "rationale": "The reference FBR failed due to low energy extraction (S2, S4) and overvoltage (S3). I am implementing a Synchronized Switch Harvesting on Inductor (SSHI) topology to significantly improve power extraction. This involves adding an inductor L1 and a synchronous switch S1 in parallel with the piezo transducer to flip the voltage across Cp at its extrema, effectively increasing the current delivered to the storage capacitor. To prevent the output voltage from exceeding 3.6V (especially in S3), I've added a Zener clamp DZ33 on the output node. The full-bridge rectifier (DSCH) provides efficient rectification of the piezo's AC output.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 9.682682444774468e-06
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.008867483037245662
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.0292883089931195e-05,
+   "phase": -0.022074306134920268,
+   "edges": "both"
+  }
+ ]
+}

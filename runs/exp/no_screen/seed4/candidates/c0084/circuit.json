@@ -1,0 +1,105 @@
+{
+ "move": "new_topology",
+ "name": "sshi_fbr_filter",
+ "rationale": "The previous 'sshi_fbr_zener' achieved sufficient average voltage for all conditions (including S2 and S4) but failed on ripple and settling. The ripple is caused by high-current charge pulses inherent to SSHI, while the slow settling is due to the large storage capacitor needed to suppress those pulses when paired with high-impedance loads (like S4's 1M Ohm). I am adding a low-pass RC filter (R_smooth, C_out) after the rectifier. This decouples the energy-collection capacitor (C_res) from the load-smoothing capacitor (C_out). C_res will absorb the SSHI spikes, and the RC filter will deliver a smooth DC voltage to the load, allowing C_out to be small enough for fast settling without sacrificing ripple performance.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0005,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_res"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_res"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cres",
+   "type": "C",
+   "nodes": [
+    "n_res",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "Rsmooth",
+   "type": "R",
+   "nodes": [
+    "n_res",
+    "out"
+   ],
+   "value": 10000.0
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-06
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

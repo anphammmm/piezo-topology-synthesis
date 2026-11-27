@@ -1,0 +1,25 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,24.608,1,20,False
+c0001,1,llm,,new_topology,SSHI_FBR_Zener,40eae91a637a,ffd4330d3d63,9,search,20.9787,1,20,False
+c0002,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,45e384426414,9,search,16.6762,1,17,False
+c0003,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,3cf251041811,9,search,17.7969,1,18,False
+c0004,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,f05775ec079e,9,search,16.3,1,17,False
+c0005,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,66bc72d049ba,9,search,8.8321,1,13,False
+c0006,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,82345592d7ab,9,search,90.608,6,30,True
+c0007,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,fcca1f941341,9,search,90.6015,6,30,True
+c0008,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,a05ca77f367c,9,search,90.6019,6,30,True
+c0009,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,ff906a458f43,9,search,63.1572,4,26,False
+c0010,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,fb9d7ba4d933,9,search,90.5717,6,30,True
+c0011,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,9e33331c4391,9,search,63.4334,4,26,False
+c0012,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,c187dcd49e3d,9,search,67.3459,4,28,False
+c0013,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,6c08b96016a7,9,search,90.606,6,30,True
+c0014,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,6c8c325558c6,9,search,90.6066,6,30,True
+c0015,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,9ba47996bae6,9,search,90.6034,6,30,True
+c0016,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,f11c5022028a,9,search,90.605,6,30,True
+c0017,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,02eb87f68874,9,search,90.6056,6,30,True
+c0018,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,35f80373420c,9,search,63.3421,4,26,False
+c0019,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,a3c2ed6a0f66,9,search,90.6093,6,30,True
+c0020,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,5aa9105b2fdc,9,search,90.6027,6,30,True
+c0021,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,7d833829ce4e,9,search,90.6078,6,30,True
+c0019,2,refine,c0001,refine,SSHI_FBR_Zener,40eae91a637a,a3c2ed6a0f66,9,heldout,60.4036,4,20,True
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,heldout,18.1045,1,13,False

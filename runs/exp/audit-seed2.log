@@ -1,0 +1,46 @@
+[00:00:00] [setup  ] output in runs/exp/audit/seed2; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:08] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (8.6 s)
+[00:00:11] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 2.9 s)
+[00:00:11] [model  ] round 1: asking the model (thinking on)
+[00:00:26] [model  ] waiting 15 s (round 1)
+[00:00:41] [model  ] waiting 30 s (round 1)
+[00:00:56] [model  ] waiting 45 s (round 1)
+[00:01:11] [model  ] waiting 60 s (round 1)
+[00:01:26] [model  ] waiting 75 s (round 1)
+[00:01:41] [model  ] waiting 90 s (round 1)
+[00:01:56] [model  ] waiting 105 s (round 1)
+[00:02:11] [model  ] waiting 120 s (round 1)
+[00:02:26] [model  ] waiting 135 s (round 1)
+[00:02:41] [model  ] waiting 150 s (round 1)
+[00:02:56] [model  ] waiting 165 s (round 1)
+[00:03:11] [model  ] waiting 180 s (round 1)
+[00:03:26] [model  ] waiting 195 s (round 1)
+[00:03:41] [model  ] waiting 210 s (round 1)
+[00:03:56] [model  ] waiting 225 s (round 1)
+[00:04:11] [model  ] waiting 240 s (round 1)
+[00:04:26] [model  ] waiting 255 s (round 1)
+[00:04:41] [model  ] waiting 270 s (round 1)
+[00:04:56] [model  ] waiting 285 s (round 1)
+[00:05:11] [model  ] waiting 300 s (round 1)
+[00:05:26] [model  ] waiting 315 s (round 1)
+[00:05:41] [model  ] waiting 330 s (round 1)
+[00:05:56] [model  ] waiting 345 s (round 1)
+[00:06:11] [model  ] waiting 360 s (round 1)
+[00:06:26] [model  ] waiting 375 s (round 1)
+[00:06:41] [model  ] waiting 390 s (round 1)
+[00:06:47] [model  ] reply after 396 s (2308 in / 5440 out)
+[00:06:47] [eval   ] round 1 design 1: new_topology 'sshi_fbr_zener' (9 parts)
+[00:06:55] [screen ] r01d1: PASS, worst 251 % of the power needed (4 presets, 8.2 s)
+[00:06:55] [sim    ] r01d1: simulating 6 conditions
+[00:07:04] [eval   ] r01d1: score 90.61, 6/6 conditions, 30/30 checks pass (8.6 s)
+[00:07:04] [eval   ] new best c0001 (sshi_fbr_zener): score 90.61, 6/6 conditions pass
+[00:07:04] [done   ] search stopped: search_spec_met; selected c0001 (sshi_fbr_zener)
+[00:07:04] [heldout] checking c0001 and the reference on 4 held-out conditions
+[00:07:16] [heldout] c0001: 3/4 held-out conditions pass; reference: 1/4
+[00:07:16] [robust ] Monte Carlo: 16 samples of c0001 on all 10 conditions
+[00:10:15] [robust ] 25 % of samples meet the spec on every condition; weakest: H4
+[00:10:15] [done   ] spec met on search conditions: True; on all conditions: False
+[00:10:15] [done   ] report: runs/exp/audit/seed2/report.md

@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0014",
+  "selected_name": "full_bridge_sshi",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 299.74,
+    "n_sims": 114,
+    "id": "c0014"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.066477060318,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.32954120636000006,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.07474303952999994,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -2.7371519764999968,
+      "passed": false
+    }
+  ]
+}

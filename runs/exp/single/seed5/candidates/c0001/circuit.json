@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "Parallel-SSHI",
+ "rationale": "The Reference Design (FBR) fails primarily due to diode voltage drops reducing output voltage (S2, S4) and a lack of regulation causing over-voltage (S3). I am implementing a Parallel-SSHI (Synchronized Switch Harvesting on Inductor) topology. By shunting the piezo with an LC resonant circuit at the voltage peaks, we flip the voltage across the internal capacitance Cp, significantly increasing the extracted energy and improving Vout in weak conditions. A Zener diode (DZ33) is added to clamp the output voltage to 3.3V, ensuring it never exceeds the 3.6V maximum limit. The full-bridge rectifier uses DSCH diodes to minimize losses.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 4.9672941328980504e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

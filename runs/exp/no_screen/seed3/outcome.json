@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0045",
+  "selected_name": "SSHI_FBR",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 594.44,
+    "n_sims": 312,
+    "id": "c0045"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.136912107468,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -1.73824214936,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.13585217183999987,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -5.7926085919999935,
+      "passed": false
+    }
+  ]
+}

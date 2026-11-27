@@ -1,0 +1,190 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0000",
+  "selected_topology": {
+    "name": "FBR reference (4x Schottky, 2.2 uF)",
+    "topo_hash": "3b1b75bd21b9"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [
+    {
+      "condition": "S1",
+      "criterion": "settled",
+      "measured": "0.021987436999999943",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -0.09937184999999712,
+      "split": "search"
+    },
+    {
+      "condition": "S2",
+      "criterion": "vout_min",
+      "measured": "1.76299623785",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.020557645638888955,
+      "split": "search"
+    },
+    {
+      "condition": "S2",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S3",
+      "criterion": "vout_max",
+      "measured": "5.72229480743",
+      "op": "<=",
+      "limit": 3.6,
+      "margin": -0.5895263353972222,
+      "split": "search"
+    },
+    {
+      "condition": "S3",
+      "criterion": "ripple",
+      "measured": "0.0843644142151",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -0.6872882843020001,
+      "split": "search"
+    },
+    {
+      "condition": "S3",
+      "criterion": "settled",
+      "measured": "0.10291681440000033",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -4.145840720000017,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "vout_min",
+      "measured": "1.50555368859",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.16358128411666667,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "settled",
+      "measured": "0.0240188802900001",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -0.20094401450000496,
+      "split": "search"
+    },
+    {
+      "condition": "S5",
+      "criterion": "settled",
+      "measured": "0.04394660725999966",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -1.197330362999983,
+      "split": "search"
+    },
+    {
+      "condition": "H1",
+      "criterion": "vout_min",
+      "measured": "1.62942306414",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.09476496436666666,
+      "split": "heldout"
+    },
+    {
+      "condition": "H1",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "heldout"
+    },
+    {
+      "condition": "H3",
+      "criterion": "vout_max",
+      "measured": "6.95464229584",
+      "op": "<=",
+      "limit": 3.6,
+      "margin": -0.9318450821777778,
+      "split": "heldout"
+    },
+    {
+      "condition": "H3",
+      "criterion": "ripple",
+      "measured": "0.107121944427",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -1.1424388885399999,
+      "split": "heldout"
+    },
+    {
+      "condition": "H3",
+      "criterion": "settled",
+      "measured": "0.13571684353000002",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -5.785842176500001,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "vout_min",
+      "measured": "1.55188091903",
+      "op": ">=",
+      "limit": 1.8,
+      "margin": -0.13784393387222224,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "heldout"
+    }
+  ],
+  "timing": {
+    "wall_s": 383.3,
+    "model_s": 0.0,
+    "model_calls": 5,
+    "model_errors": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "reasoning_tokens": 0,
+    "sim_seconds": 2710.0,
+    "sim_wall_s": 383.1,
+    "n_sims": 353,
+    "cache_hits": 0,
+    "sim_failures": 0,
+    "size_s": 0.0,
+    "screen_s": 193.8,
+    "n_screen_sims": 183,
+    "n_proposals": 15,
+    "n_invalid": 0,
+    "n_duplicate": 0,
+    "n_topologies": 15,
+    "n_screen_pass": 0,
+    "rounds": 5,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

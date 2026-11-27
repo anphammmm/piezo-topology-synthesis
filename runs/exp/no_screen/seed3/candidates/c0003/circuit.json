@@ -1,0 +1,76 @@
+{
+ "move": "new_topology",
+ "name": "HybridBridge",
+ "rationale": "A Hybrid Bridge replaces the two high-side diodes of a full-bridge rectifier with synchronous switches. This reduces the forward voltage drop from two diode drops to one diode drop (the return path), increasing the output voltage for S2 and S4. A Zener clamp protects against S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0001,
+   "phase": 0.0,
+   "edges": "pos"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 0.0001,
+   "phase": 0.0,
+   "edges": "neg"
+  }
+ ]
+}

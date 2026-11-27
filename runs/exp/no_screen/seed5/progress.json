@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 466.1,
+  "iteration": 2,
+  "max_rounds": 12,
+  "best_id": "c0014",
+  "best_name": "full_bridge_sshi",
+  "best_scalar": 90.597,
+  "best_cond_pass": 6,
+  "n_candidates": 19,
+  "n_sims": 114,
+  "model_wait_s": 0
+}

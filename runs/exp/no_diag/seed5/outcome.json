@@ -1,0 +1,15 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": true,
+  "selected_id": "c0012",
+  "selected_name": "Parallel-SSHI-FullBridge",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 567.5,
+    "n_sims": 153,
+    "id": "c0012"
+  },
+  "failed_checks": []
+}

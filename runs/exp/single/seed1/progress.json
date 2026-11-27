@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 1751.6,
+  "iteration": 5,
+  "max_rounds": 24,
+  "best_id": "c0101",
+  "best_name": "SSHI-LC-Filter-Bridge",
+  "best_scalar": 90.573,
+  "best_cond_pass": 6,
+  "n_candidates": 108,
+  "n_sims": 699,
+  "model_wait_s": 0
+}

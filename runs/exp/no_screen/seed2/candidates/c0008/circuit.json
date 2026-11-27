@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "Parallel_SSHI_FullBridge",
+ "rationale": "The reference FBR fails in low-excitation (S4) and heavy-load (S2) conditions because the open-circuit voltage peak is too low to overcome the diode drops and reach the 1.8V target. A Parallel SSHI (Synchronous Switch Harvesting on Inductor) is used to flip the voltage across the piezo capacitance (Cp) at the peaks, effectively boosting the voltage available to the rectifier. A DZ33 Zener clamp is added to prevent overvoltage in S3, and a large storage capacitor will be optimized to reduce ripple and improve settling (dv).",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.00047539322094313917
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.989155780759959e-05,
+   "phase": -0.0074138193116174145,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.932671838431978e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

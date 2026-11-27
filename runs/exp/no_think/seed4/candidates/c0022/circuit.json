@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_Simplified",
+ "rationale": "The FBR fails on S2 (heavy load) and S4 (weak excitation) due to the diode drop relative to the low open-circuit voltage. A Synchronous Switch Harvesting on Inductor (SSHI) topology uses an inductor to invert the piezo voltage, significantly increasing the extracted energy and efficiency. I use a SYNC controller to flip the voltage at the peaks and a rectifier to charge the storage capacitor. A Zener diode is added to clamp the output to 3.3V to satisfy vmax on S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.004625459259666403
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.1863151616532807e-06,
+   "phase": 0.1290993344545876,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 7.239382720554392e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+ "move": "new_topology",
+ "name": "half_wave_sshi",
+ "rationale": "Implements Parallel SSHI with a half-wave rectifier and a Zener clamp. SSHI increases the harvested voltage by inverting the piezo capacitance at the extrema, which should fix the low vavg in S2 and S4. The Zener clamp prevents vout from exceeding 3.6V in S3. A single diode reduces the forward voltage drop compared to a full bridge, increasing efficiency.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.7e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

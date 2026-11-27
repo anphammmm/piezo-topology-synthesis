@@ -1,0 +1,26 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0001",
+  "selected_name": "SSHI_FBR_Zener",
+  "selected_origin": "llm",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 193.1,
+    "n_sims": 27,
+    "id": "c0001"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.07288854550000012,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -2.6444272750000057,
+      "passed": false
+    }
+  ]
+}

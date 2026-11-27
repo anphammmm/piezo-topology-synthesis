@@ -1,0 +1,94 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_Full_Active",
+ "rationale": "The previous SSHI_Simplified used a full bridge for rectification but only one active switch for inversion. This created a conflict: the bridge diodes limit the voltage swing and efficiency of the L-Cp inversion. By using a synchronous bridge (or a more integrated active rectifier), we can improve power extraction. However, since I am limited to 4 switches, I will implement a standard SSHI with a synchronous rectifier on the positive half and a diode on the negative, or a more efficient active-rectification path. Let's try a topology where the inductor is used to flip the charge and a synchronous switch handles the transfer to the storage capacitor to minimize diode drops, which are critical given the low open-circuit voltage.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.00243634753557928
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00010616741449406711,
+   "phase": 0.03178019337151717,
+   "edges": "both"
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 3.277437720013744e-05,
+   "phase": -0.0777566272271063,
+   "edges": "pos"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.644628120094339e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

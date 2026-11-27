@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "Parallel-SSHI-FBR-Zener",
+ "rationale": "The reference FBR fails on low-excitation (S4) and heavy-load (S2) conditions because the open-circuit voltage is low and diode drops are significant. I am adding a Parallel SSHI (Synchronous Switch Harvesting on Inductor) circuit to invert the piezoelectric capacitor's charge at each voltage extremum, significantly increasing the extracted power. To prevent overvoltage in S3, a DZ33 zener clamp is added to the output. This combination should raise vavg for S2/S4 and limit vmax/ripple for S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.5707963267948967e-05,
+   "phase": 0.0,
+   "edges": "both"
+  }
+ ]
+}

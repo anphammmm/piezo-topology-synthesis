@@ -1,0 +1,29 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,24.608,1,20,False
+c0001,1,llm,,new_topology,sshi_zener,40eae91a637a,6f08ea03fe63,9,search,21.7004,1,20,False
+c0002,2,size,c0001,size,sshi_zener,40eae91a637a,97ecc53ab784,9,search,79.2957,5,29,False
+c0003,2,size,c0001,size,sshi_zener,40eae91a637a,9fe3d98404df,9,search,9.9451,1,12,False
+c0004,2,size,c0001,size,sshi_zener,40eae91a637a,c63eb6206616,9,search,66.5333,4,28,False
+c0005,2,size,c0001,size,sshi_zener,40eae91a637a,7811c49b6a65,9,search,9.2761,1,13,False
+c0006,2,size,c0001,size,sshi_zener,40eae91a637a,764e7b73e927,9,search,16.3877,1,17,False
+c0007,2,size,c0001,size,sshi_zener,40eae91a637a,5d1c109cd35b,9,search,19.7898,1,19,False
+c0008,2,size,c0001,size,sshi_zener,40eae91a637a,0109a0cd33a7,9,search,-11.4431,0,7,False
+c0009,2,size,c0001,size,sshi_zener,40eae91a637a,05b219ff200c,9,search,10.8146,1,14,False
+c0010,2,size,c0001,size,sshi_zener,40eae91a637a,e20b1a93b4fb,9,search,39.0009,2,23,False
+c0011,2,size,c0001,size,sshi_zener,40eae91a637a,e5ff377d250a,9,search,34.6954,1,25,False
+c0012,2,size,c0001,size,sshi_zener,40eae91a637a,24330ea1daeb,9,search,-10.376,0,8,False
+c0013,2,size,c0001,size,sshi_zener,40eae91a637a,8d5d0403b6d5,9,search,23.9364,1,21,False
+c0014,2,size,c0001,size,sshi_zener,40eae91a637a,e315a1d28f70,9,search,19.5999,1,19,False
+c0015,2,size,c0001,size,sshi_zener,40eae91a637a,b97da0d285ba,9,search,12.4792,1,14,False
+c0016,2,size,c0001,size,sshi_zener,40eae91a637a,aa9cb074480f,9,search,66.6809,4,27,False
+c0017,2,size,c0001,size,sshi_zener,40eae91a637a,08e3b78729d2,9,search,7.678,1,11,False
+c0018,2,size,c0001,size,sshi_zener,40eae91a637a,93558085986e,9,search,50.0116,3,24,False
+c0019,2,size,c0001,size,sshi_zener,40eae91a637a,4bcc63221db1,9,search,78.2525,5,28,False
+c0020,2,size,c0001,size,sshi_zener,40eae91a637a,a5430051c924,9,search,15.0692,1,15,False
+c0021,2,size,c0001,size,sshi_zener,40eae91a637a,a6307f0982f3,9,search,68.2652,4,28,False
+c0022,2,size,c0001,size,sshi_zener,40eae91a637a,5e6966f23107,9,search,16.1409,1,17,False
+c0023,2,size,c0001,size,sshi_zener,40eae91a637a,57469180d0f0,9,search,90.6009,6,30,True
+c0024,2,size,c0001,size,sshi_zener,40eae91a637a,87c4c8084d49,9,search,23.2716,1,21,False
+c0025,2,size,c0001,size,sshi_zener,40eae91a637a,b4b4239411ea,9,search,66.7088,4,28,False
+c0023,2,size,c0001,size,sshi_zener,40eae91a637a,57469180d0f0,9,heldout,46.3435,3,18,False
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,heldout,18.1045,1,13,False

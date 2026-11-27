@@ -1,0 +1,22 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,24.608,1,20,False
+c0001,1,llm,,new_topology,Parallel-SSHI-FullBridge,40eae91a637a,696d409a072c,9,search,21.7966,1,20,False
+c0002,1,llm,,new_topology,Series-SSHI-FullBridge,97daed379676,f7ad5ba7e1bb,9,search,13.6634,1,15,False
+c0003,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,bd018e1e3f24,9,search,-11.6382,0,7,False
+c0004,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,6cc7a8bfa693,9,search,18.8556,1,19,False
+c0005,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,ae02850a70d0,9,search,-11.4395,0,7,False
+c0006,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,ef4222b4ca53,9,search,62.5926,4,26,False
+c0007,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,19f6d96baa17,9,search,10.8915,1,13,False
+c0008,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,e0b82617e2c9,9,search,10.0491,1,13,False
+c0009,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,20f86ba9014a,9,search,35.7826,2,22,False
+c0010,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,043c00530156,9,search,79.4888,5,29,False
+c0011,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,e75d96e95ac0,9,search,51.3007,3,24,False
+c0012,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,850c9d41b8c4,9,search,90.5117,6,30,True
+c0013,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,c647eef6ccf1,9,search,79.4522,5,29,False
+c0014,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,7ebafa1f9138,9,search,33.561,1,25,False
+c0015,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,e22411f0a1d7,9,search,31.0344,1,25,False
+c0016,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,9d3dd81c4a22,9,search,43.7909,2,25,False
+c0017,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,d987b2e1aa61,9,search,56.6703,3,27,False
+c0018,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,474e501c8123,9,search,66.2264,4,27,False
+c0012,2,size,c0001,size,Parallel-SSHI-FullBridge,40eae91a637a,850c9d41b8c4,9,heldout,60.3352,4,20,True
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,heldout,18.1045,1,13,False

@@ -1,0 +1,15 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": true,
+  "selected_id": "c0036",
+  "selected_name": "sshi_fbr",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 636.63,
+    "n_sims": 303,
+    "id": "c0036"
+  },
+  "failed_checks": []
+}

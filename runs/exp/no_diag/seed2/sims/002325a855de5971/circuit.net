@@ -1,0 +1,33 @@
+* c0036-mc15 | condition H3
+Ipz pzn pzp SINE(0 0.00012 100)
+Cpz pzp pzn 2.5e-08
+Rpz pzp pzn 2e+07
+RL out 0 1e+07
+Ictl1 out 0 5e-07
+C1 0 out 1.35651e-06
+D1 0 pzn DSCH
+D2 0 pzp DSCH
+D3 pzn out DSCH
+D4 pzp out DSCH
+D5 0 out DZ33
+L1 n1 pzp 0.00922519 Rser=48.126
+S1 n1 pzn G1_g 0 SWI
+VG1 G1_g 0 PULSE(0 1 1.27448e-05 100n 100n 5.63443e-05 0.005)
+Rbleed_pzp pzp 0 1G
+Rbleed_pzn pzn 0 1G
+Rbleed_n1 n1 0 1G
+.model DSCH D(Is=5e-8 Rs=1 N=1.05 Cjo=10p BV=30 IBV=1u EG=0.69 XTI=2)
+.model DSI D(Is=2.5n Rs=0.6 N=1.75 Cjo=4p BV=75 IBV=1u)
+.model DZ33 D(Is=1e-12 Rs=5 N=1.5 BV=3.3 IBV=1u)
+.model SWI SW(Ron=2 Roff=1G Vt=0.5 Vh=0)
+.temp -20
+.tran 0 0.8 0 2e-06
+.save V(out) V(pzp) V(pzn) I(Ipz)
+.meas TRAN vavg AVG V(out) FROM=0.7 TO=0.8
+.meas TRAN vavg_prev AVG V(out) FROM=0.6 TO=0.7
+.meas TRAN vpp PP V(out) FROM=0.7 TO=0.8
+.meas TRAN vmax MAX V(out) FROM=0 TO=0.8
+.meas TRAN tup FIND time WHEN V(out)=1.8 RISE=1
+.meas TRAN pload AVG V(out)*V(out)/1e+07 FROM=0.7 TO=0.8
+.meas TRAN pext AVG V(pzp,pzn)*I(Ipz) FROM=0.7 TO=0.8
+.end

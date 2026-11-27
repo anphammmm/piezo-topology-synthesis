@@ -1,0 +1,37 @@
+[00:00:00] [setup  ] output in runs/exp/coord/seed3; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:09] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (9.3 s)
+[00:00:13] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 4.4 s)
+[00:00:13] [model  ] round 1: asking the model (thinking on)
+[00:00:28] [model  ] waiting 15 s (round 1)
+[00:00:43] [model  ] waiting 30 s (round 1)
+[00:00:58] [model  ] waiting 45 s (round 1)
+[00:01:13] [model  ] waiting 60 s (round 1)
+[00:01:28] [model  ] waiting 75 s (round 1)
+[00:01:43] [model  ] waiting 90 s (round 1)
+[00:01:58] [model  ] waiting 105 s (round 1)
+[00:02:13] [model  ] waiting 120 s (round 1)
+[00:02:28] [model  ] waiting 135 s (round 1)
+[00:02:43] [model  ] waiting 150 s (round 1)
+[00:02:58] [model  ] waiting 165 s (round 1)
+[00:03:13] [model  ] waiting 180 s (round 1)
+[00:03:23] [model  ] reply after 190 s (2308 in / 6884 out)
+[00:03:23] [eval   ] round 1 design 1: new_topology 'SSHI_FBR_Zener' (9 parts)
+[00:03:32] [screen ] r01d1: PASS, worst 249 % of the power needed (4 presets, 8.8 s)
+[00:03:32] [sim    ] r01d1: simulating 6 conditions
+[00:03:52] [eval   ] r01d1: score 20.98, 1/6 conditions, 20/30 checks pass (20.1 s)
+[00:03:52] [eval   ] round 1 design 2: new_topology 'FBR_Zener_Cout' (6 parts)
+[00:04:00] [screen ] r01d2: fail, worst -3 % of the power needed (4 presets, 7.9 s)
+[00:04:00] [model  ] round 2: asking the model (thinking on)
+[00:05:06] [eval   ] new best c0006 (SSHI_FBR_Zener): score 90.61, 6/6 conditions pass
+[00:08:00] [eval   ] new best c0019 (SSHI_FBR_Zener): score 90.61, 6/6 conditions pass
+[00:08:27] [model  ] reply after 267 s (4494 in / 10015 out)
+[00:08:27] [done   ] search stopped: search_spec_met; selected c0019 (SSHI_FBR_Zener)
+[00:08:27] [heldout] checking c0019 and the reference on 4 held-out conditions
+[00:08:41] [heldout] c0019: 4/4 held-out conditions pass; reference: 1/4
+[00:08:41] [robust ] Monte Carlo: 16 samples of c0019 on all 10 conditions
+[00:11:50] [robust ] 100 % of samples meet the spec on every condition; weakest: S1
+[00:11:50] [done   ] spec met on search conditions: True; on all conditions: True
+[00:11:50] [done   ] report: runs/exp/coord/seed3/report.md

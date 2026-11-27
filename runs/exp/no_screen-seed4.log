@@ -1,0 +1,69 @@
+[00:00:00] [setup  ] output in runs/exp/no_screen/seed4; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:09] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (9.6 s)
+[00:00:09] [model  ] round 1: asking the model (thinking on)
+[00:00:24] [model  ] waiting 15 s (round 1)
+[00:00:39] [model  ] waiting 30 s (round 1)
+[00:00:54] [model  ] waiting 45 s (round 1)
+[00:01:09] [model  ] waiting 60 s (round 1)
+[00:01:24] [model  ] waiting 75 s (round 1)
+[00:01:39] [model  ] waiting 90 s (round 1)
+[00:01:54] [model  ] waiting 105 s (round 1)
+[00:02:09] [model  ] waiting 120 s (round 1)
+[00:02:24] [model  ] waiting 135 s (round 1)
+[00:02:39] [model  ] waiting 150 s (round 1)
+[00:02:54] [model  ] waiting 165 s (round 1)
+[00:03:09] [model  ] waiting 180 s (round 1)
+[00:03:24] [model  ] waiting 195 s (round 1)
+[00:03:39] [model  ] waiting 210 s (round 1)
+[00:03:54] [model  ] waiting 225 s (round 1)
+[00:04:09] [model  ] waiting 240 s (round 1)
+[00:04:24] [model  ] waiting 255 s (round 1)
+[00:04:39] [model  ] waiting 270 s (round 1)
+[00:04:54] [model  ] waiting 285 s (round 1)
+[00:04:57] [model  ] reply after 288 s (2211 in / 8766 out)
+[00:04:57] [eval   ] round 1 design 1: new_topology 'fbr_zener' (6 parts)
+[00:04:57] [sim    ] r01d1: simulating 6 conditions
+[00:05:04] [eval   ] r01d1: score 39.93, 2/6 conditions, 23/30 checks pass (7.5 s)
+[00:05:04] [eval   ] new best c0001 (fbr_zener): score 39.93, 2/6 conditions pass
+[00:05:04] [eval   ] round 1 design 2: new_topology 'sshi_fbr_zener' (9 parts)
+[00:05:04] [sim    ] r01d2: simulating 6 conditions
+[00:05:13] [eval   ] r01d2: score 26.33, 1/6 conditions, 22/30 checks pass (8.7 s)
+[00:05:13] [eval   ] round 1 design 3: new_topology 'boost_zener' (7 parts)
+[00:05:13] [sim    ] r01d3: simulating 6 conditions
+[00:05:50] [eval   ] r01d3: score 6.45, 0/6 conditions, 18/30 checks pass (37.2 s)
+[00:05:50] [size   ] not sizing c0003 (boost_zener): output never reaches 0.9 V
+[00:05:50] [model  ] round 2: asking the model (thinking on)
+[00:06:41] [eval   ] new best c0005 (fbr_zener): score 53.36, 3/6 conditions pass
+[00:06:41] [size   ] c0001 (fbr_zener) generation 1: best score 39.93 -> 53.36, 8/48 evaluations (51 s)
+[00:07:30] [eval   ] new best c0014 (fbr_zener): score 53.37, 3/6 conditions pass
+[00:07:30] [size   ] c0001 (fbr_zener) generation 2: best score 53.36 -> 53.37, 16/48 evaluations (49 s)
+[00:08:18] [eval   ] new best c0027 (fbr_zener): score 64.38, 4/6 conditions pass
+[00:08:18] [size   ] c0001 (fbr_zener) generation 3: best score 53.37 -> 64.38, 24/48 evaluations (48 s)
+[00:09:06] [size   ] c0001 (fbr_zener) generation 4: best score 64.38 -> 64.38, 32/48 evaluations (48 s)
+[00:09:51] [size   ] c0001 (fbr_zener) generation 5: best score 64.38 -> 64.38, 40/48 evaluations (45 s)
+[00:10:40] [size   ] c0001 (fbr_zener) generation 6: best score 64.38 -> 64.38, 48/48 evaluations (49 s); budget
+[00:11:33] [eval   ] new best c0055 (sshi_fbr_zener): score 79.37, 5/6 conditions pass
+[00:11:33] [size   ] c0002 (sshi_fbr_zener) generation 1: best score 26.33 -> 79.37, 8/48 evaluations (53 s)
+[00:12:24] [size   ] c0002 (sshi_fbr_zener) generation 2: best score 79.37 -> 79.37, 16/48 evaluations (52 s)
+[00:13:09] [eval   ] new best c0071 (sshi_fbr_zener): score 79.39, 5/6 conditions pass
+[00:13:09] [size   ] c0002 (sshi_fbr_zener) generation 3: best score 79.37 -> 79.39, 24/48 evaluations (44 s)
+[00:13:54] [size   ] c0002 (sshi_fbr_zener) generation 4: best score 79.39 -> 79.39, 32/48 evaluations (45 s)
+[00:13:54] [model  ] reply after 445 s (6788 in / 8209 out)
+[00:13:54] [eval   ] round 2 design 1: new_topology 'sshi_fbr_filter' (11 parts)
+[00:13:54] [sim    ] r02d1: simulating 6 conditions
+[00:14:00] [eval   ] r02d1: score 19.59, 1/6 conditions, 19/30 checks pass (6.8 s)
+[00:14:00] [model  ] round 3: asking the model (thinking on)
+[00:14:55] [eval   ] new best c0090 (sshi_fbr_zener): score 90.59, 6/6 conditions pass
+[00:14:55] [size   ] c0002 (sshi_fbr_zener) generation 5: best score 79.39 -> 90.59, 40/48 evaluations (54 s); spec_met
+[00:14:55] [model  ] spec met while waiting; not waiting for the model's answer
+[00:14:55] [model  ] reply after 54 s (no token counts); ERROR spec_met_during_wait
+[00:14:55] [done   ] search stopped: search_spec_met; selected c0090 (sshi_fbr_zener)
+[00:14:55] [heldout] checking c0090 and the reference on 4 held-out conditions
+[00:15:09] [heldout] c0090: 3/4 held-out conditions pass; reference: 1/4
+[00:15:09] [robust ] Monte Carlo: 16 samples of c0090 on all 10 conditions
+[00:18:16] [robust ] 0 % of samples meet the spec on every condition; weakest: H4
+[00:18:16] [done   ] spec met on search conditions: True; on all conditions: False
+[00:18:16] [done   ] report: runs/exp/no_screen/seed4/report.md

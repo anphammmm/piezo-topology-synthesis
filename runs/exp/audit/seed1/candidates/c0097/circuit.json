@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "PSSHI_FBR_Zener",
+ "rationale": "To solve the failing conditions of the FBR, I am implementing a Parallel Synchronous Switch Harvesting on Inductor (PSSHI) circuit combined with a Zener clamp. The Parallel-SSHI (inductor L1 and switch S1) flips the piezoelectric capacitance voltage at its peaks, effectively boosting the voltage delivered to the rectifier, which addresses the low output voltage in S2 and S4. A Zener diode (DZ33) is added at the output node to clamp the voltage to ~3.3V, preventing the overvoltage seen in S3. A larger storage capacitor is used to reduce the peak-to-peak ripple and improve stability (S3, S5).",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.001,
+   "phase": 0.24847140363192433,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.898489985706329e-06
+  }
+ ]
+}

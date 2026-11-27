@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 1556.2,
+  "iteration": 3,
+  "max_rounds": 12,
+  "best_id": "c0099",
+  "best_name": "PSSHI_FBR_LC",
+  "best_scalar": 90.549,
+  "best_cond_pass": 6,
+  "n_candidates": 100,
+  "n_sims": 639,
+  "model_wait_s": 209
+}

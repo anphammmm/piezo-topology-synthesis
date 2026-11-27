@@ -1,0 +1,69 @@
+{
+ "move": "new_topology",
+ "name": "Half-Bridge-SSHI",
+ "rationale": "The previous Parallel-SSHI-Bridge used a full-bridge rectifier, which incurs two diode drops. Given the low open-circuit voltage (~3.2V), these drops are significant and likely caused the output to settle below 1.8V on several conditions (S1, S2, S4). By using a half-bridge rectifier (tying pzn to ground) combined with a synchronous flip at both voltage extrema (SSHI), we reduce the diode drop to a single DSCH diode. This increase in efficiency, paired with a smaller storage capacitor to improve startup time and settlement (avoiding the long time constants seen in the reference FBR), should allow the circuit to meet the vout_min and startup requirements across all scenarios while the Zener clamp handles the strong excitation of S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0008878896780792591
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0009017364473997334,
+   "phase": 0.031866896636296604,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.6526040400137904e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "R1",
+   "type": "R",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 2.8872504292546957
+  }
+ ]
+}

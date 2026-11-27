@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_Filtered_Rectifier",
+ "rationale": "The SSHI_Simplified (c0028) is very close to passing, failing only on ripple for S3 (58mV vs 50mV). S3 is the 'strong excitation, light load' case. To reduce ripple without significantly increasing the main storage capacitor (which might hurt startup), I will add a small RC filter (low-pass) between the rectifier output and the load node 'out'. This will smooth the high-frequency charge pulses from the SSHI inversion and rectifier while maintaining the DC level.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.002322440123494377
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.240669689284829e-05,
+   "phase": 0.051713293270264395,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "R_filt",
+   "type": "R",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 2225.3383501253393
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.1788421260635066e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

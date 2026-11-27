@@ -1,0 +1,2 @@
+round,k,name,move,topo_hash,status,candidate,of,worst_ratio,ratio_S2,ratio_S4,ratio_S6,gain_S2,gain_S4,gain_S6,n_presets,hints,problems
+1,1,Parallel-SSHI-FullBridge,new_topology,40eae91a637a,evaluated,c0001,,2.48583422495,2.48583422495,9.505723711388889,5.089131595148333,2.1197549151600543,3.377438372788677,2.3670952510400642,4,,

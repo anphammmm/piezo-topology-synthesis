@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "sshi_zener",
+ "rationale": "The reference FBR design fails due to efficiency losses (S2, S4) and lack of overvoltage protection (S3). I am implementing a Parallel-SSHI (Synchronous Switch Harvesting on Inductor) topology to invert the piezoelectric capacitance voltage at each half-cycle, significantly increasing the harvested energy to meet vavg requirements. I've added a DZ33 Zener diode as a clamp on the output node to prevent vout from exceeding 3.6 V in high-excitation conditions (S3). A larger storage capacitor is used to suppress ripple and improve settling stability (S5).",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.1668712014243423e-05
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0001000684112299881
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.6008712503535226e-06,
+   "phase": -0.0002445379078037609,
+   "edges": "both"
+  }
+ ]
+}

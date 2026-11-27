@@ -1,0 +1,31 @@
+[00:00:00] [setup  ] output in runs/exp/no_diag/seed4; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:08] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (8.6 s)
+[00:00:12] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 3.9 s)
+[00:00:12] [model  ] round 1: asking the model (thinking on)
+[00:00:27] [model  ] waiting 15 s (round 1)
+[00:00:42] [model  ] waiting 30 s (round 1)
+[00:00:57] [model  ] waiting 45 s (round 1)
+[00:01:12] [model  ] waiting 60 s (round 1)
+[00:01:27] [model  ] waiting 75 s (round 1)
+[00:01:42] [model  ] waiting 90 s (round 1)
+[00:01:57] [model  ] waiting 105 s (round 1)
+[00:02:12] [model  ] waiting 120 s (round 1)
+[00:02:27] [model  ] waiting 135 s (round 1)
+[00:02:42] [model  ] waiting 150 s (round 1)
+[00:02:57] [model  ] waiting 165 s (round 1)
+[00:03:00] [model  ] reply after 168 s (2308 in / 5337 out)
+[00:03:00] [eval   ] round 1 design 1: new_topology 'SSHI_FBR_Zener' (9 parts)
+[00:03:05] [screen ] r01d1: PASS, worst 250 % of the power needed (4 presets, 5.3 s)
+[00:03:05] [sim    ] r01d1: simulating 6 conditions
+[00:03:13] [eval   ] r01d1: score 90.61, 6/6 conditions, 30/30 checks pass (7.2 s)
+[00:03:13] [eval   ] new best c0001 (SSHI_FBR_Zener): score 90.61, 6/6 conditions pass
+[00:03:13] [done   ] search stopped: search_spec_met; selected c0001 (SSHI_FBR_Zener)
+[00:03:13] [heldout] checking c0001 and the reference on 4 held-out conditions
+[00:03:24] [heldout] c0001: 3/4 held-out conditions pass; reference: 1/4
+[00:03:24] [robust ] Monte Carlo: 16 samples of c0001 on all 10 conditions
+[00:06:23] [robust ] 25 % of samples meet the spec on every condition; weakest: H4
+[00:06:23] [done   ] spec met on search conditions: True; on all conditions: False
+[00:06:23] [done   ] report: runs/exp/no_diag/seed4/report.md

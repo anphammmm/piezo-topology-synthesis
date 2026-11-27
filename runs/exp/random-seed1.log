@@ -1,0 +1,53 @@
+[00:00:00] [setup  ] output in runs/exp/random/seed1; mode search (baseline random); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:08] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (8.1 s)
+[00:00:11] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 3.5 s)
+[00:00:11] [model  ] round 1: asking the model (thinking on)
+[00:00:11] [model  ] reply after 0 s (0 in / 0 out)
+[00:00:11] [eval   ] round 1 design 1: new_topology 'random-001' (11 parts)
+[00:00:16] [screen ] r01d1: fail, worst -977836 % of the power needed (4 presets, 5.2 s)
+[00:00:16] [eval   ] round 1 design 2: new_topology 'random-002' (10 parts)
+[00:00:23] [screen ] r01d2: fail, worst -32 % of the power needed (4 presets, 6.3 s)
+[00:00:23] [eval   ] round 1 design 3: new_topology 'random-003' (9 parts)
+[00:00:30] [screen ] r01d3: fail, worst -958632 % of the power needed (4 presets, 7.4 s)
+[00:00:30] [model  ] round 2: asking the model (thinking on)
+[00:00:30] [model  ] reply after 0 s (0 in / 0 out)
+[00:00:30] [eval   ] round 2 design 1: new_topology 'random-004' (7 parts)
+[00:00:36] [screen ] r02d1: fail, worst -1988 % of the power needed (4 presets, 5.3 s)
+[00:00:36] [eval   ] round 2 design 2: new_topology 'random-005' (13 parts)
+[00:00:40] [screen ] r02d2: fail, worst -626199 % of the power needed (4 presets, 4.8 s)
+[00:00:40] [eval   ] round 2 design 3: new_topology 'random-006' (10 parts)
+[00:00:46] [screen ] r02d3: fail, worst -0 % of the power needed (4 presets, 5.1 s)
+[00:00:46] [model  ] round 3: asking the model (thinking on)
+[00:00:46] [model  ] reply after 0 s (0 in / 0 out)
+[00:00:46] [eval   ] round 3 design 1: new_topology 'random-007' (7 parts)
+[00:00:53] [screen ] r03d1: fail, worst -28 % of the power needed (4 presets, 7.7 s)
+[00:00:53] [eval   ] round 3 design 2: new_topology 'random-008' (8 parts)
+[00:00:58] [screen ] r03d2: fail, worst -134 % of the power needed (4 presets, 5.1 s)
+[00:00:58] [eval   ] round 3 design 3: new_topology 'random-009' (10 parts)
+[00:01:03] [screen ] r03d3: fail, worst -586960 % of the power needed (4 presets, 4.9 s)
+[00:01:03] [model  ] round 4: asking the model (thinking on)
+[00:01:03] [model  ] reply after 0 s (0 in / 0 out)
+[00:01:03] [eval   ] round 4 design 1: new_topology 'random-010' (11 parts)
+[00:01:09] [screen ] r04d1: fail, worst -137260 % of the power needed (4 presets, 5.6 s)
+[00:01:09] [eval   ] round 4 design 2: new_topology 'random-011' (11 parts)
+[00:01:14] [screen ] r04d2: fail, worst 47 % of the power needed (4 presets, 5.0 s)
+[00:01:14] [eval   ] round 4 design 3: new_topology 'random-012' (7 parts)
+[00:01:20] [screen ] r04d3: fail, worst -0 % of the power needed (4 presets, 5.9 s)
+[00:01:20] [model  ] round 5: asking the model (thinking on)
+[00:01:20] [model  ] reply after 0 s (0 in / 0 out)
+[00:01:20] [eval   ] round 5 design 1: new_topology 'random-013' (13 parts)
+[00:01:25] [screen ] r05d1: fail, worst -7533 % of the power needed (4 presets, 5.3 s)
+[00:01:25] [eval   ] round 5 design 2: new_topology 'random-014' (11 parts)
+[00:01:30] [screen ] r05d2: fail, worst -28 % of the power needed (4 presets, 5.2 s)
+[00:01:30] [eval   ] round 5 design 3: new_topology 'random-015' (11 parts)
+[00:01:36] [screen ] r05d3: fail, worst -776658 % of the power needed (4 presets, 5.6 s)
+[00:01:36] [done   ] search stopped: stagnation; selected c0000 (FBR reference (4x Schottky, 2.2 uF))
+[00:01:36] [heldout] checking c0000 and the reference on 4 held-out conditions
+[00:01:45] [heldout] c0000: 1/4 held-out conditions pass; reference: 1/4
+[00:01:45] [robust ] Monte Carlo: 16 samples of c0000 on all 10 conditions
+[00:04:21] [robust ] 0 % of samples meet the spec on every condition; weakest: S2
+[00:04:21] [done   ] spec met on search conditions: False; on all conditions: False
+[00:04:21] [done   ] report: runs/exp/random/seed1/report.md

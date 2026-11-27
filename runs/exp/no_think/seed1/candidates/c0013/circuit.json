@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_simplified",
+ "rationale": "The FBR fails on S2 (heavy load) and S4 (weak excitation) due to diode drops and poor impedance matching. A Synchronous Switch Harvesting on Inductor (SSHI) approach uses an inductor to flip the piezo voltage, significantly increasing the extracted energy. I use a half-bridge SSHI with a rectifier to the storage capacitor. The SYNC controller flips the voltage at the peaks, and the DSCH diodes steer the current to the output.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.007165664050892116
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00014813124502937344,
+   "phase": -0.00925583837165718,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.76347072886801e-06
+  },
+  {
+   "id": "Z1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

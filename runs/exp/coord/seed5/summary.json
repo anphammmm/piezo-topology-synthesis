@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": true,
+  "selected_id": "c0024",
+  "selected_topology": {
+    "name": "SSHI_FBR_Zener",
+    "topo_hash": "40eae91a637a"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [],
+  "timing": {
+    "wall_s": 952.0,
+    "model_s": 739.9,
+    "model_calls": 2,
+    "model_errors": 0,
+    "prompt_tokens": 2308,
+    "completion_tokens": 5985,
+    "reasoning_tokens": 0,
+    "sim_seconds": 3274.6,
+    "sim_wall_s": 572.7,
+    "n_sims": 435,
+    "cache_hits": 0,
+    "sim_failures": 0,
+    "size_s": 360.9,
+    "screen_s": 7.5,
+    "n_screen_sims": 15,
+    "n_proposals": 1,
+    "n_invalid": 0,
+    "n_duplicate": 0,
+    "n_topologies": 1,
+    "n_screen_pass": 1,
+    "rounds": 2,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

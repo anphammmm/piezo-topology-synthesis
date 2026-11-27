@@ -1,0 +1,76 @@
+{
+ "move": "new_topology",
+ "name": "Sync_Full_Bridge",
+ "rationale": "The previous PSSHI design failed primarily because the synchronous flip was improperly tuned (ton too long) and the full-bridge diode drops were significant relative to the low open-circuit voltage of the piezo. This design replaces the diode bridge with a fully synchronous rectifier using 4 switches and 2 SYNC controllers. This eliminates diode drops entirely, maximizing efficiency. By using G1 for the positive half-cycle (pzp to out, pzn to ground) and G2 for the negative half-cycle (pzn to out, pzp to ground), we extract the maximum possible energy without the complexity of the resonant flip, which should be sufficient for the load requirements if efficiency is high enough.",
+ "done": false,
+ "components": [
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "S3",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "S4",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "0"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0004933039661845552,
+   "phase": -0.09271333836258958,
+   "edges": "pos"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 0.0004835810419784215,
+   "phase": -0.1556591653486145,
+   "edges": "neg"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.1083850229395185e-06
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 1073.5,
+  "iteration": 6,
+  "max_rounds": 12,
+  "best_id": "c0076",
+  "best_name": "SSHI_LC_Filter",
+  "best_scalar": 90.61,
+  "best_cond_pass": 6,
+  "n_candidates": 77,
+  "n_sims": 549,
+  "model_wait_s": 0
+}

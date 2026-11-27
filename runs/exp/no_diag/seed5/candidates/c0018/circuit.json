@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "Parallel-SSHI-FullBridge",
+ "rationale": "The reference FBR fails S2 and S4 due to the low open-circuit voltage (Voc ~1.9V in S4) and diode drops. A Parallel SSHI (Synchronous Switch Harvesting on Inductor) is used to flip the voltage on Cp at the peaks, increasing the effective voltage seen by the rectifier and improving energy extraction. A full-bridge rectifier with low-drop Schottky diodes (DSCH) is used for maximum recovery. A Zener diode (DZ33) clamps the output to 3.3V to prevent exceeding the absolute maximum in S3. A large output capacitor (4.7uF) filters the ripple.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.1299115311110841e-06
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.005243852942981813
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00012430730222912084,
+   "phase": -0.0604505972881685,
+   "edges": "both"
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": true,
+  "selected_id": "c0101",
+  "selected_name": "SSHI-LC-Filter-Bridge",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 1156.67,
+    "n_sims": 699,
+    "id": "c0101"
+  },
+  "failed_checks": []
+}

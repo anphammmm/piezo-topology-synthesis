@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 827.6,
+  "iteration": 2,
+  "max_rounds": 24,
+  "best_id": "c0034",
+  "best_name": "SSHI_FBR_LC_Filter",
+  "best_scalar": 90.556,
+  "best_cond_pass": 6,
+  "n_candidates": 35,
+  "n_sims": 237,
+  "model_wait_s": 0
+}

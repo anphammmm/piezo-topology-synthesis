@@ -1,0 +1,39 @@
+[00:00:00] [setup  ] output in runs/exp/no_screen/seed2; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:10] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (10.5 s)
+[00:00:10] [model  ] round 1: asking the model (thinking on)
+[00:00:25] [model  ] waiting 15 s (round 1)
+[00:00:40] [model  ] waiting 30 s (round 1)
+[00:00:55] [model  ] waiting 45 s (round 1)
+[00:01:10] [model  ] waiting 60 s (round 1)
+[00:01:25] [model  ] waiting 75 s (round 1)
+[00:01:40] [model  ] waiting 90 s (round 1)
+[00:01:55] [model  ] waiting 105 s (round 1)
+[00:02:10] [model  ] waiting 120 s (round 1)
+[00:02:25] [model  ] waiting 135 s (round 1)
+[00:02:40] [model  ] waiting 150 s (round 1)
+[00:02:55] [model  ] waiting 165 s (round 1)
+[00:03:10] [model  ] waiting 180 s (round 1)
+[00:03:25] [model  ] waiting 195 s (round 1)
+[00:03:29] [model  ] reply after 199 s (2211 in / 7486 out)
+[00:03:29] [eval   ] round 1 design 1: new_topology 'Parallel_SSHI_FullBridge' (9 parts)
+[00:03:29] [sim    ] r01d1: simulating 6 conditions
+[00:03:37] [eval   ] r01d1: score 17.77, 1/6 conditions, 18/30 checks pass (8.6 s)
+[00:03:37] [model  ] round 2: asking the model (thinking on)
+[00:04:40] [size   ] c0001 (Parallel_SSHI_FullBridge) generation 1: best score 17.77 -> 21.80, 8/48 evaluations (63 s)
+[00:05:54] [eval   ] new best c0011 (Parallel_SSHI_FullBridge): score 37.15, 2/6 conditions pass
+[00:05:54] [eval   ] new best c0014 (Parallel_SSHI_FullBridge): score 38.88, 2/6 conditions pass
+[00:05:55] [eval   ] new best c0016 (Parallel_SSHI_FullBridge): score 79.25, 5/6 conditions pass
+[00:05:55] [size   ] c0001 (Parallel_SSHI_FullBridge) generation 2: best score 21.80 -> 79.25, 16/48 evaluations (74 s)
+[00:07:06] [eval   ] new best c0021 (Parallel_SSHI_FullBridge): score 90.56, 6/6 conditions pass
+[00:07:06] [size   ] c0001 (Parallel_SSHI_FullBridge) generation 3: best score 79.25 -> 90.56, 24/48 evaluations (71 s); spec_met
+[00:07:06] [model  ] reply after 184 s (3966 in / 6801 out)
+[00:07:06] [done   ] search stopped: search_spec_met; selected c0021 (Parallel_SSHI_FullBridge)
+[00:07:06] [heldout] checking c0021 and the reference on 4 held-out conditions
+[00:07:25] [heldout] c0021: 3/4 held-out conditions pass; reference: 1/4
+[00:07:25] [robust ] Monte Carlo: 16 samples of c0021 on all 10 conditions
+[00:11:14] [robust ] 0 % of samples meet the spec on every condition; weakest: S4
+[00:11:14] [done   ] spec met on search conditions: True; on all conditions: False
+[00:11:14] [done   ] report: runs/exp/no_screen/seed2/report.md

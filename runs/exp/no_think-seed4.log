@@ -1,0 +1,66 @@
+[00:00:00] [setup  ] output in runs/exp/no_think/seed4; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:10] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (10.2 s)
+[00:00:13] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 2.9 s)
+[00:00:13] [model  ] round 1: asking the model (thinking off)
+[00:00:28] [model  ] waiting 15 s (round 1)
+[00:00:43] [model  ] waiting 30 s (round 1)
+[00:00:54] [model  ] reply after 42 s (2310 in / 1520 out)
+[00:00:54] [eval   ] round 1 design 1: new_topology 'SSHI_Simplified' (9 parts)
+[00:01:05] [screen ] r01d1: PASS, worst 253 % of the power needed (4 presets, 11.3 s)
+[00:01:05] [sim    ] r01d1: simulating 6 conditions
+[00:01:15] [eval   ] r01d1: score 23.01, 1/6 conditions, 21/30 checks pass (9.2 s)
+[00:01:15] [eval   ] round 1 design 2: new_topology 'HalfBridge_SSHI' (6 parts)
+[00:01:22] [screen ] r01d2: fail, worst -28 % of the power needed (4 presets, 7.4 s)
+[00:01:22] [eval   ] round 1 design 3: new_topology 'FBR_Zener_LargeC' (6 parts)
+[00:01:30] [screen ] r01d3: fail, worst -3 % of the power needed (4 presets, 8.2 s)
+[00:01:30] [model  ] round 2: asking the model (thinking off)
+[00:02:39] [eval   ] new best c0002 (SSHI_Simplified): score 37.24, 2/6 conditions pass
+[00:02:39] [size   ] c0001 (SSHI_Simplified) generation 1: best score 23.01 -> 37.24, 8/48 evaluations (69 s)
+[00:02:39] [model  ] reply after 35 s (4783 in / 1321 out)
+[00:02:39] [eval   ] round 2 design 1: new_topology 'SSHI_Full_Active' (10 parts)
+[00:02:46] [screen ] r02d1: PASS, worst 212 % of the power needed (4 presets, 6.5 s)
+[00:02:46] [sim    ] r02d1: simulating 6 conditions
+[00:02:55] [eval   ] r02d1: score 17.76, 0/6 conditions, 23/30 checks pass (9.4 s)
+[00:02:55] [eval   ] round 2 design 2: new_topology 'Active_Half_Bridge_Cout_Small' (8 parts)
+[00:03:02] [screen ] r02d2: fail, worst -56 % of the power needed (4 presets, 6.6 s)
+[00:03:02] [model  ] round 3: asking the model (thinking off)
+[00:03:58] [eval   ] new best c0016 (SSHI_Simplified): score 64.33, 4/6 conditions pass
+[00:03:58] [eval   ] new best c0017 (SSHI_Simplified): score 77.29, 5/6 conditions pass
+[00:03:58] [size   ] c0001 (SSHI_Simplified) generation 2: best score 37.24 -> 77.29, 16/48 evaluations (56 s)
+[00:03:58] [model  ] reply after 19 s (5389 in / 670 out)
+[00:03:58] [eval   ] round 3 design 1 'SSHI_Full_Bridge_Active' repeats structure c0001; not simulated
+[00:03:58] [model  ] round 4: asking the model (thinking off)
+[00:05:02] [size   ] c0001 (SSHI_Simplified) generation 3: best score 77.29 -> 77.29, 24/48 evaluations (65 s)
+[00:05:50] [eval   ] new best c0028 (SSHI_Simplified): score 79.39, 5/6 conditions pass
+[00:05:50] [size   ] c0001 (SSHI_Simplified) generation 4: best score 77.29 -> 79.39, 32/48 evaluations (48 s)
+[00:05:50] [model  ] reply after 65 s (4017 in / 741 out)
+[00:05:50] [eval   ] round 4 design 1 'SSHI_Buffered_Rectifier' repeats structure c0001; not simulated
+[00:05:50] [model  ] round 5: asking the model (thinking off)
+[00:06:41] [eval   ] new best c0036 (SSHI_Simplified): score 79.47, 5/6 conditions pass
+[00:06:41] [size   ] c0001 (SSHI_Simplified) generation 5: best score 79.39 -> 79.47, 40/48 evaluations (50 s)
+[00:07:32] [size   ] c0001 (SSHI_Simplified) generation 6: best score 79.47 -> 79.47, 48/48 evaluations (51 s); budget
+[00:08:18] [size   ] c0010 (SSHI_Full_Active) generation 1: best score 17.76 -> 37.95, 8/48 evaluations (45 s)
+[00:09:18] [size   ] c0010 (SSHI_Full_Active) generation 2: best score 37.95 -> 55.57, 16/48 evaluations (60 s)
+[00:09:18] [model  ] reply after 150 s (3950 in / 714 out)
+[00:09:18] [eval   ] round 5 design 1: new_topology 'SSHI_Filtered_Rectifier' (10 parts)
+[00:09:24] [screen ] r05d1: PASS, worst 203 % of the power needed (4 presets, 6.0 s)
+[00:09:24] [sim    ] r05d1: simulating 6 conditions
+[00:09:32] [eval   ] r05d1: score 79.40, 5/6 conditions, 29/30 checks pass (8.3 s)
+[00:09:32] [model  ] round 6: asking the model (thinking off)
+[00:10:31] [size   ] c0067 (SSHI_Filtered_Rectifier) generation 1: best score 79.40 -> 79.40, 8/48 evaluations (59 s)
+[00:10:31] [model  ] reply after 24 s (5053 in / 703 out)
+[00:10:31] [eval   ] round 6 design 1: new_topology 'SSHI_LC_Filter' (10 parts)
+[00:10:43] [screen ] r06d1: PASS, worst 251 % of the power needed (4 presets, 11.6 s)
+[00:10:43] [sim    ] r06d1: simulating 6 conditions
+[00:10:56] [eval   ] r06d1: score 90.61, 6/6 conditions, 30/30 checks pass (13.1 s)
+[00:10:56] [eval   ] new best c0076 (SSHI_LC_Filter): score 90.61, 6/6 conditions pass
+[00:10:56] [done   ] search stopped: search_spec_met; selected c0076 (SSHI_LC_Filter)
+[00:10:56] [heldout] checking c0076 and the reference on 4 held-out conditions
+[00:11:25] [heldout] c0076: 3/4 held-out conditions pass; reference: 1/4
+[00:11:25] [robust ] Monte Carlo: 16 samples of c0076 on all 10 conditions
+[00:17:53] [robust ] 25 % of samples meet the spec on every condition; weakest: H4
+[00:17:53] [done   ] spec met on search conditions: True; on all conditions: False
+[00:17:53] [done   ] report: runs/exp/no_think/seed4/report.md

@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 773.4,
+  "iteration": 2,
+  "max_rounds": 12,
+  "best_id": "c0045",
+  "best_name": "SSHI_FBR",
+  "best_scalar": 90.602,
+  "best_cond_pass": 6,
+  "n_candidates": 52,
+  "n_sims": 312,
+  "model_wait_s": 0
+}

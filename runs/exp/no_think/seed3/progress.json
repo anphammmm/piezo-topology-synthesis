@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 522.3,
+  "iteration": 3,
+  "max_rounds": 12,
+  "best_id": "c0015",
+  "best_name": "SSHI_lite",
+  "best_scalar": 90.6,
+  "best_cond_pass": 6,
+  "n_candidates": 18,
+  "n_sims": 171,
+  "model_wait_s": 0
+}

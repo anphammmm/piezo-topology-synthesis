@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "SSHI-LC-Filter-Bridge",
+ "rationale": "The best design so far (Parallel-SSHI-Bridge) suffers from a trade-off between the storage capacitor C1 value: a large C1 is needed to keep the peak-to-peak ripple below 50mV (failing on S3), but a small C1 is needed to ensure the output settles quickly enough for the 'settled' check (failing on S4). By introducing an LC filter (L2 and C1) between the bridge rectifier and the load, we can decouple the charge-delivery pulses from the output node. This allows for a smaller C1 that ensures fast settling and startup, while L2 helps suppress the high-frequency ripple at the 'out' node. The full bridge and SSHI flip circuit are maintained to maximize power extraction.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n2"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n2"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.173604988074656e-05,
+   "phase": 0.14705911880795608,
+   "edges": "both"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n2",
+    "out"
+   ],
+   "value": 0.0054462678440139614
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.1530764344875775e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

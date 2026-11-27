@@ -1,0 +1,182 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0000",
+  "selected_name": "FBR reference (4x Schottky, 2.2 uF)",
+  "selected_origin": "reference",
+  "reference_id": "c0000",
+  "first_met": null,
+  "failed_checks": [
+    {
+      "split": "search",
+      "condition": "S1",
+      "criterion": "settled",
+      "measured": 0.021987436999999943,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -0.09937184999999712,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S2",
+      "criterion": "vout_min",
+      "measured": 1.76299623785,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.020557645638888955,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S2",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.4,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S3",
+      "criterion": "vout_max",
+      "measured": 5.72229480743,
+      "limit": 3.6,
+      "op": "<=",
+      "margin": -0.5895263353972222,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S3",
+      "criterion": "ripple",
+      "measured": 0.0843644142151,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.6872882843020001,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S3",
+      "criterion": "settled",
+      "measured": 0.10291681440000033,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -4.145840720000017,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S4",
+      "criterion": "vout_min",
+      "measured": 1.50555368859,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.16358128411666667,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S4",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.4,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S4",
+      "criterion": "settled",
+      "measured": 0.0240188802900001,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -0.20094401450000496,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S5",
+      "criterion": "settled",
+      "measured": 0.04394660725999966,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -1.197330362999983,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H1",
+      "criterion": "vout_min",
+      "measured": 1.62942306414,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.09476496436666666,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H1",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.4,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H3",
+      "criterion": "vout_max",
+      "measured": 6.95464229584,
+      "limit": 3.6,
+      "op": "<=",
+      "margin": -0.9318450821777778,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H3",
+      "criterion": "ripple",
+      "measured": 0.107121944427,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -1.1424388885399999,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H3",
+      "criterion": "settled",
+      "measured": 0.13571684353000002,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -5.785842176500001,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "vout_min",
+      "measured": 1.55188091903,
+      "limit": 1.8,
+      "op": ">=",
+      "margin": -0.13784393387222224,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.4,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    }
+  ]
+}

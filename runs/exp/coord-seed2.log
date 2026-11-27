@@ -1,0 +1,33 @@
+[00:00:00] [setup  ] output in runs/exp/coord/seed2; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:11] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (11.4 s)
+[00:00:16] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 4.9 s)
+[00:00:16] [model  ] round 1: asking the model (thinking on)
+[00:00:31] [model  ] waiting 15 s (round 1)
+[00:00:46] [model  ] waiting 30 s (round 1)
+[00:01:01] [model  ] waiting 45 s (round 1)
+[00:01:16] [model  ] waiting 60 s (round 1)
+[00:01:31] [model  ] waiting 75 s (round 1)
+[00:01:46] [model  ] waiting 90 s (round 1)
+[00:02:01] [model  ] waiting 105 s (round 1)
+[00:02:16] [model  ] waiting 120 s (round 1)
+[00:02:31] [model  ] waiting 135 s (round 1)
+[00:02:46] [model  ] waiting 150 s (round 1)
+[00:03:01] [model  ] waiting 165 s (round 1)
+[00:03:16] [model  ] waiting 180 s (round 1)
+[00:03:31] [model  ] waiting 195 s (round 1)
+[00:03:32] [model  ] reply after 196 s (2308 in / 7386 out)
+[00:03:32] [eval   ] round 1 design 1: new_topology 'SSHI-FBR' (9 parts)
+[00:03:38] [screen ] r01d1: PASS, worst 249 % of the power needed (4 presets, 5.5 s)
+[00:03:38] [sim    ] r01d1: simulating 6 conditions
+[00:03:49] [eval   ] r01d1: score 90.61, 6/6 conditions, 30/30 checks pass (10.7 s)
+[00:03:49] [eval   ] new best c0001 (SSHI-FBR): score 90.61, 6/6 conditions pass
+[00:03:49] [done   ] search stopped: search_spec_met; selected c0001 (SSHI-FBR)
+[00:03:49] [heldout] checking c0001 and the reference on 4 held-out conditions
+[00:04:03] [heldout] c0001: 3/4 held-out conditions pass; reference: 1/4
+[00:04:03] [robust ] Monte Carlo: 16 samples of c0001 on all 10 conditions
+[00:07:32] [robust ] 19 % of samples meet the spec on every condition; weakest: H4
+[00:07:32] [done   ] spec met on search conditions: True; on all conditions: False
+[00:07:32] [done   ] report: runs/exp/coord/seed2/report.md

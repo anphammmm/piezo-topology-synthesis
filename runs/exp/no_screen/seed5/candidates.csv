@@ -1,0 +1,22 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,24.608,1,20,False
+c0001,1,llm,,new_topology,half_wave_sshi,8d8baae78b88,9c9f40f44738,6,search,6.45,0,18,False
+c0002,1,llm,,new_topology,full_bridge_sshi,40eae91a637a,41ee1d330344,9,search,21.0824,1,20,False
+c0003,2,size,c0002,size,full_bridge_sshi,40eae91a637a,beeb88662f6a,9,search,16.434,1,17,False
+c0004,2,size,c0002,size,full_bridge_sshi,40eae91a637a,45bd3c7a021a,9,search,5.4754,1,10,False
+c0005,2,size,c0002,size,full_bridge_sshi,40eae91a637a,1ed0b5255d06,9,search,-10.1621,0,8,False
+c0006,2,size,c0002,size,full_bridge_sshi,40eae91a637a,028e9b583d28,9,search,16.4775,1,17,False
+c0007,2,size,c0002,size,full_bridge_sshi,40eae91a637a,bc087fc8b642,9,search,5.8413,1,11,False
+c0008,2,size,c0002,size,full_bridge_sshi,40eae91a637a,b58223feba5d,9,search,62.8992,4,26,False
+c0009,2,size,c0002,size,full_bridge_sshi,40eae91a637a,c24fa39a14e1,9,search,10.7664,1,14,False
+c0010,2,size,c0002,size,full_bridge_sshi,40eae91a637a,ad1f6b9aa049,9,search,49.3879,3,24,False
+c0011,2,size,c0002,size,full_bridge_sshi,40eae91a637a,7cb701751baa,9,search,19.7604,1,17,False
+c0012,2,size,c0002,size,full_bridge_sshi,40eae91a637a,85ecfb64091d,9,search,-7.9321,0,9,False
+c0013,2,size,c0002,size,full_bridge_sshi,40eae91a637a,4cfa4f795f19,9,search,14.4031,1,15,False
+c0014,2,size,c0002,size,full_bridge_sshi,40eae91a637a,674e3544baef,9,search,90.5966,6,30,True
+c0015,2,size,c0002,size,full_bridge_sshi,40eae91a637a,f0bcf8cf9d4b,9,search,19.2733,1,18,False
+c0016,2,size,c0002,size,full_bridge_sshi,40eae91a637a,f8f214a2aa47,9,search,34.6284,2,21,False
+c0017,2,size,c0002,size,full_bridge_sshi,40eae91a637a,9f6d2356427c,9,search,4.4197,1,10,False
+c0018,2,size,c0002,size,full_bridge_sshi,40eae91a637a,5fc1a5f16220,9,search,28.7007,1,22,False
+c0014,2,size,c0002,size,full_bridge_sshi,40eae91a637a,674e3544baef,9,heldout,47.0196,3,18,False
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,heldout,18.1045,1,13,False

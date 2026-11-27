@@ -1,0 +1,23 @@
+LTspice 26.1.1 for Windows
+Circuit: Z:\work\ltspice\claude\piezo-topology-synthesis\runs\exp\random\seed4\sims\0dc2d45691b6cee3\circuit.net
+Start Time: Fri Nov 27 17:27:39 2026
+solver = Normal
+Maximum thread count: 64
+tnom = 27
+temp = 27
+method = trap
+.OP point found by inspection.
+.OP point found by inspection.
+Total elapsed time: 9.667 seconds.
+Total iterations: 800034
+
+Files loaded:
+Z:\work\ltspice\claude\piezo-topology-synthesis\runs\exp\random\seed4\sims\0dc2d45691b6cee3\circuit.net
+
+vavg: AVG(V(out))=1.52296345733 FROM 0.7 TO 0.8
+vavg_prev: AVG(V(out))=1.50738656465 FROM 0.6 TO 0.7
+vpp: PP(V(out))=0.0142313241959 FROM 0.7 TO 0.8
+vmax: MAX(V(out))=1.52960968018 FROM 0 TO 0.8
+Measurement "tup" FAIL'ed
+pload: AVG(V(out)*V(out)/1e+06)=2.31942959022e-06 FROM 0.7 TO 0.8
+pext: AVG(V(pzp,pzn)*I(Ipz))=3.38460612639e-06 FROM 0.7 TO 0.8

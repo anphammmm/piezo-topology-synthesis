@@ -1,0 +1,7 @@
+{
+ "max_sims": 3000,
+ "wall_clock_s": 3600,
+ "mc_samples": 16,
+ "proposals_per_round": 1,
+ "max_rounds": 24
+}

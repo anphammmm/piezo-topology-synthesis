@@ -1,0 +1,55 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0190",
+  "selected_topology": {
+    "name": "sshi_pi_filter",
+    "topo_hash": "55d1b27ebd06"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [
+    {
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": "0.133749246597",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -1.6749849319399996,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": "0.13217989348000003",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -5.608994674000002,
+      "split": "heldout"
+    }
+  ],
+  "timing": {
+    "wall_s": 1699.2,
+    "model_s": 807.9,
+    "model_calls": 5,
+    "model_errors": 0,
+    "prompt_tokens": 20505,
+    "completion_tokens": 24011,
+    "reasoning_tokens": 0,
+    "sim_seconds": 10710.1,
+    "sim_wall_s": 1464.7,
+    "n_sims": 1419,
+    "cache_hits": 0,
+    "sim_failures": 0,
+    "size_s": 1207.0,
+    "screen_s": 34.0,
+    "n_screen_sims": 63,
+    "n_proposals": 5,
+    "n_invalid": 0,
+    "n_duplicate": 0,
+    "n_topologies": 5,
+    "n_screen_pass": 3,
+    "rounds": 4,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

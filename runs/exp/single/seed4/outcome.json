@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0050",
+  "selected_name": "SSHI_LC_Filter",
+  "selected_origin": "llm",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 744.45,
+    "n_sims": 345,
+    "id": "c0050"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.130426645279,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -1.6085329055799997,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.16419200445999982,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -7.209600222999991,
+      "passed": false
+    }
+  ]
+}

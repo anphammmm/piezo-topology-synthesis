@@ -1,0 +1,52 @@
+[00:00:00] [setup  ] output in runs/exp/no_diag/seed2; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:07] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (7.9 s)
+[00:00:11] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 3.7 s)
+[00:00:11] [model  ] round 1: asking the model (thinking on)
+[00:00:26] [model  ] waiting 15 s (round 1)
+[00:00:41] [model  ] waiting 30 s (round 1)
+[00:00:56] [model  ] waiting 45 s (round 1)
+[00:01:11] [model  ] waiting 60 s (round 1)
+[00:01:26] [model  ] waiting 75 s (round 1)
+[00:01:41] [model  ] waiting 90 s (round 1)
+[00:01:56] [model  ] waiting 105 s (round 1)
+[00:02:11] [model  ] waiting 120 s (round 1)
+[00:02:26] [model  ] waiting 135 s (round 1)
+[00:02:41] [model  ] waiting 150 s (round 1)
+[00:02:56] [model  ] waiting 165 s (round 1)
+[00:03:11] [model  ] waiting 180 s (round 1)
+[00:03:26] [model  ] waiting 195 s (round 1)
+[00:03:41] [model  ] waiting 210 s (round 1)
+[00:03:48] [model  ] reply after 217 s (2308 in / 8165 out)
+[00:03:48] [eval   ] round 1 design 1: new_topology 'sshi_fbr' (9 parts)
+[00:03:56] [screen ] r01d1: PASS, worst 251 % of the power needed (4 presets, 7.7 s)
+[00:03:56] [sim    ] r01d1: simulating 6 conditions
+[00:04:08] [eval   ] r01d1: score -12.89, 0/6 conditions, 7/30 checks pass (12.7 s)
+[00:04:08] [eval   ] round 1 design 2: new_topology 'sece_sym' (10 parts)
+[00:04:17] [screen ] r01d2: fail, worst -56 % of the power needed (4 presets, 8.8 s)
+[00:04:17] [eval   ] round 1 design 3: new_topology 'fbr_zener' (6 parts)
+[00:04:25] [screen ] r01d3: fail, worst -3 % of the power needed (4 presets, 7.4 s)
+[00:04:25] [model  ] round 2: asking the model (thinking on)
+[00:05:33] [size   ] c0001 (sshi_fbr) generation 1: best score -12.89 -> 4.78, 8/48 evaluations (69 s)
+[00:06:42] [size   ] c0001 (sshi_fbr) generation 2: best score 4.78 -> 23.83, 16/48 evaluations (68 s)
+[00:07:55] [eval   ] new best c0018 (sshi_fbr): score 42.08, 2/6 conditions pass
+[00:07:55] [eval   ] new best c0019 (sshi_fbr): score 51.06, 3/6 conditions pass
+[00:07:55] [size   ] c0001 (sshi_fbr) generation 3: best score 23.83 -> 51.06, 24/48 evaluations (73 s)
+[00:09:06] [size   ] c0001 (sshi_fbr) generation 4: best score 51.06 -> 51.06, 32/48 evaluations (71 s)
+[00:09:06] [model  ] reply after 226 s (4382 in / 8126 out)
+[00:09:06] [eval   ] round 2 design 1: new_topology 'sece_full' (8 parts)
+[00:09:14] [screen ] r02d1: fail, worst -56 % of the power needed (4 presets, 8.2 s)
+[00:09:14] [model  ] round 3: asking the model (thinking on)
+[00:10:36] [eval   ] new best c0036 (sshi_fbr): score 90.57, 6/6 conditions pass
+[00:10:36] [size   ] c0001 (sshi_fbr) generation 5: best score 51.06 -> 90.57, 40/48 evaluations (82 s); spec_met
+[00:10:36] [model  ] spec met while waiting; not waiting for the model's answer
+[00:10:36] [model  ] reply after 82 s (no token counts); ERROR spec_met_during_wait
+[00:10:36] [done   ] search stopped: search_spec_met; selected c0036 (sshi_fbr)
+[00:10:36] [heldout] checking c0036 and the reference on 4 held-out conditions
+[00:10:49] [heldout] c0036: 4/4 held-out conditions pass; reference: 1/4
+[00:10:49] [robust ] Monte Carlo: 16 samples of c0036 on all 10 conditions
+[00:14:25] [robust ] 94 % of samples meet the spec on every condition; weakest: H4
+[00:14:25] [done   ] spec met on search conditions: True; on all conditions: True
+[00:14:25] [done   ] report: runs/exp/no_diag/seed2/report.md

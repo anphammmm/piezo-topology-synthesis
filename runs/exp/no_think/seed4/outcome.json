@@ -1,0 +1,26 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0076",
+  "selected_name": "SSHI_LC_Filter",
+  "selected_origin": "llm",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 656.13,
+    "n_sims": 549,
+    "id": "c0076"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.06394187897000014,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -2.1970939485000067,
+      "passed": false
+    }
+  ]
+}

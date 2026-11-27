@@ -1,0 +1,80 @@
+{
+ "move": "new_topology",
+ "name": "doubler_zener",
+ "rationale": "The previous SSHI design suffered from excessive ripple and slow settling due to the large output capacitor needed to buffer its high-energy bursts. The reference FBR design was smooth and fast-settling but lacked the voltage to meet vout_min on S2 and S4. A voltage doubler (Greinacher) is proposed here. It provides a voltage boost (roughly 2x the piezo voltage) to ensure vout_min is met, while avoiding the spiky current pulses of the SSHI. By using a smaller output capacitor (Cout), we can simultaneously satisfy the 'settled' (fast time constant for RL=1M Ohm) and 'startup' requirements, while the inherent smoothness of the doubler maintains low ripple. Corrected the Zener orientation to prevent forward-biasing the output.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "n1",
+    "0"
+   ],
+   "value": 1.5316545169627868e-08
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "n1",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n2"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C2",
+   "type": "C",
+   "nodes": [
+    "n2",
+    "0"
+   ],
+   "value": 5.675659191614216e-10
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "n2",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 7.286222655550216e-07
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

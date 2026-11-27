@@ -1,0 +1,31 @@
+* r02d3-screen1 | condition S6
+Ipz pzn pzp SINE(0 5e-05 100)
+Cpz pzp pzn 3e-08
+Rpz pzp pzn 2e+07
+Rsense out vsn 100
+Vst vsn 0 1.8
+C1 0 n1 1.46508e-10
+C2 n1 pzn 7.37792e-10
+C3 n2 pzn 3.86102e-08
+C4 out pzp 3.01224e-07
+C5 pzn pzp 2.31165e-08
+D1 pzp out DSCH
+D2 n1 n3 DSI
+D3 pzp n1 DSI
+L1 n2 n3 0.00190193 Rser=11.5097
+R1 n2 pzp 274.083
+Rbleed_pzp pzp 0 1G
+Rbleed_pzn pzn 0 1G
+Rbleed_n1 n1 0 1G
+Rbleed_n2 n2 0 1G
+Rbleed_n3 n3 0 1G
+.model DSCH D(Is=5e-8 Rs=1 N=1.05 Cjo=10p BV=30 IBV=1u EG=0.69 XTI=2)
+.model DSI D(Is=2.5n Rs=0.6 N=1.75 Cjo=4p BV=75 IBV=1u)
+.model DZ33 D(Is=1e-12 Rs=5 N=1.5 BV=3.3 IBV=1u)
+.model SWI SW(Ron=2 Roff=1G Vt=0.5 Vh=0)
+.temp 60
+.tran 0 0.1 0 2e-06
+.save V(out) V(vsn)
+.meas TRAN isn AVG V(out,vsn) FROM=0.06 TO=0.1
+.meas TRAN vout AVG V(out) FROM=0.06 TO=0.1
+.end
