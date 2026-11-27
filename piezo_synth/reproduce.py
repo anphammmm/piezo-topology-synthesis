@@ -18,6 +18,15 @@ from .prompts import condition_table
 from .sim import Simulator, ltspice_backend
 
 
+def find_raw(folder):
+    """The transient waveform file of a simulation folder (searched in subfolders too; .op.raw skipped)."""
+    folder = Path(folder)
+    if not folder.exists():
+        return None
+    raws = sorted(r for r in folder.rglob("*.raw") if not r.name.endswith(".op.raw"))
+    return str(raws[0]) if raws else None
+
+
 def pick_conditions(arg: str):
     if arg == "search":
         return spec.search_conditions()
@@ -56,8 +65,11 @@ def main(argv=None) -> int:
     print(condition_table(ev, conds), flush=True)
     waves = {}
     for cond, r in zip(conds, results):
-        raws = sorted(Path(r.folder).glob("*.raw"))
-        waves[cond.id] = str(raws[0]) if raws else None
+        waves[cond.id] = find_raw(r.folder)
+        if a.waveforms and waves[cond.id] is None:
+            folder = Path(r.folder)
+            listing = sorted(str(x.relative_to(folder)) for x in folder.rglob("*"))[:20] if folder.exists() else []
+            print(f"{cond.id}: WARNING no .raw waveform file in {r.folder}; it contains: {listing}")
         if not r.ok:
             print(f"{cond.id}: simulation failed: {r.error[:300]}")
     (Path(a.out) / "reproduce.json").write_text(json.dumps({

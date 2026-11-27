@@ -199,18 +199,32 @@ log(wave)'''
 
 WAVES_PLOT = '''from piezo_synth.rawread import read_raw
 
+missing = []
 fig, axes = plt.subplots(1, 2, figsize=(11, 3.6), sharey=True)
 for ax, cond in zip(axes, ["S1", "S4"]):
     for lab in ("selected", "reference"):
-        info = json.loads((RUN / f"waves-{lab}" / "reproduce.json").read_text())
-        raw = info["raw_files"].get(cond)
-        if raw:
-            d = read_raw(raw)
-            ax.plot(d["time"], d["V(out)"], lw=0.8, label=lab)
+        info_file = RUN / f"waves-{lab}" / "reproduce.json"
+        if not info_file.exists():
+            missing.append(f"{lab}: {info_file} not found (has the Waveforms job finished? see log(wave))")
+            continue
+        raw = json.loads(info_file.read_text())["raw_files"].get(cond)
+        if not raw:
+            missing.append(f"{lab} {cond}: no .raw file was produced (see the WARNING lines in log(wave))")
+            continue
+        d = read_raw(raw)
+        key = next((k for k in d if k.lower() == "v(out)"), None)
+        if key is None:
+            missing.append(f"{lab} {cond}: V(out) not in {raw}; signals: {list(d)[:8]}")
+            continue
+        ax.plot(d["time"], d[key], lw=0.8, label=lab)
     for v in (1.8, 3.6):
         ax.axhline(v, color="k", ls="--", lw=0.6)
-    ax.set(title=cond, xlabel="time, s", ylabel="V(out), V"); ax.legend()
-fig.tight_layout(); fig.savefig(figdir / "waveforms.png", dpi=200); fig.savefig(figdir / "waveforms.pdf")'''
+    ax.set(title=cond, xlabel="time, s", ylabel="V(out), V")
+    if ax.get_legend_handles_labels()[0]:
+        ax.legend()
+fig.tight_layout(); fig.savefig(figdir / "waveforms.png", dpi=200); fig.savefig(figdir / "waveforms.pdf")
+for m in missing:
+    print("MISSING:", m)'''
 
 CAMPAIGN_MD = """## 7. Experiment campaign (for the paper)
 

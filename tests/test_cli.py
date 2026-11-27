@@ -39,3 +39,20 @@ class CLITest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FindRawTest(unittest.TestCase):
+    def test_finds_raw_in_subfolder_and_skips_op_raw(self):
+        from piezo_synth.reproduce import find_raw
+        with tempfile.TemporaryDirectory() as d:
+            sub = Path(d) / "work" / "deep"
+            sub.mkdir(parents=True)
+            (Path(d) / "circuit.op.raw").write_bytes(b"x")
+            (sub / "circuit.raw").write_bytes(b"x")
+            self.assertEqual(Path(find_raw(d)).name, "circuit.raw")
+
+    def test_none_when_missing(self):
+        from piezo_synth.reproduce import find_raw
+        with tempfile.TemporaryDirectory() as d:
+            self.assertIsNone(find_raw(d))
+            self.assertIsNone(find_raw(Path(d) / "absent"))
