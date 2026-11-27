@@ -1,0 +1,10 @@
+LTspice 26.1.1 for Windows
+Circuit: Z:\work\ltspice\claude\piezo-topology-synthesis\runs\smoke\sims\0c5d2c86a6d68dbc\circuit.net
+Start Time: Fri Nov 27 15:54:43 2026
+solver = Normal
+Maximum thread count: 64
+tnom = 27
+temp = 27
+method = trap
+.OP point found by inspection.
+.OP point found by inspection.

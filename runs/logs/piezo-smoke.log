@@ -1,0 +1,3 @@
+[00:00:00] [setup  ] output in runs/smoke; mode smoke; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [sim    ] reference: 6 search conditions

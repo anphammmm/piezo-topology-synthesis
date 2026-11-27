@@ -1,0 +1,1 @@
+{"time": "2026-11-27 15:54:34", "job": "piezo-smoke-c57w6", "name": "piezo-smoke", "command": "rm -rf runs/smoke && python3 -u -m piezo_synth.run --smoke --out runs/smoke", "log": "runs/logs/piezo-smoke.log"}

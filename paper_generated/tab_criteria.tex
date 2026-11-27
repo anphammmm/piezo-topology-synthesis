@@ -1,0 +1,11 @@
+\begin{tabular}{llrp{5.2cm}}
+\toprule
+Criterion & Measure & Requirement & Meaning \\
+\midrule
+vout\_min & vavg & $\geq$ 1.8 V & settled mean output reaches the load's minimum supply \\
+vout\_max & vmax & $\leq$ 3.6 V & output never exceeds the load's absolute maximum \\
+ripple & vpp & $\leq$ 0.05 V & peak-to-peak ripple in the final window \\
+startup & tup & $\leq$ 0.4 s & cold start: first time output reaches 1.8 V \\
+settled & dv & $\leq$ 0.02 V & mean output changes little between the last two windows \\
+\bottomrule
+\end{tabular}

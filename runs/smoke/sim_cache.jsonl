@@ -1,0 +1,1 @@
+{"key": "30de3843a8e8bc587f27557e56b29c1522e8a8e120c583624940966fc29c77d2", "result": {"ok": true, "meas": {"vavg": 1.50555368859, "vavg_prev": 1.4815348083, "vpp": 0.0207586288452, "vmax": 1.5154094696, "pload": 2.26672113444e-06, "pext": 3.67128764997e-06}, "error": "", "seconds": 3.243, "folder": "runs/smoke/sims/30de3843a8e8bc58", "cached": false}}
