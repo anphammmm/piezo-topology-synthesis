@@ -118,7 +118,11 @@ PUBLISH = '''MESSAGE = "smoke test"
 if (REPO / "runs/exp").exists():
     sh(sys.executable, "-m", "piezo_synth.experiments", "runs/exp", "--paper", "runs/paper_generated",
        "--smoke", "runs/smoke", check=False)
-sh(sys.executable, "tools/publish_results.py", "--message", MESSAGE)'''
+if TOKEN_FILE.exists():
+    sh(sys.executable, "tools/publish_results.py", "--message", MESSAGE, check=False)
+else:
+    print(f"Chưa có token ({TOKEN_FILE}), nên không đẩy lên GitHub được.")
+    print("Cách khác: chạy ô 3 rồi dán output cho Claude. Hoặc tạo token theo docs/panda-sync.md (bước 1-2).")'''
 
 
 def _lines(text: str):

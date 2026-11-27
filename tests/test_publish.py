@@ -72,3 +72,12 @@ class PublishTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PublishRetryTest(PublishTest):
+    def test_commit_left_by_a_failed_push_is_pushed_next_time(self):
+        git(self.repo, "remote", "set-url", "origin", str(self.remote) + "-missing")
+        self.assertEqual(publish_results.main(["--repo", str(self.repo)]), 1)      # push fails
+        git(self.repo, "remote", "set-url", "origin", str(self.remote))
+        self.assertEqual(publish_results.main(["--repo", str(self.repo)]), 0)      # nothing new, but pushes
+        self.assertIn("runs/smoke/report.md", self.published())

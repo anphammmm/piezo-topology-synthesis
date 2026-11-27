@@ -97,8 +97,13 @@ def main(argv=None) -> int:
         out.write_text("file\tbytes\n" + "\n".join(lines[:5000]) + "\n", encoding="utf-8")
     git(wt, "add", "-A")
     if git(wt, "diff", "--cached", "--quiet", check=False).returncode == 0:
-        print("nothing new to publish")
-        return 0
+        head = git(wt, "rev-parse", "--verify", "--quiet", "HEAD", check=False).stdout.strip()
+        remote = git(wt, "ls-remote", "origin", f"refs/heads/{BRANCH}", check=False)
+        if not head or (remote.returncode == 0 and remote.stdout.split()[:1] == [head]):
+            print("nothing new to publish")
+            return 0
+        print("no new files; pushing results committed earlier that never reached GitHub")
+        return _push(wt, "earlier results")
     head = git(repo, "rev-parse", "--short", "HEAD", check=False).stdout.strip()
     stamp = time.strftime("%Y-%m-%d %H:%M:%S")
     (wt / "PUBLISHED.md").write_text(
@@ -109,12 +114,16 @@ def main(argv=None) -> int:
     email = git(repo, "config", "user.email", check=False).stdout.strip() or "panda-results@noreply.invalid"
     msg = f"results {stamp} (code {head})" + (f": {a.message}" if a.message else "")
     git(wt, "-c", f"user.name={name}", "-c", f"user.email={email}", "commit", "--quiet", "-m", msg)
+    return _push(wt, f"{len(picked) + len(listings)} files: {msg}")
+
+
+def _push(wt: Path, what: str) -> int:
     p = git(wt, "push", "--quiet", "-u", "origin", BRANCH, check=False)
     if p.returncode != 0:
         print("push failed:", p.stderr.strip()[-500:])
+        print("(the results stay committed here and are pushed on the next successful run)")
         return 1
-    n = len(picked) + len(listings)
-    print(f"published {n} files to branch '{BRANCH}': {msg}")
+    print(f"published to branch '{BRANCH}': {what}")
     return 0
 
 
