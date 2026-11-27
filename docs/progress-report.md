@@ -157,11 +157,12 @@ symptoms such as "the output never exceeds 0.9 V".
    - Monte Carlo pass rate;
    - novelty of the selected structure.
 4. ~~Write the results paragraphs of the paper~~: done; only the author list is still marked `\pending`.
-5. **Second specification** whose solution is not a textbook circuit (see open questions): the campaign
-   shows that the current one is solved by the model's prior, so it cannot show what the screen, the
-   diagnoses or the sizing strategy add.
-6. **Close the H4 gap**: add a hot, heavily loaded condition to the search set (or report H4 as an
-   intended extrapolation test).
+5. **Benchmark of five specifications (implemented, waiting for Panda).** P2: 4.5-5.5 V rail. P3: very weak
+   excitation, where a synchronous controller costs more than the load needs. P4: 50-200 Hz and Cp +/-30 %,
+   hot and heavy load in the search set. P5: ripple <= 20 mV, start <= 0.15 s. A spec check (no model)
+   first tests the textbook circuit, sized, and a hand-made witness on each. Then 5 specs x 5 variants x
+   5 seeds.
+6. **H4 gap**: P4 puts the hot, heavy-load corner in the search set.
 
 ## 6. Open questions for discussion
 

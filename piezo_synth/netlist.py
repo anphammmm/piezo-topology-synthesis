@@ -9,6 +9,7 @@ from __future__ import annotations
 from typing import Tuple
 
 from .circuit import Circuit, Component, canonical
+from . import spec
 from .spec import CTRL_SINK_A, LIMITS, SCREEN, SIM, Condition
 
 MODELS_TEXT = """.model DSCH D(Is=5e-8 Rs=1 N=1.05 Cjo=10p BV=30 IBV=1u EG=0.69 XTI=2)
@@ -111,7 +112,7 @@ def build_netlist(c: Circuit, cond: Condition, title: str = "", save_all: bool =
         f".meas TRAN vavg_prev AVG V(out) FROM={fmt(p0)} TO={fmt(p1)}",
         f".meas TRAN vpp PP V(out) FROM={fmt(w0)} TO={fmt(w1)}",
         f".meas TRAN vmax MAX V(out) FROM=0 TO={fmt(tstop)}",
-        ".meas TRAN tup FIND time WHEN V(out)=1.8 RISE=1",
+        f".meas TRAN tup FIND time WHEN V(out)={fmt(spec.vmin())} RISE=1",
         f".meas TRAN pload AVG V(out)*V(out)/{fmt(cond.rl)} FROM={fmt(w0)} TO={fmt(w1)}",
         f".meas TRAN pext AVG V(pzp,pzn)*I(Ipz) FROM={fmt(w0)} TO={fmt(w1)}",
         ".end",
@@ -143,3 +144,41 @@ def witness_circuit() -> Circuit:
         Component("D5", "D", ("0", "out"), model="DZ33"),
     ]
     return Circuit(name="witness: p-SSHI + bridge + zener clamp", components=comps)
+
+
+def _stacked_clamp_witness() -> Circuit:
+    """P2: parallel SSHI + bridge, clamped near 5 V by the 3.3 V zener in series with three silicon diodes."""
+    comps = _bridge() + [
+        Component("L1", "L", ("pzp", "n1"), value=4.7e-3),
+        Component("S1", "S", ("n1", "pzn"), ctrl="G1"),
+        Component("G1", "SYNC", (), ton=34e-6, phase=0.0, edges="both"),
+        Component("D5", "D", ("z1", "out"), model="DZ33"),
+        Component("D6", "D", ("z1", "z2"), model="DSI"),
+        Component("D7", "D", ("z2", "z3"), model="DSI"),
+        Component("D8", "D", ("z3", "0"), model="DSI"),
+    ]
+    return Circuit(name="witness: p-SSHI + bridge + stacked clamp (3.3 V zener + 3 diodes)", components=comps)
+
+
+def _multiplier_witness() -> Circuit:
+    """P3: passive two-stage Cockcroft-Walton multiplier (no controller to supply) with a 3.3 V clamp."""
+    comps = [
+        Component("R1", "R", ("pzn", "0"), value=1.0),
+        Component("C1", "C", ("pzp", "n1"), value=1e-6),
+        Component("D1", "D", ("0", "n1"), model="DSCH"),
+        Component("D2", "D", ("n1", "n2"), model="DSCH"),
+        Component("C2", "C", ("n2", "0"), value=1e-6),
+        Component("C3", "C", ("n1", "n3"), value=1e-6),
+        Component("D3", "D", ("n2", "n3"), model="DSCH"),
+        Component("D4", "D", ("n3", "out"), model="DSCH"),
+        Component("C4", "C", ("out", "n2"), value=1e-6),
+        Component("C5", "C", ("out", "0"), value=0.47e-6),
+        Component("D5", "D", ("0", "out"), model="DZ33"),
+    ]
+    return Circuit(name="witness: 2-stage Cockcroft-Walton multiplier + zener clamp", components=comps)
+
+
+def spec_witness() -> Circuit:
+    """A hand-made circuit meant to meet the active specification (feasibility evidence; never shown to the
+    model). For specs without a dedicated one, the P1 witness."""
+    return {"P2": _stacked_clamp_witness, "P3": _multiplier_witness}.get(spec.ACTIVE, witness_circuit)()

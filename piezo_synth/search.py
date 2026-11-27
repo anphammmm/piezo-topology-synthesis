@@ -21,7 +21,7 @@ from typing import Dict, List, Optional
 from . import spec
 from .bench import evaluate_circuit, evaluate_many
 from .circuit import Circuit, CircuitError, describe, design_hash, parse_circuit, to_dict, topology_hash
-from .diagnostics import DEAD_V, codes, hints, repeated
+from .diagnostics import codes, dead_v, hints, repeated
 from .evaluate import Evaluation, diagnose, is_better
 from .llm import LLMReply, proposals_from
 from .netlist import build_netlist, reference_circuit
@@ -393,11 +393,11 @@ class _Search:
         hs = hints(ev, topo.screen)
         self.history.append(codes(hs))
         dead = any(h.code == "pinned" for h in hs) or not any(ev.sim_ok.values()) or \
-            not any((m.get("vavg") or 0.0) >= DEAD_V for m in ev.meas.values())
+            not any((m.get("vavg") or 0.0) >= dead_v() for m in ev.meas.values())
         if cfg.sizer != "none" and cfg.size_budget > 0 and not ev.all_pass and not dead:
             topo.sizer = Sizer(start, ev, cfg.size_budget, random.Random(self.rng.random()), lam=cfg.size_lambda)
         elif dead:
-            rec.log("size", f"not sizing {cand.id} ({cand.name}): output never reaches {DEAD_V:g} V")
+            rec.log("size", f"not sizing {cand.id} ({cand.name}): output never reaches {dead_v():g} V")
         self._row(k, circuit.name, "evaluated", move=circuit.move, topo_hash=th, candidate=cand.id,
                   hints=" | ".join(h.code for h in hs), **scr_cols)
         return dict(self._entry(cand, topo), kind="evaluated")

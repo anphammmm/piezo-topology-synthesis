@@ -131,3 +131,33 @@ class CostTableAndMacrosTest(unittest.TestCase):
             macros = (gen / "macros.tex").read_text()
             for name in ("RandomVsFullP", "MinPairP", "RandomMedianSims"):
                 self.assertIn("\\" + name + "}", macros)
+
+
+class BenchmarkTest(unittest.TestCase):
+    def test_bench_loop_command(self):
+        from piezo_synth.experiments import BENCH_VARIANTS, bench_loop
+        self.assertEqual(BENCH_VARIANTS, ["full", "no_screen", "no_diag", "coord", "random"])
+        cmd = bench_loop("P2", ["full", "random"], [1, 2], root="runs/bench")
+        self.assertNotIn("'", cmd)
+        for s in ("--spec P2", "--label full", "--baseline random", "runs/bench/P2/random/seed2/outcome.json",
+                  "--config runs/bench/random.json"):
+            self.assertIn(s, cmd)
+
+    def test_aggregate_by_spec_and_bench_table(self):
+        from piezo_synth.experiments import write_bench_tables
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / "bench"
+            cfg = Path(d) / "c.json"
+            cfg.write_text(json.dumps({"max_rounds": 2, "mc_samples": 0, "size_budget": 4, "size_lambda": 2}))
+            for sp in ("P1", "P2"):
+                run_mod.main(["--fake", "--spec", sp, "--config", str(cfg), "--label", "full", "--seed", "1",
+                              "--out", str(root / sp / "full" / "seed1")])
+            runs, summary = aggregate(root)
+            self.assertEqual(sorted(r["spec"] for r in runs), ["P1", "P2"])
+            self.assertEqual(sorted((s["spec"], s["variant"]) for s in summary), [("P1", "full"), ("P2", "full")])
+            gen = Path(d) / "gen"
+            write_bench_tables(gen, root)
+            t = (gen / "tab_bench.tex").read_text()
+            self.assertIn("P2", t)
+            self.assertIn("1/1", t)
+            self.assertTrue((gen / "macros_bench.tex").exists())

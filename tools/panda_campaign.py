@@ -3,6 +3,8 @@ running its seeds in turn (finished seeds are skipped, so re-running this resume
 
     python3 tools/panda_campaign.py                       # all variants, seeds 1-5
     python3 tools/panda_campaign.py --variants full,random --seeds 1,2
+    python3 tools/panda_campaign.py --bench                # every spec x 5 variants x 5 seeds, one job per spec
+    python3 tools/panda_campaign.py --bench --specs P2,P3
 
 Run it from the repository folder. Then: python3 -m piezo_synth.experiments runs/exp
 """
@@ -15,7 +17,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))   # the repository, for piezo_synth
 
-from piezo_synth.experiments import VARIANTS, campaign_loop, write_campaign_configs  # noqa: E402
+from piezo_synth import spec  # noqa: E402
+from piezo_synth.experiments import BENCH_VARIANTS, VARIANTS, bench_loop, campaign_loop, write_campaign_configs  # noqa: E402
 from tools import panda_submit  # noqa: E402
 
 
@@ -23,6 +26,8 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--variants", default=",".join(VARIANTS), help=f"comma list of {', '.join(VARIANTS)}")
     ap.add_argument("--seeds", default="1,2,3,4,5")
+    ap.add_argument("--bench", action="store_true", help="the benchmark: runs/bench/<spec>/<variant>/seed<n>")
+    ap.add_argument("--specs", default=",".join(spec.SPECS), help="with --bench: which specs")
     ap.add_argument("--image")
     ap.add_argument("--work-root", default="/work", help=argparse.SUPPRESS)
     ap.add_argument("--cwd", default=None, help=argparse.SUPPRESS)
@@ -33,6 +38,16 @@ def main(argv=None) -> int:
         ap.error(f"unknown variants: {', '.join(unknown)}")
     seeds = [int(s) for s in a.seeds.split(",") if s.strip()]
     cwd = Path(a.cwd or os.getcwd())
+    if a.bench:
+        variants = names if a.variants != ",".join(VARIANTS) else BENCH_VARIANTS
+        write_campaign_configs(cwd / "runs" / "bench")
+        common = ["--work-root", a.work_root, "--cwd", str(cwd)] + (["--image", a.image] if a.image else [])
+        for sp in [x.strip() for x in a.specs.split(",") if x.strip()]:
+            if sp not in spec.SPECS:
+                ap.error(f"unknown spec {sp}")
+            panda_submit.main(common + ["--name", f"piezo-bench-{sp.lower()}", "--timeout", str(36 * 3600),
+                                        "--", bench_loop(sp, variants, seeds, "runs/bench")])
+        return 0
     write_campaign_configs(cwd / "runs" / "exp")
     common = ["--work-root", a.work_root, "--cwd", str(cwd)] + (["--image", a.image] if a.image else [])
     for name in names:

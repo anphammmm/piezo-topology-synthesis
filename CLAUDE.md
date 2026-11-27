@@ -73,6 +73,10 @@ then check in with short commands:
    to change them). Read `runs/<id>/report.md` when it finishes.
 3. **Campaign** for the paper: `python3 tools/panda_campaign.py` (8 variants x 5 seeds, one job per
    variant, resumable). Progress: `ls runs/exp/*/seed*/outcome.json | wc -l` (40 when done).
+3b. **Benchmark** (P1-P5, README "The benchmark of specifications"): first
+   `python3 tools/panda_submit.py --name piezo-speccheck -- "python3 -u -m piezo_synth.speccheck --out runs/speccheck"`,
+   read `runs/speccheck/speccheck.md`, drop or relax unproven specs, then `python3 tools/panda_campaign.py --bench`
+   (one job per spec; 125 runs). Aggregate with `python3 -m piezo_synth.experiments runs/bench --bench --paper paper/generated`.
 4. **Aggregate**: `python3 -m piezo_synth.experiments runs/exp --paper paper/generated --smoke runs/smoke`
    writes `runs/exp/experiments*.csv` and the paper's tables. The two figures of the paper are drawn by
    the notebook's Aggregate cell (matplotlib); you may run the same code with `python3` in the terminal.

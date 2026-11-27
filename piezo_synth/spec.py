@@ -5,6 +5,7 @@ evaluated only on the selected design and the reference, after the search has st
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass
 from typing import List
 
@@ -35,7 +36,7 @@ class Criterion:
 
 RP = 20e6
 
-CONDITIONS: List[Condition] = [
+_P1_CONDITIONS: List[Condition] = [
     Condition("S1", "search", "nominal", 50e-6, 100, 25e-9, RP, 330e3, 27),
     Condition("S2", "search", "heavy load", 50e-6, 100, 25e-9, RP, 150e3, 27),
     Condition("S3", "search", "strong excitation, light load", 100e-6, 100, 25e-9, RP, 2.2e6, 27),
@@ -48,7 +49,7 @@ CONDITIONS: List[Condition] = [
     Condition("H4", "heldout", "hot, heavy load", 50e-6, 100, 25e-9, RP, 200e3, 85),
 ]
 
-CRITERIA: List[Criterion] = [
+_P1_CRITERIA: List[Criterion] = [
     Criterion("vout_min", "vavg", ">=", 1.8, 1.8, "V", "settled mean output reaches the load's minimum supply"),
     Criterion("vout_max", "vmax", "<=", 3.6, 3.6, "V", "output never exceeds the load's absolute maximum"),
     Criterion("ripple", "vpp", "<=", 0.05, 0.05, "V", "peak-to-peak ripple in the final window"),
@@ -87,6 +88,130 @@ SCREEN = {"vstore": 1.8, "rsense": 100.0, "cycles": 10, "avg_cycles": 4, "alpha"
           "conditions": ("S2", "S4", "S6"), "presets": 4, "spread": 3.0}
 
 
+def _criteria(vmin: float, vmax: float, ripple: float = 0.05, startup: float = 0.4,
+              settled: float = 0.02) -> List[Criterion]:
+    return [
+        Criterion("vout_min", "vavg", ">=", vmin, vmin, "V", "settled mean output reaches the load's minimum supply"),
+        Criterion("vout_max", "vmax", "<=", vmax, vmax, "V", "output never exceeds the load's absolute maximum"),
+        Criterion("ripple", "vpp", "<=", ripple, ripple, "V", "peak-to-peak ripple in the final window"),
+        Criterion("startup", "tup", "<=", startup, startup, "s",
+                  f"cold start: first time output reaches {vmin:g} V"),
+        Criterion("settled", "dv", "<=", settled, settled, "V",
+                  "mean output changes little between the last two windows"),
+    ]
+
+
+def _c(cid, label, ip_ua, freq, cp_nf, rl, temp=27.0):
+    return Condition(cid, "search" if cid.startswith("S") else "heldout", label, ip_ua * 1e-6, freq, cp_nf * 1e-9,
+                     RP, rl, temp)
+
+
+@dataclass(frozen=True)
+class Spec:
+    name: str
+    title: str
+    hardness: str            # what makes it hard; for the paper and the report, never shown to the model
+    conditions: List[Condition]
+    criteria: List[Criterion]
+
+
+SPECS = {
+    "P1": Spec("P1", "Sensor supply 1.8-3.6 V", "the full bridge lacks power at weak excitation and heavy load, "
+               "and overcharges at strong excitation", _P1_CONDITIONS, _P1_CRITERIA),
+    # A 4.5-5.5 V rail: on most conditions the open-circuit voltage is below the window plus two diode drops,
+    # so a bridge alone never conducts; strong excitation exceeds 5.5 V, and the only zener breaks at 3.3 V.
+    "P2": Spec("P2", "High-voltage rail 4.5-5.5 V", "open-circuit voltage below the output window on most "
+               "conditions; the clamp must be composed (the only zener is 3.3 V)", [
+        _c("S1", "nominal", 60, 100, 25, 2.2e6),
+        _c("S2", "heavy load", 60, 100, 25, 1e6),
+        _c("S3", "strong excitation, light load", 120, 100, 25, 10e6),
+        _c("S4", "weak excitation", 40, 100, 25, 4.7e6),
+        _c("S5", "low frequency", 50, 80, 25, 3.3e6),
+        _c("S6", "Cp +20 %, hot", 60, 100, 30, 2.2e6, 60),
+        _c("H1", "weak excitation, mid load", 45, 100, 25, 3.3e6),
+        _c("H2", "high frequency, Cp -15 %", 70, 120, 21.25, 1.5e6),
+        _c("H3", "very strong excitation, open load, cold", 140, 100, 25, 22e6, -20),
+        _c("H4", "hot, heavy load", 60, 100, 25, 1.5e6, 85),
+    ], _criteria(4.5, 5.5)),
+    # Very weak excitation: the open-circuit voltage is below half of 1.8 V, and one synchronous controller's
+    # supply current costs more power than the load needs, so the switched interfaces of P1 lose energy.
+    "P3": Spec("P3", "Very weak excitation, 1.8-3.6 V", "open-circuit voltage below half the minimum output; a "
+               "synchronous controller costs more than the load", [
+        _c("S1", "nominal (weak)", 12, 100, 25, 10e6),
+        _c("S2", "heavy load", 12, 100, 25, 6.8e6),
+        _c("S3", "strong excitation, light load", 40, 100, 25, 22e6),
+        _c("S4", "weakest excitation", 8, 100, 25, 22e6),
+        _c("S5", "low frequency", 10, 80, 25, 10e6),
+        _c("S6", "Cp +20 %, hot", 12, 100, 30, 10e6, 60),
+        _c("H1", "weak, mid load", 10, 100, 25, 15e6),
+        _c("H2", "high frequency, Cp -15 %", 15, 120, 21.25, 6.8e6),
+        _c("H3", "strong excitation, open load, cold", 50, 100, 25, 100e6, -20),
+        _c("H4", "warm, heavy load", 12, 100, 25, 6.8e6, 70),
+    ], _criteria(1.8, 3.6)),
+    # Wide band: 50-200 Hz with the source current proportional to frequency, Cp 17.5-32.5 nF, and the hot,
+    # heavy-load corner that P1 kept for the held-out set is now a search condition.
+    "P4": Spec("P4", "Wide band 50-200 Hz, Cp +/-30 %", "timing and resonance must hold over a 4x frequency "
+               "and 1.9x capacitance range, including 85 C at heavy load", [
+        _c("S1", "nominal", 50, 100, 25, 330e3),
+        _c("S2", "low frequency, mid load", 25, 50, 25, 680e3),
+        _c("S3", "high frequency, small Cp, light load", 100, 200, 17.5, 4.7e6),
+        _c("S4", "low frequency, large Cp", 25, 50, 32.5, 1e6),
+        _c("S5", "high frequency, large Cp, heavy load", 100, 200, 32.5, 150e3),
+        _c("S6", "hot, heavy load", 50, 100, 25, 200e3, 85),
+        _c("H1", "75 Hz, Cp +12 %", 37.5, 75, 28, 470e3),
+        _c("H2", "150 Hz, Cp -20 %", 75, 150, 20, 220e3),
+        _c("H3", "200 Hz, strong, open load, cold", 120, 200, 17.5, 10e6, -20),
+        _c("H4", "60 Hz, Cp +20 %, warm", 30, 60, 30, 470e3, 70),
+    ], _criteria(1.8, 3.6)),
+    # P1's conditions with a tight supply: small ripple needs a large storage capacitance, a fast start a
+    # small one.
+    "P5": Spec("P5", "Fast start, low ripple, 1.8-3.6 V", "ripple <= 20 mV needs storage capacitance that a "
+               "start within 0.15 s cannot charge", list(_P1_CONDITIONS),
+               _criteria(1.8, 3.6, ripple=0.02, startup=0.15, settled=0.01)),
+}
+
+ACTIVE = "P1"
+CONDITIONS: List[Condition] = list(_P1_CONDITIONS)
+CRITERIA: List[Criterion] = list(_P1_CRITERIA)
+
+
+def use(name: str) -> None:
+    """Make `name` the active specification. The module-level lists and SCREEN are changed in place, so
+    modules that imported them see the new spec."""
+    global ACTIVE
+    sp = SPECS[name]
+    CONDITIONS[:] = sp.conditions
+    CRITERIA[:] = sp.criteria
+    SCREEN["vstore"] = vmin()
+    ACTIVE = name
+
+
+@contextmanager
+def using(name: str):
+    prev = ACTIVE
+    use(name)
+    try:
+        yield SPECS[name]
+    finally:
+        use(prev)
+
+
+def _limit(cid: str) -> float:
+    return next(c.limit for c in CRITERIA if c.id == cid)
+
+
+def vmin() -> float:
+    return _limit("vout_min")
+
+
+def vmax() -> float:
+    return _limit("vout_max")
+
+
+def limit(cid: str) -> float:
+    return _limit(cid)
+
+
 def search_conditions() -> List[Condition]:
     return [c for c in CONDITIONS if c.split == "search"]
 
@@ -108,6 +233,8 @@ def _jsonable(v):
 
 def spec_dict() -> dict:
     return {
+        "name": ACTIVE,
+        "title": SPECS[ACTIVE].title,
         "conditions": [asdict(c) for c in CONDITIONS],
         "criteria": [asdict(c) for c in CRITERIA],
         "limits": {k: _jsonable(v) for k, v in LIMITS.items()},

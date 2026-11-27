@@ -186,7 +186,7 @@ def build_report(out_dir) -> str:
         s += ["", f"{len(errors)} model call(s) failed: " + "; ".join(str(e.get("error"))[:80] for e in errors[:3])]
     rscreen = _read_json(out / "reference_screen.json")
     if rscreen:
-        s += ["", "Reference on the screen (power delivered at 1.8 V vs need): " +
+        s += ["", f"Reference on the screen (power delivered at {spec.get('screen', {}).get('vstore', 1.8):g} V vs need): " +
               ", ".join(f"{k} {v * 100:.0f} %" for k, v in sorted(rscreen.get("ratio", {}).items())) + "."]
     # 4b. sizing
     s += ["", "## Value sizing", ""]

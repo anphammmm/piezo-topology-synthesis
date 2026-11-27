@@ -79,7 +79,11 @@ TASK_MD = """## 2. Chạy việc
 - `"waves"`: waveform của thiết kế tốt nhất trong lần `single` gần nhất.
 - `"campaign"`: toàn bộ thí nghiệm cho paper (8 biến thể x 5 seed, vài tiếng; chạy lại thì chạy tiếp).
 - `"random_rerun"`: chạy lại baseline random với đủ ngân sách 3000 mô phỏng. Các run random cũ được chuyển
-  (không xóa) sang `runs/exp_superseded/`."""
+  (không xóa) sang `runs/exp_superseded/`.
+- `"speccheck"`: kiểm tra 5 spec (P1-P5) không cần Gemma: FBR, mạch sách giáo khoa (có sizing) và witness
+  trên từng spec, khoảng 1 tiếng. Chạy cái này TRƯỚC `"bench"`.
+- `"bench"`: benchmark cho paper: 5 spec x 5 biến thể x 5 seed, mỗi spec một job (khoảng 1 ngày; chạy lại
+  thì chạy tiếp)."""
 
 TASK = '''TASK = "smoke"
 stamp = time.strftime("%Y%m%d-%H%M%S")
@@ -98,6 +102,10 @@ elif TASK == "waves":
            1800)
 elif TASK == "campaign":
     tools.panda_campaign.main(["--cwd", str(REPO)])
+elif TASK == "speccheck":
+    submit("piezo-speccheck", "python3 -u -m piezo_synth.speccheck --out runs/speccheck", 4 * 3600)
+elif TASK == "bench":
+    tools.panda_campaign.main(["--cwd", str(REPO), "--bench"])
 elif TASK == "random_rerun":
     import shutil
     old = REPO / "runs/exp/random"
@@ -120,7 +128,12 @@ for f in sorted(REPO.glob("runs/logs/*.log"), key=lambda p: p.stat().st_mtime)[-
     print("\\n".join(f.read_text(errors="replace").splitlines()[-15:]))
 done = len(glob.glob(str(REPO / "runs/exp/*/seed*/outcome.json")))
 if (REPO / "runs/exp").exists():
-    print(f"\\ncampaign: {done} of 40 runs finished")'''
+    print(f"\\ncampaign: {done} of 40 runs finished")
+bench = len(glob.glob(str(REPO / "runs/bench/*/*/seed*/outcome.json")))
+if (REPO / "runs/bench").exists():
+    print(f"benchmark: {bench} of 125 runs finished")
+if (REPO / "runs/speccheck/speccheck.md").exists():
+    print((REPO / "runs/speccheck/speccheck.md").read_text())'''
 
 PUBLISH_MD = """## 4. Đẩy kết quả lên GitHub
 
@@ -132,6 +145,9 @@ if (REPO / "runs/exp").exists():
     sh(sys.executable, "-m", "piezo_synth.experiments", "runs/exp", "--paper", "runs/paper_generated",
        "--smoke", "runs/smoke", check=False)
     sh(sys.executable, "tools/paper_figures.py", "runs/exp", "runs/paper_generated", check=False)
+if (REPO / "runs/bench").exists():
+    sh(sys.executable, "-m", "piezo_synth.experiments", "runs/bench", "--bench", "--paper",
+       "runs/paper_generated", check=False)
 if TOKEN_FILE.exists():
     sh(sys.executable, "tools/publish_results.py", "--message", MESSAGE, check=False)
 else:

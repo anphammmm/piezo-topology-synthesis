@@ -56,7 +56,25 @@ def campaign_loop(name: str, seeds, root: str = "runs/exp") -> str:
         f"--label {name} --seed {s} {extra} --out {root}/{name}/seed{s} > {root}/{name}-seed{s}.log 2>&1 )"
         for s in seeds)
 
-RUN_FIELDS = ["variant", "seed", "run", "stop_reason", "met_search", "met_all", "rounds", "n_proposals",
+# The benchmark: every spec of spec.SPECS with these variants (one cluster job per spec).
+BENCH_VARIANTS = ["full", "no_screen", "no_diag", "coord", "random"]
+
+
+def bench_loop(spec_name: str, variants, seeds, root: str = "runs/bench") -> str:
+    """Shell command running one spec's variants and seeds in turn, skipping runs already finished.
+    The variant configs are root/<variant>.json (write_campaign_configs(root)). No single quotes."""
+    parts = []
+    for v in variants:
+        extra = VARIANTS[v][1]
+        for s in seeds:
+            d = f"{root}/{spec_name}/{v}/seed{s}"
+            parts.append(f"( test -f {d}/outcome.json || python3 -u -m piezo_synth.run --spec {spec_name} "
+                         f"--config {root}/{v}.json --label {v} --seed {s} {extra} --out {d} "
+                         f"> {root}/{spec_name}-{v}-seed{s}.log 2>&1 )")
+    return " ; ".join(parts)
+
+
+RUN_FIELDS = ["spec", "variant", "seed", "run", "stop_reason", "met_search", "met_all", "rounds", "n_proposals",
               "n_invalid", "n_duplicate", "n_topologies", "n_screen_pass", "n_sims", "n_screen_sims", "wall_s",
               "model_s", "model_calls", "prompt_tokens", "completion_tokens", "first_met_t", "first_met_sims",
               "heldout_pass", "mc_pass_all", "selected_name", "selected_origin"]
@@ -89,7 +107,7 @@ def _run_row(run: Path) -> Optional[dict]:
     t = _json(run / "timing.json", {}) or {}
     rob = _json(run / "robust.json")
     fm = outcome.get("first_met") or {}
-    row = {"variant": meta.get("label") or run.parent.name, "seed": meta.get("seed", cfg.get("seed")),
+    row = {"spec": meta.get("spec") or "P1", "variant": meta.get("label") or run.parent.name, "seed": meta.get("seed", cfg.get("seed")),
            "run": str(run), "stop_reason": outcome["stop_reason"], "met_search": bool(outcome["met_search"]),
            "met_all": bool(outcome["met_all"]), "first_met_t": fm.get("t"), "first_met_sims": fm.get("n_sims"),
            "heldout_pass": _heldout_pass(run, outcome["selected_id"]),
@@ -157,12 +175,12 @@ def aggregate(root) -> Tuple[List[dict], List[dict]]:
     runs = [r for r in (_run_row(d) for d in run_dirs) if r]
     by: Dict[str, List[dict]] = {}
     for r in runs:
-        by.setdefault(r["variant"], []).append(r)
+        by.setdefault((r["spec"], r["variant"]), []).append(r)
     summary = []
-    for v, rs in sorted(by.items()):
+    for (sp, v), rs in sorted(by.items()):
         props = sum(r["n_proposals"] or 0 for r in rs)
         summary.append({
-            "variant": v, "runs": len(rs),
+            "spec": sp, "variant": v, "runs": len(rs),
             "success_rate": sum(r["met_search"] for r in rs) / len(rs),
             "met_all_rate": sum(r["met_all"] for r in rs) / len(rs),
             "median_sims_to_success": _median(r["first_met_sims"] for r in rs if r["met_search"]),
@@ -353,6 +371,8 @@ def write_paper_tables(gen_dir, root, smoke=None) -> None:
     gen.mkdir(parents=True, exist_ok=True)
     root = Path(root)
     runs, summary = aggregate(root)
+    runs = [r for r in runs if r["spec"] == "P1"]
+    summary = [s for s in summary if s["spec"] == "P1"]
     run_dirs = sorted(p.parent for p in root.rglob("outcome.json")) if root.exists() else []
     audit = _audits(run_dirs)
     files = {"tab_conditions.tex": _conditions_table(), "tab_criteria.tex": _criteria_table(),
@@ -365,18 +385,62 @@ def write_paper_tables(gen_dir, root, smoke=None) -> None:
         (gen / name).write_text(text, encoding="utf-8")
 
 
+def _bench_table(summary: List[dict]) -> str:
+    """Specs as rows, variants as columns: runs meeting the search spec / runs (and also held-out)."""
+    specs = [sp for sp in spec.SPECS if any(s["spec"] == sp for s in summary)]
+    variants = [v for v in BENCH_VARIANTS if any(s["variant"] == v for s in summary)]
+    cell = {(s["spec"], s["variant"]): s for s in summary}
+    rows = []
+    for sp in specs:
+        row = [sp, tex(spec.SPECS[sp].title)]
+        for v in variants:
+            c = cell.get((sp, v))
+            if c is None:
+                row.append("--")
+                continue
+            med = c.get("median_sims_to_success")
+            row.append(f"{c['successes']}/{c['runs']} ({c['successes_all']})"
+                       + (f", {med:.0f}" if med is not None else ""))
+        rows.append(row)
+    return _tabular("ll" + "r" * len(variants), ["Spec", "Requirement"] + [tex(v) for v in variants], rows,
+                    2 + max(1, len(variants)))
+
+
+def write_bench_tables(gen_dir, root) -> None:
+    gen = Path(gen_dir)
+    gen.mkdir(parents=True, exist_ok=True)
+    runs, summary = aggregate(Path(root))
+
+    def m(name, val):
+        return "\\newcommand{\\" + name + "}{" + (val if val is not None else r"\textbf{[pending]}") + "}\n"
+
+    model = [s for s in summary if s["variant"] != "random"]
+    rnd = [s for s in summary if s["variant"] == "random"]
+    out = m("BenchRuns", str(len(runs)) if runs else None)
+    out += m("BenchModelSuccess", f"{sum(s['successes'] for s in model)}/{sum(s['runs'] for s in model)}"
+             if model else None)
+    out += m("BenchRandomSuccess", f"{sum(s['successes'] for s in rnd)}/{sum(s['runs'] for s in rnd)}"
+             if rnd else None)
+    (gen / "tab_bench.tex").write_text(_bench_table(summary), encoding="utf-8")
+    (gen / "macros_bench.tex").write_text(out, encoding="utf-8")
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("root", help="folder holding the run folders (e.g. runs/exp)")
     ap.add_argument("--paper", help="write LaTeX tables into this folder (e.g. paper/generated)")
     ap.add_argument("--smoke", help="smoke-test run folder, for the reference/witness table")
+    ap.add_argument("--bench", action="store_true", help="root is a benchmark (runs/bench): write tab_bench.tex")
     a = ap.parse_args(argv)
     runs, summary = aggregate(a.root)
     print(f"{len(runs)} runs, {len(summary)} variants")
     for s in summary:
-        print(f"  {s['variant']:<10} runs {s['runs']:>2}  spec met {s['success_rate'] * 100:5.1f} %  "
+        print(f"  {s['spec']:<3} {s['variant']:<10} runs {s['runs']:>2}  spec met {s['success_rate'] * 100:5.1f} %  "
               f"median sims to success {s['median_sims_to_success']}")
-    if a.paper:
+    if a.paper and a.bench:
+        write_bench_tables(a.paper, a.root)
+        print(f"benchmark tables written to {a.paper}")
+    elif a.paper:
         write_paper_tables(a.paper, a.root, a.smoke)
         print(f"tables written to {a.paper}")
     return 0

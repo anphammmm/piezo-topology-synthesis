@@ -75,6 +75,29 @@ switched-inductor inversion (SSHI-type), a voltage multiplier, an overvoltage cl
 plus a storage capacitor that balances ripple against start-up time. These estimates are checked by the
 smoke test; edit the tables in `piezo_synth/spec.py` to change the spec.
 
+## The benchmark of specifications (P1-P5)
+
+`spec.SPECS` holds five specifications; `--spec P2` selects one for `piezo_synth.run`, `reproduce` picks
+it up from the run's `spec.json`. P1 is the specification above. The others are built to defeat the
+circuit every model proposed on P1 (parallel SSHI + full bridge + 3.3 V zener clamp):
+
+| spec | requirement | why it is hard |
+|---|---|---|
+| P2 | 4.5-5.5 V rail | open-circuit voltage below the window plus two diode drops on most conditions; the only zener breaks at 3.3 V, so the clamp must be composed |
+| P3 | 1.8-3.6 V from very weak excitation | open-circuit voltage below 0.9 V; one synchronous controller's supply current costs more than the load needs |
+| P4 | 1.8-3.6 V over 50-200 Hz, Cp +/-30 % | timing and resonance over a 4x frequency range; the hot, heavy-load corner is a search condition |
+| P5 | P1 with ripple <= 20 mV, start <= 0.15 s, settled <= 10 mV | storage capacitance for low ripple versus a fast start |
+
+`python3 -u -m piezo_synth.speccheck --out runs/speccheck` (a cluster job, about an hour) simulates on each
+spec the reference, the textbook circuit as given and after sizing with the search's evolution strategy,
+and the spec's own hand-made witness (`netlist.spec_witness`), and writes `runs/speccheck/speccheck.md` with
+a verdict per spec: `textbook_solves`, `witness_solves` or `unproven`. Run it before the benchmark: a spec
+the textbook solves only repeats P1, and an unproven spec may be infeasible.
+
+The benchmark (`python3 tools/panda_campaign.py --bench`) runs every spec with the variants full,
+no_screen, no_diag, coord and random, five seeds each, into `runs/bench/<spec>/<variant>/seed<n>`;
+`python3 -m piezo_synth.experiments runs/bench --bench --paper paper/generated` writes `tab_bench.tex`.
+
 ## Design choices
 
 - **Circuits as structured data.** The model returns `{"proposals": [...]}`, each design a JSON list of

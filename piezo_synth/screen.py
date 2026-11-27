@@ -55,7 +55,7 @@ def physics_presets(c: Circuit) -> List[Circuit]:
     inds = sorted((x for x in c.components if x.type == "L"), key=lambda x: x.id)
     if not syncs or not inds:
         return []
-    cp = spec.condition("S1").cp
+    cp = spec.search_conditions()[0].cp
     res = math.pi * math.sqrt(inds[0].value * cp)
     out = []
     for ton in (res, res / 2):

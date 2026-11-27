@@ -22,7 +22,7 @@ from .circuit import design_hash, to_dict, topology_hash
 from .evaluate import Evaluation
 from .baselines import RandomProposer
 from .llm import GemmaClient, ScriptedLLM
-from .netlist import reference_circuit, witness_circuit
+from .netlist import reference_circuit, spec_witness, witness_circuit
 from .prompts import condition_table
 from .records import Candidate, RunRecorder
 from .report import build_report
@@ -51,7 +51,7 @@ def analytic_backend(text: str, folder: str, timeout: float):
         f = float(re.search(r"^Ipz pzn pzp SINE\(0 \S+ (\S+)\)", text, re.M).group(1))
         cp = float(re.search(r"^Cpz pzp pzn (\S+)$", text, re.M).group(1))
         p = (2.5 if _uses(text, "SWI") else 0.5) * ip ** 2 / (4 * math.pi ** 2 * f * cp)
-        return _FakeResult({"isn": p * spec.SCREEN["rsense"] / spec.SCREEN["vstore"], "vout": 1.8}, folder)
+        return _FakeResult({"isn": p * spec.SCREEN["rsense"] / spec.SCREEN["vstore"], "vout": spec.SCREEN["vstore"]}, folder)
     rl = float(re.search(r"^RL out 0 (\S+)$", text, re.M).group(1))
     boost = 2.5 if _uses(text, "SWI") else 1.0
     v = boost * (ip / 50e-6) * 2.2 * min(1.0, rl / 330e3) ** 0.3
@@ -91,7 +91,7 @@ def run_smoke(sim: Simulator, rec: RunRecorder) -> None:
     rec.write_json("config.json", {"mode": "smoke"})
     rec.progress(phase="sim", stop_reason=None)
     out = {}
-    for k, (circ, origin) in enumerate(((reference_circuit(), "reference"), (witness_circuit(), "witness"))):
+    for k, (circ, origin) in enumerate(((reference_circuit(), "reference"), (spec_witness(), "witness"))):
         cid = f"c{k:04d}"
         for split, conds in (("search", spec.search_conditions()), ("heldout", spec.heldout_conditions())):
             rec.log("sim", f"{origin}: {len(conds)} {split} conditions")
@@ -108,12 +108,12 @@ def run_smoke(sim: Simulator, rec: RunRecorder) -> None:
         rec.log("eval", f"WARNING: reference P_ext on S1 is {pext}; expected > 0. Check the sign of the pext "
                         f".meas in netlist.py before trusting P_ext columns.")
     wit_tup = [m.get("tup") for m in out[("witness", "search")].meas.values() if m.get("tup") is not None]
-    if wit_tup and all(abs(t - 1.8) < 1e-9 for t in wit_tup):
-        rec.log("eval", "WARNING: every t_up equals 1.8: ltspice_run is reading the threshold, not the crossing "
+    if wit_tup and all(abs(t - spec.vmin()) < 1e-9 for t in wit_tup):
+        rec.log("eval", f"WARNING: every t_up equals {spec.vmin():g}: ltspice_run is reading the threshold, not the crossing "
                         "time, from the 'tup' measurement line. Fix its parsing before the full run.")
     # the power screen on both circuits, with their own values: checks its sign and its calibration
     scr = {}
-    for origin, circ in (("reference", reference_circuit()), ("witness", witness_circuit())):
+    for origin, circ in (("reference", reference_circuit()), ("witness", spec_witness())):
         r = screen(circ, sim, random.Random(1), f"{origin}-screen", n_presets=1)
         scr[origin] = {"passed": r.passed, "worst_ratio": r.worst_ratio, "ratio": r.ratio, "gain": r.gain,
                        "p_net": r.p_net, "p_req": r.p_req}
@@ -128,7 +128,7 @@ def run_smoke(sim: Simulator, rec: RunRecorder) -> None:
                           f"consider lowering screen_alpha.")
     ref_fail = [c for c in spec.search_conditions()
                 if not all(ch.passed for ch in out[("reference", "search")].checks if ch.condition == c.id)]
-    rec.log("eval", f"reference fails {len(ref_fail)}/6 search conditions: {', '.join(c.id for c in ref_fail)} "
+    rec.log("eval", f"reference fails {len(ref_fail)}/{len(spec.search_conditions())} search conditions: {', '.join(c.id for c in ref_fail)} "
                     f"(the spec is meant to make it fail several)")
     st = sim.stats
     rec.timing({"wall_s": round(rec.elapsed(), 1), "model_s": 0, "model_calls": 0, "prompt_tokens": 0,
@@ -137,7 +137,7 @@ def run_smoke(sim: Simulator, rec: RunRecorder) -> None:
                 "refine_s": 0})
     rec.write_json("outcome.json", {"stop_reason": "smoke", "met_search": out[("witness", "search")].all_pass,
                                     "met_all": out[("witness", "search")].all_pass and out[("witness", "heldout")].all_pass,
-                                    "selected_id": "c0001", "selected_name": witness_circuit().name,
+                                    "selected_id": "c0001", "selected_name": spec_witness().name,
                                     "selected_origin": "witness", "reference_id": "c0000", "failed_checks": []})
     rec.progress(phase="done", stop_reason="smoke")
 
@@ -164,9 +164,15 @@ def main(argv=None) -> int:
     ap.add_argument("--baseline", choices=["random"], help="replace the model by a model-free proposer")
     ap.add_argument("--label", default="", help="variant name recorded in run_meta.json (for experiments.py)")
     ap.add_argument("--seed", type=int, help="overrides the config's seed")
+    ap.add_argument("--spec", default="P1", choices=list(spec.SPECS), help="which specification (spec.SPECS)")
     ap.add_argument("--workers", type=int, default=8, help="parallel LTspice simulations")
     ap.add_argument("--sim-timeout", type=float, default=120.0, help="seconds per simulation")
     a = ap.parse_args(argv)
+    with spec.using(a.spec):
+        return _main(a, argv)
+
+
+def _main(a, argv) -> int:
     out = Path(a.out)
     cfg = load_config(a.config)
     if a.seed is not None:
@@ -177,8 +183,8 @@ def main(argv=None) -> int:
     sim = Simulator(backend, out, workers=a.workers, timeout=a.sim_timeout)
     rec = RunRecorder(out)
     rec.write_json("run_meta.json", {"label": a.label, "baseline": a.baseline, "fake": a.fake, "smoke": a.smoke,
-                                     "seed": cfg.seed, "argv": argv})
-    rec.log("setup", f"output in {out}; mode {'smoke' if a.smoke else 'search'}{' (fake)' if a.fake else ''}"
+                                     "seed": cfg.seed, "spec": a.spec, "argv": argv})
+    rec.log("setup", f"output in {out}; mode {'smoke' if a.smoke else 'search'}{' (fake)' if a.fake else ''}; spec {a.spec} ({spec.SPECS[a.spec].title})"
                      f"{' (baseline ' + a.baseline + ')' if a.baseline else ''}; "
                      f"{a.workers} parallel simulations")
     free = shutil.disk_usage(out).free / 2**30

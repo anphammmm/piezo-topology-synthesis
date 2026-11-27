@@ -42,10 +42,30 @@ def main(argv=None) -> int:
     ap.add_argument("circuit", help="circuit.json (e.g. runs/<id>/selected/circuit.json)")
     ap.add_argument("--out", required=True)
     ap.add_argument("--conditions", default="all", help="search | heldout | all | comma list such as S1,H2")
+    ap.add_argument("--spec", default=None, help="specification (default: the run's spec.json, else P1)")
     ap.add_argument("--waveforms", action="store_true", help="save all signals, uncompressed .raw")
     ap.add_argument("--fake", action="store_true", help="analytic stand-in for LTspice (dry run)")
     ap.add_argument("--workers", type=int, default=8)
     a = ap.parse_args(argv)
+    name = a.spec or _run_spec(Path(a.circuit)) or "P1"
+    with spec.using(name):
+        print(f"spec {name}: {spec.SPECS[name].title}", flush=True)
+        return _main(a)
+
+
+def _run_spec(circuit_path: Path):
+    """The spec recorded in the run folder that holds this circuit, if any."""
+    for d in circuit_path.resolve().parents:
+        p = d / "spec.json"
+        if p.exists():
+            try:
+                return json.loads(p.read_text(encoding="utf-8")).get("name")
+            except ValueError:
+                return None
+    return None
+
+
+def _main(a) -> int:
     circ = parse_circuit(json.loads(Path(a.circuit).read_text(encoding="utf-8")))
     conds = pick_conditions(a.conditions)
     if a.fake:

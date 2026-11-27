@@ -12,9 +12,12 @@ from typing import Dict, Iterable, List, Optional
 from . import spec
 from .evaluate import Evaluation
 
-_LIM = {c.id: c.limit for c in spec.CRITERIA}
-VMIN, VMAX = _LIM["vout_min"], _LIM["vout_max"]
-DEAD_V = 0.5 * VMIN
+
+
+def dead_v() -> float:
+    """Below this peak output on every condition the circuit is considered pinned (no charge arrives)."""
+    return 0.5 * spec.vmin()
+
 MAJOR = ("pinned", "sim_failed", "underpower", "overvoltage")   # codes tracked for repeated failures
 
 
@@ -38,6 +41,9 @@ def _list(items: Iterable[str], n: int = 3) -> str:
 
 def hints(ev: Optional[Evaluation] = None, screen=None) -> List[Hint]:
     out: List[Hint] = []
+    VMIN, VMAX = spec.vmin(), spec.vmax()
+    DEAD_V = dead_v()
+    _LIM = {c.id: c.limit for c in spec.CRITERIA}
     if ev is not None:
         failed = [k for k, ok in ev.sim_ok.items() if not ok]
         if failed:
@@ -54,12 +60,12 @@ def hints(ev: Optional[Evaluation] = None, screen=None) -> List[Hint]:
             low = [(k, m["vavg"]) for k, m in ok.items() if m.get("vavg") is not None and m["vavg"] < VMIN
                    and (m.get("vmax") or 0) <= VMAX]
             if low:
-                out.append(Hint("underpower", "the output settles below 1.8 V on " +
+                out.append(Hint("underpower", f"the output settles below {VMIN:g} V on " +
                                 _list(f"{_label(k)} at {v:.2f} V" for k, v in low) +
                                 ": the interface does not deliver enough power there"))
             high = [(k, v) for k, v in vmax.items() if v > VMAX]
             if high:
-                out.append(Hint("overvoltage", "V(out) exceeds 3.6 V on " +
+                out.append(Hint("overvoltage", f"V(out) exceeds {VMAX:g} V on " +
                                 _list(f"{_label(k)} (peak {v:.2f} V)" for k, v in high) +
                                 ": the output needs limiting when the source is strong or the load light"))
             slow = [(k, m.get("tup")) for k, m in ok.items() if (m.get("vavg") or 0) >= VMIN
@@ -86,7 +92,7 @@ def hints(ev: Optional[Evaluation] = None, screen=None) -> List[Hint]:
         else:
             short = [(k, r) for k, r in screen.ratio.items() if r < 1.0]
             if short and not any(h.code == "underpower" for h in out):
-                out.append(Hint("underpower", "with the output fixed at 1.8 V, the net power delivered covers only " +
+                out.append(Hint("underpower", f"with the output fixed at {spec.SCREEN['vstore']:g} V, the net power delivered covers only " +
                                 _list(f"{r * 100:.0f} % of the load's need on {_label(k)}" for k, r in short) +
                                 " (best of the value presets tried)"))
     return out

@@ -5,6 +5,7 @@ Only search conditions appear here: the held-out conditions are never shown to t
 from __future__ import annotations
 
 import json
+import math
 from typing import List, Optional
 
 from . import spec
@@ -30,7 +31,7 @@ REPEATED_TEXT = {
     "pinned": "the output stays pinned near 0 V (a wiring or orientation error, not a value problem)",
     "sim_failed": "the simulation fails",
     "underpower": "too little power reaches the output on some conditions",
-    "overvoltage": "the output exceeds 3.6 V on some conditions",
+    "overvoltage": "the output exceeds the maximum voltage on some conditions",
 }
 
 
@@ -74,6 +75,8 @@ def system_prompt(reference_eval: Evaluation, per_round: int = 3, screen: bool =
         f"RL = {c.rl / 1e3:g} kOhm, temperature {c.temp:g} C" for c in conds)
     crit = "\n".join(f"  {c.id}: {c.meas} {c.op} {c.limit:g} {c.unit} ({c.description})" for c in spec.CRITERIA)
     L = spec.LIMITS
+    nom = conds[0]
+    voc_nom = nom.ip / (2 * math.pi * nom.freq * nom.cp)
     return f"""You are an expert power-electronics designer synthesising the interface circuit of a
 piezoelectric energy harvester. You work by experiment: you propose a circuit, it is simulated in
 LTspice under several operating conditions, and you receive the measurements.
@@ -83,12 +86,13 @@ A piezo transducer must power a sensor-node load RL from a storage capacitor at 
 Under EVERY operating condition below, starting from 0 V (cold start) and simulating 0.8 s:
 {crit}
 Measurement windows: vavg and vpp over 0.7-0.8 s; vmax over the whole run; tup = first time
-V(out) reaches 1.8 V (missing if never); dv = |mean(0.7-0.8 s) - mean(0.6-0.7 s)|.
+V(out) reaches {spec.vmin():g} V (missing if never); dv = |mean(0.7-0.8 s) - mean(0.6-0.7 s)|.
 
 PIEZO MODEL AND OPERATING CONDITIONS
 The piezo is a sinusoidal current source Ip*sin(2*pi*f*t) in parallel with its capacitance Cp and a
-20 MOhm leakage resistance, between nodes pzp and pzn (Cp = 25 nF nominal).
-Its open-circuit voltage amplitude is Ip/(2*pi*f*Cp), about 3.2 V at nominal: low, so diode drops matter.
+20 MOhm leakage resistance, between nodes pzp and pzn (Cp = {nom.cp * 1e9:g} nF at {nom.id}).
+Its open-circuit voltage amplitude is Ip/(2*pi*f*Cp), about {voc_nom:.2g} V at {nom.id}; compare it with the
+output window and the diode drops.
 {ctable}
 
 TEST BENCH (fixed, added automatically - do not include these)
@@ -152,7 +156,7 @@ def _hints(d: dict) -> str:
 def _design_block(d: dict) -> str:
     extra = ""
     if d.get("screen"):
-        extra += f"\nscreen (out fixed at 1.8 V): {d['screen']}"
+        extra += f"\nscreen (out fixed at {spec.SCREEN['vstore']:g} V): {d['screen']}"
     if d.get("sizing"):
         extra += f"\nvalue sizing: {d['sizing']}"
     return (f"[{d['id']}] {d['name']}  (topology {d['topo_hash']}, score {d['scalar']:.2f}, "
@@ -177,7 +181,7 @@ def _result_block(k: int, d: dict) -> str:
         return f"Your previous request failed: {d['error']}"
     if kind == "screen_failed":
         return (head + f"failed the screen and was not tuned (topology {d.get('topo_hash', '?')}).\n"
-                f"{d.get('circuit_text', '')}\nscreen (out fixed at 1.8 V): {d.get('screen', '')}{_hints(d)}")
+                f"{d.get('circuit_text', '')}\nscreen (out fixed at {spec.SCREEN['vstore']:g} V): {d.get('screen', '')}{_hints(d)}")
     return head + "simulated with the best screening preset (it is being tuned):\n" + _design_block(d)
 
 
