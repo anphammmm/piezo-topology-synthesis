@@ -1,3 +1,1 @@
-{"time": "2026-11-27 15:54:34", "job": "piezo-smoke-c57w6", "name": "piezo-smoke", "command": "rm -rf runs/smoke && python3 -u -m piezo_synth.run --smoke --out runs/smoke", "log": "runs/logs/piezo-smoke.log"}
-{"time": "2026-11-27 16:04:37", "job": "piezo-smoke-ng7vx", "name": "piezo-smoke", "command": "rm -rf runs/smoke && python3 -u -m piezo_synth.run --smoke --out runs/smoke", "log": "runs/logs/piezo-smoke.log"}
-{"time": "2026-11-27 16:09:17", "job": "piezo-smoke-nlp48", "name": "piezo-smoke", "command": "rm -rf runs/smoke && python3 -u -m piezo_synth.run --smoke --out runs/smoke", "log": "runs/logs/piezo-smoke.log"}
+{"time": "2026-11-27 16:24:05", "job": "piezo-single-8nc7k", "name": "piezo-single", "command": "python3 -u -m piezo_synth.run --out runs/single-20261127-162404", "log": "runs/logs/piezo-single.log"}
