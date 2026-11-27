@@ -33,12 +33,14 @@ REPO = Path(f"/work/{ME}/piezo-topology-synthesis")
 SECRETS = Path(f"/work/{ME}/.secrets")
 TOKEN_FILE = SECRETS / "github_token"
 
-assert TOKEN_FILE.exists(), f"chưa có token: tạo {TOKEN_FILE} theo docs/panda-sync.md (bước 2)"
-ASKPASS = SECRETS / "askpass.sh"                # git gets the token from here; it is never printed
-ASKPASS.write_text('#!/bin/sh\\ncase "$1" in Username*) echo "$GITHUB_USER" ;; *) cat "$PIEZO_TOKEN_FILE" ;; esac\\n')
-ASKPASS.chmod(0o700)
-ENV = dict(os.environ, GIT_ASKPASS=str(ASKPASS), GIT_TERMINAL_PROMPT="0", GITHUB_USER=GITHUB_USER,
-           PIEZO_TOKEN_FILE=str(TOKEN_FILE))
+ENV = dict(os.environ, GIT_TERMINAL_PROMPT="0")
+if TOKEN_FILE.exists():                         # needed only to publish results (cell 4); the repo is public
+    ASKPASS = SECRETS / "askpass.sh"            # git gets the token from here; it is never printed
+    ASKPASS.write_text('#!/bin/sh\\ncase "$1" in Username*) echo "$GITHUB_USER" ;; *) cat "$PIEZO_TOKEN_FILE" ;; esac\\n')
+    ASKPASS.chmod(0o700)
+    ENV.update(GIT_ASKPASS=str(ASKPASS), GITHUB_USER=GITHUB_USER, PIEZO_TOKEN_FILE=str(TOKEN_FILE))
+else:
+    print(f"(chưa có token ở {TOKEN_FILE}: lấy code và chạy được, nhưng ô 4 sẽ không đẩy kết quả lên được)")
 
 def sh(*cmd, cwd=REPO, check=True):
     p = subprocess.run(cmd, cwd=cwd, env=ENV, capture_output=True, text=True)
