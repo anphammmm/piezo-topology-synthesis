@@ -1,0 +1,7 @@
+{
+ "max_sims": 3000,
+ "wall_clock_s": 3600,
+ "mc_samples": 16,
+ "stagnation": 1000000,
+ "max_rounds": 10000
+}
