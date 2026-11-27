@@ -25,7 +25,7 @@ Lần đầu: tạo file token theo `docs/panda-sync.md` (bước 1-2), rồi ch
 SETUP = '''import os, sys, json, glob, time, subprocess, importlib
 from pathlib import Path
 
-ME = "ltspice/claudeonly"                        # <-- thư mục của bạn trong /work
+ME = "ltspice/claude"                        # <-- thư mục của bạn trong /work
 GITHUB_USER = "anphammmm"
 URL = "https://github.com/anphammmm/piezo-topology-synthesis.git"
 BRANCH = "feat/v2-screen-size-paper"
@@ -42,8 +42,13 @@ if TOKEN_FILE.exists():                         # needed only to publish results
 else:
     print(f"(chưa có token ở {TOKEN_FILE}: lấy code và chạy được, nhưng ô 4 sẽ không đẩy kết quả lên được)")
 
-def sh(*cmd, cwd=REPO, check=True):
-    p = subprocess.run(cmd, cwd=cwd, env=ENV, capture_output=True, text=True)
+def sh(*cmd, cwd=REPO, check=True, timeout=300):
+    print("$", " ".join(cmd[:3]), "...", flush=True)
+    try:
+        p = subprocess.run(cmd, cwd=cwd, env=ENV, capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        raise RuntimeError(f"'{' '.join(cmd[:3])}' took more than {timeout} s and was stopped "
+                           "(network to GitHub, or a git lock left by an interrupted run: see docs/panda-sync.md)")
     out = (p.stdout + p.stderr).strip()
     if out:
         print(out[-3000:])
@@ -151,7 +156,7 @@ if (REPO / "runs/bench").exists():
     sh(sys.executable, "-m", "piezo_synth.experiments", "runs/bench", "--bench", "--paper",
        "runs/paper_generated", check=False)
 if TOKEN_FILE.exists():
-    sh(sys.executable, "tools/publish_results.py", "--message", MESSAGE, check=False)
+    sh(sys.executable, "tools/publish_results.py", "--message", MESSAGE, check=False, timeout=1800)
 else:
     print(f"Chưa có token ({TOKEN_FILE}), nên không đẩy lên GitHub được.")
     print("Cách khác: chạy ô 3 rồi dán output cho Claude. Hoặc tạo token theo docs/panda-sync.md (bước 1-2).")'''

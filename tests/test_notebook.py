@@ -83,3 +83,11 @@ class SyncReloadTest(unittest.TestCase):
             sys.modules.update({k: v for k, v in saved.items() if "zz_stale" not in k})
             sys.modules.pop("piezo_synth.zz_stale", None)
             sys.modules.pop("tools.zz_stale", None)
+
+
+class SyncSetupTest(unittest.TestCase):
+    def test_git_commands_cannot_hang_and_folder_is_current(self):
+        from build_sync_notebook import SETUP
+        self.assertIn('ME = "ltspice/claude"', SETUP)
+        self.assertIn("timeout=", SETUP)
+        self.assertIn("TimeoutExpired", SETUP)

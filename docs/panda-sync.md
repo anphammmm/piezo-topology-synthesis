@@ -67,3 +67,11 @@ nếu cần và push. Bạn chạy lại **ô 1** là có bản sửa.
 | `Not possible to fast-forward` ở ô 1 | có file trong repo bị sửa trên Panda; nhắn Claude kèm output của ô 1 |
 | `push failed` ở ô 4 | token chỉ có quyền đọc → cần **Read and write** |
 | ô 2 báo `no module named gpu` | chạy notebook trong JupyterLab của Panda, không phải chỗ khác |
+
+## Ô 1 bị treo hoặc báo "took more than 300 s"
+
+- Bấm nút ■ (Interrupt) rồi kiểm tra `ME` ở đầu ô 1 đúng thư mục của bạn (`ltspice/claude`).
+- Nếu báo lỗi `index.lock` hoặc vẫn quá thời gian, mở Terminal trong JupyterLab và chạy
+  `rm -f /work/ltspice/claude/piezo-topology-synthesis/.git/index.lock` (khóa do lần chạy trước bị ngắt),
+  rồi chạy lại ô 1.
+- Thử mạng: `curl -sI https://github.com | head -1` phải in ra `HTTP/2 200`.
