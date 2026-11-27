@@ -1,5 +1,9 @@
 # Working on this repository on Panda (CAIR, Memorial University)
 
+Note (2026-11-27): Panda blocks claude.ai and api.anthropic.com, so this file applies only if that changes.
+Meanwhile the code runs on Panda through `panda_sync.ipynb`, which publishes light results to the
+`results` branch; read them with `git fetch origin results` and `git show origin/results:<path>`.
+
 This repository synthesises piezoelectric energy-harvesting interface circuits: Gemma 4 31B proposes
 circuit structures, LTspice simulates them, a power screen and an evolution-strategy sizer refine them.
 `README.md` explains the method, the spec and every output file; `paper/` is the paper, whose results

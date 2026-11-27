@@ -1,5 +1,9 @@
 # Chạy Claude Code trên Panda
 
+> **Hiện chưa dùng được (2026-11-27):** Panda chặn `claude.ai` và `api.anthropic.com`, nên Claude Code
+> không cài và không chạy được ở đó. Đang dùng cách thay thế: `docs/panda-sync.md`. Hướng dẫn dưới đây chỉ
+> áp dụng nếu admin CAIR mở các địa chỉ đó.
+
 Mục tiêu: Claude Code chạy ngay trong Terminal của JupyterLab trên Panda. Nó tự clone repo, tự submit
 job LTspice/Gemma, tự đọc kết quả và sửa lỗi. Nó làm theo `CLAUDE.md` ở gốc repo, file đó Claude tự đọc
 khi khởi động.

@@ -29,7 +29,8 @@ Expected run time with the default settings: 30-60 minutes, dominated by the mod
 LTspice runs under Wine with a shared prefix in `/work/.wine-ltspice`. If parallel jobs interfere (Wine
 errors in `sims/*/*.log`), submit the campaign's variants one after another instead of all at once.
 
-To let Claude Code run the experiments itself from the notebook's terminal on Panda, see
+To run the code from GitHub on Panda and publish the results back (a `results` branch), use
+`panda_sync.ipynb` and `docs/panda-sync.md` (in Vietnamese). To let Claude Code run the experiments itself from the notebook's terminal on Panda, see
 `docs/panda-claude-setup.md` (setup, in Vietnamese) and `CLAUDE.md` (its instructions);
 `tools/panda_submit.py` and `tools/panda_campaign.py` submit jobs from that terminal.
 

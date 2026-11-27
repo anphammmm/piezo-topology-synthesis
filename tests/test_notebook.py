@@ -39,3 +39,22 @@ class NotebookTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SyncNotebookTest(unittest.TestCase):
+    def test_sync_notebook_current_and_valid(self):
+        from build_sync_notebook import build
+        with tempfile.TemporaryDirectory() as d:
+            build(Path(d) / "s.ipynb")
+            fresh = (Path(d) / "s.ipynb").read_text(encoding="utf-8")
+        self.assertEqual((ROOT / "panda_sync.ipynb").read_text(encoding="utf-8"), fresh,
+                         "run: python tools/build_sync_notebook.py")
+        nb = json.loads(fresh)
+        code = ["".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "code"]
+        for src in code:
+            compile(src, "cell", "exec")
+        joined = "\n".join(code)
+        for s in ("GIT_ASKPASS", "pull", "--ff-only", "panda_submit", "panda_campaign", "publish_results.py",
+                  "runs/paper_generated", 'TASK = "smoke"'):
+            self.assertIn(s, joined)
+        self.assertNotIn("print(TOKEN", joined)
