@@ -62,9 +62,11 @@ sh("git", "log", "-1", "--format=code: %h %s (%cr)")
 
 if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))               # the repository has no gpu.py, so nothing is shadowed
+# drop every cached module of the repository, so the code just pulled is what runs (reloading a few
+# modules kept stale ones such as piezo_synth.spec)
+for m in [m for m in sys.modules if m in ("piezo_synth", "tools") or m.startswith(("piezo_synth.", "tools."))]:
+    del sys.modules[m]
 import piezo_synth.experiments, tools.panda_submit, tools.panda_campaign
-for m in (piezo_synth.experiments, tools.panda_submit, tools.panda_campaign):
-    importlib.reload(m)                          # pick up code just pulled
 from gpu import jobs, log, cancel
 
 def submit(name, cmd, timeout=4 * 3600):

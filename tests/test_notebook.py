@@ -58,3 +58,28 @@ class SyncNotebookTest(unittest.TestCase):
                   "runs/paper_generated", 'TASK = "smoke"'):
             self.assertIn(s, joined)
         self.assertNotIn("print(TOKEN", joined)
+
+
+class SyncReloadTest(unittest.TestCase):
+    """Cell 1 must drop every cached piezo_synth/tools module: reloading only a few kept an old
+    piezo_synth.spec in the kernel, and the new panda_campaign failed on spec.SPECS."""
+
+    def test_setup_cell_purges_all_package_modules(self):
+        import sys
+        import types
+        from build_sync_notebook import SETUP
+        start = SETUP.index("# drop every cached module")
+        end = SETUP.index("from gpu import")
+        snippet = SETUP[start:end]
+        stale = types.ModuleType("piezo_synth.spec")
+        sys.modules["piezo_synth.zz_stale"] = stale
+        sys.modules["tools.zz_stale"] = stale
+        saved = dict(sys.modules)
+        try:
+            exec(snippet.split("import piezo_synth")[0], {"sys": sys})
+            self.assertNotIn("piezo_synth.zz_stale", sys.modules)
+            self.assertNotIn("tools.zz_stale", sys.modules)
+        finally:
+            sys.modules.update({k: v for k, v in saved.items() if "zz_stale" not in k})
+            sys.modules.pop("piezo_synth.zz_stale", None)
+            sys.modules.pop("tools.zz_stale", None)
