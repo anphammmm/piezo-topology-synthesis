@@ -1,0 +1,10 @@
+[00:00:00] [setup  ] output in runs/single-20261127-162404; mode search; 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.9 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:06] [eval   ] reference: score 24.61, 1/6 conditions, 20/30 checks pass (6.5 s)
+[00:00:08] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 2.1 s)
+[00:00:08] [model  ] round 1: asking the model (thinking on)
+[00:00:23] [model  ] waiting 15 s (round 1)
+[00:00:38] [model  ] waiting 30 s (round 1)
+[00:00:53] [model  ] waiting 45 s (round 1)
