@@ -1,0 +1,118 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0125",
+  "selected_topology": {
+    "name": "SSHI_SeriesL_Filter",
+    "topo_hash": "6c0f86768618"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [
+    {
+      "condition": "S1",
+      "criterion": "ripple",
+      "measured": "0.0559828281403",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -1.799141407015,
+      "split": "search"
+    },
+    {
+      "condition": "S2",
+      "criterion": "ripple",
+      "measured": "0.0715527534485",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -2.577637672425,
+      "split": "search"
+    },
+    {
+      "condition": "S3",
+      "criterion": "ripple",
+      "measured": "0.0762319564819",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -2.8115978240949997,
+      "split": "search"
+    },
+    {
+      "condition": "S5",
+      "criterion": "ripple",
+      "measured": "0.0542414188385",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -1.712070941925,
+      "split": "search"
+    },
+    {
+      "condition": "S6",
+      "criterion": "ripple",
+      "measured": "0.0535230636597",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -1.6761531829849996,
+      "split": "search"
+    },
+    {
+      "condition": "H1",
+      "criterion": "ripple",
+      "measured": "0.0332727432251",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -0.663637161255,
+      "split": "heldout"
+    },
+    {
+      "condition": "H2",
+      "criterion": "ripple",
+      "measured": "0.0679783821106",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -2.39891910553,
+      "split": "heldout"
+    },
+    {
+      "condition": "H3",
+      "criterion": "ripple",
+      "measured": "0.0694937705994",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -2.47468852997,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": "0.0766417980194",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -2.8320899009700002,
+      "split": "heldout"
+    }
+  ],
+  "timing": {
+    "wall_s": 4135.4,
+    "model_s": 2118.1,
+    "model_calls": 11,
+    "model_errors": 0,
+    "prompt_tokens": 53271,
+    "completion_tokens": 77553,
+    "reasoning_tokens": 0,
+    "sim_seconds": 24911.5,
+    "sim_wall_s": 3387.1,
+    "n_sims": 1455,
+    "cache_hits": 0,
+    "sim_failures": 16,
+    "size_s": 2559.9,
+    "screen_s": 74.6,
+    "n_screen_sims": 99,
+    "n_proposals": 12,
+    "n_invalid": 0,
+    "n_duplicate": 4,
+    "n_topologies": 8,
+    "n_screen_pass": 5,
+    "rounds": 11,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

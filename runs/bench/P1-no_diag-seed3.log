@@ -33,3 +33,51 @@
 [00:06:04] [eval   ] new best c0025 (SSHI_FullBridge_Zener): score 68.16, 4/6 conditions pass
 [00:06:04] [size   ] c0001 (SSHI_FullBridge_Zener) generation 3: best score 20.97 -> 68.16, 24/48 evaluations (54 s)
 [00:06:54] [size   ] c0001 (SSHI_FullBridge_Zener) generation 4: best score 68.16 -> 68.16, 32/48 evaluations (50 s)
+[00:07:45] [size   ] c0001 (SSHI_FullBridge_Zener) generation 5: best score 68.16 -> 68.16, 40/48 evaluations (51 s)
+[00:07:45] [model  ] reply after 218 s (4360 in / 7910 out)
+[00:07:45] [eval   ] round 2 design 1: new_topology 'FBSR_Zener' (8 parts)
+[00:07:53] [screen ] r02d1: fail, worst -0 % of the power needed (4 presets, 7.2 s)
+[00:07:53] [model  ] round 3: asking the model (thinking on)
+[00:08:47] [size   ] c0001 (SSHI_FullBridge_Zener) generation 6: best score 68.16 -> 68.16, 48/48 evaluations (54 s); budget
+[00:09:02] [model  ] waiting 69 s (round 3)
+[00:09:17] [model  ] waiting 84 s (round 3)
+[00:09:32] [model  ] waiting 99 s (round 3)
+[00:09:47] [model  ] waiting 114 s (round 3)
+[00:10:02] [model  ] waiting 129 s (round 3)
+[00:10:17] [model  ] waiting 144 s (round 3)
+[00:10:32] [model  ] waiting 159 s (round 3)
+[00:10:47] [model  ] waiting 174 s (round 3)
+[00:11:02] [model  ] waiting 189 s (round 3)
+[00:11:17] [model  ] waiting 204 s (round 3)
+[00:11:29] [model  ] reply after 216 s (3257 in / 8238 out)
+[00:11:29] [eval   ] round 3 design 1: modify_topology 'SSHI_FullBridge_LCFilter' (10 parts)
+[00:11:38] [screen ] r03d1: PASS, worst 189 % of the power needed (4 presets, 9.5 s)
+[00:11:38] [sim    ] r03d1: simulating 6 conditions
+[00:12:19] [eval   ] r03d1: score 34.89, 1/6 conditions, 25/30 checks pass (40.6 s)
+[00:12:19] [model  ] round 4: asking the model (thinking on)
+[00:16:39] [size   ] c0050 (SSHI_FullBridge_LCFilter) generation 1: best score 34.89 -> 68.11, 8/48 evaluations (260 s)
+[00:16:39] [model  ] reply after 187 s (4528 in / 7322 out)
+[00:16:39] [eval   ] round 4 design 1: new_topology 'SSHI_Doubler_Zener' (9 parts)
+[00:16:44] [screen ] r04d1: fail, worst -26 % of the power needed (4 presets, 5.3 s)
+[00:16:44] [model  ] round 5: asking the model (thinking on)
+[00:21:14] [size   ] c0050 (SSHI_FullBridge_LCFilter) generation 2: best score 68.11 -> 68.11, 16/48 evaluations (270 s)
+[00:21:14] [model  ] reply after 194 s (3939 in / 7932 out)
+[00:21:14] [eval   ] round 5 design 1: new_topology 'SSHI_FullBridge_RCFilter' (10 parts)
+[00:21:19] [screen ] r05d1: PASS, worst 202 % of the power needed (4 presets, 5.2 s)
+[00:21:19] [sim    ] r05d1: simulating 6 conditions
+[00:21:27] [eval   ] r05d1: score 79.39, 5/6 conditions, 29/30 checks pass (7.4 s)
+[00:21:27] [eval   ] new best c0067 (SSHI_FullBridge_RCFilter): score 79.39, 5/6 conditions pass
+[00:21:27] [model  ] round 6: asking the model (thinking on)
+[00:22:18] [size   ] c0067 (SSHI_FullBridge_RCFilter) generation 1: best score 79.39 -> 79.39, 8/48 evaluations (52 s)
+[00:23:13] [eval   ] new best c0077 (SSHI_FullBridge_RCFilter): score 79.46, 5/6 conditions pass
+[00:23:13] [eval   ] new best c0081 (SSHI_FullBridge_RCFilter): score 90.55, 6/6 conditions pass
+[00:23:13] [size   ] c0067 (SSHI_FullBridge_RCFilter) generation 2: best score 79.39 -> 90.55, 16/48 evaluations (55 s); spec_met
+[00:23:13] [model  ] spec met while waiting; not waiting for the model's answer
+[00:23:13] [model  ] reply after 106 s (no token counts); ERROR spec_met_during_wait
+[00:23:13] [done   ] search stopped: search_spec_met; selected c0081 (SSHI_FullBridge_RCFilter)
+[00:23:13] [heldout] checking c0081 and the reference on 4 held-out conditions
+[00:23:24] [heldout] c0081: 3/4 held-out conditions pass; reference: 1/4
+[00:23:24] [robust ] Monte Carlo: 16 samples of c0081 on all 10 conditions
+[00:26:18] [robust ] 0 % of samples meet the spec on every condition; weakest: H4
+[00:26:18] [done   ] spec met on search conditions: True; on all conditions: False
+[00:26:18] [done   ] report: runs/bench/P1/no_diag/seed3/report.md

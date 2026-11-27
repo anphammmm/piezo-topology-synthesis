@@ -1,0 +1,69 @@
+{
+ "move": "new_topology",
+ "name": "SECE_Basic",
+ "rationale": "Implementing a basic Synchronized Electric Charge Extraction (SECE) circuit. Instead of an inductor to flip the voltage, SECE uses an external capacitor to temporarily store the piezo charge and then discharge it into the output capacitor. This is another proven method to boost the harvested voltage of piezo transducers beyond the open-circuit limit without requiring the precise L-Cp resonance timing of SSHI.",
+ "done": false,
+ "components": [
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.0001,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "Cext",
+   "type": "C",
+   "nodes": [
+    "n1",
+    "0"
+   ],
+   "value": 1e-07
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "n1",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "R_gnd",
+   "type": "R",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 100.0
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

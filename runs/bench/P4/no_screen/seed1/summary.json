@@ -1,0 +1,73 @@
+{
+  "stop_reason": "time_budget",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0187",
+  "selected_topology": {
+    "name": "PSSHI_LCFilter",
+    "topo_hash": "797ef4cba6c7"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [
+    {
+      "condition": "S4",
+      "criterion": "ripple",
+      "measured": "0.0576303005219",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -0.1526060104379999,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "settled",
+      "measured": "0.0619684603399997",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -2.0984230169999845,
+      "split": "search"
+    },
+    {
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": "0.0550143718719",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -0.100287437438,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": "0.023729417620000248",
+      "op": "<=",
+      "limit": 0.02,
+      "margin": -0.18647088100001238,
+      "split": "heldout"
+    }
+  ],
+  "timing": {
+    "wall_s": 4714.4,
+    "model_s": 2769.9,
+    "model_calls": 13,
+    "model_errors": 0,
+    "prompt_tokens": 69467,
+    "completion_tokens": 100407,
+    "reasoning_tokens": 0,
+    "sim_seconds": 29442.2,
+    "sim_wall_s": 4188.9,
+    "n_sims": 1626,
+    "cache_hits": 0,
+    "sim_failures": 140,
+    "size_s": 2993.9,
+    "screen_s": 0.0,
+    "n_screen_sims": 0,
+    "n_proposals": 15,
+    "n_invalid": 2,
+    "n_duplicate": 3,
+    "n_topologies": 10,
+    "n_screen_pass": 0,
+    "rounds": 12,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

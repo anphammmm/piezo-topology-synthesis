@@ -1,0 +1,224 @@
+{
+  "name": "P1",
+  "title": "Sensor supply 1.8-3.6 V",
+  "conditions": [
+    {
+      "id": "S1",
+      "split": "search",
+      "label": "nominal",
+      "ip": 5e-05,
+      "freq": 100,
+      "cp": 2.5e-08,
+      "rp": 20000000.0,
+      "rl": 330000.0,
+      "temp": 27
+    },
+    {
+      "id": "S2",
+      "split": "search",
+      "label": "heavy load",
+      "ip": 5e-05,
+      "freq": 100,
+      "cp": 2.5e-08,
+      "rp": 20000000.0,
+      "rl": 150000.0,
+      "temp": 27
+    },
+    {
+      "id": "S3",
+      "split": "search",
+      "label": "strong excitation, light load",
+      "ip": 0.0001,
+      "freq": 100,
+      "cp": 2.5e-08,
+      "rp": 20000000.0,
+      "rl": 2200000.0,
+      "temp": 27
+    },
+    {
+      "id": "S4",
+      "split": "search",
+      "label": "weak excitation",
+      "ip": 3e-05,
+      "freq": 100,
+      "cp": 2.5e-08,
+      "rp": 20000000.0,
+      "rl": 1000000.0,
+      "temp": 27
+    },
+    {
+      "id": "S5",
+      "split": "search",
+      "label": "low frequency",
+      "ip": 4e-05,
+      "freq": 80,
+      "cp": 2.5e-08,
+      "rp": 20000000.0,
+      "rl": 470000.0,
+      "temp": 27
+    },
+    {
+      "id": "S6",
+      "split": "search",
+      "label": "Cp +20 %, hot",
+      "ip": 5e-05,
+      "freq": 100,
+      "cp": 3e-08,
+      "rp": 20000000.0,
+      "rl": 330000.0,
+      "temp": 60
+    },
+    {
+      "id": "H1",
+      "split": "heldout",
+      "label": "weak excitation, mid load",
+      "ip": 3.5e-05,
+      "freq": 100,
+      "cp": 2.5e-08,
+      "rp": 20000000.0,
+      "rl": 470000.0,
+      "temp": 27
+    },
+    {
+      "id": "H2",
+      "split": "heldout",
+      "label": "high frequency, Cp \u221215 %",
+      "ip": 6e-05,
+      "freq": 120,
+      "cp": 2.125e-08,
+      "rp": 20000000.0,
+      "rl": 220000.0,
+      "temp": 27
+    },
+    {
+      "id": "H3",
+      "split": "heldout",
+      "label": "very strong excitation, open load, cold",
+      "ip": 0.00012,
+      "freq": 100,
+      "cp": 2.5e-08,
+      "rp": 20000000.0,
+      "rl": 10000000.0,
+      "temp": -20
+    },
+    {
+      "id": "H4",
+      "split": "heldout",
+      "label": "hot, heavy load",
+      "ip": 5e-05,
+      "freq": 100,
+      "cp": 2.5e-08,
+      "rp": 20000000.0,
+      "rl": 200000.0,
+      "temp": 85
+    }
+  ],
+  "criteria": [
+    {
+      "id": "vout_min",
+      "meas": "vavg",
+      "op": ">=",
+      "limit": 1.8,
+      "scale": 1.8,
+      "unit": "V",
+      "description": "settled mean output reaches the load's minimum supply"
+    },
+    {
+      "id": "vout_max",
+      "meas": "vmax",
+      "op": "<=",
+      "limit": 3.6,
+      "scale": 3.6,
+      "unit": "V",
+      "description": "output never exceeds the load's absolute maximum"
+    },
+    {
+      "id": "ripple",
+      "meas": "vpp",
+      "op": "<=",
+      "limit": 0.05,
+      "scale": 0.05,
+      "unit": "V",
+      "description": "peak-to-peak ripple in the final window"
+    },
+    {
+      "id": "startup",
+      "meas": "tup",
+      "op": "<=",
+      "limit": 0.4,
+      "scale": 0.4,
+      "unit": "s",
+      "description": "cold start: first time output reaches 1.8 V"
+    },
+    {
+      "id": "settled",
+      "meas": "dv",
+      "op": "<=",
+      "limit": 0.02,
+      "scale": 0.02,
+      "unit": "V",
+      "description": "mean output changes little between the last two windows"
+    }
+  ],
+  "limits": {
+    "max_components": 16,
+    "max_switches": 4,
+    "max_sync": 2,
+    "R": [
+      1.0,
+      100000000.0
+    ],
+    "C": [
+      1e-10,
+      4.7e-05
+    ],
+    "L": [
+      1e-05,
+      0.01
+    ],
+    "ton": [
+      1e-07,
+      0.001
+    ],
+    "phase": [
+      -0.25,
+      0.25
+    ],
+    "l_rser_base": 2.0,
+    "l_rser_per_h": 5000.0
+  },
+  "sim": {
+    "tstop": 0.8,
+    "maxstep": 2e-06,
+    "win": [
+      0.7,
+      0.8
+    ],
+    "win_prev": [
+      0.6,
+      0.7
+    ]
+  },
+  "ctrl_sink_a": 5e-07,
+  "screen": {
+    "vstore": 1.8,
+    "rsense": 100.0,
+    "cycles": 10,
+    "avg_cycles": 4,
+    "alpha": 0.5,
+    "conditions": [
+      "S2",
+      "S4",
+      "S6"
+    ],
+    "presets": 4,
+    "spread": 3.0
+  },
+  "tolerances": {
+    "R": 0.05,
+    "C": 0.2,
+    "L": 0.1,
+    "ton": 0.05,
+    "phase": 0.02
+  }
+}

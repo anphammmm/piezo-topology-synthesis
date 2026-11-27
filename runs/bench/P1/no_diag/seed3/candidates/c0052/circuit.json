@@ -1,0 +1,96 @@
+{
+ "move": "modify_topology",
+ "name": "SSHI_FullBridge_LCFilter",
+ "rationale": "The previous best design (SSHI_FullBridge_Zener) failed marginally on ripple in S3 and stability in S5. S3's ripple is likely exacerbated by charging spikes from the SSHI inversion and the non-linear clamping of the Zener diode at 3.3V. S5's stability is likely affected by the low excitation frequency. Adding a second-order LC filter (L2 and C1) between the rectifier output and the storage node 'out' will decouple the high-frequency switching spikes from the load, reducing peak-to-peak ripple and smoothing the mean output voltage to improve the 'settled' metric.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.44314308324259e-05,
+   "phase": 0.015988285692434073,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 0.0004359172381172229
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.301897831779959e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

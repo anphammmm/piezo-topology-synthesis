@@ -1,0 +1,40 @@
+[00:00:00] [setup  ] output in runs/bench/P4/no_screen/seed3; mode search; spec P4 (Wide band 50-200 Hz, Cp +/-30 %); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:06] [eval   ] reference: score 9.33, 0/6 conditions, 16/30 checks pass (6.8 s)
+[00:00:06] [model  ] round 1: asking the model (thinking on)
+[00:00:21] [model  ] waiting 15 s (round 1)
+[00:00:36] [model  ] waiting 30 s (round 1)
+[00:00:51] [model  ] waiting 45 s (round 1)
+[00:01:06] [model  ] waiting 60 s (round 1)
+[00:01:21] [model  ] waiting 75 s (round 1)
+[00:01:36] [model  ] waiting 90 s (round 1)
+[00:01:51] [model  ] waiting 105 s (round 1)
+[00:02:06] [model  ] waiting 120 s (round 1)
+[00:02:21] [model  ] waiting 135 s (round 1)
+[00:02:36] [model  ] waiting 150 s (round 1)
+[00:02:49] [model  ] reply after 162 s (2235 in / 6203 out)
+[00:02:49] [eval   ] round 1 design 1: new_topology 'SSHI_FBR_Zener' (9 parts)
+[00:02:49] [sim    ] r01d1: simulating 6 conditions
+[00:02:57] [eval   ] r01d1: score 55.30, 3/6 conditions, 27/30 checks pass (8.4 s)
+[00:02:57] [eval   ] new best c0001 (SSHI_FBR_Zener): score 55.30, 3/6 conditions pass
+[00:02:57] [eval   ] round 1 design 2: new_topology 'FBR_Zener_Simple' (6 parts)
+[00:02:57] [sim    ] r01d2: simulating 6 conditions
+[00:03:05] [eval   ] r01d2: score 11.55, 1/6 conditions, 13/30 checks pass (7.7 s)
+[00:03:05] [eval   ] round 1 design 3: new_topology 'SSHI_Pos_FBR_Zener' (9 parts)
+[00:03:05] [sim    ] r01d3: simulating 6 conditions
+[00:03:12] [eval   ] r01d3: score 36.14, 2/6 conditions, 22/30 checks pass (7.2 s)
+[00:03:12] [model  ] round 2: asking the model (thinking on)
+[00:04:09] [eval   ] new best c0006 (SSHI_FBR_Zener): score 76.69, 5/6 conditions pass
+[00:04:09] [eval   ] new best c0011 (SSHI_FBR_Zener): score 90.51, 6/6 conditions pass
+[00:04:09] [size   ] c0001 (SSHI_FBR_Zener) generation 1: best score 55.30 -> 90.51, 8/48 evaluations (56 s); spec_met
+[00:04:09] [model  ] spec met while waiting; not waiting for the model's answer
+[00:04:09] [model  ] reply after 56 s (no token counts); ERROR spec_met_during_wait
+[00:04:09] [done   ] search stopped: search_spec_met; selected c0011 (SSHI_FBR_Zener)
+[00:04:09] [heldout] checking c0011 and the reference on 4 held-out conditions
+[00:04:22] [heldout] c0011: 4/4 held-out conditions pass; reference: 1/4
+[00:04:22] [robust ] Monte Carlo: 16 samples of c0011 on all 10 conditions
+[00:07:22] [robust ] 56 % of samples meet the spec on every condition; weakest: S6
+[00:07:22] [done   ] spec met on search conditions: True; on all conditions: True
+[00:07:22] [done   ] report: runs/bench/P4/no_screen/seed3/report.md

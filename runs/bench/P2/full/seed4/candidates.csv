@@ -1,0 +1,4 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,-3.0418,0,11,False
+c0001,1,llm,,new_topology,Parallel_SSHI_FBR,6e6749432f4c,b6ba103c60a3,8,search,-1.6505,0,14,False
+c0002,1,llm,,new_topology,SSHI_HalfBridge,f44d9319364a,327a1fba3052,6,search,-5.7042,0,12,False

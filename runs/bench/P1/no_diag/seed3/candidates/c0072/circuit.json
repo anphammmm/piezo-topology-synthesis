@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FullBridge_RCFilter",
+ "rationale": "The previous best design SSHI_FullBridge_Zener was very close, only failing on S3 ripple (0.061V vs 0.05V) and S5 settling (0.022V vs 0.02V). To reduce these high-frequency ripple components and smooth the settling behavior without the significant startup penalty seen with an LC filter (as in SSHI_FullBridge_LCFilter), I am introducing a small series resistance (R1) between the rectifier output and the storage capacitor C1. This creates an RC low-pass filter that will damp the charging spikes from the SSHI pulses. Since the load current is very low (uA range), the voltage drop across a small R1 will be negligible, preserving the average output voltage.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.005130980140092097
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.4333984894800064e-05,
+   "phase": 0.1335234679938876,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "R1",
+   "type": "R",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 39.802642638973815
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 9.244703205723894e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

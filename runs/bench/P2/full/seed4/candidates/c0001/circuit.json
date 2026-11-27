@@ -1,0 +1,78 @@
+{
+ "move": "new_topology",
+ "name": "Parallel_SSHI_FBR",
+ "rationale": "The open-circuit voltage of the piezo (~3.8V) is lower than the target output voltage (4.5-5.5V). A standard full-bridge rectifier (FBR) cannot boost this voltage. Parallel SSHI (Synchronized Switch Harvesting on Inductor) uses an inductor and a switch to invert the voltage across the piezo capacitance Cp at its extrema, effectively increasing the voltage swing and boosting the output. I'm using a full-bridge rectifier to capture the energy from both half-cycles and a storage capacitor to filter ripple.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0047
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.405405287374763e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-06
+  }
+ ]
+}

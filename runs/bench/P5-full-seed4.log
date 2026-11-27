@@ -1,0 +1,55 @@
+[00:00:00] [setup  ] output in runs/bench/P5/full/seed4; mode search; spec P5 (Fast start, low ripple, 1.8-3.6 V); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:07] [eval   ] reference: score 0.11, 0/6 conditions, 12/30 checks pass (7.4 s)
+[00:00:09] [screen ] reference: fail, worst -3 % of the power needed (1 presets, 2.0 s)
+[00:00:09] [model  ] round 1: asking the model (thinking on)
+[00:00:24] [model  ] waiting 15 s (round 1)
+[00:00:39] [model  ] waiting 30 s (round 1)
+[00:00:54] [model  ] waiting 45 s (round 1)
+[00:01:09] [model  ] waiting 60 s (round 1)
+[00:01:24] [model  ] waiting 75 s (round 1)
+[00:01:39] [model  ] waiting 90 s (round 1)
+[00:01:54] [model  ] waiting 105 s (round 1)
+[00:02:09] [model  ] waiting 120 s (round 1)
+[00:02:24] [model  ] waiting 135 s (round 1)
+[00:02:39] [model  ] waiting 150 s (round 1)
+[00:02:49] [model  ] reply after 160 s (2317 in / 6336 out)
+[00:02:49] [eval   ] round 1 design 1: new_topology 'SSHI_Bridge_Clamp' (9 parts)
+[00:02:56] [screen ] r01d1: PASS, worst 251 % of the power needed (4 presets, 6.2 s)
+[00:02:56] [sim    ] r01d1: simulating 6 conditions
+[00:03:04] [eval   ] r01d1: score 33.96, 1/6 conditions, 25/30 checks pass (8.7 s)
+[00:03:04] [eval   ] new best c0001 (SSHI_Bridge_Clamp): score 33.96, 1/6 conditions pass
+[00:03:04] [eval   ] round 1 design 2: new_topology 'SyncHalfBridge_Clamp' (8 parts)
+[00:03:10] [screen ] r01d2: fail, worst -50 % of the power needed (4 presets, 5.9 s)
+[00:03:10] [eval   ] round 1 design 3: new_topology 'FBR_Zener_LargeC' (6 parts)
+[00:03:16] [screen ] r01d3: fail, worst -3 % of the power needed (4 presets, 5.8 s)
+[00:03:16] [model  ] round 2: asking the model (thinking on)
+[00:04:05] [size   ] c0001 (SSHI_Bridge_Clamp) generation 1: best score 33.96 -> 33.96, 8/48 evaluations (49 s)
+[00:04:58] [size   ] c0001 (SSHI_Bridge_Clamp) generation 2: best score 33.96 -> 33.96, 16/48 evaluations (53 s)
+[00:05:48] [size   ] c0001 (SSHI_Bridge_Clamp) generation 3: best score 33.96 -> 33.96, 24/48 evaluations (51 s)
+[00:06:40] [size   ] c0001 (SSHI_Bridge_Clamp) generation 4: best score 33.96 -> 33.96, 32/48 evaluations (52 s)
+[00:06:40] [model  ] reply after 196 s (4517 in / 7531 out)
+[00:06:40] [eval   ] round 2 design 1: new_topology 'HalfBridge_SSHI_Clamp' (7 parts)
+[00:06:45] [screen ] r02d1: PASS, worst 274 % of the power needed (4 presets, 5.2 s)
+[00:06:45] [sim    ] r02d1: simulating 6 conditions
+[00:06:53] [eval   ] r02d1: score 8.07, 0/6 conditions, 18/30 checks pass (7.9 s)
+[00:06:53] [model  ] round 3: asking the model (thinking on)
+[00:07:47] [size   ] c0001 (SSHI_Bridge_Clamp) generation 5: best score 33.96 -> 33.96, 40/48 evaluations (54 s)
+[00:08:42] [size   ] c0001 (SSHI_Bridge_Clamp) generation 6: best score 33.96 -> 33.96, 48/48 evaluations (55 s); budget
+[00:09:35] [size   ] c0034 (HalfBridge_SSHI_Clamp) generation 1: best score 8.07 -> 13.46, 8/48 evaluations (53 s)
+[00:09:35] [model  ] reply after 125 s (5040 in / 4687 out)
+[00:09:35] [eval   ] round 3 design 1: new_topology 'SSHI_Bridge_LC_Filter' (10 parts)
+[00:09:43] [screen ] r03d1: PASS, worst 251 % of the power needed (4 presets, 7.9 s)
+[00:09:43] [sim    ] r03d1: simulating 6 conditions
+[00:09:57] [eval   ] r03d1: score 22.52, 0/6 conditions, 24/30 checks pass (13.4 s)
+[00:09:57] [model  ] round 4: asking the model (thinking on)
+[00:13:08] [size   ] c0059 (SSHI_Bridge_LC_Filter) generation 1: best score 22.52 -> 22.52, 8/48 evaluations (192 s)
+[00:13:08] [model  ] reply after 161 s (5823 in / 5830 out)
+[00:13:08] [eval   ] round 4 design 1: new_topology 'SSHI_Bridge_PiFilter' (11 parts)
+[00:13:14] [screen ] r04d1: PASS, worst 251 % of the power needed (4 presets, 5.4 s)
+[00:13:14] [sim    ] r04d1: simulating 6 conditions
+[00:13:21] [eval   ] r04d1: score 17.30, 0/6 conditions, 22/30 checks pass (7.1 s)
+[00:13:21] [model  ] round 5: asking the model (thinking on)
+[00:15:25] [size   ] c0059 (SSHI_Bridge_LC_Filter) generation 2: best score 22.52 -> 22.52, 16/48 evaluations (125 s)

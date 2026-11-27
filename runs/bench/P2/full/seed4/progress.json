@@ -1,0 +1,14 @@
+{
+  "phase": "size",
+  "stop_reason": null,
+  "elapsed_s": 267.2,
+  "iteration": 1,
+  "max_rounds": 12,
+  "best_id": "c0001",
+  "best_name": "Parallel_SSHI_FBR",
+  "best_scalar": -1.65,
+  "best_cond_pass": 0,
+  "n_candidates": 3,
+  "n_sims": 57,
+  "model_wait_s": 0
+}

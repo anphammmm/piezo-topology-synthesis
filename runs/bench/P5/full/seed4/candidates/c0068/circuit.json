@@ -1,0 +1,105 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_Bridge_PiFilter",
+ "rationale": "The previous 'SSHI_Bridge_Clamp' design was very close, but failed on startup time (tup) for light/weak loads. Reducing C_out to speed up startup increases the voltage ripple (vpp), creating a trade-off. To break this, I am implementing a pi-filter (C-L-C) after the rectifier. C_in absorbs the high-current charge pulses from the SSHI bridge, while L_filt and C_out form a low-pass filter that provides a very smooth DC voltage to the load. This allows C_out to be small enough (e.g., 0.8-1.0 uF) to satisfy the tup < 0.15s requirement while keeping vpp < 20mV.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0047
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.405405287374763e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_in"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_in"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cin",
+   "type": "C",
+   "nodes": [
+    "n_in",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "Lfilt",
+   "type": "L",
+   "nodes": [
+    "n_in",
+    "out"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 8.2e-07
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

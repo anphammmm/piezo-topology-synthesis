@@ -1,0 +1,172 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0230",
+  "selected_topology": {
+    "name": "SSHI_FBR_DualZClamp",
+    "topo_hash": "31ef5e439fe6"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [
+    {
+      "condition": "S3",
+      "criterion": "vout_max",
+      "measured": "6.81282329559",
+      "op": "<=",
+      "limit": 5.5,
+      "margin": -0.23869514465272734,
+      "split": "search"
+    },
+    {
+      "condition": "S3",
+      "criterion": "ripple",
+      "measured": "0.0965738296509",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -0.9314765930179999,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "vout_min",
+      "measured": "3.8319409722",
+      "op": ">=",
+      "limit": 4.5,
+      "margin": -0.14845756173333335,
+      "split": "search"
+    },
+    {
+      "condition": "S4",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "S6",
+      "criterion": "vout_min",
+      "measured": "3.43907357628",
+      "op": ">=",
+      "limit": 4.5,
+      "margin": -0.2357614274933333,
+      "split": "search"
+    },
+    {
+      "condition": "S6",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "search"
+    },
+    {
+      "condition": "H1",
+      "criterion": "vout_min",
+      "measured": "4.17166050159",
+      "op": ">=",
+      "limit": 4.5,
+      "margin": -0.07296433298000002,
+      "split": "heldout"
+    },
+    {
+      "condition": "H1",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "heldout"
+    },
+    {
+      "condition": "H2",
+      "criterion": "vout_max",
+      "measured": "6.7524933815",
+      "op": "<=",
+      "limit": 5.5,
+      "margin": -0.22772606936363635,
+      "split": "heldout"
+    },
+    {
+      "condition": "H2",
+      "criterion": "ripple",
+      "measured": "0.0559039115906",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -0.11807823181199995,
+      "split": "heldout"
+    },
+    {
+      "condition": "H3",
+      "criterion": "vout_max",
+      "measured": "6.79963064194",
+      "op": "<=",
+      "limit": 5.5,
+      "margin": -0.23629648035272732,
+      "split": "heldout"
+    },
+    {
+      "condition": "H3",
+      "criterion": "ripple",
+      "measured": "0.10297203064",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -1.0594406128,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "vout_min",
+      "measured": "4.22199059196",
+      "op": ">=",
+      "limit": 4.5,
+      "margin": -0.061779868453333324,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": "0.0522079467773",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -0.04415893554599995,
+      "split": "heldout"
+    },
+    {
+      "condition": "H4",
+      "criterion": "startup",
+      "measured": null,
+      "op": "<=",
+      "limit": 0.4,
+      "margin": -1.0,
+      "split": "heldout"
+    }
+  ],
+  "timing": {
+    "wall_s": 4273.3,
+    "model_s": 2229.6,
+    "model_calls": 9,
+    "model_errors": 0,
+    "prompt_tokens": 56467,
+    "completion_tokens": 81187,
+    "reasoning_tokens": 0,
+    "sim_seconds": 24721.0,
+    "sim_wall_s": 3408.0,
+    "n_sims": 1881,
+    "cache_hits": 0,
+    "sim_failures": 85,
+    "size_s": 2920.9,
+    "screen_s": 130.6,
+    "n_screen_sims": 135,
+    "n_proposals": 11,
+    "n_invalid": 0,
+    "n_duplicate": 0,
+    "n_topologies": 11,
+    "n_screen_pass": 6,
+    "rounds": 9,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

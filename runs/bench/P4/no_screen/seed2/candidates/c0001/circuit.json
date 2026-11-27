@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FBR_Zener",
+ "rationale": "The reference FBR failed due to overvoltage in S3 and insufficient voltage/startup in S4-S6. Adding a Zener clamp (DZ33) limits the output to 3.3V, solving the S3 issue. Adding a Synchronized Switch Harvesting on Inductor (SSHI) circuit (L1 and S1 in parallel with the piezo) inverts the piezo voltage at its extrema, significantly increasing energy extraction efficiency to meet the 1.8V minimum and 0.4s startup requirements for S4, S5, and S6.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-06
+  }
+ ]
+}

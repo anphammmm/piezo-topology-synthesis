@@ -1,0 +1,105 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_PiFilter",
+ "rationale": "The SSHI_LC_Filter design is nearly successful, but fails on the ripple requirement (vpp <= 0.02V). To further suppress the charging pulses from the rectifier and reduce output ripple, I am replacing the single-stage LC filter with a pi-filter (C-L-C). Adding a pre-filter capacitor (C2) at the rectifier output node (n_rect) will absorb the bulk of the current spikes, while the existing inductor (L2) and storage capacitor (C1) will further smooth the voltage at the 'out' node. This topology should significantly lower the ripple while maintaining the power extraction benefits of the SSHI stage.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0008988367102268328
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00010249112725213516,
+   "phase": -0.0013029451955710591,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C2",
+   "type": "C",
+   "nodes": [
+    "n_rect",
+    "0"
+   ],
+   "value": 2.8261040208307253e-07
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 0.008400420150727618
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.4861829009608966e-06
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

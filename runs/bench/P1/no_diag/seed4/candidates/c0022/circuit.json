@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI",
+ "rationale": "Synchronous Switch Harvesting on Inductor (SSHI) improves efficiency by flipping the voltage across the piezo capacitor at its extrema, effectively increasing the voltage swing available for the rectifier. This topology combines a flipping inductor (L1) with a full-bridge rectifier (D1-D4). Like the SECE design, a Zener clamp (DZ33) is included to protect the load in high-excitation conditions (S3) and a storage capacitor to ensure low ripple and stability.",
+ "done": false,
+ "components": [
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5.782120755015021e-05,
+   "phase": 0.028199079529533114,
+   "edges": "both"
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0037947810842813142
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.8176879159323324e-06
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

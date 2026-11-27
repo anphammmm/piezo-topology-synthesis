@@ -1,0 +1,105 @@
+{
+ "move": "new_topology",
+ "name": "Filtered_SSHI",
+ "rationale": "The previous SSHI design was very close, failing only on the ripple requirement in S3 (strong excitation, light load). S3's ripple is likely caused by the charging pulses from the bridge interacting with the storage capacitor, and the 'settled' requirement prevents simply increasing the output capacitor significantly. To decouple the charging pulses from the output, I am adding a second-order LC filter (L2, C1, C2) between the rectifier bridge and the load. This should drastically reduce vpp while maintaining a fast startup and meeting the settled mean condition.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0032028703450824275
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.965271472479554e-05,
+   "phase": 0.015146029858119546,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "out"
+   ],
+   "value": 0.0007857341579611893
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "n_rect",
+    "0"
+   ],
+   "value": 7.234231320485318e-07
+  },
+  {
+   "id": "C2",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.1040425906501933e-06
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

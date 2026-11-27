@@ -1,0 +1,102 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0125",
+  "selected_name": "SSHI_SeriesL_Filter",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": null,
+  "failed_checks": [
+    {
+      "split": "search",
+      "condition": "S1",
+      "criterion": "ripple",
+      "measured": 0.0559828281403,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -1.799141407015,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S2",
+      "criterion": "ripple",
+      "measured": 0.0715527534485,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -2.577637672425,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S3",
+      "criterion": "ripple",
+      "measured": 0.0762319564819,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -2.8115978240949997,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S5",
+      "criterion": "ripple",
+      "measured": 0.0542414188385,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -1.712070941925,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S6",
+      "criterion": "ripple",
+      "measured": 0.0535230636597,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -1.6761531829849996,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H1",
+      "criterion": "ripple",
+      "measured": 0.0332727432251,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -0.663637161255,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H2",
+      "criterion": "ripple",
+      "measured": 0.0679783821106,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -2.39891910553,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H3",
+      "criterion": "ripple",
+      "measured": 0.0694937705994,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -2.47468852997,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.0766417980194,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -2.8320899009700002,
+      "passed": false
+    }
+  ]
+}

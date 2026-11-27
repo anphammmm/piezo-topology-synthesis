@@ -1,0 +1,112 @@
+{
+ "move": "new_topology",
+ "name": "SECE_Zener",
+ "rationale": "Synchronized Electric Charge Extraction (SECE) is often more efficient than SSHI. It uses switches and inductors to transfer the charge from the piezo capacitance directly to the storage capacitor at the peaks. I've implemented a dual-path extraction for both positive and negative peaks, with a Zener clamp for S3 and a small storage capacitor for fast startup.",
+ "done": false,
+ "components": [
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "n1",
+    "n2"
+   ],
+   "value": 0.0004823205293713454
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "n2",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "pzn",
+    "n3"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n3",
+    "n4"
+   ],
+   "value": 0.00041213586931565635
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "n4",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 0.00010507962427424317,
+   "phase": -0.1273070158030657,
+   "edges": "pos"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 3.563314379714573e-05,
+   "phase": -0.03429925748927149,
+   "edges": "neg"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.839680892397651e-06
+  }
+ ]
+}

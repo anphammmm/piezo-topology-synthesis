@@ -1,0 +1,112 @@
+{
+ "move": "new_topology",
+ "name": "Symmetric_SSHI",
+ "rationale": "The previous SSHI failed primarily on startup time, ripple, and stability, likely due to excessive losses in the 10mH inductor (Rs = 52 Ohm) and a storage capacitor that was too small. A symmetric SSHI uses two inductors and two switches to flip the piezo voltage more efficiently at both peaks. By reducing the inductor value to 1mH, the series resistance drops to 7 Ohm, significantly increasing efficiency and speeding up the cold start. A larger Cout (47uF) is used to minimize peak-to-peak ripple and stabilize the output voltage across all load conditions.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "pzn",
+    "n2"
+   ],
+   "value": 0.001
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "n2",
+    "pzp"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.5707963267948967e-05,
+   "phase": 0.0,
+   "edges": "pos"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 1.5707963267948967e-05,
+   "phase": 0.0,
+   "edges": "neg"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.7e-05
+  },
+  {
+   "id": "Dz",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

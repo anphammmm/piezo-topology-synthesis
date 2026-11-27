@@ -1,0 +1,30 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,9.3332,0,16,False
+c0001,1,llm,,new_topology,SSHI_FBR_Zener,c364d0f2b6ab,e8ae6ee30051,9,search,54.7081,3,26,False
+c0002,1,llm,,new_topology,SECE_Zener,5d349678fc14,8a171c4ec666,12,search,67.1705,4,28,False
+c0003,2,size,c0002,size,SECE_Zener,5d349678fc14,e57e225fc104,12,search,78.559,5,29,False
+c0004,2,size,c0002,size,SECE_Zener,5d349678fc14,1f5974643639,12,search,33.8447,1,25,False
+c0005,2,size,c0002,size,SECE_Zener,5d349678fc14,b8e286a25f0e,12,search,22.4278,0,24,False
+c0006,2,size,c0002,size,SECE_Zener,5d349678fc14,b6eda5cbcd28,12,search,45.1898,2,26,False
+c0007,2,size,c0002,size,SECE_Zener,5d349678fc14,4b4ba52454a2,12,search,18.6872,0,23,False
+c0008,2,size,c0002,size,SECE_Zener,5d349678fc14,770c95d92d91,12,search,41.7871,2,24,False
+c0009,2,size,c0002,size,SECE_Zener,5d349678fc14,edab361ea947,12,search,78.8256,5,29,False
+c0010,2,size,c0002,size,SECE_Zener,5d349678fc14,bc64ba177da9,12,search,25.6503,1,21,False
+c0011,2,size,c0002,size,SECE_Zener,5d349678fc14,ad8ab8c88b5d,12,search,64.1227,4,26,False
+c0012,2,size,c0002,size,SECE_Zener,5d349678fc14,d3adb4d498eb,12,search,53.0842,3,25,False
+c0013,2,size,c0002,size,SECE_Zener,5d349678fc14,b4d70f050c8d,12,search,64.3988,4,26,False
+c0014,2,size,c0002,size,SECE_Zener,5d349678fc14,244d3fb0b4ce,12,search,21.7655,0,24,False
+c0015,2,size,c0002,size,SECE_Zener,5d349678fc14,c017e12e91a8,12,search,50.9884,3,24,False
+c0016,2,size,c0002,size,SECE_Zener,5d349678fc14,593c039994e9,12,search,33.2066,2,19,False
+c0017,2,size,c0002,size,SECE_Zener,5d349678fc14,ff2e38f83ae2,12,search,64.2843,4,26,False
+c0018,2,size,c0002,size,SECE_Zener,5d349678fc14,2fa3af55bac7,12,search,53.0832,3,25,False
+c0019,2,size,c0002,size,SECE_Zener,5d349678fc14,4c93304d6127,12,search,-4.4505,0,11,False
+c0020,2,size,c0002,size,SECE_Zener,5d349678fc14,f4e4e4f7b606,12,search,29.8036,1,23,False
+c0021,2,size,c0002,size,SECE_Zener,5d349678fc14,f1dff8aab4b2,12,search,64.3455,4,26,False
+c0022,2,size,c0002,size,SECE_Zener,5d349678fc14,e17c6f7784a8,12,search,79.5389,5,29,False
+c0023,2,size,c0002,size,SECE_Zener,5d349678fc14,b7c9ab4903a1,12,search,90.5587,6,30,True
+c0024,2,size,c0002,size,SECE_Zener,5d349678fc14,e5bd8a8a1083,12,search,41.4346,2,24,False
+c0025,2,size,c0002,size,SECE_Zener,5d349678fc14,9bb95ee1ae6b,12,search,31.4665,2,19,False
+c0026,2,size,c0002,size,SECE_Zener,5d349678fc14,42e5be650ce1,12,search,56.5802,3,27,False
+c0023,2,size,c0002,size,SECE_Zener,5d349678fc14,b7c9ab4903a1,12,heldout,49.0227,3,19,False
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,heldout,19.1564,1,13,False

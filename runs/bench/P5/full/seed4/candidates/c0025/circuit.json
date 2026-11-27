@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_Bridge_Clamp",
+ "rationale": "The SSHI (Synchronized Switch Harvesting on Inductor) topology flips the piezoelectric capacitor voltage at its extrema, significantly increasing the harvested power. This addresses the vavg failures in S2 and S4 and the slow startup (tup) seen in the FBR. A full-bridge rectifier extracts this energy, a Zener diode (DZ33) clamps the output to prevent vmax violations (S3), and a storage capacitor reduces ripple.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.003314023241373567
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 2.6284474729533653e-05,
+   "phase": 0.06286090455889026,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.7485840893163298e-06
+  }
+ ]
+}

@@ -1,0 +1,69 @@
+{
+ "move": "new_topology",
+ "name": "HalfBridge_SSHI_Clamp",
+ "rationale": "The previous SSHI_Bridge_Clamp is very close but fails on startup (too slow) and ripple (slightly too high). Startup is limited by the two-diode drop (0.5V) in the full bridge and the storage capacitor size. By moving to a half-bridge rectifier (D1, D2), we reduce the diode drop to 0.25V. Because the SSHI flip (L1, S1) effectively makes the piezo voltage positive during both half-cycles, a half-bridge can extract most of the energy while speeding up the cold start. This efficiency gain allows us to use a slightly larger storage capacitor C1 to resolve the ripple issue on S3 without violating the startup time limit on S4.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0030711354556384562
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 2.0178736545639616e-05,
+   "phase": -0.020187060076883784,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.396622585415251e-06
+  }
+ ]
+}

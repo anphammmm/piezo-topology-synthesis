@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "LC_Filtered_SSHI",
+ "rationale": "The best design so far (SSHI_FullBridge) fails slightly on output ripple (S3) and settling time (S4). The ripple is a direct consequence of the storage capacitor's inability to smooth the pulsed energy delivery from the SSHI inverter. By introducing an LC filter (L2, C1) between the rectifier output (mid) and the load (out), we can drastically reduce the peak-to-peak ripple. Furthermore, decoupling the rectification stage from the output node may help stabilize the mean output voltage and improve the settling time by providing a more consistent current source to the storage capacitor.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 9.388820440450543e-05
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.529073287860661e-05,
+   "phase": -0.13532956766421583,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "mid",
+    "out"
+   ],
+   "value": 0.0010884604544539106
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 7.286638260757015e-08
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

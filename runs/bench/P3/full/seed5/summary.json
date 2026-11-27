@@ -1,0 +1,55 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0098",
+  "selected_topology": {
+    "name": "LC_Filtered_SSHI",
+    "topo_hash": "797ef4cba6c7"
+  },
+  "reference_id": "c0000",
+  "failed_checks": [
+    {
+      "condition": "S3",
+      "criterion": "ripple",
+      "measured": "0.0584976673126",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -0.1699533462519999,
+      "split": "search"
+    },
+    {
+      "condition": "H3",
+      "criterion": "ripple",
+      "measured": "0.0562376976013",
+      "op": "<=",
+      "limit": 0.05,
+      "margin": -0.12475395202599993,
+      "split": "heldout"
+    }
+  ],
+  "timing": {
+    "wall_s": 3869.7,
+    "model_s": 1779.5,
+    "model_calls": 8,
+    "model_errors": 0,
+    "prompt_tokens": 38430,
+    "completion_tokens": 64973,
+    "reasoning_tokens": 0,
+    "sim_seconds": 24222.6,
+    "sim_wall_s": 3297.4,
+    "n_sims": 1149,
+    "cache_hits": 0,
+    "sim_failures": 80,
+    "size_s": 2110.4,
+    "screen_s": 50.2,
+    "n_screen_sims": 87,
+    "n_proposals": 9,
+    "n_invalid": 0,
+    "n_duplicate": 2,
+    "n_topologies": 7,
+    "n_screen_pass": 4,
+    "rounds": 8,
+    "note": "model calls overlap sizing and simulations run in parallel, so the sums can exceed wall_s"
+  }
+}

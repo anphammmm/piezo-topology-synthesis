@@ -1,14 +1,14 @@
 {
-  "phase": "screen",
-  "stop_reason": null,
-  "elapsed_s": 2186.6,
-  "iteration": 7,
+  "phase": "done",
+  "stop_reason": "stagnation",
+  "elapsed_s": 4273.3,
+  "iteration": 9,
   "max_rounds": 12,
-  "best_id": "c0178",
-  "best_name": "SSHI_FBR_ZClamp",
-  "best_scalar": 39.047,
-  "best_cond_pass": 2,
-  "n_candidates": 197,
-  "n_sims": 1293,
-  "model_wait_s": 300
+  "best_id": "c0230",
+  "best_name": "SSHI_FBR_DualZClamp",
+  "best_scalar": 50.832,
+  "best_cond_pass": 3,
+  "n_candidates": 263,
+  "n_sims": 1713,
+  "model_wait_s": 0
 }

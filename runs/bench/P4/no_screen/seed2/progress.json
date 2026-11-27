@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 779.2,
+  "iteration": 2,
+  "max_rounds": 12,
+  "best_id": "c0023",
+  "best_name": "SECE_Zener",
+  "best_scalar": 90.559,
+  "best_cond_pass": 6,
+  "n_candidates": 27,
+  "n_sims": 162,
+  "model_wait_s": 0
+}

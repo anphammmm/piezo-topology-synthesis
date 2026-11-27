@@ -1,0 +1,105 @@
+{
+ "move": "modify_topology",
+ "name": "SSHI_FBR_DualZClamp",
+ "rationale": "The SSHI_FBR topology (c0096) showed very high power capability in screening (700-2000% of load needs), but failed to reach 4.5V in several conditions and exceeded 5.5V on S3. The underpowering is likely due to the storage capacitor's time constant or diode drops at low voltages. To fix the vout_max on S3, I'm implementing a stronger clamp using two DZ33 Zener diodes in series. While this clamps to ~6.6V (slightly above 5.5V), it is far more effective than the weak resistor-clamp and should be combined with a larger output capacitor to smooth ripple and potentially a smaller one to speed up startup\u2014the tuner will optimize these. The dual-Zener path provides a lower-impedance discharge path when the output exceeds the limit, preventing the large overshoots seen in S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0020986159825249935
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5.868446522975768e-05,
+   "phase": 0.032946402283260484,
+   "edges": "both"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 5.645696090618619e-07
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "n_z"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "DZ2",
+   "type": "D",
+   "nodes": [
+    "n_z",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "R_clamp",
+   "type": "R",
+   "nodes": [
+    "out",
+    "n_z"
+   ],
+   "value": 666046.3411234638
+  }
+ ]
+}

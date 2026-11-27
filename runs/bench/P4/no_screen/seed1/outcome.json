@@ -1,0 +1,52 @@
+{
+  "stop_reason": "time_budget",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0187",
+  "selected_name": "PSSHI_LCFilter",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": null,
+  "failed_checks": [
+    {
+      "split": "search",
+      "condition": "S4",
+      "criterion": "ripple",
+      "measured": 0.0576303005219,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.1526060104379999,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S4",
+      "criterion": "settled",
+      "measured": 0.0619684603399997,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -2.0984230169999845,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.0550143718719,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.100287437438,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.023729417620000248,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -0.18647088100001238,
+      "passed": false
+    }
+  ]
+}

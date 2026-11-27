@@ -1,0 +1,13 @@
+id,iteration,origin,parent,move,name,topo_hash,design_hash,n_components,split,scalar,cond_pass,checks_pass,all_pass
+c0000,0,reference,,reference,"FBR reference (4x Schottky, 2.2 uF)",3b1b75bd21b9,dbda384d399e,5,search,9.7704,0,19,False
+c0001,1,llm,,new_topology,SSHI_FBR,40eae91a637a,9bcc81f8099c,9,search,-1.3902,0,12,False
+c0002,1,llm,,new_topology,SSHI_HalfBridge,d7bec90a44ee,ae02e16cd6cb,7,search,-8.6914,0,8,False
+c0003,1,llm,,new_topology,SECE_Basic,8bf685581c35,8825c9885685,7,search,6.45,0,18,False
+c0004,2,size,c0001,size,SSHI_FBR,40eae91a637a,5c51594f0880,9,search,12.8659,1,15,False
+c0005,2,size,c0001,size,SSHI_FBR,40eae91a637a,a836c869eceb,9,search,-6.1464,0,10,False
+c0006,2,size,c0001,size,SSHI_FBR,40eae91a637a,1b6156ad43d9,9,search,9.0692,1,12,False
+c0007,2,size,c0001,size,SSHI_FBR,40eae91a637a,ceedac26924b,9,search,7.781,1,12,False
+c0008,2,size,c0001,size,SSHI_FBR,40eae91a637a,49c9d432ec82,9,search,-1.0464,0,12,False
+c0009,2,size,c0001,size,SSHI_FBR,40eae91a637a,a18ea2022b4c,9,search,9.4435,0,18,False
+c0010,2,size,c0001,size,SSHI_FBR,40eae91a637a,ec036c21e870,9,search,6.2716,1,11,False
+c0011,2,size,c0001,size,SSHI_FBR,40eae91a637a,86ffae3e3a0d,9,search,-1.7011,0,12,False

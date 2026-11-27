@@ -1,0 +1,96 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_Bridge_LC_Filter",
+ "rationale": "The best previous design (SSHI_Bridge_Clamp) failed on startup time (too slow) and ripple (too high) for some conditions. There is a trade-off: increasing C1 reduces ripple but slows startup. To break this trade-off, I am adding a second inductor L2 as a low-pass filter between the rectifier bridge and the storage capacitor C1. This allows using a smaller C1 for fast startup while L2 handles the current ripple, ensuring vpp <= 20mV. The Zener clamp remains at the output to prevent overvoltage.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0071236148006667945
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.9130653474243875e-05,
+   "phase": -0.06551028556920929,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_filter"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_filter"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "n_filter",
+    "out"
+   ],
+   "value": 0.01
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.677840660737628e-06
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

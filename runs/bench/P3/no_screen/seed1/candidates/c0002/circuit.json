@@ -1,0 +1,69 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_HalfBridge",
+ "rationale": "This is a simplified version of the SSHI converter that grounds pzn to reduce the number of diode drops in the rectification path. While the piezo is a floating current source, grounding one terminal allows for a half-bridge rectifier (single diode), which reduces the total forward voltage drop from ~0.5V (two DSCH diodes) to ~0.25V. This may improve startup time and Vavg under the weakest excitation conditions (S4).",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.0001
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "0"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5e-05,
+   "phase": 0.0,
+   "edges": "both"
+  },
+  {
+   "id": "R_gnd",
+   "type": "R",
+   "nodes": [
+    "pzn",
+    "0"
+   ],
+   "value": 100.0
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 2.2e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

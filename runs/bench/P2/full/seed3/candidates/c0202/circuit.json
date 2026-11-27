@@ -1,0 +1,114 @@
+{
+ "move": "new_topology",
+ "name": "FBR_Boost_ZClamp",
+ "rationale": "The previous SSHI_FBR designs are 1:1 converters, meaning they cannot boost the piezo voltage above its open-circuit value (V_oc). For S4, V_oc is approx 2.55 V, making it impossible to reach the 4.5 V target. I am replacing the SSHI flipping stage with a DC-DC boost converter. The circuit uses a Full-Bridge Rectifier (FBR) to create a steady DC rail (n_rect), and then a boost stage (L1, S1, D5) to step up this voltage to the required 4.5-5.5 V range. The SYNC controller provides the necessary switching pulses. A Zener clamp (R_clamp, DZ1) is used to prevent overvoltage on S3.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "n_rect"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C_rect",
+   "type": "C",
+   "nodes": [
+    "n_rect",
+    "0"
+   ],
+   "value": 9.94059234504182e-07
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "n_rect",
+    "n_boost"
+   ],
+   "value": 0.0028552566156592623
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n_boost",
+    "0"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5.751396691271652e-05,
+   "phase": 0.03123223975299942,
+   "edges": "both"
+  },
+  {
+   "id": "D5",
+   "type": "D",
+   "nodes": [
+    "n_boost",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C_out",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 4.1893974441081245e-07
+  },
+  {
+   "id": "R_clamp",
+   "type": "R",
+   "nodes": [
+    "out",
+    "n_z"
+   ],
+   "value": 14318447.858992787
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "n_z",
+    "0"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

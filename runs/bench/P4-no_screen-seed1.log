@@ -138,3 +138,6 @@
 [01:01:58] [heldout] checking c0187 and the reference on 4 held-out conditions
 [01:03:04] [heldout] c0187: 3/4 held-out conditions pass; reference: 1/4
 [01:03:04] [robust ] Monte Carlo: 16 samples of c0187 on all 10 conditions
+[01:18:34] [robust ] 0 % of samples meet the spec on every condition; weakest: S4
+[01:18:34] [done   ] spec met on search conditions: False; on all conditions: False
+[01:18:34] [done   ] report: runs/bench/P4/no_screen/seed1/report.md

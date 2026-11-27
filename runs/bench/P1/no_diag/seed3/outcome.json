@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0081",
+  "selected_name": "SSHI_FullBridge_RCFilter",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 1393.42,
+    "n_sims": 591,
+    "id": "c0081"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.068665266037,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.37330532074,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.04227084446999996,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -1.1135422234999979,
+      "passed": false
+    }
+  ]
+}

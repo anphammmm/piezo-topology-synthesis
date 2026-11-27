@@ -1,0 +1,87 @@
+{
+ "move": "new_topology",
+ "name": "SSHI_FBR",
+ "rationale": "The reference FBR fails because the piezo open-circuit voltage amplitude (~0.76V) is too low to overcome diode drops and reach the 1.8V target. I am implementing a Parallel-SSHI (Synchronized Switch Harvesting on Inductor) topology. By using an inductor L1 and a switch S1 to flip the piezoelectric capacitance charge at the voltage extrema, we can effectively increase the voltage available to the rectifier, allowing Vout to reach and sustain levels between 1.8V and 3.6V. A full-bridge rectifier (FBR) is used to harvest energy from both half-cycles, and a DZ33 zener diode clamps the output to prevent exceeding the 3.6V absolute maximum during strong excitation (S3).",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 8.200113447569032e-05
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 5.136614815028201e-05,
+   "phase": -0.02148318160151655,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "Cout",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 3.5923556206865736e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

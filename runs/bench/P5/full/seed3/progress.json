@@ -1,14 +1,14 @@
 {
-  "phase": "size",
-  "stop_reason": null,
-  "elapsed_s": 2548.3,
-  "iteration": 10,
+  "phase": "done",
+  "stop_reason": "stagnation",
+  "elapsed_s": 4135.4,
+  "iteration": 11,
   "max_rounds": 12,
   "best_id": "c0125",
   "best_name": "SSHI_SeriesL_Filter",
   "best_scalar": 30.468,
   "best_cond_pass": 1,
-  "n_candidates": 126,
-  "n_sims": 855,
+  "n_candidates": 198,
+  "n_sims": 1287,
   "model_wait_s": 0
 }

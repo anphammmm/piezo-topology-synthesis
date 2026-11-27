@@ -1,0 +1,15 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": true,
+  "selected_id": "c0011",
+  "selected_name": "SSHI_FBR_Zener",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 249.06,
+    "n_sims": 72,
+    "id": "c0011"
+  },
+  "failed_checks": []
+}

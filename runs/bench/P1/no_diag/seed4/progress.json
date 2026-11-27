@@ -1,0 +1,14 @@
+{
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 884.4,
+  "iteration": 4,
+  "max_rounds": 12,
+  "best_id": "c0054",
+  "best_name": "Filtered_SSHI",
+  "best_scalar": 90.565,
+  "best_cond_pass": 6,
+  "n_candidates": 60,
+  "n_sims": 411,
+  "model_wait_s": 0
+}

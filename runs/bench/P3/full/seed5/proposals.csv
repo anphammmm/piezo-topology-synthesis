@@ -6,3 +6,5 @@ round,k,name,move,topo_hash,status,candidate,of,worst_ratio,ratio_S2,ratio_S4,ra
 4,1,LC_Filtered_SSHI,new_topology,797ef4cba6c7,evaluated,c0050,,22.953884040131108,22.953884040131108,43.21312832002222,23.29724526972222,7.495999244489541,9.814265624324594,6.208234050077334,4,underpower | slow_start | not_settled | ripple,
 5,1,PI_Filtered_SSHI,new_topology,55d1b27ebd06,evaluated,c0059,,19.764848069499998,20.680223041968883,38.70039487917777,19.764848069499998,6.7534947910100405,8.789364942470954,5.266923250327191,4,underpower | slow_start | not_settled | ripple,
 6,1,Pulsed_Output_SSHI,new_topology,b25db282a44a,evaluated,c0076,,20.08772333944444,20.99657749169111,37.03294379314444,20.08772333944444,6.856805965361306,8.410665030890675,5.35296283232885,4,underpower | slow_start | not_settled | ripple,
+7,1,SSHI_FullBridge_Balanced,modify_topology,40eae91a637a,duplicate,,c0001,,,,,,,,,,
+8,1,CL_Filtered_SSHI,new_topology,55d1b27ebd06,duplicate,,c0059,,,,,,,,,,

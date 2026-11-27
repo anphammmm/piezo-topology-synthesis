@@ -10,3 +10,4 @@ round,k,name,move,topo_hash,status,candidate,of,worst_ratio,ratio_S2,ratio_S4,ra
 8,1,SSHI_SeriesL_Filter,new_topology,6c0f86768618,evaluated,c0101,,2.4787878519916666,2.4787878519916666,9.477311040833333,5.07629053514,2.1137462346283598,3.3673431873276516,2.3611225204089634,4,ripple,
 9,1,SSHI_DoubleLC_Filter,new_topology,97036d946b55,duplicate,,c0084,,,,,,,,,,
 10,1,SSHI_DoubleLC_Filter,new_topology,97036d946b55,duplicate,,c0084,,,,,,,,,,
+11,1,SSHI_TFilter,new_topology,97036d946b55,duplicate,,c0084,,,,,,,,,,

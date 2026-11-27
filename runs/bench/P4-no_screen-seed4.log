@@ -1,0 +1,28 @@
+[00:00:00] [setup  ] output in runs/bench/P4/no_screen/seed4; mode search; spec P4 (Wide band 50-200 Hz, Cp +/-30 %); 8 parallel simulations
+[00:00:00] [setup  ] free disk where results go: 47.3 GiB
+[00:00:00] [setup  ] reference circuit on 6 search conditions
+[00:00:00] [sim    ] reference: simulating 6 conditions
+[00:00:06] [eval   ] reference: score 9.33, 0/6 conditions, 16/30 checks pass (6.4 s)
+[00:00:06] [model  ] round 1: asking the model (thinking on)
+[00:00:21] [model  ] waiting 15 s (round 1)
+[00:00:36] [model  ] waiting 30 s (round 1)
+[00:00:51] [model  ] waiting 45 s (round 1)
+[00:01:06] [model  ] waiting 60 s (round 1)
+[00:01:21] [model  ] waiting 75 s (round 1)
+[00:01:36] [model  ] waiting 90 s (round 1)
+[00:01:51] [model  ] waiting 105 s (round 1)
+[00:02:06] [model  ] waiting 120 s (round 1)
+[00:02:21] [model  ] waiting 135 s (round 1)
+[00:02:36] [model  ] waiting 150 s (round 1)
+[00:02:51] [model  ] waiting 165 s (round 1)
+[00:03:06] [model  ] waiting 180 s (round 1)
+[00:03:21] [model  ] waiting 195 s (round 1)
+[00:03:24] [model  ] reply after 198 s (2235 in / 7183 out)
+[00:03:24] [eval   ] round 1 design 1: new_topology 'SSHI_FBR_Zener' (9 parts)
+[00:03:24] [sim    ] r01d1: simulating 6 conditions
+[00:03:32] [eval   ] r01d1: score 31.83, 2/6 conditions, 20/30 checks pass (8.1 s)
+[00:03:32] [eval   ] new best c0001 (SSHI_FBR_Zener): score 31.83, 2/6 conditions pass
+[00:03:32] [model  ] round 2: asking the model (thinking on)
+[00:04:31] [eval   ] new best c0004 (SSHI_FBR_Zener): score 46.28, 3/6 conditions pass
+[00:04:31] [eval   ] new best c0007 (SSHI_FBR_Zener): score 46.34, 3/6 conditions pass
+[00:04:31] [size   ] c0001 (SSHI_FBR_Zener) generation 1: best score 31.83 -> 46.34, 8/48 evaluations (58 s)

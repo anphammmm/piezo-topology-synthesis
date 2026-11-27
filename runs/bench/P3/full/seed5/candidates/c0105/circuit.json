@@ -1,0 +1,105 @@
+{
+ "move": "new_topology",
+ "name": "PI_Filtered_SSHI",
+ "rationale": "The SSHI_FullBridge is very close to passing but struggles with a trade-off between ripple (S3) and settling time (S4). A larger storage capacitor reduces ripple and settling drift but increases startup time. To decouple these, I am adding a Pi-filter after the rectifier: a large capacitor C1 at a 'mid' node to store energy, and a small LC filter (L2, C2) to smooth the output at the 'out' node. This reduces the peak-to-peak ripple and the settling drift at the load without requiring a massive total capacitance that would violate the startup time constraint.",
+ "done": false,
+ "components": [
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.00012633779351526383
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 1.0421770564489396e-05,
+   "phase": 0.013069361947637116,
+   "edges": "both"
+  },
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "mid"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "mid",
+    "0"
+   ],
+   "value": 5.400802853360322e-07
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "mid",
+    "out"
+   ],
+   "value": 1e-05
+  },
+  {
+   "id": "C2",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1.0309376246570708e-06
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  }
+ ]
+}

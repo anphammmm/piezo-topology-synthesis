@@ -1,0 +1,162 @@
+{
+  "stop_reason": "stagnation",
+  "met_search": false,
+  "met_all": false,
+  "selected_id": "c0230",
+  "selected_name": "SSHI_FBR_DualZClamp",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": null,
+  "failed_checks": [
+    {
+      "split": "search",
+      "condition": "S3",
+      "criterion": "vout_max",
+      "measured": 6.81282329559,
+      "limit": 5.5,
+      "op": "<=",
+      "margin": -0.23869514465272734,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S3",
+      "criterion": "ripple",
+      "measured": 0.0965738296509,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.9314765930179999,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S4",
+      "criterion": "vout_min",
+      "measured": 3.8319409722,
+      "limit": 4.5,
+      "op": ">=",
+      "margin": -0.14845756173333335,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S4",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.4,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S6",
+      "criterion": "vout_min",
+      "measured": 3.43907357628,
+      "limit": 4.5,
+      "op": ">=",
+      "margin": -0.2357614274933333,
+      "passed": false
+    },
+    {
+      "split": "search",
+      "condition": "S6",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.4,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H1",
+      "criterion": "vout_min",
+      "measured": 4.17166050159,
+      "limit": 4.5,
+      "op": ">=",
+      "margin": -0.07296433298000002,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H1",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.4,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H2",
+      "criterion": "vout_max",
+      "measured": 6.7524933815,
+      "limit": 5.5,
+      "op": "<=",
+      "margin": -0.22772606936363635,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H2",
+      "criterion": "ripple",
+      "measured": 0.0559039115906,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.11807823181199995,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H3",
+      "criterion": "vout_max",
+      "measured": 6.79963064194,
+      "limit": 5.5,
+      "op": "<=",
+      "margin": -0.23629648035272732,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H3",
+      "criterion": "ripple",
+      "measured": 0.10297203064,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -1.0594406128,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "vout_min",
+      "measured": 4.22199059196,
+      "limit": 4.5,
+      "op": ">=",
+      "margin": -0.061779868453333324,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.0522079467773,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.04415893554599995,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "startup",
+      "measured": null,
+      "limit": 0.4,
+      "op": "<=",
+      "margin": -1.0,
+      "passed": false
+    }
+  ]
+}

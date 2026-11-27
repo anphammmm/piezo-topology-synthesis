@@ -1,0 +1,22 @@
+LTspice 26.1.1 for Windows
+Circuit: Z:\work\ltspice\claude\piezo-topology-synthesis\runs\bench\P3\no_screen\seed1\sims\06c9e4efb3b557e8\circuit.net
+Start Time: Fri Nov 27 22:34:42 2026
+solver = Normal
+Maximum thread count: 64
+tnom = 27
+temp = 27
+method = trap
+Direct Newton iteration succeeded in finding operating point.
+Total elapsed time: 6.303 seconds.
+Total iterations: 840871
+
+Files loaded:
+Z:\work\ltspice\claude\piezo-topology-synthesis\runs\bench\P3\no_screen\seed1\sims\06c9e4efb3b557e8\circuit.net
+
+vavg: AVG(V(out))=1.94278264284 FROM 0.7 TO 0.8
+vavg_prev: AVG(V(out))=1.82188665992 FROM 0.6 TO 0.7
+vpp: PP(V(out))=0.110157012939 FROM 0.7 TO 0.8
+vmax: MAX(V(out))=1.99754142761 FROM 0 TO 0.8
+tup: time=0.633659287657 at 0.633659287657
+pload: AVG(V(out)*V(out)/6.8e+06)=5.55203272514e-07 FROM 0.7 TO 0.8
+pext: AVG(V(pzp,pzn)*I(Ipz))=1.37034213761e-05 FROM 0.7 TO 0.8

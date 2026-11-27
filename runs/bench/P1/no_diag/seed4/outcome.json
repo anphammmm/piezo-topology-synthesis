@@ -1,0 +1,36 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0054",
+  "selected_name": "Filtered_SSHI",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 691.85,
+    "n_sims": 411,
+    "id": "c0054"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "ripple",
+      "measured": 0.070161819458,
+      "limit": 0.05,
+      "op": "<=",
+      "margin": -0.40323638915999993,
+      "passed": false
+    },
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.051055118080000295,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -1.5527559040000147,
+      "passed": false
+    }
+  ]
+}
