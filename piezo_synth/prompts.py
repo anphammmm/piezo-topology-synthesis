@@ -27,8 +27,8 @@ EXAMPLE_CIRCUIT = {
 }
 EXAMPLE_JSON = {"proposals": [EXAMPLE_CIRCUIT]}
 
-# For the neutral_prompt variant: the same JSON syntax with a meaningless R-C network, so the example
-# carries no piece of a known interface (EXAMPLE_CIRCUIT's L-S-SYNC branch is the SSHI branch).
+# The default (neutral) example: the same JSON syntax with a meaningless R-C network, so the example
+# carries no piece of a known interface. EXAMPLE_CIRCUIT (hinted variant only) is the SSHI branch.
 NEUTRAL_EXAMPLE_JSON = {"proposals": [{
     "move": "new_topology",
     "name": "short label for this design",
@@ -84,9 +84,10 @@ def condition_table(ev: Evaluation, conditions) -> str:
 
 
 def system_prompt(reference_eval: Evaluation, per_round: int = 3, screen: bool = True, size_budget: int = 48,
-                  neutral: bool = False) -> str:
-    """neutral: the neutral_prompt variant, without the fragments of the textbook answer (SSHI branch in
-    the JSON example, its switch-timing formula, bridge and zener-clamp wiring examples)."""
+                  hinted: bool = False) -> str:
+    """By default the prompt carries no fragment of the textbook answer. hinted=True (the hinted variant)
+    restores the original prompt: the SSHI branch as JSON example, its switch-timing formula, and the
+    full-bridge and zener-clamp wiring examples."""
     conds = spec.search_conditions()
     sc = spec.SCREEN
     screen_text = (f"""- Each proposal is first SCREENED: with out fixed at {sc['vstore']:g} V, the net power it delivers is
@@ -103,9 +104,9 @@ def system_prompt(reference_eval: Evaluation, per_round: int = 3, screen: bool =
     L = spec.LIMITS
     nom = conds[0]
     voc_nom = nom.ip / (2 * math.pi * nom.freq * nom.cp)
-    ton_hint = "" if neutral else "\n     For L-Cp inversion, ton is about pi*sqrt(L*Cp)."
-    diode_wiring = _DIODE_WIRING_NEUTRAL if neutral else _DIODE_WIRING
-    example = json.dumps(NEUTRAL_EXAMPLE_JSON if neutral else EXAMPLE_JSON, indent=1)
+    ton_hint = "" if not hinted else "\n     For L-Cp inversion, ton is about pi*sqrt(L*Cp)."
+    diode_wiring = _DIODE_WIRING if hinted else _DIODE_WIRING_NEUTRAL
+    example = json.dumps(EXAMPLE_JSON if hinted else NEUTRAL_EXAMPLE_JSON, indent=1)
     return f"""You are an expert power-electronics designer synthesising the interface circuit of a
 piezoelectric energy harvester. You work by experiment: you propose a circuit, it is simulated in
 LTspice under several operating conditions, and you receive the measurements.

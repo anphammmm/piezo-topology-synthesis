@@ -110,13 +110,21 @@ class SearchTest(unittest.TestCase):
         self.assertEqual(json.loads((self.out / "progress.json").read_text())["phase"], "done")
         self.assertEqual(json.loads((self.out / "robust.json").read_text())["n"], 3)
 
-    def test_neutral_prompt_config_reaches_the_model(self):
+    def test_hinted_prompt_config_reaches_the_model(self):
         llm = FakeLLM([multi(WITNESS)])
-        run_search(self.cfg(neutral_prompt=True), llm, self.sim, self.rec)
-        self.assertNotIn("pi*sqrt", llm.received[0][0]["content"])
+        run_search(self.cfg(hinted_prompt=True), llm, self.sim, self.rec)
+        self.assertIn("pi*sqrt", llm.received[0][0]["content"])
         llm = FakeLLM([multi(WITNESS)])
         run_search(self.cfg(), llm, self.sim, self.rec)
-        self.assertIn("pi*sqrt", llm.received[0][0]["content"])
+        self.assertNotIn("pi*sqrt", llm.received[0][0]["content"])
+
+    def test_config_ignores_unknown_neutral_prompt_key(self):
+        import tempfile
+        from piezo_synth.run import load_config
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "c.json"
+            p.write_text('{"neutral_prompt": true}')
+            self.assertFalse(load_config(p).hinted_prompt)
 
     def test_several_designs_per_round_each_screened(self):
         llm = FakeLLM([multi(BRIDGE_CLAMP, WITNESS)])

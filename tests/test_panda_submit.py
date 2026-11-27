@@ -85,14 +85,14 @@ class PandaCampaignTest(PandaSubmitTest):
     def test_bench_extra_variant_gets_its_own_job_names(self):
         from tools import panda_campaign
         rc = panda_campaign.main(["--work-root", str(self.work), "--cwd", str(self.repo), "--image", "img",
-                                  "--bench", "--variants", "neutral_prompt", "--specs", "P1,P3", "--seeds", "1"])
+                                  "--bench", "--variants", "hinted", "--specs", "P1,P3", "--seeds", "1"])
         self.assertEqual(rc, 0)
         self.assertEqual([kw["name"] for _, kw in self.gpu.calls],
-                         ["piezo-bench-p1-neutral-prompt", "piezo-bench-p3-neutral-prompt"])
+                         ["piezo-bench-p1-hinted", "piezo-bench-p3-hinted"])
         cmd = self.gpu.calls[0][0]
-        self.assertIn("runs/bench/P1/neutral_prompt/seed1", cmd)
+        self.assertIn("runs/bench/P1/hinted/seed1", cmd)
         self.assertNotIn("/full/", cmd)
-        self.assertTrue((self.repo / "runs" / "bench" / "neutral_prompt.json").exists())
+        self.assertTrue((self.repo / "runs" / "bench" / "hinted.json").exists())
 
     def test_bench_submits_one_job_per_spec(self):
         from tools import panda_campaign

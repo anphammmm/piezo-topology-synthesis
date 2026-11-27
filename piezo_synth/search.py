@@ -56,7 +56,7 @@ class SearchConfig:
     size_min_gens: int = 1            # generations per model wait even if the model answers first
     drain_top: int = 2                # after the last round, finish sizing this many best structures
     diagnostics: bool = True
-    neutral_prompt: bool = False      # system prompt without fragments of the textbook answer (prompts.py)
+    hinted_prompt: bool = False       # True: the original prompt with fragments of the textbook answer (prompts.py)
     mc_samples: int = 16              # Monte Carlo samples for the selected design (0 = skip)
     think: bool = True
     seed: int = 1
@@ -432,7 +432,7 @@ class _Search:
             rec.write_json("reference_screen.json", {"worst_ratio": r.worst_ratio, "ratio": r.ratio, "gain": r.gain,
                                                      "p_net": r.p_net, "p_req": r.p_req})
         system = system_prompt(self.reference.evaluation, per_round=cfg.proposals_per_round, screen=cfg.screen,
-                               size_budget=cfg.size_budget, neutral=cfg.neutral_prompt)
+                               size_budget=cfg.size_budget, hinted=cfg.hinted_prompt)
         last: Optional[list] = None
         consecutive_errors = no_improve = 0
         stop_reason = "round_budget"

@@ -143,13 +143,14 @@ class BenchmarkTest(unittest.TestCase):
                   "--config runs/bench/random.json"):
             self.assertIn(s, cmd)
 
-    def test_neutral_prompt_variant_and_bench_column(self):
+    def test_hinted_variant_and_bench_column(self):
         from piezo_synth.experiments import VARIANTS, _bench_table
-        self.assertEqual(VARIANTS["neutral_prompt"], ({"neutral_prompt": True}, ""))
+        self.assertEqual(VARIANTS["hinted"], ({"hinted_prompt": True}, ""))
+        self.assertNotIn("neutral_prompt", VARIANTS)
         summary = [{"spec": "P1", "variant": v, "runs": 5, "successes": 5, "successes_all": 1,
-                    "median_sims_to_success": 100.0} for v in ("full", "neutral_prompt")]
+                    "median_sims_to_success": 100.0} for v in ("full", "hinted")]
         t = _bench_table(summary)
-        self.assertIn("neutral\_prompt", t)
+        self.assertIn("hinted", t)
 
     def test_aggregate_by_spec_and_bench_table(self):
         from piezo_synth.experiments import write_bench_tables

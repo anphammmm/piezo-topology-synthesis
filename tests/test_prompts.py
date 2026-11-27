@@ -29,7 +29,7 @@ class PromptTest(unittest.TestCase):
             self.assertIn(s, p)
 
     def test_system_prompt_explains_diode_orientation(self):
-        p = system_prompt(REF_EV)
+        p = system_prompt(REF_EV, hinted=True)
         self.assertIn('["0", "out"]', p)        # zener clamp: cathode on out
         self.assertIn('["0", "pzp"]', p)        # bridge return diode: anode on ground
         self.assertIn("anode", p)
@@ -99,17 +99,17 @@ class PromptTest(unittest.TestCase):
         self.assertIn("S4", t)
         self.assertIn("FAIL", t)
 
-    def test_neutral_prompt_hides_textbook_fragments(self):
-        """The neutral prompt must not hand the model pieces of the textbook answer (SSHI branch, its timing
+    def test_default_prompt_hides_textbook_fragments(self):
+        """The default (neutral) prompt must not hand the model pieces of the textbook answer (SSHI branch, its timing
         formula, bridge and zener-clamp wiring), while keeping the spec, the components and the reference."""
-        p = system_prompt(REF_EV, neutral=True)
+        p = system_prompt(REF_EV)
         for s in ['"type": "L"', '"type": "S"', '"type": "SYNC"', "pi*sqrt", '["0", "out"]', '["0", "pzp"]',
                   "full bridge", "zener clamp", "3.4e-05"]:
             self.assertNotIn(s, p, s)
         for s in ["S1", "S6", "1.8", "3.6", "DZ33", "DSCH", "SYNC", "\"components\"", "FBR", "anode", "ctrl",
                   "new_topology"]:
             self.assertIn(s, p, s)
-        d = system_prompt(REF_EV)            # the default prompt is unchanged
+        d = system_prompt(REF_EV, hinted=True)   # the hinted variant keeps the old prompt
         self.assertIn("pi*sqrt", d)
         self.assertIn('"type": "SYNC"', d)
 

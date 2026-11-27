@@ -5,7 +5,7 @@ running its seeds in turn (finished seeds are skipped, so re-running this resume
     python3 tools/panda_campaign.py --variants full,random --seeds 1,2
     python3 tools/panda_campaign.py --bench                # every spec x 5 variants x 5 seeds, one job per spec
     python3 tools/panda_campaign.py --bench --specs P2,P3
-    python3 tools/panda_campaign.py --bench --variants neutral_prompt --specs P1,P3   # prompt-leakage control
+    python3 tools/panda_campaign.py --bench --variants hinted --specs P1,P3   # one extra variant, own job names
 
 Run it from the repository folder. Then: python3 -m piezo_synth.experiments runs/exp
 """

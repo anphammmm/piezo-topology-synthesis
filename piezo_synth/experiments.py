@@ -31,9 +31,9 @@ VARIANTS: Dict[str, Tuple[dict, str]] = {
     # stopped only by the simulation budget or the wall clock, like a model run that never succeeds
     "random": ({"stagnation": 10 ** 6, "max_rounds": 10 ** 4}, "--baseline random"),
     "audit": ({"screen_audit": True}, ""),
-    # prompt-leakage control: no SSHI branch in the JSON example, no switch-timing formula, no bridge or
-    # zener-clamp wiring examples (run on P1 and P3 of the benchmark)
-    "neutral_prompt": ({"neutral_prompt": True}, ""),
+    # prompt-leakage control: the original prompt, whose JSON example is the SSHI branch and which gives
+    # the switch-timing formula and the bridge and zener-clamp wiring (every other variant is neutral)
+    "hinted": ({"hinted_prompt": True}, ""),
 }
 CAMPAIGN_BASE = {"max_sims": 3000, "wall_clock_s": 3600, "mc_samples": 16}
 
@@ -61,7 +61,7 @@ def campaign_loop(name: str, seeds, root: str = "runs/exp") -> str:
 
 # The benchmark: every spec of spec.SPECS with these variants (one cluster job per spec).
 BENCH_VARIANTS = ["full", "no_screen", "no_diag", "coord", "random"]
-BENCH_EXTRA = ["neutral_prompt"]      # run on some specs only (tools/panda_campaign.py --bench --variants ...)
+BENCH_EXTRA = ["hinted"]      # run on some specs only (tools/panda_campaign.py --bench --variants ...)
 
 
 def bench_loop(spec_name: str, variants, seeds, root: str = "runs/bench") -> str:
@@ -255,7 +255,7 @@ def _criteria_table() -> str:
     return _tabular("llrp{5.2cm}", ["Criterion", "Measure", "Requirement", "Meaning"], rows, 4)
 
 
-VARIANT_ORDER = ["full", "no_screen", "no_diag", "single", "coord", "no_think", "neutral_prompt", "random"]
+VARIANT_ORDER = ["full", "no_screen", "no_diag", "single", "coord", "no_think", "hinted", "random"]
 
 
 def _variants_table(summary: List[dict]) -> str:
