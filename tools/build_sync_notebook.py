@@ -25,7 +25,7 @@ Lần đầu: tạo file token theo `docs/panda-sync.md` (bước 1-2), rồi ch
 SETUP = '''import os, sys, json, glob, time, subprocess, importlib
 from pathlib import Path
 
-ME = "hpham"                                    # <-- tên thư mục của bạn trong /work
+ME = "ltspice/claudeonly"                        # <-- thư mục của bạn trong /work
 GITHUB_USER = "anphammmm"
 URL = "https://github.com/anphammmm/piezo-topology-synthesis.git"
 BRANCH = "feat/v2-screen-size-paper"
