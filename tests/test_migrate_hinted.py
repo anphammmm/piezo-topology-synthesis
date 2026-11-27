@@ -10,13 +10,19 @@ from piezo_synth.experiments import aggregate
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
 
-def fake_run(root: Path, spec: str, variant: str, seed: int) -> Path:
+def fake_run(root: Path, spec: str, variant: str, seed: int, neutral: bool = False) -> Path:
+    """A finished run. neutral=False imitates the first benchmark's code, whose config.json had no
+    hinted_prompt key (it always used the original prompt)."""
     cfg = root / "c.json"
     cfg.write_text(json.dumps({"max_rounds": 2, "mc_samples": 0, "size_budget": 4, "size_lambda": 2}))
     out = root / "bench" / spec / variant / f"seed{seed}"
     run_mod.main(["--fake", "--spec", spec, "--config", str(cfg), "--label", variant, "--seed", str(seed),
                   "--out", str(out)])
     (root / "bench" / f"{spec}-{variant}-seed{seed}.log").write_text("log\n")
+    if not neutral:
+        c = json.loads((out / "config.json").read_text())
+        c.pop("hinted_prompt", None)
+        (out / "config.json").write_text(json.dumps(c))
     return out
 
 
@@ -72,6 +78,15 @@ class MigrateHintedTest(unittest.TestCase):
         self.assertEqual(migrate(self.old, self.new, apply=True), [])
         self.assertTrue(self.src.exists())
         self.assertEqual(json.loads((dest / "outcome.json").read_text()), {"keep": True})
+
+    def test_neutral_prompt_run_is_not_migrated(self):
+        """An old-bench seed that started after the new code was pulled used the neutral prompt."""
+        from migrate_hinted import migrate
+        late = fake_run(self.root, "P5", "full", 3, neutral=True)
+        moves = migrate(self.old, self.new, apply=True)
+        self.assertEqual([m[1].split("/")[-3] for m in moves], ["P1"])
+        self.assertTrue(late.exists())
+        self.assertFalse((self.new / "P5").exists())
 
     def test_other_variants_untouched(self):
         from migrate_hinted import migrate

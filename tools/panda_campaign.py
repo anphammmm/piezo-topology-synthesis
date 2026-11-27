@@ -22,10 +22,14 @@ from piezo_synth import spec  # noqa: E402
 from piezo_synth.experiments import BENCH_ROOT, BENCH_VARIANTS, VARIANTS, bench_loop, campaign_loop, write_campaign_configs  # noqa: E402
 from tools import panda_submit  # noqa: E402
 
+# runs/exp (the P1 campaign) used the original prompt for every variant: "hinted" would only repeat full
+CAMPAIGN_VARIANTS = [v for v in VARIANTS if v != "hinted"]
+
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--variants", default=",".join(VARIANTS), help=f"comma list of {', '.join(VARIANTS)}")
+    ap.add_argument("--variants", default=",".join(CAMPAIGN_VARIANTS),
+                    help=f"comma list of {', '.join(VARIANTS)} (default: {', '.join(CAMPAIGN_VARIANTS)})")
     ap.add_argument("--seeds", default="1,2,3,4,5")
     ap.add_argument("--bench", action="store_true", help="the benchmark: runs/bench2/<spec>/<variant>/seed<n>")
     ap.add_argument("--specs", default=",".join(spec.SPECS), help="with --bench: which specs")
@@ -40,7 +44,7 @@ def main(argv=None) -> int:
     seeds = [int(s) for s in a.seeds.split(",") if s.strip()]
     cwd = Path(a.cwd or os.getcwd())
     if a.bench:
-        custom = a.variants != ",".join(VARIANTS)
+        custom = a.variants != ",".join(CAMPAIGN_VARIANTS)
         variants = names if custom else BENCH_VARIANTS
         # extra variants get their own job names, so they never collide with the spec's main bench job
         suffix = "".join("-" + v.replace("_", "-") for v in variants) if custom else ""

@@ -71,6 +71,16 @@ if __name__ == "__main__":
 
 
 class PandaCampaignTest(PandaSubmitTest):
+    def test_campaign_default_excludes_hinted(self):
+        """runs/exp used the original prompt for every variant, so hinted would duplicate runs/exp/full."""
+        from tools import panda_campaign
+        panda_campaign.main(["--work-root", str(self.work), "--cwd", str(self.repo), "--image", "img",
+                             "--seeds", "1"])
+        names = [kw["name"] for _, kw in self.gpu.calls]
+        self.assertIn("piezo-full", names)
+        self.assertNotIn("piezo-hinted", names)
+        self.assertEqual(len(names), 8)
+
     def test_campaign_submits_one_job_per_chosen_variant(self):
         from tools import panda_campaign
         rc = panda_campaign.main(["--work-root", str(self.work), "--cwd", str(self.repo), "--image", "img",

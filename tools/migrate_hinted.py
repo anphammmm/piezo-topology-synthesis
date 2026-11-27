@@ -4,7 +4,8 @@ into benchmark v2 as the `hinted` variant, so they are not run again.
     python3 tools/migrate_hinted.py                 # show what would move
     python3 tools/migrate_hinted.py --apply         # move runs/bench/<spec>/full/seed<n> -> runs/bench2/<spec>/hinted/seed<n>
 
-Only finished runs (with outcome.json) move; a destination that exists is never overwritten; nothing is
+Only finished runs (with outcome.json) that used the original prompt (no "hinted_prompt": false in
+config.json) move; a destination that exists is never overwritten; nothing is
 deleted. Each moved run's run_meta.json gets label "hinted" and "migrated_from". Run it from the
 repository folder, after the old benchmark jobs have stopped.
 """
@@ -20,6 +21,16 @@ from typing import List, Tuple
 SEED = re.compile(r"seed(\d+)$")
 
 
+def _used_neutral_prompt(run: Path) -> bool:
+    """The first benchmark's code wrote no hinted_prompt key (it always used the original prompt); a seed
+    that an old job started after the new code was pulled records hinted_prompt false."""
+    cfg = run / "config.json"
+    try:
+        return json.loads(cfg.read_text(encoding="utf-8")).get("hinted_prompt") is False
+    except (OSError, ValueError):
+        return False
+
+
 def migrate(old_root: Path, new_root: Path, apply: bool) -> List[Tuple[str, str]]:
     old_root, new_root = Path(old_root), Path(new_root)
     moves = []
@@ -30,7 +41,7 @@ def migrate(old_root: Path, new_root: Path, apply: bool) -> List[Tuple[str, str]
             continue
         spec = src.parent.parent.name
         dest = new_root / spec / "hinted" / src.name
-        if dest.exists():
+        if dest.exists() or _used_neutral_prompt(src):
             continue
         moves.append((src.as_posix(), dest.as_posix()))
         if not apply:

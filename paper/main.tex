@@ -392,6 +392,13 @@ overvoltage, slow start, drift, ripple, or simulation failure. Diagnoses name th
 function that fails, not a remedy, so that they do not steer the model toward a known topology. If the
 last three designs share a major diagnosis, the prompt says so explicitly.
 
+\paragraph{Prompt hints.} The system prompt used for the P1 campaign contained fragments of the textbook
+answer: its JSON syntax example was a parallel-SSHI branch (inductor, switch and synchronous controller
+with the witness's values), it stated the inversion time $t_{on}\approx\pi\sqrt{L C_p}$, and it illustrated
+diode orientation with full-bridge and zener-clamp wiring. The benchmark (Section~\ref{sec:bench}) uses a
+neutral prompt without these fragments for every variant; the \emph{hinted} variant restores the original
+prompt, so that the difference between the two measures how much the results depend on the hints.
+
 \subsection{Stopping, held-out check and robustness}\label{sec:robust}
 The loop stops at the first of: a design meeting the specification on the search conditions; the model
 declaring that no structural change can help; three failed model calls; five rounds without improving

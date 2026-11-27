@@ -140,7 +140,8 @@ class DiodeOrientationTest(unittest.TestCase):
         bad["components"].append({"id": "DZ1", "type": "D", "nodes": ["out", "0"], "model": "DZ33"})
         p = problems_of(bad)
         self.assertIn("DZ1", p)
-        self.assertIn('["0", "out"]', p)
+        self.assertIn("forward-biased", p)
+        self.assertNotIn('["0", "out"]', p)     # the neutral prompt must not get the clamp wiring this way
 
     def test_zener_clamp_with_cathode_on_out_accepted(self):
         ok = copy.deepcopy(EXAMPLE)
