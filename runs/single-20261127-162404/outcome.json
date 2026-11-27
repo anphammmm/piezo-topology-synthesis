@@ -1,0 +1,26 @@
+{
+  "stop_reason": "search_spec_met",
+  "met_search": true,
+  "met_all": false,
+  "selected_id": "c0030",
+  "selected_name": "sshi_fbr_zener",
+  "selected_origin": "size",
+  "reference_id": "c0000",
+  "first_met": {
+    "t": 404.1,
+    "n_sims": 249,
+    "id": "c0030"
+  },
+  "failed_checks": [
+    {
+      "split": "heldout",
+      "condition": "H4",
+      "criterion": "settled",
+      "measured": 0.08869681343999991,
+      "limit": 0.02,
+      "op": "<=",
+      "margin": -3.434840671999995,
+      "passed": false
+    }
+  ]
+}

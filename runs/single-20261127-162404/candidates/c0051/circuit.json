@@ -1,0 +1,112 @@
+{
+ "move": "modify_topology",
+ "name": "sshi_fbr_zener_dual",
+ "rationale": "The previous 'sshi_fbr' had ample power but failed on vmax. The 'sshi_fbr_zener' failed on power, likely because the tuner struggled with a single L-S pair for both polarity flips. I am proposing a symmetric SSHI structure with two separate L-S pairs: one for the positive peak and one for the negative peak. This provides the tuner with independent control over the flip efficiency for each half-cycle, which should increase power extraction on S2, S4, and S5. The Zener clamp on the output remains to ensure vmax <= 3.6V, and a larger C1 will be used to mitigate ripple and settling issues, provided the increased power allows for fast startup.",
+ "done": false,
+ "components": [
+  {
+   "id": "D1",
+   "type": "D",
+   "nodes": [
+    "pzp",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D2",
+   "type": "D",
+   "nodes": [
+    "pzn",
+    "out"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D3",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzp"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "D4",
+   "type": "D",
+   "nodes": [
+    "0",
+    "pzn"
+   ],
+   "model": "DSCH"
+  },
+  {
+   "id": "C1",
+   "type": "C",
+   "nodes": [
+    "out",
+    "0"
+   ],
+   "value": 1e-05
+  },
+  {
+   "id": "DZ1",
+   "type": "D",
+   "nodes": [
+    "0",
+    "out"
+   ],
+   "model": "DZ33"
+  },
+  {
+   "id": "L1",
+   "type": "L",
+   "nodes": [
+    "pzp",
+    "n1"
+   ],
+   "value": 0.005
+  },
+  {
+   "id": "S1",
+   "type": "S",
+   "nodes": [
+    "n1",
+    "pzn"
+   ],
+   "ctrl": "G1"
+  },
+  {
+   "id": "G1",
+   "type": "SYNC",
+   "ton": 3.512407365520363e-05,
+   "phase": 0.0,
+   "edges": "pos"
+  },
+  {
+   "id": "L2",
+   "type": "L",
+   "nodes": [
+    "pzn",
+    "n2"
+   ],
+   "value": 0.005
+  },
+  {
+   "id": "S2",
+   "type": "S",
+   "nodes": [
+    "n2",
+    "pzp"
+   ],
+   "ctrl": "G2"
+  },
+  {
+   "id": "G2",
+   "type": "SYNC",
+   "ton": 3.512407365520363e-05,
+   "phase": 0.0,
+   "edges": "neg"
+  }
+ ]
+}

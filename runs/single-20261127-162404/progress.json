@@ -1,14 +1,14 @@
 {
-  "phase": "model",
-  "stop_reason": null,
-  "elapsed_s": 83.9,
-  "iteration": 0,
+  "phase": "done",
+  "stop_reason": "search_spec_met",
+  "elapsed_s": 670.5,
+  "iteration": 2,
   "max_rounds": 12,
-  "best_id": "c0000",
-  "best_name": "FBR reference (4x Schottky, 2.2 uF)",
-  "best_scalar": 24.608,
-  "best_cond_pass": 1,
-  "n_candidates": 1,
-  "n_sims": 6,
-  "model_wait_s": 75
+  "best_id": "c0030",
+  "best_name": "sshi_fbr_zener",
+  "best_scalar": 90.608,
+  "best_cond_pass": 6,
+  "n_candidates": 52,
+  "n_sims": 363,
+  "model_wait_s": 0
 }
