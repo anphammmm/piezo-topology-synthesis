@@ -75,6 +75,16 @@ def _fake_replies() -> list:
 
 # ---------------------------------------------------------------- smoke test
 
+def screen_sign_suspect(scr: dict) -> bool:
+    """True if the screen's sign looks wrong. A small negative net power for the reference on one
+    condition is physical (S4: the open-circuit voltage is below 1.8 V plus two diode drops, so the bridge
+    delivers nothing and the source loses the diodes' reverse leakage); the witness losing power, or the
+    reference losing it on every condition, is not."""
+    ref = [v for v in scr["reference"]["p_net"].values() if v is not None]
+    wit = [v for v in scr["witness"]["p_net"].values() if v is not None]
+    return any(v < 0 for v in wit) or (bool(ref) and all(v <= 0 for v in ref))
+
+
 def run_smoke(sim: Simulator, rec: RunRecorder) -> None:
     """Reference and witness on all conditions: checks the simulator setup and the spec's difficulty."""
     rec.write_json("spec.json", spec.spec_dict())
@@ -110,9 +120,9 @@ def run_smoke(sim: Simulator, rec: RunRecorder) -> None:
         rec.log("screen", f"{origin}: net power at {spec.SCREEN['vstore']:g} V vs need: {r.summary()}; "
                           f"gain over ideal FBR: " + ", ".join(f"{k} {v:.2f}" for k, v in r.gain.items() if v is not None))
     rec.write_json("smoke_screen.json", scr)
-    if any((v or 0) < 0 for v in scr["reference"]["p_net"].values()):
-        rec.log("screen", "WARNING: negative net power for the reference: check the sign of the 'isn' measurement "
-                          "(V(out,vsn)) before trusting the screen.")
+    if screen_sign_suspect(scr):
+        rec.log("screen", "WARNING: net powers look sign-flipped (the witness loses power, or the reference loses "
+                          "it everywhere): check the 'isn' measurement (V(out,vsn)) before trusting the screen.")
     if not scr["witness"]["passed"]:
         rec.log("screen", f"WARNING: the witness fails the screen (worst {scr['witness']['worst_ratio'] * 100:.0f} %); "
                           f"consider lowering screen_alpha.")

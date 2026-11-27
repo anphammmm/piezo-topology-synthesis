@@ -57,3 +57,16 @@ class FindRawTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             self.assertIsNone(find_raw(d))
             self.assertIsNone(find_raw(Path(d) / "absent"))
+
+
+class ScreenSignWarningTest(unittest.TestCase):
+    def test_leakage_on_one_condition_is_not_a_sign_error(self):
+        from piezo_synth.run import screen_sign_suspect
+        ok = {"reference": {"p_net": {"S2": 2.1e-5, "S4": -8.9e-8, "S6": 1.4e-5}},
+              "witness": {"p_net": {"S2": 5.4e-5, "S4": 3.1e-5, "S6": 5.1e-5}}}
+        self.assertFalse(screen_sign_suspect(ok))
+        flipped = {"reference": {"p_net": {"S2": -2.1e-5, "S4": -1e-8, "S6": -1.4e-5}},
+                   "witness": {"p_net": {"S2": -5.4e-5, "S4": -3.1e-5, "S6": -5.1e-5}}}
+        self.assertTrue(screen_sign_suspect(flipped))
+        witness_neg = {"reference": ok["reference"], "witness": {"p_net": {"S2": 5e-5, "S4": -1e-6, "S6": 5e-5}}}
+        self.assertTrue(screen_sign_suspect(witness_neg))
