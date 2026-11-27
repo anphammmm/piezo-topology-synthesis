@@ -19,6 +19,42 @@ from . import spec
 
 PENDING = r"\textit{pending: no runs yet}"
 
+# The paper's comparison: config overrides and extra command-line arguments per variant. Every
+# variant shares the base config (and with it the simulation budget max_sims).
+VARIANTS: Dict[str, Tuple[dict, str]] = {
+    "full": ({}, ""),
+    "no_screen": ({"screen": False}, ""),
+    "no_diag": ({"diagnostics": False}, ""),
+    "single": ({"proposals_per_round": 1, "max_rounds": 24}, ""),
+    "coord": ({"sizer": "coord"}, ""),
+    "no_think": ({"think": False}, ""),
+    "random": ({}, "--baseline random"),
+    "audit": ({"screen_audit": True}, ""),
+}
+CAMPAIGN_BASE = {"max_sims": 3000, "wall_clock_s": 3600, "mc_samples": 16}
+
+
+def write_campaign_configs(root, base: Optional[dict] = None) -> Dict[str, Path]:
+    """runs/exp/<variant>.json for every variant; returns their paths."""
+    root = Path(root)
+    root.mkdir(parents=True, exist_ok=True)
+    out = {}
+    for name, (over, _extra) in VARIANTS.items():
+        p = root / f"{name}.json"
+        p.write_text(json.dumps(dict(CAMPAIGN_BASE if base is None else base, **over), indent=1), encoding="utf-8")
+        out[name] = p
+    return out
+
+
+def campaign_loop(name: str, seeds, root: str = "runs/exp") -> str:
+    """Shell command running one variant's seeds in turn, skipping seeds already finished.
+    Contains no single quotes, so it can be wrapped in bash -c '...'."""
+    extra = VARIANTS[name][1]
+    return " ; ".join(
+        f"( test -f {root}/{name}/seed{s}/outcome.json || python3 -u -m piezo_synth.run --config {root}/{name}.json "
+        f"--label {name} --seed {s} {extra} --out {root}/{name}/seed{s} > {root}/{name}-seed{s}.log 2>&1 )"
+        for s in seeds)
+
 RUN_FIELDS = ["variant", "seed", "run", "stop_reason", "met_search", "met_all", "rounds", "n_proposals",
               "n_invalid", "n_duplicate", "n_topologies", "n_screen_pass", "n_sims", "n_screen_sims", "wall_s",
               "model_s", "model_calls", "prompt_tokens", "completion_tokens", "first_met_t", "first_met_sims",

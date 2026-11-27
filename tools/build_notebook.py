@@ -245,28 +245,14 @@ compared by **simulations used**, which does not depend on how busy the shared G
 One cluster job per variant runs its seeds one after another. With 5 seeds a variant takes up to
 about 5 hours; all variants run at the same time. Re-running a variant skips seeds already finished."""
 
-CAMPAIGN = '''SEEDS = [1, 2, 3, 4, 5]
-BASE = dict(CONFIG, max_sims=3000, wall_clock_s=3600, mc_samples=16)
-VARIANTS = {
-    "full": ({}, ""),
-    "no_screen": ({"screen": False}, ""),
-    "no_diag": ({"diagnostics": False}, ""),
-    "single": ({"proposals_per_round": 1, "max_rounds": 24}, ""),
-    "coord": ({"sizer": "coord"}, ""),
-    "no_think": ({"think": False}, ""),
-    "random": ({}, "--baseline random"),
-    "audit": ({"screen_audit": True}, ""),
-}
-os.makedirs("runs/exp", exist_ok=True)
+CAMPAIGN = '''from piezo_synth.experiments import CAMPAIGN_BASE, VARIANTS, campaign_loop, write_campaign_configs
+
+SEEDS = [1, 2, 3, 4, 5]
+write_campaign_configs("runs/exp", base=dict(CONFIG, **CAMPAIGN_BASE))
 campaign = {}
-for name, (over, extra) in VARIANTS.items():
-    Path(f"runs/exp/{name}.json").write_text(json.dumps(dict(BASE, **over), indent=1))
-    loop = " ; ".join(
-        f"( test -f runs/exp/{name}/seed{s}/outcome.json || python3 -u -m piezo_synth.run --config runs/exp/{name}.json "
-        f"--label {name} --seed {s} {extra} --out runs/exp/{name}/seed{s} > runs/exp/{name}-seed{s}.log 2>&1 )"
-        for s in SEEDS)
-    campaign[name] = run(f"bash -c '{loop}'", image=LTSPICE, gpus=0, cpus=8, memory="16Gi",
-                         timeout=12 * 3600, name=f"piezo-{name.replace('_', '-')}")
+for name in VARIANTS:
+    campaign[name] = run(f"bash -c '{campaign_loop(name, SEEDS)}'", image=LTSPICE, gpus=0, cpus=8,
+                         memory="16Gi", timeout=12 * 3600, name=f"piezo-{name.replace('_', '-')}")
     print("submitted", name, campaign[name])'''
 
 CAMPAIGN_STATUS = '''# how far each variant has got (safe to run any time)

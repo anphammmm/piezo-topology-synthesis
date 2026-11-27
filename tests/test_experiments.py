@@ -55,3 +55,19 @@ class TexEscapeTest(unittest.TestCase):
             for f in gen.iterdir():
                 text = f.read_text(encoding="utf-8")
                 self.assertTrue(text.isascii(), f"{f.name}: {[c for c in text if not c.isascii()]}")
+
+
+class CampaignTest(unittest.TestCase):
+    def test_configs_and_loop(self):
+        from piezo_synth.experiments import VARIANTS, campaign_loop, write_campaign_configs
+        self.assertIn("full", VARIANTS)
+        self.assertIn("random", VARIANTS)
+        with tempfile.TemporaryDirectory() as d:
+            paths = write_campaign_configs(Path(d) / "exp", base={"max_sims": 3000})
+            full = json.loads(paths["full"].read_text())
+            self.assertEqual(full["max_sims"], 3000)
+            self.assertFalse(json.loads(paths["no_screen"].read_text())["screen"])
+        loop = campaign_loop("random", [1, 2], root="runs/exp")
+        self.assertNotIn("'", loop)
+        for s in ("--label random", "--seed 2", "--baseline random", "runs/exp/random/seed1/outcome.json"):
+            self.assertIn(s, loop)
