@@ -28,6 +28,12 @@ class PromptTest(unittest.TestCase):
                   "new_topology", "connectivity"]:
             self.assertIn(s, p)
 
+    def test_system_prompt_explains_diode_orientation(self):
+        p = system_prompt(REF_EV)
+        self.assertIn('["0", "out"]', p)        # zener clamp: cathode on out
+        self.assertIn('["0", "pzp"]', p)        # bridge return diode: anode on ground
+        self.assertIn("anode", p)
+
     def test_heldout_never_in_prompts(self):
         last = entry(3, duplicate=False, invalid_problems=[], refined_from=None)
         p = system_prompt(REF_EV) + iteration_prompt(3, 16, [entry(1), entry(2)], last,

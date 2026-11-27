@@ -132,3 +132,17 @@ class ParseValueTest(unittest.TestCase):
         self.assertAlmostEqual(parse_value("4.7mH"), 4.7e-3)
         self.assertIsNone(parse_value("lots"))
         self.assertIsNone(parse_value(True))
+
+
+class DiodeOrientationTest(unittest.TestCase):
+    def test_forward_diode_from_out_to_ground_rejected(self):
+        bad = copy.deepcopy(EXAMPLE)
+        bad["components"].append({"id": "DZ1", "type": "D", "nodes": ["out", "0"], "model": "DZ33"})
+        p = problems_of(bad)
+        self.assertIn("DZ1", p)
+        self.assertIn('["0", "out"]', p)
+
+    def test_zener_clamp_with_cathode_on_out_accepted(self):
+        ok = copy.deepcopy(EXAMPLE)
+        ok["components"].append({"id": "DZ1", "type": "D", "nodes": ["0", "out"], "model": "DZ33"})
+        self.assertEqual(problems_of(ok), "")

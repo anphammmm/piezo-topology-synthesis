@@ -11,7 +11,7 @@ from typing import Tuple
 from .circuit import Circuit, Component, canonical
 from .spec import CTRL_SINK_A, LIMITS, SIM, Condition
 
-MODELS_TEXT = """.model DSCH D(Is=5e-8 Rs=1 N=1.05 Cjo=10p BV=30 IBV=1u)
+MODELS_TEXT = """.model DSCH D(Is=5e-8 Rs=1 N=1.05 Cjo=10p BV=30 IBV=1u EG=0.69 XTI=2)
 .model DSI D(Is=2.5n Rs=0.6 N=1.75 Cjo=4p BV=75 IBV=1u)
 .model DZ33 D(Is=1e-12 Rs=5 N=1.5 BV=3.3 IBV=1u)
 .model SWI SW(Ron=2 Roff=1G Vt=0.5 Vh=0)"""

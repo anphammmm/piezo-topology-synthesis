@@ -153,6 +153,14 @@ class SearchTest(unittest.TestCase):
         origins = [l.split(",")[2] for l in (self.out / "candidates.csv").read_text().splitlines()[1:]]
         self.assertIn("refine", origins)
 
+    def test_dead_design_not_tuned(self):
+        dead = FakeBackend(lambda text: dict(vavg=0.6, vavg_prev=0.6, vpp=0.01, vmax=0.65, pload=1e-9, pext=1e-6))
+        sim = Simulator(dead, self.out / "dead", workers=4)
+        llm = FakeLLM([json.dumps(SSHI_NO_CLAMP)])
+        run_search(self.cfg(max_proposals=2, refine_budget=4, refine_min=4, stagnation=99), llm, sim, self.rec)
+        origins = [l.split(",")[2] for l in (self.out / "candidates.csv").read_text().splitlines()[1:]]
+        self.assertNotIn("refine", origins)
+
     def test_timing_has_tokens(self):
         run_search(self.cfg(), FakeLLM([json.dumps(WITNESS)]), self.sim, self.rec)
         t = json.loads((self.out / "timing.json").read_text())

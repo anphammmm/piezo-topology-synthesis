@@ -150,6 +150,10 @@ def validate(c: Circuit) -> List[str]:
             p.append(f"{x.id}: value {x.value} outside [{lo:g}, {hi:g}]")
         if x.type == "D" and x.model not in DIODE_MODELS:
             p.append(f"{x.id}: diode model must be one of {', '.join(DIODE_MODELS)}")
+        if x.type == "D" and tuple(x.nodes) == ("out", "0"):
+            p.append(f'{x.id}: nodes ["out", "0"] put the anode on out, so the diode is forward-biased, holds out '
+                     f'near 0.3-0.7 V and drains the storage. A zener clamp on out needs nodes ["0", "out"] '
+                     f'(cathode on out)')
         if x.type == "S":
             if x.ctrl not in syncs:
                 p.append(f"{x.id}: ctrl must name a SYNC component (got {x.ctrl!r})")

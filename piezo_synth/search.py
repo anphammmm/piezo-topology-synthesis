@@ -20,6 +20,9 @@ from .records import Candidate, RunRecorder
 from .refine import refine
 from .sim import Simulator
 
+# a design whose output never reaches this on any condition is not value-tuned
+DEAD_V = 0.5 * next(c.limit for c in spec.CRITERIA if c.id == "vout_min")
+
 
 @dataclass
 class SearchConfig:
@@ -146,8 +149,18 @@ class _Search:
     def _refine_target(self) -> Optional[Candidate]:
         for c in (self.latest_llm, self.best):
             if c is not None and c.origin != "reference" and c.id not in self.refined:
+                if not self._alive(c):
+                    self.refined.add(c.id)
+                    self.rec.log("refine", f"not tuning {c.id} ({c.name}): output never reaches "
+                                           f"{DEAD_V:g} V, so values alone are unlikely to fix it")
+                    continue
                 return c
         return None
+
+    @staticmethod
+    def _alive(c: Candidate) -> bool:
+        """True if the output reaches half the minimum supply voltage on at least one condition."""
+        return any((m.get("vavg") or 0.0) >= DEAD_V for m in c.evaluation.meas.values())
 
     def _refine(self, target: Candidate, reply_arrived) -> None:
         self.refined.add(target.id)

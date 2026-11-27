@@ -84,9 +84,15 @@ COMPONENTS YOU MAY USE (at most {L['max_components']} components)
 - R  resistor, value {L['R'][0]:g}..{L['R'][1]:g} Ohm, nodes [a, b]
 - C  capacitor, value {L['C'][0]:g}..{L['C'][1]:g} F, nodes [a, b]
 - L  inductor, value {L['L'][0]:g}..{L['L'][1]:g} H; it has series resistance 2 Ohm + 5 Ohm per mH
-- D  diode, nodes [anode, cathode], model one of {', '.join(DIODE_MODELS)}:
+- D  diode, nodes [anode, cathode]: forward current flows from the first node to the second.
+     Model one of {', '.join(DIODE_MODELS)}:
      DSCH = low-drop Schottky (~0.25 V at uA), DSI = silicon small-signal (~0.5 V at uA),
      DZ33 = 3.3 V zener (reverse breakdown 3.3 V, conducts ~1 uA at 3.3 V and much more above)
+     Orientation matters:
+       full bridge: ["pzp", "out"], ["pzn", "out"], ["0", "pzp"], ["0", "pzn"] (return diodes have
+       their anode on ground);
+       zener clamp on out: ["0", "out"] (cathode on out, so it is reverse-biased and breaks down at
+       3.3 V). ["out", "0"] would be forward-biased and hold out near 0.7 V; it is rejected.
 - S  switch, nodes [a, b], "ctrl": id of a SYNC; Ron = 2 Ohm, Roff = 1 GOhm (at most {L['max_switches']})
 - SYNC ideal synchronous controller (no nodes, at most {L['max_sync']}): closes its switches for "ton"
      seconds ({L['ton'][0]:g}..{L['ton'][1]:g}) at the piezo voltage extrema, which occur at the zero

@@ -62,3 +62,11 @@ class NetlistTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DiodeTemperatureTest(unittest.TestCase):
+    def test_schottky_has_schottky_temperature_parameters(self):
+        from piezo_synth.netlist import MODELS_TEXT
+        line = next(l for l in MODELS_TEXT.splitlines() if l.startswith(".model DSCH"))
+        self.assertIn("EG=0.69", line)
+        self.assertIn("XTI=2", line)
