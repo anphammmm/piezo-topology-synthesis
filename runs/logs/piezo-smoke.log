@@ -1,7 +1,7 @@
 [00:00:00] [setup  ] output in runs/smoke; mode smoke; 8 parallel simulations
 [00:00:00] [setup  ] free disk where results go: 47.9 GiB
 [00:00:00] [sim    ] reference: 6 search conditions
-[00:00:08] [eval   ] reference search: 1/6 conditions pass (9.0 s)
+[00:00:07] [eval   ] reference search: 1/6 conditions pass (7.1 s)
 cond   vavg V  vmax V  vpp mV   tup s  Pload uW  vout_min vout_max ripple   startup  settled 
 S1       2.24    2.25    26.2   0.269      15.2  ok       ok       ok       ok       FAIL    
 S2       1.76    1.77    20.3       -      20.7  FAIL     ok       ok       FAIL     ok      
@@ -9,15 +9,15 @@ S3       5.68    5.72    84.4  0.0779      14.7  ok       FAIL     FAIL     ok  
 S4       1.51    1.52    20.8       -      2.27  FAIL     ok       ok       FAIL     FAIL    
 S5       2.26    2.28    43.5   0.318      10.9  ok       ok       ok       ok       FAIL    
 S6       1.93    1.94    18.8   0.379      11.3  ok       ok       ok       ok       ok      
-[00:00:08] [sim    ] reference: 4 heldout conditions
-[00:00:14] [eval   ] reference heldout: 1/4 conditions pass (6.0 s)
+[00:00:07] [sim    ] reference: 4 heldout conditions
+[00:00:12] [eval   ] reference heldout: 1/4 conditions pass (5.0 s)
 cond   vavg V  vmax V  vpp mV   tup s  Pload uW  vout_min vout_max ripple   startup  settled 
 H1       1.63    1.64    20.2       -      5.65  FAIL     ok       ok       FAIL     ok      
 H2       2.41    2.42    23.9   0.203      26.4  ok       ok       ok       ok       ok      
 H3        6.9    6.95     107  0.0633      4.77  ok       FAIL     FAIL     ok       FAIL    
 H4       1.55    1.56    25.4       -        12  FAIL     ok       ok       FAIL     ok      
-[00:00:14] [sim    ] witness: 6 search conditions
-[00:00:23] [eval   ] witness search: 6/6 conditions pass (8.2 s)
+[00:00:12] [sim    ] witness: 6 search conditions
+[00:00:19] [eval   ] witness search: 6/6 conditions pass (7.5 s)
 cond   vavg V  vmax V  vpp mV   tup s  Pload uW  vout_min vout_max ripple   startup  settled 
 S1       3.38    3.38    17.1   0.149      34.5  ok       ok       ok       ok       ok      
 S2       3.35    3.36    17.3   0.171      74.8  ok       ok       ok       ok       ok      
@@ -25,15 +25,15 @@ S3        3.4    3.42    27.2  0.0678      5.27  ok       ok       ok       ok  
 S4       3.37    3.37      11   0.247      11.3  ok       ok       ok       ok       ok      
 S5       3.37    3.38    17.1   0.186      24.2  ok       ok       ok       ok       ok      
 S6       3.38    3.39    18.5   0.156      34.6  ok       ok       ok       ok       ok      
-[00:00:23] [sim    ] witness: 4 heldout conditions
-[00:00:27] [eval   ] witness heldout: 3/4 conditions pass (4.3 s)
+[00:00:19] [sim    ] witness: 4 heldout conditions
+[00:00:27] [eval   ] witness heldout: 3/4 conditions pass (8.2 s)
 cond   vavg V  vmax V  vpp mV   tup s  Pload uW  vout_min vout_max ripple   startup  settled 
 H1       3.37    3.37    12.6   0.218      24.1  ok       ok       ok       ok       ok      
 H2       3.38    3.38    17.4   0.127      51.8  ok       ok       ok       ok       ok      
 H3       3.39     3.4    28.2  0.0624      1.15  ok       ok       ok       ok       ok      
 H4       3.34    3.35    21.6   0.232      55.9  ok       ok       ok       ok       FAIL    
-[00:00:30] [screen ] reference: net power at 1.8 V vs need: S2: 20.8 uW of 21.6 uW needed (96 %); S4: -0.0891 uW of 3.24 uW needed (-3 %); S6: 13.8 uW of 9.82 uW needed (141 %); gain over ideal FBR: S2 0.82, S4 -0.01, S6 0.66
-[00:00:32] [screen ] witness: net power at 1.8 V vs need: S2: 54.3 uW of 21.6 uW needed (251 %); S4: 31.4 uW of 3.24 uW needed (968 %); S6: 50.6 uW of 9.82 uW needed (516 %); gain over ideal FBR: S2 2.14, S4 3.44, S6 2.40
-[00:00:32] [screen ] WARNING: negative net power for the reference: check the sign of the 'isn' measurement (V(out,vsn)) before trusting the screen.
-[00:00:32] [eval   ] reference fails 5/6 search conditions: S1, S2, S3, S4, S5 (the spec is meant to make it fail several)
-[00:00:32] [done   ] report: runs/smoke/report.md
+[00:00:29] [screen ] reference: net power at 1.8 V vs need: S2: 20.8 uW of 21.6 uW needed (96 %); S4: -0.0891 uW of 3.24 uW needed (-3 %); S6: 13.8 uW of 9.82 uW needed (141 %); gain over ideal FBR: S2 0.82, S4 -0.01, S6 0.66
+[00:00:31] [screen ] witness: net power at 1.8 V vs need: S2: 54.3 uW of 21.6 uW needed (251 %); S4: 31.4 uW of 3.24 uW needed (968 %); S6: 50.6 uW of 9.82 uW needed (516 %); gain over ideal FBR: S2 2.14, S4 3.44, S6 2.40
+[00:00:31] [screen ] WARNING: negative net power for the reference: check the sign of the 'isn' measurement (V(out,vsn)) before trusting the screen.
+[00:00:31] [eval   ] reference fails 5/6 search conditions: S1, S2, S3, S4, S5 (the spec is meant to make it fail several)
+[00:00:31] [done   ] report: runs/smoke/report.md

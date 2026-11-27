@@ -132,7 +132,7 @@ Spec met on search conditions: **True**; on all conditions including held-out: *
 | of which reasoning tokens | not reported |
 | simulations run | 26 |
 | cache hits (not re-simulated) | 0 |
-| simulator time (sum over parallel runs) | 109 s |
+| simulator time (sum over parallel runs) | 122 s |
 | simulation wall time | 32 s |
 | screening simulations | - |
 | screening wall time | 0 s |

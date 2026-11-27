@@ -1,13 +1,13 @@
 LTspice 26.1.1 for Windows
 Circuit: Z:\work\ltspice\claude\piezo-topology-synthesis\runs\smoke\sims\ffd007da05edba67\circuit.net
-Start Time: Fri Nov 27 15:55:05 2026
+Start Time: Fri Nov 27 16:05:08 2026
 solver = Normal
 Maximum thread count: 64
 tnom = 27
 temp = 27
 method = trap
 Direct Newton iteration succeeded in finding operating point.
-Total elapsed time: 2.422 seconds.
+Total elapsed time: 2.253 seconds.
 Total iterations: 821891
 
 Files loaded:

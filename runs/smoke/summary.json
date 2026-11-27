@@ -20,14 +20,14 @@
     }
   ],
   "timing": {
-    "wall_s": 32.5,
+    "wall_s": 31.9,
     "model_s": 0,
     "model_calls": 0,
     "prompt_tokens": 0,
     "completion_tokens": 0,
     "reasoning_tokens": 0,
-    "sim_seconds": 108.8,
-    "sim_wall_s": 32.5,
+    "sim_seconds": 122.1,
+    "sim_wall_s": 31.9,
     "n_sims": 26,
     "cache_hits": 0,
     "refine_s": 0
